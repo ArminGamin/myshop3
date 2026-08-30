@@ -36,6 +36,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# deploy artifacts
+deploy-files.json
+scripts/collect-deploy-files.mjs
+
+# cursor
+.cursor
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
