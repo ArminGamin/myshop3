@@ -3,6 +3,7 @@ import { store } from "@/lib/config/store.config";
 import { collections } from "@/lib/data/collections";
 import { PaymentIcons } from "@/components/commerce/payment-icons";
 import { CookieSettingsButton } from "@/components/layout/cookie-settings-button";
+import { SafeDiv } from "@/components/layout/safe-div";
 
 const infoLinks = [
   { href: "/apie-mus", label: "Apie mus" },
@@ -20,10 +21,10 @@ const legalLinks = [
 
 export function Footer() {
   return (
-    <footer className="band-forest relative z-[2] text-cream-100">
-      <div className="mx-auto max-w-7xl px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:px-8 lg:py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div>
+    <footer className="band-forest relative z-[2] text-cream-100" suppressHydrationWarning>
+      <SafeDiv className="mx-auto max-w-7xl px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:px-8 lg:py-12">
+        <SafeDiv className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
+          <SafeDiv>
             <p className="font-display text-2xl font-extrabold text-cream-50">
               {store.brand.name}
             </p>
@@ -31,12 +32,12 @@ export function Footer() {
               {store.brand.tagline}. Kruopščiai parinktos dovanos, kurios namus pripildo
               šilumos — pristatome visoje Lietuvoje.
             </p>
-            <div className="mt-5 flex gap-2">
+            <SafeDiv className="mt-5 flex gap-2">
               <SocialLink href={store.social.instagram} label="Instagram" icon={<IgIcon />} />
               <SocialLink href={store.social.facebook} label="Facebook" icon={<FbIcon />} />
               <SocialLink href={store.social.tiktok} label="TikTok" icon={<TtIcon />} />
-            </div>
-          </div>
+            </SafeDiv>
+          </SafeDiv>
 
           <nav aria-label="Parduotuvė">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-gold-300">
@@ -78,7 +79,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <div>
+          <SafeDiv>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-gold-300">
               Kontaktai
             </p>
@@ -91,16 +92,16 @@ export function Footer() {
               <li>{store.contact.responseTime}</li>
             </ul>
             <CookieSettingsButton />
-          </div>
-        </div>
+          </SafeDiv>
+        </SafeDiv>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-cream-100/15 pt-5 sm:flex-row">
+        <SafeDiv className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-cream-100/15 pt-5 sm:flex-row">
           <p className="text-xs text-cream-100/55">
             © {new Date().getFullYear()} {store.brand.name}. Visos teisės saugomos.
           </p>
           <PaymentIcons tone="light" />
-        </div>
-      </div>
+        </SafeDiv>
+      </SafeDiv>
     </footer>
   );
 }

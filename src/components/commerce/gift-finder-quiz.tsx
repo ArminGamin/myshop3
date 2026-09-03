@@ -197,9 +197,9 @@ export function GiftFinderQuiz({ compact = false }: { compact?: boolean }) {
               key={opt.value}
               type="button"
               onClick={() => pick(step.id, opt.value)}
-              className="group flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-cozy border-2 border-cream-300 bg-cream-50 px-2.5 py-3 transition hover:border-gold-400 hover:bg-gold-200/30 active:scale-[0.98] sm:min-h-28 sm:gap-1.5 sm:px-3 sm:py-4"
+              className="group flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-cozy border-2 border-cream-300 bg-cream-50 px-2.5 py-3 transition-[transform,border-color,background-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-gold-400 hover:bg-gold-200/30 active:scale-[0.98] sm:min-h-28 sm:gap-1.5 sm:px-3 sm:py-4"
             >
-              <span className="text-burgundy-600 transition-transform group-hover:scale-110">
+              <span className="text-burgundy-600 transition-transform duration-500 group-hover:scale-[1.06]">
                 <QuizGlyph value={opt.value} />
               </span>
               <span className="text-center text-[13.5px] font-semibold leading-tight text-ink-900">

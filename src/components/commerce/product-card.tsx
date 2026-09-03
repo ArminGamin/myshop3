@@ -18,7 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="group relative flex flex-col">
-      <div className="gold-shimmer relative overflow-hidden rounded-cozy bg-cream-200 shadow-card transition-shadow duration-700 group-hover:shadow-lift after:pointer-events-none after:absolute after:inset-0 after:z-[1] after:rounded-cozy after:content-[''] after:shadow-[inset_0_0_0_1px_rgb(201_162_75/0.22)]">
+      <div className="gold-shimmer relative overflow-hidden rounded-cozy bg-cream-200 shadow-card transition-shadow duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:shadow-lift after:pointer-events-none after:absolute after:inset-0 after:z-[1] after:rounded-cozy after:content-[''] after:shadow-[inset_0_0_0_1px_rgb(201_162_75/0.22)]">
         <Link
           href={`/produktai/${product.slug}`}
           aria-label={product.name}
@@ -29,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
             seed={product.artSeed}
             alt={product.name}
             size="card"
-            className="h-full w-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+            className="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035]"
           />
         </Link>
 
@@ -56,7 +56,7 @@ export function ProductCard({ product }: { product: Product }) {
         ) : null}
 
         {/* Greitas pridėjimas — atsiranda užvedus (desktop) */}
-        <div className="absolute inset-x-3 bottom-3 z-[2] hidden sm:pointer-events-none sm:group-hover:pointer-events-auto sm:group-hover:block">
+        <div className="absolute inset-x-3 bottom-3 z-[2] hidden translate-y-1 opacity-0 transition-[opacity,transform] duration-500 sm:block sm:pointer-events-none sm:group-hover:pointer-events-auto sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
           <button
             type="button"
             onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
@@ -70,7 +70,7 @@ export function ProductCard({ product }: { product: Product }) {
 
       <div className="flex flex-1 flex-col px-0.5 pt-2.5 sm:px-1 sm:pt-3.5">
         <Link href={`/produktai/${product.slug}`} className="flex-1">
-          <h3 className="line-clamp-2 text-[13.5px] font-semibold leading-snug text-ink-900 transition group-hover:text-burgundy-600 sm:text-[14.5px]">
+          <h3 className="line-clamp-2 text-[14px] font-semibold leading-snug text-ink-900 transition group-hover:text-burgundy-600 sm:text-[14.5px]">
             {product.name}
           </h3>
         </Link>
@@ -104,7 +104,7 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+    <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-4 sm:gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
       {products.map((product) => (
         <ProductCard key={product.slug} product={product} />
       ))}

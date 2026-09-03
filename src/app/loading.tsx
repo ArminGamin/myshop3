@@ -1,3 +1,5 @@
+"use client";
+
 export default function Loading() {
   return (
     <div className="route-hold" role="status" aria-label="Kraunama">

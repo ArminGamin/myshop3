@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
@@ -7,7 +8,14 @@ import { collections } from "@/lib/data/collections";
 import { countOf, useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
 import { store } from "@/lib/config/store.config";
-import { SearchOverlay } from "./search-overlay";
+import { usePresence } from "@/lib/motion";
+import { BrandLogo } from "./brand-logo";
+import { SafeDiv } from "./safe-div";
+
+const SearchOverlay = dynamic(
+  () => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })),
+  { ssr: false }
+);
 
 const desktopNav = [
   { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos" },
@@ -22,6 +30,7 @@ const desktopNav = [
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchMounted, setSearchMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const cart = useCart();
   const wishlist = useWishlist();
@@ -45,11 +54,11 @@ export function Header() {
   return (
     <>
       <header
-        className={`border-b border-cream-300 bg-cream-50/88 backdrop-blur-md transition-shadow ${
+        className={`border-b border-cream-300 bg-cream-50/88 backdrop-blur-md transition-[box-shadow,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           scrolled ? "shadow-lift" : "shadow-card"
         }`}
       >
-        <div className="mx-auto flex h-14 max-w-7xl items-center gap-1.5 px-3 sm:gap-2 sm:px-6 lg:h-16 lg:gap-6 lg:px-8">
+        <SafeDiv className="mx-auto flex h-14 max-w-7xl items-center gap-1.5 px-3 sm:gap-2 sm:px-6 lg:h-16 lg:gap-6 lg:px-8">
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
@@ -60,15 +69,7 @@ export function Header() {
             <Menu className="size-5.5" strokeWidth={1.8} />
           </button>
 
-          <Link
-            href="/"
-            aria-label={`${store.brand.name} — pradžia`}
-            className="group flex shrink-0 items-center"
-          >
-            <span className="font-display text-[17px] font-extrabold leading-none whitespace-nowrap text-burgundy-600 sm:text-[20px] lg:text-[22px]">
-              {store.brand.name}
-            </span>
-          </Link>
+          <BrandLogo />
 
           <nav aria-label="Pagrindinė navigacija" className="hidden flex-1 lg:block">
             <ul className="flex items-center justify-center gap-1 xl:gap-2">
@@ -89,10 +90,13 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="ml-auto flex items-center gap-0.5 sm:gap-1 lg:ml-0 lg:w-44 lg:justify-end">
+          <SafeDiv className="ml-auto flex items-center gap-0.5 sm:gap-1 lg:ml-0 lg:w-44 lg:justify-end">
             <button
               type="button"
-              onClick={() => setSearchOpen(true)}
+              onClick={() => {
+                setSearchMounted(true);
+                setSearchOpen(true);
+              }}
               aria-label="Paieška"
               className="nav-glow flex size-11 items-center justify-center rounded-[10px] text-ink-900"
             >
@@ -123,18 +127,21 @@ export function Header() {
                 </span>
               ) : null}
             </button>
-          </div>
-        </div>
+          </SafeDiv>
+        </SafeDiv>
       </header>
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      {searchMounted ? (
+        <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      ) : null}
     </>
   );
 }
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
-  if (!open) return null;
+  const { mounted, visible } = usePresence(open);
+  if (!mounted) return null;
   const menuItems: { href: string; label: string; accent?: boolean; pill?: boolean }[] = [
     { href: "/rask-dovana", label: "Rasti dovaną", accent: true },
     ...collections.slice(0, 7).map((c) => ({
@@ -148,16 +155,18 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-[80] lg:hidden">
-      <div className="animate-fade-in absolute inset-0 bg-ink-900/45" onClick={onClose} aria-hidden />
+    <div className="pointer-events-none fixed inset-0 z-[80] lg:hidden">
+      <div
+        className={`overlay-backdrop absolute inset-0 bg-ink-900/45 ${visible ? "is-visible" : ""}`}
+        onClick={onClose}
+        aria-hidden
+      />
       <nav
         aria-label="Mobilusis meniu"
-        className="animate-slide-in-left absolute inset-y-0 left-0 flex w-[min(86%,22rem)] max-w-sm flex-col bg-white pt-[env(safe-area-inset-top)] shadow-drawer"
+        className={`overlay-panel overlay-panel-left absolute inset-y-0 left-0 flex w-[min(86%,22rem)] max-w-sm flex-col bg-white pt-[env(safe-area-inset-top)] shadow-drawer ${visible ? "is-visible" : ""}`}
       >
         <div className="flex h-14 items-center justify-between border-b border-cream-400 px-4 sm:h-16 sm:px-5">
-          <span className="font-display text-xl font-extrabold text-burgundy-600">
-            {store.brand.name}
-          </span>
+          <BrandLogo />
           <button
             type="button"
             onClick={onClose}
@@ -188,7 +197,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </ul>
         <div className="border-t border-cream-400 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-[13px] leading-relaxed text-ink-600">
           <p>Nemokamas pristatymas nuo 80 €</p>
-          <p>Grąžinimas per 14 d. d.</p>
+          <p>Kokybės garantija</p>
           <p>Pristatome per 4–6 d.</p>
         </div>
       </nav>

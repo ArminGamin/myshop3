@@ -26,7 +26,8 @@ export function Gallery({ product }: { product: Product }) {
             seed={product.artSeed}
             alt={product.name}
             size="hero"
-            className={`h-full w-full object-cover transition-transform duration-700 ${zoom ? "scale-125" : "scale-100"}`}
+            priority={active === 0}
+            className={`h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${zoom ? "scale-125" : "scale-100"}`}
           />
         ) : (
           <ProductArt seed={product.artSeed} size="hero" className="h-full w-full" />
@@ -47,7 +48,7 @@ export function Gallery({ product }: { product: Product }) {
                 i === active ? "border-burgundy-600" : "border-transparent opacity-70 hover:opacity-100"
               }`}
             >
-              <ProductImage images={[src]} seed={`${product.artSeed}-${i}`} alt="" size="card" className="h-full w-full object-cover" />
+              <ProductImage images={[src]} seed={`${product.artSeed}-${i}`} alt="" size="thumb" className="h-full w-full object-cover" />
             </button>
           ))}
         </div>

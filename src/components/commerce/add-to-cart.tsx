@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, ShieldCheck, ShoppingBag, Truck, Undo2 } from "lucide-react";
+import { Check, ShieldCheck, ShoppingBag, Truck, X } from "lucide-react";
 import type { Product } from "@/types";
 import { useCart } from "@/lib/cart/context";
+import { useMobileChromeFlag, useIsMobile } from "@/lib/mobile-chrome";
 import { bundleUnitPriceCents, bundleTiers } from "@/lib/commerce/pricing";
 import { store } from "@/lib/config/store.config";
 import { formatPrice, discountPercent } from "@/lib/format";
@@ -160,8 +161,8 @@ export function AddToCartForm({ product }: { product: Product }) {
             Pristatymas visoje Lietuvoje per 4–6 d.
           </li>
           <li className="flex items-center gap-2">
-            <Undo2 className="size-4 shrink-0 text-burgundy-600" />
-            Grąžinimas be priežasties per 14 d. d.
+            <ShieldCheck className="size-4 shrink-0 text-burgundy-600" />
+            Kokybės garantija — kruopščiai parinktos dovanos
           </li>
         </ul>
       </div>
@@ -182,6 +183,7 @@ export function AddToCartForm({ product }: { product: Product }) {
 // Mobilioji lipni pirkimo juosta — pasirodo nuslinkus žemiau pagrindinio CTA.
 export function StickyBuyBar({ product }: { product: Product }) {
   const cart = useCart();
+  const isMobile = useIsMobile();
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
@@ -194,11 +196,17 @@ export function StickyBuyBar({ product }: { product: Product }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (!visible || dismissed || !cart.hydrated) return null;
+  const showBar = isMobile && visible && !dismissed && cart.hydrated;
+  useMobileChromeFlag("stickyBuy", showBar);
+
+  if (!showBar) return null;
 
   return (
-    <div className="animate-slide-up-mobile fixed inset-x-0 bottom-0 z-[65] border-t border-cream-300 bg-cream-50/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2.5 shadow-lift backdrop-blur-md lg:hidden">
-      <div className="flex items-center gap-3">
+    <div
+      data-mobile-sticky-buy=""
+      className="animate-slide-up-mobile fixed inset-x-0 bottom-0 z-[65] border-t border-cream-300 bg-cream-50/95 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2.5 shadow-lift backdrop-blur-md lg:hidden"
+    >
+      <div className="flex items-center gap-2.5">
         <div className="min-w-0 flex-1">
           <p className="truncate text-[13px] font-bold text-ink-900">{product.name}</p>
           <p className="text-[15px] font-extrabold text-burgundy-600">
@@ -207,7 +215,7 @@ export function StickyBuyBar({ product }: { product: Product }) {
         </div>
         <Button
           onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
-          className="shrink-0"
+          className="shrink-0 px-4"
         >
           <ShoppingBag className="size-4" strokeWidth={2} />
           Į krepšelį
@@ -216,9 +224,9 @@ export function StickyBuyBar({ product }: { product: Product }) {
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="Paslėpti pirkimo juostą"
-          className="absolute -top-10 right-3 flex size-11 items-center justify-center rounded-full bg-ink-900/80 text-cream-50"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full text-ink-500 transition hover:bg-cream-200 hover:text-ink-900"
         >
-          ×
+          <X className="size-4" strokeWidth={2.25} />
         </button>
       </div>
     </div>

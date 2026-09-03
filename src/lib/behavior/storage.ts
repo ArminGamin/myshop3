@@ -59,7 +59,11 @@ const EMPTY_SLUGS: string[] = [];
 const wishlistStore = createStore<string[]>("jaukumas.wishlist.v1", EMPTY_SLUGS, isStringArray);
 
 export function useWishlist() {
-  const items = useSyncExternalStore(wishlistStore.subscribe, wishlistStore.get, wishlistStore.get);
+  const items = useSyncExternalStore(
+    wishlistStore.subscribe,
+    wishlistStore.get,
+    () => EMPTY_SLUGS
+  );
 
   const toggle = useCallback((slug: string) => {
     const current = wishlistStore.get();
@@ -84,7 +88,7 @@ export function pushRecentlyViewed(slug: string) {
 }
 
 export function useRecentlyViewed(excludeSlug?: string) {
-  return useSyncExternalStore(recentStore.subscribe, recentStore.get, recentStore.get).filter(
+  return useSyncExternalStore(recentStore.subscribe, recentStore.get, () => EMPTY_SLUGS).filter(
     (s) => s !== excludeSlug
   );
 }

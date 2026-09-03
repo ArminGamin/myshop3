@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { store } from "@/lib/config/store.config";
+import { productPhotoDisclaimer } from "@/lib/copy/product-disclaimer";
 import { InfoPage } from "@/components/layout/info-page";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function ShippingPage() {
         užsakymą klientas patvirtina, kad susipažino su pristatymo informacija ir supranta,
         jog pristatymo terminas gali priklausyti nuo tiekėjų, kurjerių bei užsakymų srauto.
       </p>
+      <p>{productPhotoDisclaimer.shipping}</p>
       <p>
         Užsakymams virš {free} € taikomas nemokamas pristatymas. Užsakymams iki {free} €
         pristatymo kaina — {rate} €.

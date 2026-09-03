@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Package, RotateCcw, Truck } from "lucide-react";
+import { ChevronRight, Package, ShieldCheck, Truck } from "lucide-react";
 import { products, getProduct } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
 import { discountPercent, formatPrice } from "@/lib/format";
@@ -14,6 +14,7 @@ import { TrackProductView } from "@/components/commerce/track-product-view";
 import { RecentlyViewed } from "@/components/commerce/recently-viewed";
 import { ProductCard } from "@/components/commerce/product-card";
 import { Badge } from "@/components/ui/primitives";
+import { ProductPhotoNotice } from "@/components/commerce/product-photo-notice";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {};
   return {
     title: `${product.name} — ${formatPrice(product.priceCents)}`,
-    description: `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €, grąžinimas per 14 d. d. Pristatome per 4–6 dienas.`,
+    description: `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €. Pristatome per 4–6 dienas. Kokybės garantija.`,
     alternates: { canonical: `/produktai/${product.slug}` },
     openGraph: {
       title: product.name,
@@ -50,7 +51,7 @@ export default async function ProductPage({ params }: Props) {
     .slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 pb-28 pt-4 sm:px-6 lg:px-8 lg:pb-14 lg:pt-8">
+    <div className="mx-auto max-w-7xl px-4 pb-mobile-sticky pt-4 sm:px-6 lg:px-8 lg:pb-14 lg:pt-8">
       {/* Naršymo takeliai */}
       <nav aria-label="Naršymo takelis" className="mb-5 flex flex-wrap items-center gap-1 text-[13px] text-ink-400">
         <Link href="/" className="hover:text-burgundy-600">Pradžia</Link>
@@ -63,6 +64,7 @@ export default async function ProductPage({ params }: Props) {
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Gallery product={product} />
+          <ProductPhotoNotice />
         </div>
 
         <div className="flex flex-col lg:pt-2">
@@ -106,7 +108,7 @@ export default async function ProductPage({ params }: Props) {
             ))}
           </div>
 
-          {/* Objektų atsakymai — pristatymas / grąžinimas */}
+          {/* Objektų atsakymai — pristatymas / kokybė */}
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             {[
               {
@@ -115,9 +117,9 @@ export default async function ProductPage({ params }: Props) {
                 d: `Per 4–6 d. · nuo ${formatPrice(store.shipping.flatRateCents)} arba nemokamai`,
               },
               {
-                icon: <RotateCcw className="size-5" strokeWidth={1.7} />,
-                t: "Grąžinimas",
-                d: "Per 14 d. d. be priežasties",
+                icon: <ShieldCheck className="size-5" strokeWidth={1.7} />,
+                t: "Kokybės garantija",
+                d: "Aukštos kokybės medžiagos ir kruopšti atranka",
               },
               {
                 icon: <Package className="size-5" strokeWidth={1.7} />,

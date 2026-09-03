@@ -8,6 +8,8 @@ import { store, flags } from "@/lib/config/store.config";
 import { countOf, useCart } from "@/lib/cart/context";
 import { useExitIntent } from "@/lib/behavior/use-exit-intent";
 import { track } from "@/lib/analytics";
+import { useConsent } from "@/lib/consent";
+import { usePresence } from "@/lib/motion";
 
 type PopupKind = "welcome" | "exit-cart" | "exit-quiz" | null;
 
@@ -35,6 +37,7 @@ function writeDismissed() {
 // Vienas didelis pertraukimas per sesiją, vėsinimo laikotarpis tarp sesijų.
 export function SmartPopups() {
   const cart = useCart();
+  const { consent, hydrated } = useConsent();
   const [kind, setKind] = useState<PopupKind>(null);
   const shownRef = useRef(false);
   const hydratedRef = useRef(cart.hydrated);
@@ -45,12 +48,13 @@ export function SmartPopups() {
 
   const eligible = useCallback((): PopupKind => {
     if (!flags.ENABLE_POPUP) return null;
+    if (!hydrated || !consent) return null;
     if (sessionStorage.getItem("jaukumas.popup-shown")) return null;
     const dismissedAt = readDismissed();
     if (dismissedAt && Date.now() - dismissedAt < store.popups.cooldownHours * 3_600_000)
       return null;
     return "pending" as unknown as PopupKind;
-  }, []);
+  }, [hydrated, consent]);
 
   const show = useCallback((candidate: Exclude<PopupKind, null>) => {
     if (shownRef.current || !eligible()) return;
@@ -110,14 +114,20 @@ export function SmartPopups() {
     setKind(null);
   }
 
-  if (!flags.ENABLE_POPUP) return null;
+  const { mounted, visible } = usePresence(kind !== null);
+  const kindRef = useRef(kind);
+  if (kind) kindRef.current = kind;
+  const displayKind = kind ?? kindRef.current;
 
-  if (kind === "welcome")
-    return <WelcomePopup onClose={dismiss} />;
-  if (kind === "exit-cart")
-    return <CartReminderPopup onClose={dismiss} />;
-  if (kind === "exit-quiz")
-    return <ExitQuizPopup onClose={dismiss} />;
+  if (!flags.ENABLE_POPUP) return null;
+  if (!mounted || !displayKind) return null;
+
+  if (displayKind === "welcome")
+    return <WelcomePopup visible={visible} onClose={dismiss} />;
+  if (displayKind === "exit-cart")
+    return <CartReminderPopup visible={visible} onClose={dismiss} />;
+  if (displayKind === "exit-quiz")
+    return <ExitQuizPopup visible={visible} onClose={dismiss} />;
 
   return null;
 }
@@ -126,19 +136,25 @@ function PopupShell({
   onClose,
   children,
   label,
+  visible,
 }: {
   onClose: () => void;
   children: React.ReactNode;
   label: string;
+  visible: boolean;
 }) {
   return (
-    <div className="fixed inset-0 z-[85] flex items-end justify-center p-3 sm:items-center sm:p-4">
-      <div className="animate-fade-in absolute inset-0 bg-ink-900/50" onClick={onClose} aria-hidden />
+    <div className="pointer-events-none fixed inset-0 z-[85] flex items-end justify-center p-3 sm:items-center sm:p-4">
+      <div
+        className={`overlay-backdrop absolute inset-0 bg-ink-900/50 ${visible ? "is-visible" : ""}`}
+        onClick={onClose}
+        aria-hidden
+      />
       <div
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className="animate-fade-up texture-knit relative max-h-[min(90dvh,36rem)] w-full max-w-md overflow-y-auto rounded-cozy bg-cream-50 p-5 shadow-lift sm:p-7 pb-[max(1.25rem,env(safe-area-inset-bottom))]"
+        className={`overlay-panel overlay-panel-up texture-knit relative max-h-[min(90dvh,36rem)] w-full max-w-md overflow-y-auto rounded-cozy bg-cream-50 p-5 shadow-lift sm:p-7 pb-[max(1.25rem,env(safe-area-inset-bottom))] ${visible ? "is-visible" : ""}`}
       >
         <button
           type="button"
@@ -154,9 +170,9 @@ function PopupShell({
   );
 }
 
-function WelcomePopup({ onClose }: { onClose: () => void }) {
+function WelcomePopup({ onClose, visible }: { onClose: () => void; visible: boolean }) {
   return (
-    <PopupShell onClose={onClose} label="Sveiki atvykę">
+    <PopupShell visible={visible} onClose={onClose} label="Sveiki atvykę">
       <p className="text-center font-display text-4xl" aria-hidden>🎄</p>
       <h2 className="mt-2 text-center font-display text-2xl font-semibold leading-snug text-ink-900">
         Gaukite {store.popups.discountPercentFirstOrder} % nuolaidą pirmajam užsakymui
@@ -171,9 +187,9 @@ function WelcomePopup({ onClose }: { onClose: () => void }) {
   );
 }
 
-function ExitQuizPopup({ onClose }: { onClose: () => void }) {
+function ExitQuizPopup({ onClose, visible }: { onClose: () => void; visible: boolean }) {
   return (
-    <PopupShell onClose={onClose} label="Palaukite">
+    <PopupShell visible={visible} onClose={onClose} label="Palaukite">
       <p className="text-center font-display text-4xl" aria-hidden>🎁</p>
       <h2 className="mt-2 text-center font-display text-2xl font-semibold text-ink-900">
         Palaukite! Dar neišsirinkote dovanos?
@@ -199,10 +215,10 @@ function ExitQuizPopup({ onClose }: { onClose: () => void }) {
   );
 }
 
-function CartReminderPopup({ onClose }: { onClose: () => void }) {
+function CartReminderPopup({ onClose, visible }: { onClose: () => void; visible: boolean }) {
   const router = useRouter();
   return (
-    <PopupShell onClose={onClose} label="Jūsų dovana dar laukia">
+    <PopupShell visible={visible} onClose={onClose} label="Jūsų dovana dar laukia">
       <p className="text-center font-display text-4xl" aria-hidden>🎅</p>
       <h2 className="mt-2 text-center font-display text-2xl font-semibold text-ink-900">
         Jūsų dovana dar laukia 🎁

@@ -29,7 +29,7 @@ export default function TikTokLanding() {
         </h1>
         <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-600">
             Tos pačios prekės, kurias matėte vaizdo įraše — pristatome per 1–2 d. d.,
-            grąžinimas per 14 dienų.
+            kokybės garantija.
         </p>
       </section>
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { productPhotoDisclaimer } from "@/lib/copy/product-disclaimer";
 import { InfoPage } from "@/components/layout/info-page";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function ReturnsPage() {
         užsakymą rekomenduojame atidžiai peržiūrėti prekės aprašymą, nuotraukas, spalvą,
         tipą ir kitą pateiktą informaciją.
       </p>
+      <p>{productPhotoDisclaimer.returns}</p>
       <p>
         Kokybiškos prekės gali būti grąžinamos per 14 dienų nuo prekės gavimo dienos,
         jeigu prekė nebuvo naudota, nėra sugadinta, nepraradusi prekinės išvaizdos, yra

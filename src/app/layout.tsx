@@ -9,10 +9,9 @@ import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { IntroCutscene } from "@/components/layout/intro-cutscene";
-import { Snowfall } from "@/components/layout/snowfall";
-import { CartDrawer } from "@/components/commerce/cart-drawer";
-import { SmartPopups } from "@/components/commerce/smart-popups";
-import { CookieBanner } from "@/components/layout/cookie-banner";
+import { IntroStatic } from "@/components/layout/intro-static";
+import { DeferredChrome } from "@/components/layout/deferred-chrome";
+import { SafeDiv } from "@/components/layout/safe-div";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
 
 const display = Cormorant_Garamond({
@@ -26,6 +25,7 @@ const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-manrope",
   subsets: ["latin", "latin-ext"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -35,14 +35,14 @@ export const metadata: Metadata = {
     template: `%s | ${store.brand.name}`,
   },
   description:
-    "Kruopščiai parinktos kalėdinės dovanos jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €, pristatymas per 4–6 dienas, grąžinimas per 14 dienų.",
+    "Kruopščiai parinktos kalėdinės dovanos jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €, pristatymas per 4–6 dienas, kokybės garantija.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "lt_LT",
     siteName: store.brand.name,
     title: `${store.brand.name} — ${store.brand.tagline}`,
-    description: "Kalėdinės dovanos, kurias iš tikrųjų norisi dovanoti.",
+    description: "Kalėdinės dovanos, kurias iš tikrųjų norisi dovanoti!",
   },
 };
 
@@ -53,13 +53,27 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const stripExtensionAttrs = `(function(){function strip(n){if(n.nodeType!==1)return;n.removeAttribute("bis_skin_checked");n.removeAttribute("bis_register");for(var i=n.attributes.length-1;i>=0;i--){var a=n.attributes[i].name;if(a.indexOf("__processed_")===0)n.removeAttribute(a)}}function walk(n){strip(n);for(var j=0;j<n.childNodes.length;j++)walk(n.childNodes[j])}function run(){walk(document.documentElement)}if(document.documentElement)run();else document.addEventListener("DOMContentLoaded",run);var o=new MutationObserver(function(rs){for(var i=0;i<rs.length;i++){var r=rs[i];if(r.type==="attributes")strip(r.target);else for(var j=0;j<r.addedNodes.length;j++)strip(r.addedNodes[j])}});o.observe(document.documentElement,{subtree:true,childList:true,attributes:true});setTimeout(function(){o.disconnect()},2500)})();`;
+
+const motionBootstrap = `try{function r(){document.documentElement.dataset.motionReady="1";window.dispatchEvent(new Event("motion-ready"))}if(matchMedia("(prefers-reduced-motion: reduce)").matches)r()}catch(e){}`;
+
+const introGate = `try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.dataset.intro="pending"}}catch(e){}`;
+
+const appBootstrap = `${stripExtensionAttrs};${motionBootstrap};${introGate}`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="lt" className={`${display.variable} ${plusJakarta.variable} h-full antialiased`}>
-      <body className="relative z-0 flex min-h-dvh flex-col">
-        <Script id="intro-gate" strategy="beforeInteractive">
-          {`try{if(!sessionStorage.getItem("kaledukampelis.intro.v1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.dataset.intro="pending"}}catch(e){}`}
-        </Script>
+    <html
+      lang="lt"
+      className={`${display.variable} ${plusJakarta.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="relative z-0 flex min-h-dvh flex-col" suppressHydrationWarning>
+        <Script
+          id="app-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: appBootstrap }}
+        />
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
         </noscript>
@@ -71,7 +85,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <ConsentProvider>
           <CartProvider>
-            <Snowfall />
+            <IntroStatic />
             <IntroCutscene />
             <a
               href="#turinys"
@@ -79,17 +93,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             >
               Prie turinio
             </a>
-            <div className="sticky top-0 z-50">
+            <SafeDiv className="sticky top-0 z-50">
               <AnnouncementBar />
               <Header />
-            </div>
-            <main id="turinys" className="relative z-[2] bg-transparent">
-              {children}
+            </SafeDiv>
+            <main id="turinys" className="relative z-[2] bg-transparent" suppressHydrationWarning>
+              <SafeDiv>{children}</SafeDiv>
             </main>
             <Footer />
-            <CartDrawer />
-            <SmartPopups />
-            <CookieBanner />
+            <DeferredChrome />
           </CartProvider>
         </ConsentProvider>
       </body>

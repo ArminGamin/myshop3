@@ -72,42 +72,42 @@ export function FAQAccordion({
           return (
             <div
               key={faq.q}
-              className={
+              className={`rounded-2xl border transition-[border-color,background-color,box-shadow] duration-500 ${
                 isOpen
-                  ? "rounded-2xl border border-burgundy-500 bg-burgundy-100/30 shadow-[0_8px_24px_rgb(42_33_24/0.08),0_2px_8px_rgb(42_33_24/0.04)]"
-                  : "rounded-2xl border border-cream-300 bg-white shadow-[0_4px_16px_rgb(42_33_24/0.08),0_1px_4px_rgb(42_33_24/0.05)]"
-              }
+                  ? "border-burgundy-500 bg-burgundy-100/30 shadow-[0_8px_24px_rgb(42_33_24/0.08),0_2px_8px_rgb(42_33_24/0.04)]"
+                  : "border-cream-300 bg-white shadow-[0_4px_16px_rgb(42_33_24/0.08),0_1px_4px_rgb(42_33_24/0.05)]"
+              }`}
             >
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : i)}
-                className={`flex min-h-[56px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-[15px] font-semibold leading-snug text-ink-900 transition md:px-6 ${
+                className={`flex min-h-[56px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-[15px] font-semibold leading-snug text-ink-900 md:px-6 ${
                   isOpen ? "hover:bg-burgundy-100/40" : "hover:bg-cream-100"
                 }`}
                 aria-expanded={isOpen}
               >
                 {faq.q}
                 <span
-                  className={`flex size-9 shrink-0 items-center justify-center rounded-full text-lg font-semibold leading-none shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] ${
+                  className={`flex size-9 shrink-0 items-center justify-center rounded-full text-lg font-semibold leading-none shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] transition-transform duration-500 ${
                     isOpen
-                      ? "bg-burgundy-300/50 text-burgundy-700"
+                      ? "rotate-45 bg-burgundy-300/50 text-burgundy-700"
                       : "bg-burgundy-100 text-burgundy-600"
                   }`}
                   aria-hidden
                 >
-                  {isOpen ? "−" : "+"}
+                  +
                 </span>
               </button>
-              {isOpen ? (
-                <>
+              <div className={`faq-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen} inert={!isOpen}>
+                <div className="faq-panel-inner">
                   <div className="mx-4 h-px shrink-0 bg-cream-300 md:mx-6" aria-hidden />
                   <div className="px-5 pb-5 pt-4 md:px-6 md:pb-6 md:pt-5">
                     <div className="border-l-[3px] border-gold-500 pl-5 pr-1 md:pl-6">
                       <FaqAnswer text={faq.a} />
                     </div>
                   </div>
-                </>
-              ) : null}
+                </div>
+              </div>
             </div>
           );
         })}

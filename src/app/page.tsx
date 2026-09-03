@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Gift, HeartHandshake, PackageCheck } from "lucide-react";
+import { ArrowRight, Gift, HeartHandshake, PackageCheck, ShieldCheck } from "lucide-react";
 import { CollectionGlyph, SectionGlyph } from "@/components/ui/line-icons";
 import { campaign, store } from "@/lib/config/store.config";
 import { bestsellers, getProduct, premiumProducts } from "@/lib/data/products";
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 const trustChips = [
   `Pristatymas per 4–6 d.`,
   `Nemokamai nuo ${store.shipping.freeThresholdCents / 100} €`,
-  `Grąžinimas per 14 d.`,
+  `Kokybės garantija`,
 ];
 
 export default function HomePage() {
@@ -40,7 +40,7 @@ export default function HomePage() {
         <div className="hero-wash" aria-hidden />
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 px-4 pb-8 pt-6 sm:gap-10 sm:px-6 sm:pb-10 sm:pt-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:px-8 lg:pb-16 lg:pt-12">
           <div className="hero-stagger text-left">
-            <p className="mb-3 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy-700 sm:mb-5 sm:text-xs sm:tracking-[0.18em]">
+            <p className="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-burgundy-700 sm:mb-5 sm:text-[13px] sm:tracking-[0.18em]">
               <svg
                 aria-hidden
                 viewBox="0 0 24 24"
@@ -57,10 +57,10 @@ export default function HomePage() {
               </svg>
               {campaign.heroEyebrow}
             </p>
-            <h1 className="font-display text-[1.85rem] font-semibold leading-[1.2] text-ink-900 sm:text-5xl lg:text-[3.55rem] lg:leading-[1.12]">
+            <h1 className="font-display text-[2rem] font-semibold leading-[1.18] text-ink-900 sm:text-[3.15rem] sm:leading-[1.14] lg:text-[3.85rem] lg:leading-[1.1]">
               <HeroHeadline />
             </h1>
-            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-ink-600 sm:mt-5 sm:text-base">
+            <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-ink-600 sm:mt-5 sm:text-[17px]">
               {campaign.heroSubtext}
             </p>
             <div className="mt-5 flex flex-col items-stretch gap-2.5 sm:mt-7 sm:flex-row sm:items-center sm:gap-3">
@@ -69,12 +69,12 @@ export default function HomePage() {
               </ButtonLink>
               <Link
                 href="/dovanos/bestselleriai"
-                className="inline-flex min-h-11 items-center justify-center text-[15px] font-semibold text-ink-900 underline decoration-gold-500/70 underline-offset-[6px] transition hover:text-burgundy-600 hover:decoration-burgundy-600"
+                className="inline-flex min-h-11 items-center justify-center text-[16px] font-semibold text-ink-900 underline decoration-gold-500/70 underline-offset-[6px] transition hover:text-burgundy-600 hover:decoration-burgundy-600"
               >
                 {campaign.secondaryCTA}
               </Link>
             </div>
-            <ul className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-gold-400/55 pt-3 text-[12px] font-medium text-ink-600 sm:mt-8 sm:gap-x-5 sm:pt-4 sm:text-[13px]">
+            <ul className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-gold-400/55 pt-3.5 text-[13px] font-medium text-ink-600 sm:mt-8 sm:gap-x-5 sm:pt-4 sm:text-sm">
               {trustChips.map((chip) => (
                 <li key={chip} className="flex items-center gap-2">
                   <span className="size-1 rounded-full bg-gold-500" aria-hidden />
@@ -88,19 +88,21 @@ export default function HomePage() {
             <div className="relative mx-auto aspect-[4/5] w-full max-w-[22rem] sm:max-w-[28rem] lg:max-w-none lg:aspect-[5/6]">
               <HeroCard
                 slug="vilnonis-pledas-jaukumas"
-                className="absolute left-[4%] top-[2%] z-10 w-[54%] rotate-[-7deg]"
+                priority
+                className="hero-card absolute left-[4%] top-[2%] z-10 w-[58%] rotate-[-6deg] sm:w-[54%] sm:rotate-[-7deg]"
               />
               <HeroCard
                 slug="aromaterapijos-zvakide-sventinis-vakaras"
-                className="absolute right-[2%] top-[14%] z-20 w-[56%] rotate-[6deg]"
+                priority
+                className="hero-card absolute right-[2%] top-[14%] z-20 w-[58%] rotate-[5deg] sm:w-[56%] sm:rotate-[6deg]"
               />
               <HeroCard
                 slug="karstojo-sokolado-rinkinys"
-                className="absolute bottom-[8%] left-[10%] z-30 w-[50%] rotate-[2.5deg]"
+                className="hero-card absolute bottom-[8%] left-[10%] z-30 w-[50%] rotate-[2.5deg]"
               />
               <HeroCard
                 slug="advento-kalendorius-24-malonumai"
-                className="absolute bottom-[0%] right-[6%] z-40 w-[44%] rotate-[-4deg]"
+                className="hero-card absolute bottom-[0%] right-[6%] z-40 w-[44%] rotate-[-4deg]"
               />
             </div>
             <svg
@@ -158,9 +160,9 @@ export default function HomePage() {
                 <li key={c.slug}>
                   <Link
                     href={`/dovanos/${c.slug}`}
-                    className="group flex min-h-[5.5rem] flex-col items-center justify-center gap-1.5 rounded-cozy bg-cream-50/95 px-2 py-3.5 text-center shadow-card transition hover:-translate-y-0.5 hover:bg-white hover:shadow-lift sm:min-h-24 sm:gap-2 sm:px-3 sm:py-4"
+                    className="group flex min-h-[5.5rem] flex-col items-center justify-center gap-1.5 rounded-cozy bg-cream-50/95 px-2 py-3.5 text-center shadow-card transition-[transform,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-white hover:shadow-lift sm:min-h-24 sm:gap-2 sm:px-3 sm:py-4"
                   >
-                    <span className="text-burgundy-600 transition-transform group-hover:scale-110">
+                    <span className="text-burgundy-600 transition-transform duration-500 group-hover:scale-[1.06]">
                       <CollectionGlyph slug={c.slug} />
                     </span>
                     <span className="text-[13px] font-bold text-ink-900 sm:text-sm">{c.shortTitle}</span>
@@ -170,7 +172,7 @@ export default function HomePage() {
               <li>
                 <Link
                   href="/rask-dovana"
-                  className="group flex min-h-[5.5rem] flex-col items-center justify-center gap-1.5 rounded-cozy border border-gold-400/60 bg-gold-400/15 px-2 py-3.5 text-center transition hover:bg-gold-400/30 sm:min-h-24 sm:gap-2 sm:px-3 sm:py-4"
+                  className="group flex min-h-[5.5rem] flex-col items-center justify-center gap-1.5 rounded-cozy border border-gold-400/60 bg-gold-400/15 px-2 py-3.5 text-center transition-[background-color] duration-500 hover:bg-gold-400/30 sm:min-h-24 sm:gap-2 sm:px-3 sm:py-4"
                 >
                   <span className="text-gold-200">
                     <SectionGlyph name="search" className="size-6" />
@@ -191,11 +193,10 @@ export default function HomePage() {
                 Per 30 sekundžių
               </p>
               <h2 id="quiz-heading" className="font-display text-[1.65rem] font-semibold text-ink-900 sm:text-4xl">
-                Nežinote, ką rinktis? Atsakyme į 4 klausimus.
+                Nežinote, ką rinktis?
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-ink-600">
-                Kam dovana, koks biudžetas, koks žmogaus tipas — o mes parodysime geriausiai
-                atitinkančias dovanas.
+                Atsakykite į 4 klausimus ir padėsime išsirinkti!
               </p>
               <ButtonLink href="/rask-dovana" size="lg" className="mt-6">
                 Rasti mano dovaną →
@@ -224,9 +225,9 @@ export default function HomePage() {
                 d: "Dauguma prekių atkeliauja gražioje pakuotėje — belieka pridėti žinutę. Papildomo pakavimo nereikia.",
               },
               {
-                icon: <Gift className="size-7" strokeWidth={1.5} />,
-                t: "Jei netiks — grąžinsime",
-                d: "Nepatiko ar netiko? Grąžinimas per 14 dienų be paaiškinimų. Dovanų pasirinkimas turėtų džiuginti, ne nervinti.",
+                icon: <ShieldCheck className="size-7" strokeWidth={1.5} />,
+                t: "Kokybės garantija",
+                d: "Renkame tik aukštos kokybės prekes, kurias patys norėtume gauti. Kiekviena dovana turi būti verta dovanoti.",
               },
             ].map((item) => (
               <div key={item.t} className="flex flex-col items-center">
@@ -300,47 +301,6 @@ export default function HomePage() {
         </Reveal>
       ) : null}
 
-      <Reveal className="band-wash">
-        <section className="band-forest py-9 lg:py-11" aria-labelledby="guide-heading">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-gold-300">
-                Dovanų gidai
-              </p>
-              <h2 id="guide-heading" className="font-display text-[1.65rem] font-semibold text-cream-50 sm:text-4xl">
-                Ką dovanoti…?
-              </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-cream-100/75">
-                Greiti maršrutai iki tinkamiausių dovanų konkrečiam žmogui.
-              </p>
-            </div>
-            <ul className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-              {[
-                { label: "mamai", href: "/dovanos/dovanos-jai" },
-                { label: "tėčiui", href: "/dovanos/dovanos-jam" },
-                { label: "vaikinui", href: "/dovanos/dovanos-jam" },
-                { label: "merginai", href: "/dovanos/dovanos-jai" },
-                { label: "draugui", href: "/dovanos/dovanos-seimai" },
-                { label: "kolegoms", href: "/dovanos/dovanos-iki-30-euru" },
-                { label: "Slaptas Senelis", href: "/dovanos/dovanos-iki-20-euru" },
-                { label: "porai", href: "/dovanos/dovanos-poroms" },
-              ].map((g) => (
-                <li key={g.label}>
-                  <Link
-                    href={g.href}
-                    className="tile-forest flex min-h-[4.5rem] flex-col justify-center overflow-visible rounded-cozy border border-cream-50/15 px-3 py-3.5 transition hover:border-gold-300 sm:min-h-24 sm:px-4 sm:py-4"
-                  >
-                    <span className="text-[1.05rem] font-bold capitalize leading-[1.4] text-cream-50 sm:text-[1.2rem] sm:leading-[1.45]">
-                      {g.label} →
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      </Reveal>
-
       <section className="py-10 lg:py-14">
         <DeadlineBanner />
       </section>
@@ -397,13 +357,21 @@ export default function HomePage() {
   );
 }
 
-function HeroCard({ slug, className }: { slug: string; className?: string }) {
+function HeroCard({
+  slug,
+  className,
+  priority = false,
+}: {
+  slug: string;
+  className?: string;
+  priority?: boolean;
+}) {
   const product = getProduct(slug);
   if (!product) return null;
   return (
     <Link
       href={`/produktai/${product.slug}`}
-      className={`group block overflow-hidden rounded-cozy bg-white shadow-lift transition duration-700 hover:-translate-y-1 hover:shadow-lift ${className ?? ""}`}
+      className={`group block overflow-hidden rounded-cozy bg-white shadow-lift transition-[transform,box-shadow] duration-700 ease-cinematic hover:-translate-y-0.5 hover:shadow-lift ${className ?? ""}`}
     >
       <div className="aspect-[4/5] overflow-hidden bg-cream-100">
         <ProductImage
@@ -411,7 +379,8 @@ function HeroCard({ slug, className }: { slug: string; className?: string }) {
           seed={product.artSeed}
           alt={product.name}
           size="card"
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+          priority={priority}
+          className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
         />
       </div>
       <div className="border-t border-cream-300/80 px-3 py-2.5">

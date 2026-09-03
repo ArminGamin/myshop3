@@ -19,7 +19,7 @@ export default function InstagramLanding() {
           ✨ Bestselleriai, kuriuos pamatėte feede
         </h1>
         <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-600">
-          Nemokamas pristatymas nuo 49 € · grąžinimas per 14 d. d.
+          Nemokamas pristatymas nuo 49 € · kokybės garantija
         </p>
       </section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

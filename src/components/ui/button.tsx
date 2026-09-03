@@ -5,7 +5,7 @@ type Variant = "primary" | "secondary" | "ghost" | "gold";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-bold tracking-[0.02em] select-none disabled:opacity-50 disabled:pointer-events-none";
+  "inline-flex items-center justify-center gap-2 font-bold tracking-[0.02em] select-none disabled:opacity-50 disabled:pointer-events-none transition-[color,background-color,border-color,box-shadow,transform] duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)]";
 
 const variants: Record<Variant, string> = {
   primary: "cta-fill text-white border-0",

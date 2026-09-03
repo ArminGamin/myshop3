@@ -1,26 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useConsent } from "@/lib/consent";
+import { useMobileChromeFlag } from "@/lib/mobile-chrome";
+import { useMotionReady } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 
-// GDPR slapukų sutikimo juosta / nustatymų langas.
-// Analitikos ir rinkodaros skriptai įkeliami TIK gavus sutikimą.
 export function CookieBanner() {
   const { consent, hydrated, save, rejectAll, managerOpen, closeManager } = useConsent();
+  const motionReady = useMotionReady();
+  const [entered, setEntered] = useState(false);
 
-  if (!hydrated) return null;
-  if (consent && !managerOpen) return null;
+  useEffect(() => {
+    if (!motionReady) return;
+    const timer = window.setTimeout(() => setEntered(true), 900);
+    return () => clearTimeout(timer);
+  }, [motionReady]);
 
   const isManager = Boolean(consent);
+  const shouldRender = hydrated && (!consent || managerOpen);
+  const bannerVisible = shouldRender && (isManager || entered);
+  useMobileChromeFlag("cookieBanner", bannerVisible);
+
+  if (!shouldRender) return null;
 
   return (
     <div
       role="dialog"
       aria-label="Slapukų nustatymai"
-      className={`fixed inset-x-3 z-[90] mx-auto max-w-xl rounded-cozy border border-cream-300 bg-cream-50 p-4 shadow-lift sm:inset-x-6 sm:p-5 ${
-        isManager
-          ? "bottom-[max(0.75rem,env(safe-area-inset-bottom))] sm:bottom-6"
-          : "animate-fade-up bottom-[max(0.75rem,env(safe-area-inset-bottom))] sm:bottom-6"
+      data-mobile-cookie=""
+      className={`fixed inset-x-2 z-[90] mx-auto max-w-xl rounded-cozy border border-cream-300 bg-cream-50 p-4 shadow-lift transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:inset-x-6 sm:p-5 ${
+        bannerVisible
+          ? "bottom-[max(0.75rem,env(safe-area-inset-bottom))] translate-y-0 opacity-100 sm:bottom-6"
+          : "pointer-events-none bottom-[max(0.75rem,env(safe-area-inset-bottom))] translate-y-2 opacity-0 sm:bottom-6"
       }`}
     >
       <p className="font-display text-lg font-semibold text-ink-900">🍪 Slapukų nustatymai</p>
@@ -31,26 +43,24 @@ export function CookieBanner() {
           Slapukų politika
         </a>
       </p>
-      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+      <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
         <Button
           onClick={() => {
             save({ analytics: true, marketing: true });
             closeManager();
           }}
-          className="flex-1"
-          size="sm"
+          className="min-h-11 flex-1"
         >
           Priimti viską
         </Button>
         {isManager ? (
-          <Button variant="secondary" size="sm" className="flex-1" onClick={closeManager}>
+          <Button variant="secondary" className="min-h-11 flex-1" onClick={closeManager}>
             Uždaryti
           </Button>
         ) : (
           <Button
             variant="secondary"
-            size="sm"
-            className="flex-1"
+            className="min-h-11 flex-1"
             onClick={() => {
               rejectAll();
               closeManager();

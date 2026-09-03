@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { MOTION, usePresence } from "@/lib/motion";
 
-// Prieinamas modalas/drawer: fokusavimo spąstai, Esc uždarymas,
-// fono slinkimo blokavimas.
 export function Overlay({
   open,
   onClose,
@@ -20,9 +19,10 @@ export function Overlay({
   widthClass?: string;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const { mounted, visible } = usePresence(open, MOTION.overlayExit);
 
   useEffect(() => {
-    if (!open) return;
+    if (!mounted) return;
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
@@ -36,7 +36,7 @@ export function Overlay({
         ) ?? []
       );
 
-    focusables()[0]?.focus();
+    if (visible) focusables()[0]?.focus();
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -66,14 +66,14 @@ export function Overlay({
       delete document.documentElement.dataset.veil;
       previouslyFocused?.focus();
     };
-  }, [open, onClose]);
+  }, [mounted, visible, onClose]);
 
-  if (!open) return null;
+  if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[70]">
+    <div className="pointer-events-none fixed inset-0 z-[70]">
       <div
-        className="animate-fade-in absolute inset-0 bg-forest-700/28 backdrop-blur-md"
+        className={`overlay-backdrop absolute inset-0 bg-forest-700/32 backdrop-blur-[2px] ${visible ? "is-visible" : ""}`}
         onClick={onClose}
         aria-hidden
       />
@@ -82,11 +82,11 @@ export function Overlay({
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className={`absolute bg-cream-50 shadow-drawer ${
+        className={`overlay-panel absolute bg-cream-50 shadow-drawer ${
           side === "right"
-            ? `animate-slide-in-right inset-y-0 right-0 flex h-dvh max-h-dvh w-full ${widthClass} flex-col overflow-hidden pt-[env(safe-area-inset-top)]`
-            : `animate-slide-up-mobile inset-x-0 bottom-0 max-h-[88dvh] rounded-t-cozy`
-        }`}
+            ? `overlay-panel-right inset-y-0 right-0 flex h-dvh max-h-dvh w-full ${widthClass} flex-col overflow-hidden pt-[env(safe-area-inset-top)]`
+            : "overlay-panel-bottom inset-x-0 bottom-0 flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-cozy pb-[env(safe-area-inset-bottom)]"
+        } ${visible ? "is-visible" : ""}`}
       >
         {children}
       </div>

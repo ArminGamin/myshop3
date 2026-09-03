@@ -54,11 +54,6 @@ export default async function CollectionPage({ params }: Props) {
         <CollectionBrowser products={items} />
       </div>
 
-      {/* SEO turinys */}
-      <section className="mx-auto max-w-2xl px-4 pb-10 sm:px-6 lg:px-8">
-        <p className="text-sm leading-relaxed text-ink-400">{meta.description}</p>
-      </section>
-
       <TrustStrip />
 
       <script

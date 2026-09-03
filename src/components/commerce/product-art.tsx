@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { store } from "@/lib/config/store.config";
 
 const palettes: Record<string, { from: string; to: string; ink: string }> = {
@@ -64,16 +65,20 @@ export function ProductArt({
           <stop offset="40%" stopColor="#1f1914" stopOpacity="0" />
           <stop offset="100%" stopColor="#1f1914" stopOpacity="0.32" />
         </radialGradient>
-        <filter id={`grain-${uid}`} x="0" y="0" width="100%" height="100%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="2" stitchTiles="stitch" result="n" />
-          <feColorMatrix type="saturate" values="0" />
-          <feComponentTransfer>
-            <feFuncA type="table" tableValues="0 0.22" />
-          </feComponentTransfer>
-        </filter>
+        {size === "thumb" ? null : (
+          <filter id={`grain-${uid}`} x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="2" stitchTiles="stitch" result="n" />
+            <feColorMatrix type="saturate" values="0" />
+            <feComponentTransfer>
+              <feFuncA type="table" tableValues="0 0.22" />
+            </feComponentTransfer>
+          </filter>
+        )}
       </defs>
       <rect width={dims.w} height={dims.h} fill={`url(#g-${uid})`} rx={size === "thumb" ? dims.r : 0} />
-      <rect width={dims.w} height={dims.h} fill={`url(#g-${uid})`} filter={`url(#grain-${uid})`} opacity="0.55" />
+      {size === "thumb" ? null : (
+        <rect width={dims.w} height={dims.h} fill={`url(#g-${uid})`} filter={`url(#grain-${uid})`} opacity="0.55" />
+      )}
       <rect width={dims.w} height={dims.h} fill={`url(#vig-${uid})`} />
       <g transform={`rotate(${rotate} ${dims.w * 0.78} ${dims.h * 0.16})`} opacity={0.22 * dims.deco}>
         <line
@@ -120,22 +125,53 @@ export function ProductArt({
   );
 }
 
+const IMAGE_META = {
+  thumb: { width: 96, height: 96, sizes: "96px", quality: 70 },
+  card: {
+    width: 480,
+    height: 600,
+    sizes: "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px",
+    quality: 75,
+  },
+  hero: {
+    width: 900,
+    height: 1125,
+    sizes: "(max-width: 768px) 92vw, 560px",
+    quality: 80,
+  },
+} as const;
+
 export function ProductImage({
   images,
   seed,
   alt,
   size = "card",
   className = "",
+  priority = false,
+  sizes,
 }: {
   images: string[];
   seed: string;
   alt: string;
   size?: "thumb" | "card" | "hero";
   className?: string;
+  priority?: boolean;
+  sizes?: string;
 }) {
-  if (images.length > 0) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={images[0]} alt={alt} loading="lazy" decoding="async" className={className} />;
-  }
-  return <ProductArt seed={seed} size={size} className={className} />;
+  const src = images[0];
+  if (!src) return <ProductArt seed={seed} size={size} className={className} />;
+
+  const meta = IMAGE_META[size];
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={meta.width}
+      height={meta.height}
+      sizes={sizes ?? meta.sizes}
+      quality={meta.quality}
+      priority={priority}
+      className={className}
+    />
+  );
 }

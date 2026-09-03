@@ -25,7 +25,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "Kalėdinės dovanos internetu — pristatymas visoje Lietuvoje | Kalėdų Kampelis",
     description:
-      "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 49 €, grąžinimas per 14 d. d.",
+      "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 49 €, kokybės garantija.",
     intro:
       "Visas mūsų kalėdinių dovanų pasirinkimas — nuo mažų malonumų iki premium rinkinių. Kiekviena prekė parinkta pagal tą patį principą: kad dovana būtų tokia, kurią iš tikrųjų norisi dovanoti.",
     filter: () => true,

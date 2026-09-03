@@ -15,6 +15,7 @@ import {
   type CartAddonSelection,
 } from "@/lib/cart/addons";
 import { store, flags } from "@/lib/config/store.config";
+import { useIsMobile, useMobileChromeFlag } from "@/lib/mobile-chrome";
 import { formatPrice } from "@/lib/format";
 import { getProduct } from "@/lib/data/products";
 import { track } from "@/lib/analytics";
@@ -52,7 +53,7 @@ export function FreeShippingBar({ subtotalCents }: { subtotalCents: number }) {
         className="mt-2 h-2 overflow-hidden rounded-full bg-white"
       >
         <div
-          className="h-full rounded-full bg-gradient-to-r from-gold-400 to-burgundy-500 transition-all duration-500"
+          className="h-full rounded-full bg-gradient-to-r from-gold-400 to-burgundy-500 transition-all duration-700 ease-cinematic"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -65,6 +66,8 @@ export function CartDrawer() {
   const items = resolveItems(cart.lines);
   const subtotal = subtotalOf(items);
   const open = cart.drawerOpen;
+  const isMobile = useIsMobile();
+  useMobileChromeFlag("cartOpen", open);
   const freeShipping = subtotal >= store.shipping.freeThresholdCents;
   const [addons, setAddons] = useState<CartAddonSelection>(CART_ADDON_DEFAULTS);
 
@@ -126,7 +129,13 @@ export function CartDrawer() {
   }
 
   return (
-    <Overlay open={open} onClose={close} label="Krepšelis" widthClass="max-w-md">
+    <Overlay
+      open={open}
+      onClose={close}
+      label="Krepšelis"
+      side={isMobile ? "bottom" : "right"}
+      widthClass={isMobile ? "max-w-none" : "max-w-md"}
+    >
       {/* Antraštė */}
       <div className="flex shrink-0 items-center justify-between border-b border-cream-300/70 px-5 py-4">
         <h2 className="flex items-center gap-2 font-display text-xl font-semibold text-ink-900">
@@ -142,7 +151,7 @@ export function CartDrawer() {
           type="button"
           onClick={close}
           aria-label="Uždaryti krepšelį"
-          className="flex size-10 items-center justify-center rounded-full transition hover:bg-cream-200"
+          className="flex size-11 items-center justify-center rounded-full transition hover:bg-cream-200"
         >
           <X className="size-5" strokeWidth={1.8} />
         </button>
@@ -215,7 +224,7 @@ export function CartDrawer() {
                           type="button"
                           onClick={() => cart.setQty(item.slug, item.variantId, item.qty - 1)}
                           aria-label={`Sumažinti ${item.product.name} kiekį`}
-                          className="flex size-8 items-center justify-center rounded-full text-ink-600 hover:text-burgundy-600"
+                          className="flex size-11 items-center justify-center rounded-full text-ink-600 hover:text-burgundy-600"
                         >
                           <Minus className="size-3.5" />
                         </button>
@@ -224,7 +233,7 @@ export function CartDrawer() {
                           type="button"
                           onClick={() => cart.setQty(item.slug, item.variantId, item.qty + 1)}
                           aria-label={`Padidinti ${item.product.name} kiekį`}
-                          className="flex size-8 items-center justify-center rounded-full text-ink-600 hover:text-burgundy-600"
+                          className="flex size-11 items-center justify-center rounded-full text-ink-600 hover:text-burgundy-600"
                         >
                           <Plus className="size-3.5" />
                         </button>
@@ -271,6 +280,7 @@ export function CartDrawer() {
                   <Button
                     size="sm"
                     variant="secondary"
+                    className="min-h-11 shrink-0"
                     onClick={() => cart.addItem(upsell.slug, upsell.defaultVariantId)}
                   >
                     Pridėti +

@@ -1,41 +1,47 @@
 "use client";
 
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { markMotionReady, MOTION } from "@/lib/motion";
 import { store } from "@/lib/config/store.config";
 
-const KEY = "kaledukampelis.intro.v1";
+type IntroPhase = "off" | "hold" | "split" | "done";
 
 export function IntroCutscene() {
-  const [phase, setPhase] = useState<"off" | "hold" | "split" | "done">("off");
+  const [phase, setPhase] = useState<IntroPhase>("off");
 
   const finish = useCallback(() => {
-    try {
-      sessionStorage.setItem(KEY, "1");
-    } catch {
-      /* sessionStorage may be blocked */
-    }
+    document.getElementById("intro-static")?.remove();
     document.documentElement.removeAttribute("data-intro");
+    markMotionReady();
     setPhase("done");
   }, []);
 
   useLayoutEffect(() => {
     let reduced = false;
-    let seen = false;
     try {
       reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      seen = sessionStorage.getItem(KEY) === "1";
     } catch {
       /* ignore */
     }
-    if (reduced || seen) {
+
+    if (reduced) {
+      document.getElementById("intro-static")?.remove();
       document.documentElement.removeAttribute("data-intro");
+      markMotionReady();
       setPhase("done");
       return;
     }
-    document.documentElement.dataset.intro = "pending";
+
+    if (document.documentElement.dataset.intro !== "pending") {
+      document.getElementById("intro-static")?.remove();
+      setPhase("done");
+      return;
+    }
+
+    document.getElementById("intro-static")?.remove();
     setPhase("hold");
-    const splitAt = window.setTimeout(() => setPhase("split"), 1600);
-    const endAt = window.setTimeout(finish, 2380);
+    const splitAt = window.setTimeout(() => setPhase("split"), MOTION.introHold);
+    const endAt = window.setTimeout(finish, MOTION.introHold + MOTION.introCurtain + 60);
     return () => {
       window.clearTimeout(splitAt);
       window.clearTimeout(endAt);

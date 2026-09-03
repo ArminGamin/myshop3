@@ -74,7 +74,7 @@ export function FrequentlyBoughtTogether({ product }: { product: Product }) {
                   images={p.images}
                   seed={p.artSeed}
                   alt={p.name}
-                  size="card"
+                  size="thumb"
                   className="aspect-square w-full rounded-lg object-cover"
                 />
                 <span className="line-clamp-2 text-[11.5px] font-semibold leading-tight text-ink-900">

@@ -11,7 +11,7 @@ export const store = {
   contact: {
     email: "kaleddovanos@gmail.com",
     phone: "",
-    responseTime: "Atsakome per 24 valandas",
+    responseTime: "Atsakome per 24 valandas!",
     legalName: "Kalėdų Kampelis",
     address: "",
     companyCode: "",
@@ -87,6 +87,7 @@ export const flags = {
   ENABLE_EMAIL_CAPTURE: true,
   ENABLE_RECOMMENDATIONS: true,
   ENABLE_AB_HERO: true,
+  ENABLE_SOCIAL_PROOF: true,
 } as const;
 
 export type CampaignTheme = {
@@ -108,13 +109,13 @@ export type CampaignTheme = {
 export const campaign: CampaignTheme = {
   name: "Kaledos 2026",
   heroEyebrow: "Kalėdos 2026",
-  heroHeadlineA: "Kalėdinės dovanos, kurias iš tikrųjų norisi dovanoti 🎁",
+  heroHeadlineA: "Kalėdinės dovanos, kurias iš tikrųjų norisi dovanoti",
   heroHeadlineB: "Dovanos, po kurių žmonės apkabina stipriau",
   heroSubtext:
     "Raskite išskirtinę dovaną šeimai, draugams ir artimiausiems — be valandų praleistų ieškant.",
   primaryCTA: "Rasti dovaną →",
   secondaryCTA: "Peržiūrėti bestsellerius",
-  bannerText: "Nemokamas pristatymas nuo 80 € · Grąžinimas per 14 d.",
+  bannerText: "Nemokamas pristatymas nuo 80 € · Kokybės garantija",
   announcementText: "🎄 Kalėdinis pristatymas visoje Lietuvoje",
   discountCode: null,
   theme: "christmas",

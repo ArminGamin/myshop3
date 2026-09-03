@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { store } from "@/lib/config/store.config";
+import { productPhotoDisclaimer } from "@/lib/copy/product-disclaimer";
 import { InfoPage } from "@/components/layout/info-page";
 
 export const metadata: Metadata = {
@@ -58,7 +59,10 @@ export default function TermsPage() {
         16 dienų.
       </p>
 
-      <h2>6. Grąžinimas</h2>
+      <h2>6. {productPhotoDisclaimer.termsTitle}</h2>
+      <p>{productPhotoDisclaimer.terms}</p>
+
+      <h2>7. Grąžinimas</h2>
       <p>
         Kokybiškos, nenaudotos prekės grąžinamos per 14 dienų nuo gavimo. Grąžinant dėl
         pirkėjo apsisprendimo, siuntimo išlaidas apmoka pirkėjas. Pinigai grąžinami po
@@ -69,7 +73,7 @@ export default function TermsPage() {
         .
       </p>
 
-      <h2>7. Ginčai</h2>
+      <h2>8. Ginčai</h2>
       <p>
         Visi ginčai sprendžiami derybomis; nepavykus — Lietuvos Respublikos įstatymų
         nustatyta tvarka. Vartotojai gali kreiptis į Valstybinę vartotojų teisių

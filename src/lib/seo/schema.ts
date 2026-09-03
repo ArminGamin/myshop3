@@ -10,7 +10,7 @@ export function organizationSchema(): JsonLd {
     "@type": "Organization",
     name: store.brand.name,
     url: store.brand.url,
-    logo: `${store.brand.url}/icon.svg`,
+    logo: `${store.brand.url}/logo.png`,
     email: store.contact.email,
     sameAs: [store.social.instagram, store.social.facebook, store.social.tiktok],
   };

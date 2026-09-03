@@ -10,6 +10,7 @@ import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types";
 import { ProductArt } from "@/components/commerce/product-art";
 import { track } from "@/lib/analytics";
+import { usePresence } from "@/lib/motion";
 
 const RECENT_KEY = "jaukumas.recent-searches.v1";
 
@@ -20,8 +21,10 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
+  const { mounted, visible } = usePresence(open);
+
   useEffect(() => {
-    if (!open) return;
+    if (!mounted || !visible) return;
     document.body.style.overflow = "hidden";
     inputRef.current?.focus();
     const t = setTimeout(() => {
@@ -36,7 +39,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
       clearTimeout(t);
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [mounted, visible]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -53,7 +56,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
     }
     const t = setTimeout(() => {
       setResults(searchProducts(query));
-    }, 120);
+    }, 180);
     return () => clearTimeout(t);
   }, [query]);
 
@@ -71,16 +74,20 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
     onClose();
   }
 
-  if (!open) return null;
+  if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[80]">
-      <div className="animate-fade-in absolute inset-0 bg-ink-900/45" onClick={onClose} aria-hidden />
+    <div className="pointer-events-none fixed inset-0 z-[80]">
+      <div
+        className={`overlay-backdrop absolute inset-0 bg-ink-900/45 ${visible ? "is-visible" : ""}`}
+        onClick={onClose}
+        aria-hidden
+      />
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Paieška"
-        className="animate-fade-up absolute inset-x-0 top-0 mx-auto max-w-2xl p-3 pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-5"
+        className={`overlay-panel overlay-panel-up absolute inset-x-0 top-0 mx-auto max-w-2xl p-3 pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-5 ${visible ? "is-visible" : ""}`}
       >
         <div className="overflow-hidden rounded-cozy bg-cream-50 shadow-lift">
           <form
@@ -124,7 +131,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                           key={term}
                           type="button"
                           onClick={() => submitSearch(term)}
-                          className="rounded-full bg-cream-200 px-3.5 py-2 text-sm font-medium text-ink-900 transition hover:bg-cream-300"
+                          className="inline-flex min-h-11 items-center rounded-full bg-cream-200 px-4 py-2 text-sm font-medium text-ink-900 transition hover:bg-cream-300"
                         >
                           {term}
                         </button>
@@ -141,7 +148,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                       key={term}
                       type="button"
                       onClick={() => setQuery(term)}
-                      className="rounded-full border border-cream-300 bg-white/60 px-3.5 py-2 text-sm font-medium text-ink-600 transition hover:border-gold-400 hover:text-burgundy-600"
+                      className="inline-flex min-h-11 items-center rounded-full border border-cream-300 bg-white/60 px-4 py-2 text-sm font-medium text-ink-600 transition hover:border-gold-400 hover:text-burgundy-600"
                     >
                       {term}
                     </button>
