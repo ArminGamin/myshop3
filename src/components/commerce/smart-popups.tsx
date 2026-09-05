@@ -254,12 +254,11 @@ function CartReminderPopup({ onClose, visible }: { onClose: () => void; visible:
 
 function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
   const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
   const [state, setState] = useState<"idle" | "loading" | "ok" | "error">("idle");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!consent || !isAllowedEmail(email)) {
+    if (!isAllowedEmail(email)) {
       setState("error");
       return;
     }
@@ -268,7 +267,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: apiHeaders(),
-        body: JSON.stringify({ email, consent, source: "popup-welcome" }),
+        body: JSON.stringify({ email, consent: true, source: "popup-welcome" }),
       });
       if (!res.ok) throw new Error();
       track("sign_up", { source: "popup-welcome" });
@@ -303,19 +302,9 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
         autoComplete="email"
         className="min-h-12 w-full rounded-full border border-cream-400 bg-white px-5 text-base outline-none focus:border-gold-500"
       />
-      <label className="flex cursor-pointer items-start gap-2 text-left text-xs leading-relaxed text-ink-600">
-        <input
-          type="checkbox"
-          required
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 size-4 shrink-0 accent-burgundy-600"
-        />
-        Sutinku gauti naujienlaiškį ir galiu bet kada atsisakyti.
-      </label>
       <button
         type="submit"
-        disabled={state === "loading" || !consent}
+        disabled={state === "loading"}
         className="flex min-h-12 w-full items-center justify-center rounded-full bg-gold-500 text-[15px] font-bold text-burgundy-800 transition hover:bg-gold-400 disabled:opacity-50"
       >
         {state === "loading" ? "Siunčiama…" : `Gauti ${store.popups.discountPercentFirstOrder} % nuolaidą`}
