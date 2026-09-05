@@ -10,6 +10,13 @@ const CartDrawer = dynamic(
   () => import("@/components/commerce/cart-drawer").then((m) => ({ default: m.CartDrawer })),
   { ssr: false }
 );
+const CheckoutOverlay = dynamic(
+  () =>
+    import("@/components/commerce/checkout-overlay").then((m) => ({
+      default: m.CheckoutOverlay,
+    })),
+  { ssr: false }
+);
 const SocialProofToast = dynamic(
   () =>
     import("@/components/commerce/social-proof-toast").then((m) => ({
@@ -25,15 +32,21 @@ const CookieBanner = dynamic(
   () => import("@/components/layout/cookie-banner").then((m) => ({ default: m.CookieBanner })),
   { ssr: false }
 );
+const TabTitleFlash = dynamic(
+  () => import("@/components/layout/tab-title-flash").then((m) => ({ default: m.TabTitleFlash })),
+  { ssr: false }
+);
 
 export function DeferredChrome() {
   return (
     <>
       <Snowfall />
       <CartDrawer />
+      <CheckoutOverlay />
       <SocialProofToast />
       <SmartPopups />
       <CookieBanner />
+      <TabTitleFlash />
     </>
   );
 }

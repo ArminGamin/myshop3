@@ -50,12 +50,11 @@ export function DeadlineBanner() {
     return (
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-cozy bg-burgundy-600 p-6 text-center text-cream-50 shadow-lift sm:p-8">
-          <p className="font-display text-xl font-semibold sm:text-2xl">
-            Kalėdos jau visai čia — paskutinės dienos užsakymams!
+          <p className="font-display text-xl font-extrabold sm:text-2xl">
+            Kalėdos jau visai čia. Paskutinės dienos užsakymams!
           </p>
-          <p className="mt-2 text-sm opacity-90">
-            Užsisakykite iki {dateStr}, o jeigu nevėluojame per mūsų kaltę — pristatymas
-            jums nemokamas.
+          <p className="mt-2 text-sm font-semibold opacity-90">
+            Užsisakykite iki <strong>{dateStr}</strong>. Jei vėluojame mes, pristatymas jums nemokamas.
           </p>
         </div>
       </div>
@@ -65,10 +64,11 @@ export function DeadlineBanner() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="texture-knit rounded-cozy border border-gold-400/55 bg-cream-100 p-6 text-center sm:p-8">
-        <p className="font-display text-xl font-semibold text-ink-900 sm:text-2xl">
-          Užsisakykite iki {dateStr} — dovana spės pasiekti jus iki Kalėdų.
+        <p className="font-display text-xl font-extrabold text-ink-900 sm:text-2xl">
+          Užsisakykite iki <span className="text-burgundy-600">{dateStr}</span>. Dovana spės pasiekti jus{" "}
+          <span className="text-burgundy-600">iki Kalėdų</span>!
         </p>
-        <p className="mt-2 text-sm leading-relaxed text-ink-600">
+        <p className="mt-2 text-sm font-semibold leading-relaxed text-ink-600">
           Visus Kalėdinius užsakymus ruošiame su pirmenybe ir siunčiame sekimo numerį.
         </p>
       </div>

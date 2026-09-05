@@ -181,9 +181,9 @@ export function SocialProofToast() {
             type="button"
             onClick={handleDismiss}
             aria-label="Užverti"
-            className="ml-auto flex size-7 shrink-0 items-center justify-center rounded-full text-cream-50/75 transition hover:bg-cream-50/10 hover:text-cream-50"
+            className="ml-auto inline-flex size-11 shrink-0 items-center justify-center rounded-full text-cream-50/75 transition hover:bg-cream-50/10 hover:text-cream-50"
           >
-            <X className="size-3.5" strokeWidth={2.5} />
+            <X className="block size-3.5 shrink-0" strokeWidth={2.5} />
           </button>
         </div>
         {slice ? (

@@ -10,6 +10,8 @@ import { useExitIntent } from "@/lib/behavior/use-exit-intent";
 import { track } from "@/lib/analytics";
 import { useConsent } from "@/lib/consent";
 import { usePresence } from "@/lib/motion";
+import { apiHeaders } from "@/lib/security/csrf-client";
+import { isAllowedEmail } from "@/lib/security/email";
 
 type PopupKind = "welcome" | "exit-cart" | "exit-quiz" | null;
 
@@ -144,7 +146,7 @@ function PopupShell({
   visible: boolean;
 }) {
   return (
-    <div className="pointer-events-none fixed inset-0 z-[85] flex items-end justify-center p-3 sm:items-center sm:p-4">
+    <div className="smart-popup-root pointer-events-none fixed inset-0 z-[85] flex items-end justify-center p-0 sm:items-center sm:p-4">
       <div
         className={`overlay-backdrop absolute inset-0 bg-ink-900/50 ${visible ? "is-visible" : ""}`}
         onClick={onClose}
@@ -154,15 +156,15 @@ function PopupShell({
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className={`overlay-panel overlay-panel-up texture-knit relative max-h-[min(90dvh,36rem)] w-full max-w-md overflow-y-auto rounded-cozy bg-cream-50 p-5 shadow-lift sm:p-7 pb-[max(1.25rem,env(safe-area-inset-bottom))] ${visible ? "is-visible" : ""}`}
+        className={`overlay-panel overlay-panel-up texture-knit relative max-h-[min(90dvh,36rem)] w-full max-w-md overflow-y-auto rounded-t-cozy bg-cream-50 p-5 shadow-lift sm:rounded-cozy sm:p-7 pb-[max(1.25rem,env(safe-area-inset-bottom))] ${visible ? "is-visible" : ""}`}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Uždaryti"
-          className="absolute right-3 top-3 flex size-10 items-center justify-center rounded-full text-ink-600 transition hover:bg-cream-200 hover:text-ink-900"
+          className="absolute right-3 top-3 inline-flex size-11 items-center justify-center rounded-full text-ink-600 transition hover:bg-cream-200 hover:text-ink-900"
         >
-          <X className="size-5" strokeWidth={1.8} />
+          <X className="block size-5 shrink-0" strokeWidth={1.8} />
         </button>
         {children}
       </div>
@@ -257,12 +259,15 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!consent) return;
+    if (!consent || !isAllowedEmail(email)) {
+      setState("error");
+      return;
+    }
     setState("loading");
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: apiHeaders(),
         body: JSON.stringify({ email, consent, source: "popup-welcome" }),
       });
       if (!res.ok) throw new Error();
@@ -296,7 +301,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
         placeholder="Jūsų el. paštas"
         inputMode="email"
         autoComplete="email"
-        className="min-h-12 w-full rounded-full border border-cream-400 bg-white px-5 text-[15px] outline-none focus:border-gold-500"
+        className="min-h-12 w-full rounded-full border border-cream-400 bg-white px-5 text-base outline-none focus:border-gold-500"
       />
       <label className="flex cursor-pointer items-start gap-2 text-left text-xs leading-relaxed text-ink-600">
         <input
@@ -315,11 +320,11 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
       >
         {state === "loading" ? "Siunčiama…" : `Gauti ${store.popups.discountPercentFirstOrder} % nuolaidą`}
       </button>
-      {state === "error" && (
+      {state === "error" ? (
         <p role="alert" className="text-center text-xs font-semibold text-burgundy-600">
-          Nepavyko. Pabandykite dar kartą.
+          Įveskite gmail.com, outlook.com, icloud.com arba inbox.lt paštą.
         </p>
-      )}
+      ) : null}
     </form>
   );
 }

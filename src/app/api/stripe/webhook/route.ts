@@ -4,8 +4,17 @@ import { getStripe } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
-// Stripe webhook: patvirtina mokėjimo įvykius. Čia galima prijungti
-// užsakymų saugojimą, Klaviyo „Placed Order" įvykį ar kitas integracijas.
+function logOrder(payload: Record<string, unknown>) {
+  console.log("[ORDER]", JSON.stringify({ ...payload, ts: new Date().toISOString() }));
+  const hook = process.env.ORDER_WEBHOOK_URL;
+  if (!hook) return;
+  fetch(hook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  }).catch(() => {});
+}
+
 export async function POST(req: Request) {
   const stripe = getStripe();
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -30,32 +39,29 @@ export async function POST(req: Request) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object;
-      console.log("[ORDER]", JSON.stringify({
-        id: session.id,
-        amount_total: session.amount_total,
+      logOrder({
+        type: event.type,
+        orderId: session.id,
+        amountCents: session.amount_total,
         currency: session.currency,
         email: session.customer_details?.email,
         shipping: session.customer_details?.address,
         metadata: session.metadata,
-        ts: new Date().toISOString(),
-      }));
-      // TODO integracijos: užsakymų DB, Klaviyo Placed Order, SMS — per env:
-      // ORDER_WEBHOOK_URL nurodyta nuoroda gauna tą patį JSON (pvz., Make/Zapier).
-      const hook = process.env.ORDER_WEBHOOK_URL;
-      if (hook) {
-        fetch(hook, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: event.type,
-            orderId: session.id,
-            amountCents: session.amount_total,
-            currency: session.currency,
-            email: session.customer_details?.email,
-            metadata: session.metadata,
-          }),
-        }).catch(() => {});
-      }
+      });
+      break;
+    }
+    case "payment_intent.succeeded": {
+      const intent = event.data.object;
+      if (!intent.metadata?.cart) break;
+      logOrder({
+        type: event.type,
+        orderId: intent.id,
+        amountCents: intent.amount_received || intent.amount,
+        currency: intent.currency,
+        email: intent.receipt_email ?? intent.metadata.email,
+        shipping: intent.shipping,
+        metadata: intent.metadata,
+      });
       break;
     }
     case "checkout.session.expired":

@@ -18,13 +18,12 @@ const SearchOverlay = dynamic(
 );
 
 const desktopNav = [
-  { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos" },
-  { href: "/dovanos/bestselleriai", label: "Bestselleriai" },
-  { href: "/dovanos/dovanos-jai", label: "Dovanos jai" },
-  { href: "/dovanos/dovanos-jam", label: "Dovanos jam" },
-  { href: "/dovanos/dovanos-seimai", label: "Dovanos šeimai" },
-  { href: "/dovanos/dovanos-iki-30-euru", label: "Iki 30 €" },
-  { href: "/kontaktai", label: "Kontaktai" },
+  { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos", tone: "text-cranberry-500 hover:text-cranberry-400" },
+  { href: "/dovanos/bestselleriai", label: "Bestselleriai", tone: "text-gold-500 hover:text-gold-400" },
+  { href: "/dovanos/dovanos-jai", label: "Dovanos jai", tone: "text-rose-500 hover:text-rose-400" },
+  { href: "/dovanos/dovanos-jam", label: "Dovanos jam", tone: "text-pine-500 hover:text-pine-400" },
+  { href: "/dovanos/dovanos-seimai", label: "Dovanos šeimai", tone: "text-sky-500 hover:text-sky-400" },
+  { href: "/dovanos/dovanos-iki-30-euru", label: "Iki 30 €", tone: "text-copper-500" },
 ];
 
 export function Header() {
@@ -46,8 +45,11 @@ export function Header() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (menuOpen) document.documentElement.dataset.menuOpen = "on";
+    else delete document.documentElement.dataset.menuOpen;
     return () => {
       document.body.style.overflow = "";
+      delete document.documentElement.dataset.menuOpen;
     };
   }, [menuOpen]);
 
@@ -58,13 +60,13 @@ export function Header() {
           scrolled ? "shadow-lift" : "shadow-card"
         }`}
       >
-        <SafeDiv className="mx-auto flex h-14 max-w-7xl items-center gap-1.5 px-3 sm:gap-2 sm:px-6 lg:h-16 lg:gap-6 lg:px-8">
+        <SafeDiv className="mx-auto flex h-14 max-w-7xl items-center gap-0.5 px-2.5 sm:gap-2 sm:px-6 lg:h-16 lg:gap-6 lg:px-8">
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label="Atidaryti meniu"
             aria-expanded={menuOpen}
-            className="nav-glow flex size-11 items-center justify-center rounded-[10px] text-ink-900 lg:hidden"
+            className="nav-glow flex size-10 items-center justify-center rounded-[10px] text-ink-900 sm:size-11 lg:hidden"
           >
             <Menu className="size-5.5" strokeWidth={1.8} />
           </button>
@@ -79,8 +81,8 @@ export function Header() {
                     href={item.href}
                     className={
                       item.href === "/dovanos/dovanos-iki-30-euru"
-                        ? "whitespace-nowrap rounded-full border border-gold-400/55 bg-gold-200/45 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-burgundy-700 xl:text-[12px]"
-                        : "nav-glow whitespace-nowrap px-2 py-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-900 xl:px-3 xl:text-[12.5px]"
+                        ? `whitespace-nowrap rounded-full border border-copper-400/70 bg-copper-500/12 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] xl:text-[12px] ${item.tone}`
+                        : `nav-glow whitespace-nowrap px-2 py-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] xl:px-3 xl:text-[12.5px] ${item.tone}`
                     }
                   >
                     {item.label}
@@ -90,7 +92,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <SafeDiv className="ml-auto flex items-center gap-0.5 sm:gap-1 lg:ml-0 lg:w-44 lg:justify-end">
+          <SafeDiv className="ml-auto flex items-center gap-0 sm:gap-1 lg:ml-0 lg:w-44 lg:justify-end">
             <button
               type="button"
               onClick={() => {
@@ -98,14 +100,14 @@ export function Header() {
                 setSearchOpen(true);
               }}
               aria-label="Paieška"
-              className="nav-glow flex size-11 items-center justify-center rounded-[10px] text-ink-900"
+              className="nav-glow flex size-10 items-center justify-center rounded-[10px] text-ink-900 sm:size-11"
             >
               <Search className="size-5.5" strokeWidth={1.8} />
             </button>
             <Link
               href="/issaugotos-dovanos"
               aria-label={`Pageidavimų sąrašas${wishlist.items.length ? ` (${wishlist.items.length})` : ""}`}
-              className="nav-glow relative hidden size-11 items-center justify-center rounded-[10px] text-ink-900 sm:flex"
+              className="nav-glow relative flex size-10 items-center justify-center rounded-[10px] text-ink-900 sm:size-11"
             >
               <Heart className="size-5.5" strokeWidth={1.8} />
               {wishlist.items.length > 0 ? (
@@ -118,7 +120,7 @@ export function Header() {
               type="button"
               onClick={cart.openDrawer}
               aria-label={`Krepšelis${count ? ` (${count} prekės)` : " — tuščias"}`}
-              className="nav-glow relative flex size-11 items-center justify-center rounded-[10px] text-ink-900"
+              className="nav-glow relative flex size-10 items-center justify-center rounded-[10px] text-ink-900 sm:size-11"
             >
               <ShoppingBag className="size-5.5" strokeWidth={1.8} />
               {count > 0 && cart.hydrated ? (
@@ -142,6 +144,19 @@ export function Header() {
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { mounted, visible } = usePresence(open);
   if (!mounted) return null;
+  const menuTone: Record<string, string> = {
+    "/dovanos/visos-dovanos": "text-cranberry-500",
+    "/dovanos/bestselleriai": "text-gold-500",
+    "/dovanos/dovanos-jai": "text-rose-500",
+    "/dovanos/dovanos-jam": "text-pine-500",
+    "/dovanos/dovanos-seimai": "text-sky-500",
+    "/dovanos/dovanos-poroms": "text-teal-500",
+    "/dovanos/dovanos-iki-20-euru": "text-amber-500",
+    "/dovanos/dovanos-iki-30-euru": "text-copper-500",
+    "/dovanos/premium-dovanos": "text-indigo-500",
+    "/issaugotos-dovanos": "text-forest-400",
+    "/kontaktai": "text-plum-500",
+  };
   const menuItems: { href: string; label: string; accent?: boolean; pill?: boolean }[] = [
     { href: "/rask-dovana", label: "Rasti dovaną", accent: true },
     ...collections.slice(0, 7).map((c) => ({
@@ -151,7 +166,6 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
     { href: "/dovanos/dovanos-iki-30-euru", label: "Iki 30 €", pill: true },
     { href: "/dovanos/premium-dovanos", label: "Premium dovanos" },
     { href: "/issaugotos-dovanos", label: "Išsaugotos dovanos" },
-    { href: "/kontaktai", label: "Kontaktai" },
   ];
 
   return (
@@ -186,8 +200,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                   item.accent
                     ? "cta-fill text-white"
                     : item.pill
-                      ? "mx-1 rounded-full border border-gold-400/55 bg-gold-200/45 text-burgundy-700"
-                      : "text-ink-900 hover:bg-cream-200"
+                      ? `mx-1 rounded-full border border-copper-400/70 bg-copper-500/12 ${menuTone[item.href] ?? "text-copper-500"}`
+                      : `${menuTone[item.href] ?? "text-ink-900"} hover:bg-cream-200`
                 }`}
               >
                 {item.label}

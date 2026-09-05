@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 const ATTR = {
   stickyBuy: "data-sticky-buy",
   cookieBanner: "data-cookie-banner",
   cartOpen: "data-cart-open",
+  checkoutOpen: "data-checkout",
 } as const;
 
 export function useMobileChromeFlag(flag: keyof typeof ATTR, active: boolean) {
@@ -18,16 +19,25 @@ export function useMobileChromeFlag(flag: keyof typeof ATTR, active: boolean) {
   }, [flag, active]);
 }
 
+const queries = new Map<number, MediaQueryList>();
+
+function media(breakpoint: number) {
+  let mq = queries.get(breakpoint);
+  if (!mq) {
+    mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    queries.set(breakpoint, mq);
+  }
+  return mq;
+}
+
 export function useIsMobile(breakpoint = 639) {
-  const [mobile, setMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
-    const sync = () => setMobile(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, [breakpoint]);
-
-  return mobile;
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = media(breakpoint);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => media(breakpoint).matches,
+    () => false
+  );
 }

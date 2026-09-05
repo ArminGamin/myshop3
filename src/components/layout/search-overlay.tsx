@@ -111,9 +111,9 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
               type="button"
               onClick={onClose}
               aria-label="Uždaryti paiešką"
-              className="flex size-10 items-center justify-center rounded-full hover:bg-cream-200"
+              className="inline-flex size-11 items-center justify-center rounded-full hover:bg-cream-200"
             >
-              <X className="size-5" strokeWidth={1.8} />
+              <X className="block size-5 shrink-0" strokeWidth={1.8} />
             </button>
           </form>
 
@@ -198,7 +198,7 @@ function EmptySearch({ query, onClose }: { query: string; onClose: () => void })
     <div className="p-5 text-center">
       <p className="font-display text-lg font-semibold text-ink-900">Nieko neradome 😕</p>
       <p className="mx-auto mt-1 max-w-xs text-sm leading-relaxed text-ink-600">
-        „{query}“ — tokios prekės neturime. Bet tikrai turime jaukią dovaną:
+        „{query}“ tokios prekės neturime. Bet tikrai turime jaukią dovaną:
       </p>
       <div className="mt-4 flex flex-wrap justify-center gap-2">
         <Link

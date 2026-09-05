@@ -8,8 +8,6 @@ export const runtime = "nodejs";
 const palettes: Record<string, [string, string]> = {
   zvakide: ["#F6EBDD", "#E9D3B4"],
   pledas: ["#F3E7E0", "#DFC5B4"],
-  sokoladas: ["#F2E4D5", "#D9B98F"],
-  adventas: ["#EAF0E6", "#C9D8C2"],
   silkas: ["#F6E8EA", "#E3C2C8"],
   viskis: ["#EFE6D6", "#CFA96F"],
   sodas: ["#EDF2E4", "#CBDCB4"],
@@ -20,6 +18,17 @@ const palettes: Record<string, [string, string]> = {
   zaidimai: ["#F6ECDD", "#EBCB9E"],
   krepselis: ["#F5E6E0", "#DDB9AC"],
   arbata: ["#F1EFE6", "#D6D2BE"],
+  "sildymo-lempa": ["#F5F0E6", "#E4D4B4"],
+  roze: ["#F6E8EA", "#E3C2C8"],
+  menulis: ["#F0EBE1", "#D8CCB6"],
+  saulelydis: ["#F6EDE0", "#E8C8A0"],
+  lietus: ["#F0EEE8", "#D4D0C4"],
+  sildykle: ["#F5EEE4", "#E4D4BC"],
+  galaktika: ["#EEEAF0", "#D0C8D8"],
+  plakiklis: ["#F3EEE4", "#DDD2BE"],
+  masazas: ["#EFE8DC", "#D6C8B0"],
+  uzvalkalas: ["#F6EFE4", "#E8D8C2"],
+  guasha: ["#F6E8EA", "#E8C8D0"],
 };
 
 export async function GET(req: Request) {

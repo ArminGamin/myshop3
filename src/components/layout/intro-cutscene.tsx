@@ -6,12 +6,24 @@ import { store } from "@/lib/config/store.config";
 
 type IntroPhase = "off" | "hold" | "split" | "done";
 
+function curtain() {
+  return document.getElementById("intro-static");
+}
+
+function splitCurtain() {
+  const el = curtain();
+  if (!el) return;
+  el.classList.add("is-leaving");
+  el.querySelector(".intro-panel-top")?.classList.add("intro-split-top");
+  el.querySelector(".intro-panel-bottom")?.classList.add("intro-split-bottom");
+}
+
 export function IntroCutscene() {
   const [phase, setPhase] = useState<IntroPhase>("off");
 
   const finish = useCallback(() => {
-    document.getElementById("intro-static")?.remove();
     document.documentElement.removeAttribute("data-intro");
+    curtain()?.remove();
     markMotionReady();
     setPhase("done");
   }, []);
@@ -24,21 +36,11 @@ export function IntroCutscene() {
       /* ignore */
     }
 
-    if (reduced) {
-      document.getElementById("intro-static")?.remove();
-      document.documentElement.removeAttribute("data-intro");
-      markMotionReady();
-      setPhase("done");
+    if (reduced || document.documentElement.dataset.intro !== "pending") {
+      finish();
       return;
     }
 
-    if (document.documentElement.dataset.intro !== "pending") {
-      document.getElementById("intro-static")?.remove();
-      setPhase("done");
-      return;
-    }
-
-    document.getElementById("intro-static")?.remove();
     setPhase("hold");
     const splitAt = window.setTimeout(() => setPhase("split"), MOTION.introHold);
     const endAt = window.setTimeout(finish, MOTION.introHold + MOTION.introCurtain + 60);
@@ -47,6 +49,10 @@ export function IntroCutscene() {
       window.clearTimeout(endAt);
     };
   }, [finish]);
+
+  useLayoutEffect(() => {
+    if (phase === "split") splitCurtain();
+  }, [phase]);
 
   useEffect(() => {
     if (phase === "off" || phase === "done") return;
@@ -64,15 +70,8 @@ export function IntroCutscene() {
       role="dialog"
       aria-label={store.brand.name}
       aria-modal="true"
-      className={`intro-curtain ${phase === "split" ? "is-leaving" : ""}`}
+      className="intro-skip"
       onClick={finish}
-    >
-      <div className={`intro-panel intro-panel-top ${phase === "split" ? "intro-split-top" : ""}`} />
-      <div className={`intro-panel intro-panel-bottom ${phase === "split" ? "intro-split-bottom" : ""}`} />
-      <div className="intro-center">
-        <span className="intro-line" />
-        <p className="intro-mark">{store.brand.name}</p>
-      </div>
-    </div>
+    />
   );
 }

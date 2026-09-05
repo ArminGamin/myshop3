@@ -192,12 +192,16 @@ export function GiftFinderQuiz({ compact = false }: { compact?: boolean }) {
         <h3 className="font-display text-xl font-semibold text-ink-900 sm:text-2xl">{step.q}</h3>
 
         <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-3 sm:gap-2.5 lg:grid-cols-4">
-          {step.options.map((opt) => (
+          {step.options.map((opt, i) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => pick(step.id, opt.value)}
-              className="group flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-cozy border-2 border-cream-300 bg-cream-50 px-2.5 py-3 transition-[transform,border-color,background-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-gold-400 hover:bg-gold-200/30 active:scale-[0.98] sm:min-h-28 sm:gap-1.5 sm:px-3 sm:py-4"
+              className={`group flex min-h-16 flex-col items-center justify-center gap-1 rounded-cozy border-2 border-cream-300 bg-cream-50 px-2 py-2.5 transition-[transform,border-color,background-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-gold-400 hover:bg-gold-200/30 active:scale-[0.98] sm:min-h-28 sm:gap-1.5 sm:px-3 sm:py-4${
+                step.options.length % 2 === 1 && i === step.options.length - 1
+                  ? " col-span-2 mx-auto w-1/2 sm:col-span-1 sm:mx-0 sm:w-auto"
+                  : ""
+              }`}
             >
               <span className="text-burgundy-600 transition-transform duration-500 group-hover:scale-[1.06]">
                 <QuizGlyph value={opt.value} />

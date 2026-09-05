@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 export default function GiftFinderPage() {
   return (
     <div className="texture-knit glow-candle">
-      <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:py-8">
-        <div className="mb-8 text-center">
+      <div className="mx-auto max-w-3xl px-4 py-5 sm:px-6 sm:py-6 lg:py-8">
+        <div className="mb-6 text-center sm:mb-8">
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-gold-600">
             Dovanų radiklis
           </p>
@@ -20,7 +20,7 @@ export default function GiftFinderPage() {
             Rask tinkamą dovaną
           </h1>
           <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-ink-600">
-            Keturi greiti klausimai — ir jau žinote, ką dėti po egle.
+            Keturi greiti klausimai ir jau žinote, ką dėti po egle.
           </p>
         </div>
         <div className="rounded-cozy border border-cream-300 bg-white/70 p-4 shadow-card sm:p-6">

@@ -72,10 +72,10 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="font-display text-[1.65rem] font-semibold leading-snug text-ink-900 sm:text-4xl">
+      <h2 className="font-display text-[1.65rem] font-bold leading-snug text-ink-900 sm:text-4xl">
         {title}
       </h2>
-      {sub ? <p className="mt-2 text-[15px] font-medium leading-snug text-ink-600 sm:text-[16px]">{sub}</p> : null}
+      {sub ? <p className="mt-2 text-[15px] font-semibold leading-snug text-ink-600 sm:text-[16px]">{sub}</p> : null}
     </div>
   );
 }

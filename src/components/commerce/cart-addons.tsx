@@ -16,22 +16,37 @@ export function CartAddonRows({
   subtotalCents,
   selected,
   onChange,
+  compact = false,
 }: {
   subtotalCents: number;
   selected: CartAddonSelection;
   onChange: (next: CartAddonSelection) => void;
+  compact?: boolean;
 }) {
   const beforeDonation = donationBaseCents(subtotalCents, selected);
   const donation = donationCents(beforeDonation);
   const target = donationTargetCents(beforeDonation);
 
   return (
-    <div className="rounded-cozy border border-gold-300/50 bg-gradient-to-br from-cream-50 to-cream-100/80 p-3">
-      <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gold-600">
+    <div
+      className={
+        compact
+          ? "rounded-[12px] border border-gold-300/50 bg-cream-50 p-2"
+          : "rounded-cozy border border-gold-300/50 bg-gradient-to-br from-cream-50 to-cream-100/80 p-3"
+      }
+    >
+      <p
+        className={
+          compact
+            ? "mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gold-600"
+            : "mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gold-600"
+        }
+      >
         Papildomai
       </p>
-      <div className="space-y-1.5">
+      <div className={compact ? "space-y-1" : "space-y-1.5"}>
         <AddonRow
+          compact={compact}
           checked={selected.protection}
           onChange={(protection) => onChange({ ...selected, protection })}
           icon={Shield}
@@ -41,6 +56,7 @@ export function CartAddonRows({
         />
         {donation > 0 ? (
           <AddonRow
+            compact={compact}
             checked={selected.donation}
             onChange={(on) => onChange({ ...selected, donation: on })}
             icon={Heart}
@@ -50,6 +66,7 @@ export function CartAddonRows({
           />
         ) : null}
         <AddonRow
+          compact={compact}
           checked={selected.priority}
           onChange={(priority) => onChange({ ...selected, priority })}
           icon={Sparkles}
@@ -69,6 +86,7 @@ function AddonRow({
   title,
   price,
   tip,
+  compact = false,
 }: {
   checked: boolean;
   onChange: (next: boolean) => void;
@@ -76,12 +94,15 @@ function AddonRow({
   title: string;
   price: string;
   tip: string;
+  compact?: boolean;
 }) {
   const id = useId();
   return (
     <label
       htmlFor={id}
-      className={`flex cursor-pointer items-center gap-2.5 rounded-[12px] border px-2.5 py-2 transition ${
+      className={`flex min-h-11 cursor-pointer items-center rounded-[12px] border transition ${
+        compact ? "gap-2 px-2 py-1.5" : "gap-2.5 px-2.5 py-2"
+      } ${
         checked
           ? "border-gold-400 bg-cream-50 shadow-card"
           : "border-transparent bg-white/50 hover:border-cream-300 hover:bg-white"
@@ -106,9 +127,9 @@ function AddonRow({
       </span>
       <span
         aria-hidden
-        className={`flex size-8 shrink-0 items-center justify-center rounded-full ${
-          checked ? "bg-gold-200 text-burgundy-600" : "bg-cream-200 text-ink-400"
-        }`}
+        className={`flex shrink-0 items-center justify-center rounded-full ${
+          compact ? "size-7" : "size-8"
+        } ${checked ? "bg-gold-200 text-burgundy-600" : "bg-cream-200 text-ink-400"}`}
       >
         <Icon className="size-3.5" strokeWidth={1.8} />
       </span>
@@ -116,7 +137,7 @@ function AddonRow({
         {title}
       </span>
       <span className="shrink-0 text-[12px] font-bold text-burgundy-600">{price}</span>
-      <AddonTip text={tip} />
+      {compact ? null : <AddonTip text={tip} />}
     </label>
   );
 }

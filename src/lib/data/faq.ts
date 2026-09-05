@@ -1,7 +1,14 @@
+import { store } from "@/lib/config/store.config";
+
 export interface FaqItem {
   q: string;
   a: string;
 }
+
+const paymentMethods =
+  store.payments.methods.length > 1
+    ? `${store.payments.methods.slice(0, -1).join(", ")} ir ${store.payments.methods.at(-1)}`
+    : (store.payments.methods[0] ?? "");
 
 export interface FaqCategory {
   id: string;
@@ -48,7 +55,7 @@ export const faqCategories: FaqCategory[] = [
     items: [
       {
         q: "Kokie mokėjimo būdai?",
-        a: "Galite atsiskaityti Visa ir Mastercard kortelėmis, taip pat Apple Pay ir Google Pay. Visi mokėjimai yra saugūs ir užšifruoti — juos apdoroja Stripe.",
+        a: `Galite atsiskaityti ${paymentMethods}.\nVisi mokėjimai yra saugūs ir užšifruoti, todėl galite atsiskaityti saugiai ir patogiai.`,
       },
       {
         q: "Ar mokėjimas saugus?",
@@ -85,11 +92,11 @@ export const faqCategories: FaqCategory[] = [
 export const homeFaqs: FaqItem[] = [
   {
     q: "Kiek laiko trunka pristatymas?",
-    a: "Įprastai užsakymus pristatome per 4–6 dienas, priklausomai nuo užsakymo kiekio, tiekėjo sandėlio ir pristatymo vietos.\n\n- Dalis prekių gali būti siunčiama iš užsienio sandėlių.\n- Didesnio užimtumo metu pristatymas gali užtrukti iki 16 dienų.\n- Užsakymams nuo 80 € – nemokamas pristatymas.",
+    a: "Įprastai užsakymus pristatome per 4–6 dienas, priklausomai nuo užsakymo kiekio, tiekėjo sandėlio ir pristatymo vietos.\n\n- Dalis prekių gali būti siunčiama iš užsienio sandėlių.\n- Didesnio užimtumo metu pristatymas gali užtrukti iki 16 dienų.\n- Užsakymams nuo 80 € nemokamas pristatymas.",
   },
   {
     q: "Kokie mokėjimo būdai?",
-    a: "Galite atsiskaityti Visa ir Mastercard kortelėmis.\nVisi mokėjimai yra saugūs ir užšifruoti, todėl galite atsiskaityti saugiai ir patogiai.",
+    a: `Galite atsiskaityti ${paymentMethods}.\nVisi mokėjimai yra saugūs ir užšifruoti, todėl galite atsiskaityti saugiai ir patogiai.`,
   },
   {
     q: "Ar turite fizinę parduotuvę?",

@@ -23,14 +23,13 @@ export function Footer() {
   return (
     <footer className="band-forest relative z-[2] text-cream-100" suppressHydrationWarning>
       <SafeDiv className="mx-auto max-w-7xl px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:px-8 lg:py-12">
-        <SafeDiv className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-          <SafeDiv>
+        <SafeDiv className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+          <SafeDiv className="col-span-2 lg:col-span-1">
             <p className="font-display text-2xl font-extrabold text-cream-50">
               {store.brand.name}
             </p>
-            <p className="mt-3 max-w-xs text-[13.5px] leading-relaxed text-cream-100/75">
-              {store.brand.tagline}. Kruopščiai parinktos dovanos, kurios namus pripildo
-              šilumos — pristatome visoje Lietuvoje.
+            <p className="mt-3 max-w-xs text-[13.5px] font-bold leading-relaxed text-cream-50">
+              {store.brand.tagline}. Kruopščiai parinktos dovanos, kurios namus pripildo šilumos! ❤️
             </p>
             <SafeDiv className="mt-5 flex gap-2">
               <SocialLink href={store.social.instagram} label="Instagram" icon={<IgIcon />} />
@@ -97,7 +96,7 @@ export function Footer() {
 
         <SafeDiv className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-cream-100/15 pt-5 sm:flex-row">
           <p className="text-xs text-cream-100/55">
-            © {new Date().getFullYear()} {store.brand.name}. Visos teisės saugomos.
+            © 2026 {store.brand.name}. Visos teisės saugomos.
           </p>
           <PaymentIcons tone="light" />
         </SafeDiv>

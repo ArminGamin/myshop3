@@ -22,20 +22,20 @@ export default function ContactPage() {
           className="group rounded-cozy border border-cream-300 bg-white/70 p-5 text-center transition hover:border-gold-400 hover:shadow-card"
         >
           <Mail className="mx-auto size-6 text-burgundy-600" strokeWidth={1.7} />
-          <p className="mt-3 font-display text-lg font-semibold text-ink-900">El. paštas</p>
-          <p className="mt-1 break-all text-[13px] font-medium text-burgundy-600">
+          <p className="mt-3 font-display text-lg font-extrabold text-ink-900">El. paštas</p>
+          <p className="mt-1 break-all text-[13px] font-bold text-burgundy-600">
             {store.contact.email}
           </p>
         </a>
         <div className="rounded-cozy border border-cream-300 bg-white/70 p-5 text-center">
           <Clock className="mx-auto size-6 text-burgundy-600" strokeWidth={1.7} />
-          <p className="mt-3 font-display text-lg font-semibold text-ink-900">Atsakymo laikas</p>
-          <p className="mt-1 text-[13px] text-ink-600">{store.contact.responseTime}</p>
+          <p className="mt-3 font-display text-lg font-extrabold text-ink-900">Atsakymo laikas</p>
+          <p className="mt-1 text-[13px] font-bold text-ink-600">{store.contact.responseTime}</p>
         </div>
         <div className="rounded-cozy border border-cream-300 bg-white/70 p-5 text-center">
           <MapPin className="mx-auto size-6 text-burgundy-600" strokeWidth={1.7} />
-          <p className="mt-3 font-display text-lg font-semibold text-ink-900">Būstinė</p>
-          <p className="mt-1 text-[13px] text-ink-600">Dirbame tik internetu</p>
+          <p className="mt-3 font-display text-lg font-extrabold text-ink-900">Būstinė</p>
+          <p className="mt-1 text-[13px] font-bold text-ink-600">Dirbame tik internetu</p>
         </div>
       </div>
 
@@ -48,10 +48,6 @@ export default function ContactPage() {
         <li>
           <strong>Siuntos sekimas</strong> — patikrinsime būseną ir atsakysime tą pačią
           dieną.
-        </li>
-        <li>
-          <strong>Verslo dovanoms</strong> — išrašome sąskaitas su PVN, konsultuojame dėl
-          kiekių.
         </li>
       </ul>
     </InfoPage>

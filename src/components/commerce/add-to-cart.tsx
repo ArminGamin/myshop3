@@ -224,9 +224,9 @@ export function StickyBuyBar({ product }: { product: Product }) {
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="Paslėpti pirkimo juostą"
-          className="flex size-10 shrink-0 items-center justify-center rounded-full text-ink-500 transition hover:bg-cream-200 hover:text-ink-900"
+          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink-500 transition hover:bg-cream-200 hover:text-ink-900"
         >
-          <X className="size-4" strokeWidth={2.25} />
+          <X className="block size-4 shrink-0" strokeWidth={2.25} />
         </button>
       </div>
     </div>

@@ -35,7 +35,6 @@ const collectionEmojis: Record<string, string> = {
   "dovanos-jai": "💐",
   "dovanos-jam": "⌚",
   "dovanos-seimai": "🏡",
-  "dovanos-poroms": "💑",
 };
 
 const quizEmojis: Record<string, string> = {

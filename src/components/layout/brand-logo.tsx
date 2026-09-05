@@ -12,7 +12,7 @@ export function BrandLogo({ className = "" }: BrandLogoProps) {
       aria-label={`${store.brand.name} — pradžia`}
       className={`group flex shrink-0 items-center ${className}`}
     >
-      <span className="font-display max-w-[9.5rem] truncate text-[16px] font-extrabold leading-none text-burgundy-600 sm:max-w-none sm:text-[20px] lg:text-[22px]">
+      <span className="font-display max-w-[9.25rem] truncate text-[15px] font-extrabold leading-none text-burgundy-600 sm:max-w-none sm:text-[20px] lg:text-[22px]">
         {store.brand.name}
       </span>
     </Link>

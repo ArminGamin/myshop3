@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export const MOTION = {
-  introHold: 1100,
+  introHold: 1600,
   introCurtain: 720,
   overlayExit: 520,
 } as const;

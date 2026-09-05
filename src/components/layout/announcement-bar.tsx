@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { campaign, store } from "@/lib/config/store.config";
-import { getDeadlineInfo, formatDeadline } from "@/lib/config/deadline";
+import { campaign, flags, store } from "@/lib/config/store.config";
+import { getDeadlineInfo, formatDeadline, getChristmasCountdown } from "@/lib/config/deadline";
 import { SafeDiv } from "@/components/layout/safe-div";
 
 const ROTATE_MS = 4500;
@@ -11,18 +11,29 @@ const ROTATE_MS = 4500;
 function deadlineMessage(): string | null {
   const deadline = getDeadlineInfo();
   if (deadline.phase === "before" && deadline.deadlineDate) {
-    return `Užsisakykite iki ${formatDeadline(deadline.deadlineDate)}`;
+    return `Užsisakykite iki ${formatDeadline(deadline.deadlineDate)}! ✨`;
   }
   if (deadline.phase === "near" && deadline.deadlineDate) {
     return deadline.daysLeft === 1
-      ? "Paskutinės dienos užsakymams iki Kalėdų — liko 1 diena"
-      : `Paskutinės dienos užsakymams iki Kalėdų — liko ${deadline.daysLeft} d.`;
+      ? "Paskutinės dienos užsakymams iki Kalėdų — liko 1 diena! ✨"
+      : `Paskutinės dienos užsakymams iki Kalėdų — liko ${deadline.daysLeft} dienų! ✨`;
   }
   return null;
 }
 
+function christmasMessage(): string | null {
+  if (!flags.ENABLE_COUNTDOWN) return null;
+  const left = getChristmasCountdown();
+  if (left.totalMs <= 0) return "Linksmų Kalėdų! 🤩";
+  if (left.days === 0) return "Kalėdos jau šiandien! 🤩";
+  if (left.days === 1) return "Iki Kalėdų liko 1 diena! 🤩";
+  return `Iki Kalėdų liko ${left.days} dienų! 🤩`;
+}
+
 function buildMessages(): string[] {
-  return [campaign.announcementText, deadlineMessage()].filter((text): text is string => Boolean(text));
+  return [campaign.announcementText, christmasMessage(), deadlineMessage()].filter(
+    (text): text is string => Boolean(text)
+  );
 }
 
 export function AnnouncementBar() {

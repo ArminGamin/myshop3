@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { headers } from "next/headers";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { store } from "@/lib/config/store.config";
@@ -25,13 +26,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-manrope",
   subsets: ["latin", "latin-ext"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(store.brand.url),
   title: {
-    default: `${store.brand.name} — Kalėdinės dovanos internetu | Pristatymas visoje Lietuvoje`,
+    default: `${store.brand.name} | Kalėdinės dovanos internetu | Pristatymas visoje Lietuvoje`,
     template: `%s | ${store.brand.name}`,
   },
   description:
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "lt_LT",
     siteName: store.brand.name,
-    title: `${store.brand.name} — ${store.brand.tagline}`,
+    title: `${store.brand.name} | ${store.brand.tagline}`,
     description: "Kalėdinės dovanos, kurias iš tikrųjų norisi dovanoti!",
   },
 };
@@ -57,28 +58,37 @@ const stripExtensionAttrs = `(function(){function strip(n){if(n.nodeType!==1)ret
 
 const motionBootstrap = `try{function r(){document.documentElement.dataset.motionReady="1";window.dispatchEvent(new Event("motion-ready"))}if(matchMedia("(prefers-reduced-motion: reduce)").matches)r()}catch(e){}`;
 
-const introGate = `try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.dataset.intro="pending"}}catch(e){}`;
+const introGate = `try{if(matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.removeAttribute("data-intro");var n=document.getElementById("intro-static");if(n)n.remove()}}catch(e){}`;
+
+const introPaint = `#intro-static{position:fixed;inset:0;z-index:200;background:#0b2a1f}#intro-static.is-leaving{background:transparent}#intro-static .intro-line{display:block;width:min(18rem,72vw);height:1px;background:#d6b35f;opacity:1;transform:none}#intro-static .intro-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}#intro-static .intro-mark{opacity:1;color:#f5f0e6;margin:1.15rem 0 0;font-size:clamp(1.65rem,5vw,2.75rem);font-weight:700;letter-spacing:0.14em}#intro-static .intro-tagline{opacity:1;color:#e8dfcc;margin:0.65rem 0 0;font-size:0.78rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase}`;
 
 const appBootstrap = `${stripExtensionAttrs};${motionBootstrap};${introGate}`;
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html
       lang="lt"
+      data-intro="pending"
       className={`${display.variable} ${plusJakarta.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: introPaint }} />
+      </head>
       <body className="relative z-0 flex min-h-dvh flex-col" suppressHydrationWarning>
         <Script
           id="app-bootstrap"
           strategy="beforeInteractive"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: appBootstrap }}
         />
         <noscript>
-          <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
+          <style>{`.reveal{opacity:1!important;transform:none!important}#intro-static,.intro-curtain,.intro-skip{display:none!important}`}</style>
         </noscript>
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([organizationSchema(), websiteSchema()]),
           }}

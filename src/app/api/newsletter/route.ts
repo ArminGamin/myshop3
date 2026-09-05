@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import { store } from "@/lib/config/store.config";
+import { denyPost } from "@/lib/security/guard";
+import { isAllowedEmail, normalizeEmail } from "@/lib/security/email";
 
 export const runtime = "nodejs";
 
-// Naujienlaiškio užfiksavimas su GDPR sutikimu. Be teikėjo rakto —
-// įrašome į serverio žurnalą; integracija su Klaviyo/Brevo per env.
 export async function POST(req: Request) {
+  const blocked = denyPost(req, "newsletter");
+  if (blocked) return blocked;
+
   let body: { email?: string; consent?: boolean; source?: string; honey?: string };
   try {
     body = await req.json();
@@ -13,26 +16,25 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  // Honeypot — botai užpildo, žmonės ne.
   if (body.honey) {
     return NextResponse.json({ ok: true, mode: "ignored" });
   }
 
-  const email = (body.email ?? "").trim().toLowerCase();
-  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-  if (!valid || !body.consent) {
+  const email = normalizeEmail(body.email ?? "");
+  if (!isAllowedEmail(email) || !body.consent) {
     return NextResponse.json({ ok: false, error: "invalid" }, { status: 400 });
   }
 
-  console.log("[NEWSLETTER]", JSON.stringify({
-    email,
-    source: body.source ?? "unknown",
-    consent: true,
-    ts: new Date().toISOString(),
-  }));
+  console.log(
+    "[NEWSLETTER]",
+    JSON.stringify({
+      email,
+      source: body.source ?? "unknown",
+      consent: true,
+      ts: new Date().toISOString(),
+    })
+  );
 
-  // Integracijos sąsaja: Klaviyo ar Brevo API per env raktus.
-  // Pavyzdys (Klaviyo): POST /client/subscriptions su list_id iš KLAVIYO_LIST_ID.
   const klaviyoKey = process.env.KLAVIYO_API_KEY;
   const klaviyoList = process.env.KLAVIYO_LIST_ID;
   if (klaviyoKey && klaviyoList) {

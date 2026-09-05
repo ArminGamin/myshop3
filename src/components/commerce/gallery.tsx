@@ -12,7 +12,7 @@ export function Gallery({ product }: { product: Product }) {
   return (
     <div className="flex flex-col gap-3">
       <div
-        className={`gallery-still relative aspect-[4/5] overflow-hidden rounded-cozy bg-cream-200 shadow-lift ring-1 ring-gold-400/30 ${
+        className={`gallery-still relative aspect-square overflow-hidden rounded-cozy bg-cream-200 shadow-lift ring-1 ring-gold-400/30 sm:aspect-[4/5] ${
           hasImages ? "cursor-zoom-in" : ""
         }`}
         onMouseEnter={() => {

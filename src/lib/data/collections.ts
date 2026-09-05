@@ -73,7 +73,7 @@ export const collections: CollectionMeta[] = [
     emoji: "users",
     seoTitle: "Kalėdinės dovanos šeimai — bendram laikui | Kalėdų Kampelis",
     description:
-      "Dovanos, kurios suartina: žaidimų vakarai, advento kalendoriai, namų jaukumo rinkiniai. Pristatymas iki Kalėdų garantuotas.",
+      "Dovanos, kurios suartina: žaidimų vakarai, eglutės detalės, namų jaukumo rinkiniai. Pristatymas iki Kalėdų garantuotas.",
     intro:
       "Dovanos ne vienam žmogui, o visiems namams — už bendrą laiką, juoką ir tradicijas.",
     filter: byRecipient("seimai"),

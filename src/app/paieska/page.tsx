@@ -47,7 +47,7 @@ function SearchResults() {
           Nieko neradome 😕
         </p>
         <p className="mx-auto mt-2 max-w-sm text-center text-sm leading-relaxed text-ink-600">
-          „{q}“ — tokios prekės neturime, bet šie bestselleriai džiugina beveik visus:
+          „{q}“ tokios prekės neturime, bet šie bestselleriai džiugina beveik visus:
         </p>
         <div className="mt-8">
           <ProductGrid products={bestsellers().slice(0, 4)} />

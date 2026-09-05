@@ -6,6 +6,7 @@ import { products, getProduct } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
 import { discountPercent, formatPrice } from "@/lib/format";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
+import { JsonLd } from "@/components/seo/json-ld";
 import { RECIPIENT_LABELS } from "@/types";
 import { Gallery } from "@/components/commerce/gallery";
 import { AddToCartForm, StickyBuyBar } from "@/components/commerce/add-to-cart";
@@ -14,7 +15,6 @@ import { TrackProductView } from "@/components/commerce/track-product-view";
 import { RecentlyViewed } from "@/components/commerce/recently-viewed";
 import { ProductCard } from "@/components/commerce/product-card";
 import { Badge } from "@/components/ui/primitives";
-import { ProductPhotoNotice } from "@/components/commerce/product-photo-notice";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -51,20 +51,19 @@ export default async function ProductPage({ params }: Props) {
     .slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 pb-mobile-sticky pt-4 sm:px-6 lg:px-8 lg:pb-14 lg:pt-8">
+    <div data-product-page="" className="mx-auto max-w-7xl px-4 pb-mobile-sticky pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pb-14 lg:pt-8">
       {/* Naršymo takeliai */}
-      <nav aria-label="Naršymo takelis" className="mb-5 flex flex-wrap items-center gap-1 text-[13px] text-ink-400">
-        <Link href="/" className="hover:text-burgundy-600">Pradžia</Link>
+      <nav aria-label="Naršymo takelis" className="mb-3 flex flex-wrap items-center gap-1 text-[13px] text-ink-400 sm:mb-5">
+        <Link href="/" className="inline-flex min-h-9 items-center hover:text-burgundy-600">Pradžia</Link>
         <ChevronRight className="size-3.5" aria-hidden />
-        <Link href="/dovanos/visos-dovanos" className="hover:text-burgundy-600">Dovanos</Link>
+        <Link href="/dovanos/visos-dovanos" className="inline-flex min-h-9 items-center hover:text-burgundy-600">Dovanos</Link>
         <ChevronRight className="size-3.5" aria-hidden />
-        <span className="max-w-[50vw] truncate font-medium text-ink-600">{product.name}</span>
+        <span className="max-w-[46vw] truncate font-medium text-ink-600">{product.name}</span>
       </nav>
 
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Gallery product={product} />
-          <ProductPhotoNotice />
         </div>
 
         <div className="flex flex-col lg:pt-2">
@@ -78,7 +77,7 @@ export default async function ProductPage({ params }: Props) {
             <span className="ml-auto text-xs font-medium text-ink-400">SKU: {product.sku}</span>
           </div>
 
-          <h1 className="font-display text-[1.75rem] font-semibold leading-tight text-ink-900 sm:text-4xl">
+          <h1 className="font-display text-[1.55rem] font-semibold leading-tight text-ink-900 sm:text-4xl">
             {product.name}
           </h1>
           <p className="mt-2.5 text-[15px] leading-relaxed text-ink-600">{product.tagline}</p>
@@ -162,7 +161,7 @@ export default async function ProductPage({ params }: Props) {
           <h2 id="rel-heading" className="mb-6 font-display text-2xl font-semibold text-ink-900">
             Jums taip pat gali patikti
           </h2>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4 lg:gap-x-6">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-4 md:gap-x-4 md:gap-y-8 lg:gap-x-6">
             {related.map((p) => (
               <ProductCard key={p!.slug} product={p!} />
             ))}
@@ -174,18 +173,15 @@ export default async function ProductPage({ params }: Props) {
 
       <StickyBuyBar product={product} />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            productSchema(product),
-            breadcrumbSchema([
-              { name: "Pradžia", href: "/" },
-              { name: "Dovanos", href: "/dovanos/visos-dovanos" },
-              { name: product.name, href: `/produktai/${product.slug}` },
-            ]),
+      <JsonLd
+        data={[
+          productSchema(product),
+          breadcrumbSchema([
+            { name: "Pradžia", href: "/" },
+            { name: "Dovanos", href: "/dovanos/visos-dovanos" },
+            { name: product.name, href: `/produktai/${product.slug}` },
           ]),
-        }}
+        ]}
       />
       <TrackProductView product={product} />
     </div>

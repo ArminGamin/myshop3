@@ -51,12 +51,12 @@ export function FrequentlyBoughtTogether({ product }: { product: Product }) {
         Dažnai perkama kartu
       </h2>
       <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-center">
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
           {[product, ...companions].map((p, i) => (
-            <div key={p.slug} className="flex items-center gap-3">
-              {i > 0 ? <span aria-hidden className="text-xl text-gold-500">+</span> : null}
+            <div key={p.slug} className="flex min-w-0 items-center gap-2 sm:gap-3">
+              {i > 0 ? <span aria-hidden className="hidden text-xl text-gold-500 sm:inline">+</span> : null}
               <label
-                className={`flex w-36 cursor-pointer flex-col items-center gap-1.5 rounded-cozy border-2 p-2.5 text-center transition ${
+                className={`flex w-full cursor-pointer flex-col items-center gap-1.5 rounded-cozy border-2 p-1.5 text-center transition sm:w-36 sm:p-2.5 ${
                   i === 0 || selected.includes(p.slug)
                     ? "border-burgundy-600/70 bg-burgundy-100/30"
                     : "border-cream-300 opacity-60 hover:opacity-100"

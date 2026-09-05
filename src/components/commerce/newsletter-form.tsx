@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
+import { apiHeaders } from "@/lib/security/csrf-client";
+import { emailError } from "@/lib/security/email";
 
 export function NewsletterForm({
   source = "footer-section",
@@ -12,17 +14,13 @@ export function NewsletterForm({
   compact?: boolean;
 }) {
   const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
   const [honey, setHoney] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error" | "invalid">("idle");
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-      setStatus("invalid");
-      return;
-    }
-    if (!consent) {
+    const mailErr = emailError(email);
+    if (mailErr) {
       setStatus("invalid");
       return;
     }
@@ -30,8 +28,8 @@ export function NewsletterForm({
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, consent, source, honey }),
+        headers: apiHeaders(),
+        body: JSON.stringify({ email, consent: true, source, honey }),
       });
       if (!res.ok) throw new Error();
       track("sign_up", { source });
@@ -88,19 +86,10 @@ export function NewsletterForm({
           {status === "loading" ? "Siunčiama…" : "Gauti nuolaidą"}
         </Button>
       </div>
-      <label className="mt-3 flex cursor-pointer items-start gap-2 text-left text-xs leading-relaxed text-ink-600">
-        <input
-          type="checkbox"
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 size-4 shrink-0 accent-burgundy-600"
-        />
-        Sutinku gauti naujienlaiškį ir galiu bet kada atsisakyti vienu paspaudimu.
-      </label>
       {(status === "invalid" || status === "error") && (
         <p role="alert" className="mt-2 text-left text-xs font-semibold text-burgundy-600">
           {status === "invalid"
-            ? "Patikrinkite el. paštą ir pažymėkite sutikimą."
+            ? "Įveskite gmail.com, outlook.com, icloud.com arba inbox.lt paštą."
             : "Kažkas nepavyko — pabandykite dar kartą."}
         </p>
       )}

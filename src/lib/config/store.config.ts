@@ -3,8 +3,7 @@ export const store = {
     name: "Kalėdų Kampelis",
     handle: "kaledukampelis",
     tagline: "Premium kalėdinės dovanos",
-    description:
-      "Atidžiai parinktos kalėdinės dovanos, kurios sukuria jaukumą. Pristatome visoje Lietuvoje.",
+    description: "Atidžiai parinktos kalėdinės dovanos, kurios namus pripildo šilumos!",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   },
   // DEMO DATA — replace with real company details before launch.
@@ -41,7 +40,22 @@ export const store = {
     tiktok: "https://tiktok.com/@kaledukampelis",
   },
   search: {
-    popularQueries: ["žvakė", "pledas", "advento kalendorius", "dovana mamai", "dovana vaikinui", "kojinės"],
+    popularQueries: [
+      "žvakė",
+      "pledas",
+      "dovana mamai",
+      "dovana vaikinui",
+      "dovana vaikams",
+      "dovana kolegei",
+      "kojinės",
+      "girlianda",
+      "puodelis",
+      "arbata",
+      "rožė",
+      "šildyklė",
+      "lempa",
+      "masažas",
+    ],
   },
   popups: {
     enabled: true,
@@ -62,6 +76,14 @@ export const store = {
     protection: { priceCents: 150 },
     donation: { stepCents: 500, cause: "Maisto banką", lineLabel: "Parama Maisto bankui" },
     priority: { priceCents: 250 },
+  },
+  mysteryGift: {
+    slug: "kaledu-siurprizas",
+    name: "Kalėdų siurprizas",
+    tagline: "Paslaptinga dovana, kurią atidarysite šventėms.",
+    priceCents: 899,
+    compareAtCents: 1499,
+    image: "/mystery-gift.png",
   },
   // Kiekio („rinkinio") nuolaidos — taikomos automatiškai, rodomos aiškiai.
   bundles: {
@@ -112,11 +134,11 @@ export const campaign: CampaignTheme = {
   heroHeadlineA: "Kalėdinės dovanos, kurias iš tikrųjų norisi dovanoti",
   heroHeadlineB: "Dovanos, po kurių žmonės apkabina stipriau",
   heroSubtext:
-    "Raskite išskirtinę dovaną šeimai, draugams ir artimiausiems — be valandų praleistų ieškant.",
+    "Raskite išskirtinę dovaną šeimai, draugams ir artimiausiems!",
   primaryCTA: "Rasti dovaną →",
   secondaryCTA: "Peržiūrėti bestsellerius",
   bannerText: "Nemokamas pristatymas nuo 80 € · Kokybės garantija",
-  announcementText: "🎄 Kalėdinis pristatymas visoje Lietuvoje",
+  announcementText: "Kalėdinis pristatymas visoje Lietuvoje! 🎄",
   discountCode: null,
   theme: "christmas",
 };

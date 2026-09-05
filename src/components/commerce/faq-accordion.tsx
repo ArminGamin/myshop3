@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail } from "lucide-react";
+import { Mail, Plus } from "lucide-react";
 import type { FaqItem } from "@/lib/data/faq";
 import { store } from "@/lib/config/store.config";
 
@@ -45,22 +45,22 @@ export function FAQAccordion({
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-burgundy-600">
             Pagalba
           </p>
-          <h2 id="faq-heading" className="mb-3 font-display text-[1.45rem] font-semibold leading-snug text-ink-900 sm:text-3xl xl:text-[2rem]">
+          <h2 id="faq-heading" className="mb-3 font-display text-[1.45rem] font-extrabold leading-snug text-ink-900 sm:text-3xl xl:text-[2rem]">
             Dažniausiai užduodami klausimai
           </h2>
-          <p className="mb-5 text-base leading-relaxed text-ink-600 md:mb-6">
+          <p className="mb-5 text-base font-semibold leading-relaxed text-ink-600 md:mb-6">
             Neradote atsakymo? Susisiekite ir atsakysime greitai!
           </p>
           <a
             href={`mailto:${store.contact.email}`}
-            className="group flex gap-3 rounded-2xl bg-white p-3 shadow-[0_4px_12px_rgb(42_33_24/0.05)] transition-shadow hover:shadow-[0_6px_16px_rgb(42_33_24/0.08)] md:p-4"
+            className="group flex gap-3 rounded-cozy border border-gold-400 bg-white p-3 shadow-card transition-shadow hover:shadow-lift md:p-4"
           >
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-cream-100">
-              <Mail className="size-5 text-ink-900" strokeWidth={1.75} aria-hidden />
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-cozy bg-gold-200 text-burgundy-700">
+              <Mail className="size-5" strokeWidth={1.75} aria-hidden />
             </span>
             <span className="flex min-w-0 flex-col justify-center gap-0.5 text-left">
-              <span className="text-sm font-semibold text-ink-900">Rašykite mums</span>
-              <span className="break-all text-sm text-ink-600">{store.contact.email}</span>
+              <span className="text-sm font-extrabold text-ink-900">Rašykite mums</span>
+              <span className="break-all text-sm font-bold text-burgundy-600">{store.contact.email}</span>
             </span>
           </a>
         </div>
@@ -88,14 +88,19 @@ export function FAQAccordion({
               >
                 {faq.q}
                 <span
-                  className={`flex size-9 shrink-0 items-center justify-center rounded-full text-lg font-semibold leading-none shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] transition-transform duration-500 ${
+                  className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] ${
                     isOpen
-                      ? "rotate-45 bg-burgundy-300/50 text-burgundy-700"
+                      ? "bg-burgundy-300/50 text-burgundy-700"
                       : "bg-burgundy-100 text-burgundy-600"
                   }`}
                   aria-hidden
                 >
-                  +
+                  <Plus
+                    className={`block size-4 shrink-0 origin-center transition-transform duration-500 ${
+                      isOpen ? "rotate-45" : ""
+                    }`}
+                    strokeWidth={2.25}
+                  />
                 </span>
               </button>
               <div className={`faq-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen} inert={!isOpen}>

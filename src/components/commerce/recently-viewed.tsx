@@ -22,7 +22,7 @@ export function RecentlyViewed({ excludeSlug }: { excludeSlug?: string }) {
       <h2 id="recent-heading" className="mb-5 font-display text-2xl font-semibold text-ink-900">
         Jūsų peržiūrėtos prekės
       </h2>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 md:gap-x-4 md:gap-y-8 lg:grid-cols-4">
         {items.slice(0, 4).map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}

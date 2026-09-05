@@ -3,6 +3,25 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { MOTION, usePresence } from "@/lib/motion";
 
+function acquireOverlay() {
+  const n = Number(document.documentElement.dataset.overlays ?? "0") + 1;
+  document.documentElement.dataset.overlays = String(n);
+  document.documentElement.dataset.veil = "on";
+  document.body.style.overflow = "hidden";
+}
+
+function releaseOverlay(previouslyFocused: HTMLElement | null) {
+  const n = Math.max(0, Number(document.documentElement.dataset.overlays ?? "1") - 1);
+  if (n === 0) {
+    delete document.documentElement.dataset.overlays;
+    delete document.documentElement.dataset.veil;
+    document.body.style.overflow = "";
+    previouslyFocused?.focus();
+    return;
+  }
+  document.documentElement.dataset.overlays = String(n);
+}
+
 export function Overlay({
   open,
   onClose,
@@ -10,23 +29,28 @@ export function Overlay({
   children,
   side = "right",
   widthClass = "max-w-md",
+  zClass = "z-[70]",
 }: {
   open: boolean;
   onClose: () => void;
   label: string;
   children: ReactNode;
-  side?: "right" | "bottom";
+  side?: "right" | "bottom" | "center";
   widthClass?: string;
+  zClass?: string;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const { mounted, visible } = usePresence(open, MOTION.overlayExit);
 
   useEffect(() => {
     if (!mounted) return;
-
     const previouslyFocused = document.activeElement as HTMLElement | null;
-    document.body.style.overflow = "hidden";
-    document.documentElement.dataset.veil = "on";
+    acquireOverlay();
+    return () => releaseOverlay(previouslyFocused);
+  }, [mounted]);
+
+  useEffect(() => {
+    if (!mounted || !visible) return;
 
     const panel = panelRef.current;
     const focusables = () =>
@@ -36,11 +60,12 @@ export function Overlay({
         ) ?? []
       );
 
-    if (visible) focusables()[0]?.focus();
+    focusables()[0]?.focus();
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
+        e.stopImmediatePropagation();
         onClose();
         return;
       }
@@ -60,18 +85,20 @@ export function Overlay({
     }
 
     document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-      delete document.documentElement.dataset.veil;
-      previouslyFocused?.focus();
-    };
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [mounted, visible, onClose]);
 
   if (!mounted) return null;
 
+  const panelClass =
+    side === "right"
+      ? `overlay-panel-right inset-y-0 right-0 flex h-dvh max-h-dvh w-full ${widthClass} flex-col overflow-hidden pt-[env(safe-area-inset-top)]`
+      : side === "bottom"
+        ? "overlay-panel-bottom inset-x-0 bottom-0 flex max-h-[96dvh] w-full flex-col overflow-hidden rounded-t-cozy pb-[env(safe-area-inset-bottom)]"
+        : `overlay-panel-center left-1/2 top-1/2 flex max-h-[95dvh] w-[calc(100%-1.25rem)] ${widthClass} flex-col overflow-hidden rounded-cozy`;
+
   return (
-    <div className="pointer-events-none fixed inset-0 z-[70]">
+    <div className={`pointer-events-none fixed inset-0 ${zClass}`}>
       <div
         className={`overlay-backdrop absolute inset-0 bg-forest-700/32 backdrop-blur-[2px] ${visible ? "is-visible" : ""}`}
         onClick={onClose}
@@ -82,11 +109,7 @@ export function Overlay({
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className={`overlay-panel absolute bg-cream-50 shadow-drawer ${
-          side === "right"
-            ? `overlay-panel-right inset-y-0 right-0 flex h-dvh max-h-dvh w-full ${widthClass} flex-col overflow-hidden pt-[env(safe-area-inset-top)]`
-            : "overlay-panel-bottom inset-x-0 bottom-0 flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-cozy pb-[env(safe-area-inset-bottom)]"
-        } ${visible ? "is-visible" : ""}`}
+        className={`overlay-panel absolute bg-cream-50 shadow-drawer ${panelClass} ${visible ? "is-visible" : ""}`}
       >
         {children}
       </div>

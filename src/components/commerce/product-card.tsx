@@ -82,7 +82,7 @@ export function ProductCard({ product }: { product: Product }) {
         ) : null}
         <p className="mt-0.5 hidden line-clamp-1 text-[13px] text-ink-600 sm:block">{product.tagline}</p>
         <div className="mt-1.5 flex items-baseline gap-2 sm:mt-2">
-          <span className="text-[14px] font-bold text-burgundy-600 sm:text-[15px]">
+          <span className="font-display text-[17px] font-extrabold text-burgundy-600 sm:text-xl">
             {formatPrice(product.priceCents)}
           </span>
           {product.compareAtPriceCents ? (
@@ -104,7 +104,7 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-4 sm:gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+    <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
       {products.map((product) => (
         <ProductCard key={product.slug} product={product} />
       ))}

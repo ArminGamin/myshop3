@@ -30,6 +30,7 @@ Komandos: `npm run build` · `npm run lint` · `npx tsc --noEmit`
 | Kintamasis | Būtinas | Aprašymas |
 |---|---|---|
 | `STRIPE_SECRET_KEY` | ✅ mokėjimams | `sk_test_…` / `sk_live_…` |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | ✅ kortelės laukui | `pk_test_…` / `pk_live_…` |
 | `STRIPE_WEBHOOK_SECRET` | ✅ užsakymams | `whsec_…` |
 | `NEXT_PUBLIC_SITE_URL` | ✅ | `https://jusu-domenas.lt` |
 | `NEXT_PUBLIC_GA_ID` | — | GA4 (`G-…`) |
@@ -40,7 +41,7 @@ Komandos: `npm run build` · `npm run lint` · `npx tsc --noEmit`
 
 4. Stripe → Developers → Webhooks → `Add endpoint`:
    `https://jusu-domenas.lt/api/stripe/webhook` → events: `checkout.session.completed`,
-   `checkout.session.expired` → nukopijuokite `whsec_…` į Vercel.
+   `checkout.session.expired`, `payment_intent.succeeded` → nukopijuokite `whsec_…` į Vercel.
 
 Be `STRIPE_SECRET_KEY` parduotuvė veikia pilnai, tik atsiskaitymas grąžina sąžiningą
 503 klaidą (niekas nėra imituojama).

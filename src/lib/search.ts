@@ -1,10 +1,6 @@
 import { products } from "@/lib/data/products";
 import type { Product } from "@/types";
 
-// Paprastas atsparus rašybos klaidoms paieškos įvertinimas — pakankamas
-// katalogui iki ~200 prekių. Augant katalogui rekomenduojama išorinė
-// paieška (pvz., Algolia) per šio modulio sąsają.
-
 interface Scored {
   product: Product;
   score: number;
@@ -33,46 +29,92 @@ function similarity(a: string, b: string): number {
 }
 
 const KEYWORD_MAP: Record<string, string[]> = {
-  mama: ["jai", "tevams", "zvakide", "arbata", "pledas"],
+  mama: ["jai", "tevams", "zvakide", "arbata", "pledas", "vonia", "sildykle", "roze"],
+  mamai: ["jai", "tevams", "zvakide", "arbata", "pledas", "vonia", "sildykle", "roze"],
+  anyta: ["jai", "tevams", "zvakide"],
   tevas: ["jam", "tevams", "viskis", "termosas"],
-  vaikinas: ["jam", "termosas", "viskis", "kojines"],
-  mergina: ["jai", "silkas", "zvakide"],
+  tecio: ["jam", "tevams", "viskis", "termosas"],
+  teciai: ["jam", "tevams", "viskis"],
+  vaikinas: ["jam", "termosas", "viskis", "kojines", "deklas", "ikroviklis", "masazas"],
+  vaikinui: ["jam", "termosas", "viskis", "kojines", "deklas", "ikroviklis", "masazas"],
+  mergina: ["jai", "silkas", "zvakide", "vonia", "roze"],
+  merginai: ["jai", "silkas", "zvakide", "vonia", "roze"],
   draugas: ["draugui", "zaidimai", "kojines"],
-  kolega: ["kolegai", "sokoladas", "adventas"],
-  senelis: ["slaptas-senelis", "sokoladas", "sodas", "kojines"],
-  jauku: ["pledas", "kojines", "zvakide", "sokoladas"],
-  kvapas: ["zvakide", "difuzorius"],
+  draugei: ["jai", "silkas", "zvakide"],
+  kolega: ["kolegai", "uzrasine", "deklas"],
+  kolegei: ["kolegai", "uzrasine", "arbata", "zvakide"],
+  mokytoja: ["kolegai", "uzrasine", "arbata"],
+  mokytojai: ["kolegai", "uzrasine", "arbata"],
+  senelis: ["slaptas-senelis", "sodas", "kojines"],
+  vaikas: ["seimai", "zaidimas", "puodelis"],
+  vaikams: ["seimai", "zaidimas", "zaisliukai", "galaktika", "menulis"],
+  jauku: ["pledas", "kojines", "zvakide"],
+  kvapas: ["zvakide", "difuzorius", "vonia"],
+  zvak: ["zvakide"],
+  zvake: ["zvakide"],
+  pledas: ["pledas"],
+  kojines: ["kojines"],
+  arbata: ["arbata"],
+  girlianda: ["girlianda"],
+  puodelis: ["puodelis"],
+  vonia: ["vonia"],
+  muilas: ["vonia"],
+  ikroviklis: ["ikroviklis"],
+  deklas: ["deklas"],
+  uzrasine: ["uzrasine"],
+  zaisliukai: ["zaisliukai", "egle"],
+  eglute: ["zaisliukai", "egle"],
+  lempa: ["sildymo-lempa", "menulis", "saulelydis"],
+  roze: ["roze"],
+  menulis: ["menulis"],
+  saulelydis: ["saulelydis"],
+  drekinuvas: ["lietus", "difuzorius"],
+  sildykle: ["sildykle", "pledas"],
+  projektorius: ["galaktika", "saulelydis"],
+  plakiklis: ["plakiklis", "puodelis"],
+  masazas: ["masazas"],
+  pagalve: ["uzvalkalas", "silkas"],
+  gua: ["guasha", "vonia"],
 };
 
 export function searchProducts(query: string): Product[] {
   const q = normalize(query);
   if (q.length < 2) return [];
 
-  const keywords = KEYWORD_MAP[q] ?? [];
+  const words = q.split(/\s+/).filter((w) => w.length >= 3);
   const scored: Scored[] = [];
 
   for (const product of products) {
     if (!product.inStock) continue;
     const name = normalize(product.name);
     const tagline = normalize(product.tagline);
-    const haystack = `${name} ${tagline} ${product.recipients.join(" ")} ${product.vibes.join(" ")}`;
+    const extra = normalize(
+      `${product.recipients.join(" ")} ${product.vibes.join(" ")} ${product.occasions.join(" ")} ${product.benefits.join(" ")} ${product.artSeed}`,
+    );
+    const haystack = `${name} ${tagline} ${extra} ${normalize(product.slug)}`;
 
     let score = 0;
     if (normalize(product.slug).includes(q)) score += 6;
     if (name.includes(q)) score += 5;
     else {
       const sim = similarity(q, name.split(" ")[0] ?? "");
-      if (sim > 0.55) score += 3 * sim; // rašybos klaidų tolerancija
+      if (sim > 0.55) score += 3 * sim;
     }
     if (haystack.includes(q)) score += 2;
-    for (const kw of keywords) {
-      if (
-        product.recipients.includes(kw as never) ||
-        product.occasions.includes(kw as never) ||
-        name.includes(normalize(kw)) ||
-        product.slug.includes(kw)
-      ) {
-        score += 1.5;
+
+    for (const word of words) {
+      if (haystack.includes(word)) score += 2;
+      const mapped = KEYWORD_MAP[word] ?? [];
+      for (const kw of mapped) {
+        if (
+          product.recipients.includes(kw as never) ||
+          product.occasions.includes(kw as never) ||
+          name.includes(normalize(kw)) ||
+          product.slug.includes(kw) ||
+          product.artSeed.includes(kw)
+        ) {
+          score += 1.5;
+        }
       }
     }
 
