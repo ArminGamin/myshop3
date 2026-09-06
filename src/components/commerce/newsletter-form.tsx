@@ -47,7 +47,7 @@ export function NewsletterForm({
           compact ? "" : "mx-auto max-w-md"
         }`}
       >
-        Ačiū! Nuolaidos kodas išsiųstas į <strong>{email}</strong>.
+        Ačiū! Esate prenumeratorius — naujienas siųsime į <strong>{email}</strong>.
       </div>
     );
   }
@@ -83,7 +83,7 @@ export function NewsletterForm({
           className="min-h-12 flex-1 rounded-full border border-cream-400 bg-white px-5 text-base text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-gold-500"
         />
         <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
-          {status === "loading" ? "Siunčiama…" : "Gauti nuolaidą"}
+          {status === "loading" ? "Siunčiama…" : "Prenumeruoti"}
         </Button>
       </div>
       {(status === "invalid" || status === "error") && (

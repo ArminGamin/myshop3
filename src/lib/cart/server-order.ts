@@ -125,7 +125,10 @@ export function buildOrder(
   };
 }
 
-export function orderMetadata(order: BuiltOrder, customer?: { email?: string; phone?: string; address?: string }) {
+export function orderMetadata(
+  order: BuiltOrder,
+  customer?: { email?: string; phone?: string; address?: string; name?: string; surname?: string }
+) {
   return {
     cart: JSON.stringify(order.rawLines.map((l) => ({ s: l.slug, v: l.variantId, q: l.qty }))).slice(0, 400),
     addons: JSON.stringify({
@@ -137,5 +140,7 @@ export function orderMetadata(order: BuiltOrder, customer?: { email?: string; ph
     email: (customer?.email ?? "").slice(0, 80),
     phone: (customer?.phone ?? "").slice(0, 20),
     address: (customer?.address ?? "").slice(0, 400),
+    name: (customer?.name ?? "").slice(0, 40),
+    surname: (customer?.surname ?? "").slice(0, 40),
   };
 }

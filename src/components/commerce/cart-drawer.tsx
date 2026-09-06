@@ -223,7 +223,13 @@ export function CartDrawer() {
                         </button>
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-sm font-bold text-burgundy-600">
+                        <span
+                          className={
+                            isMobile
+                              ? "text-base font-extrabold text-burgundy-600"
+                              : "text-sm font-bold text-burgundy-600"
+                          }
+                        >
                           {formatPrice(item.lineTotalCents)}
                         </span>
                         <button
@@ -240,6 +246,15 @@ export function CartDrawer() {
                 </li>
               ))}
             </ul>
+
+            {isMobile ? (
+              <CartAddonRows
+                compact
+                subtotalCents={subtotal + mysteryCents}
+                selected={addons}
+                onChange={updateAddons}
+              />
+            ) : null}
 
             {/* Krepšelio papildymas */}
             {upsell ? (
@@ -293,59 +308,75 @@ export function CartDrawer() {
           </div>
 
           <div className="shrink-0 border-t border-cream-300/70 bg-cream-100/80 px-5 py-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
-            {isMobile ? (
-              <div className="mb-2.5">
-                <CartAddonRows
-                  compact
-                  subtotalCents={subtotal + mysteryCents}
-                  selected={addons}
-                  onChange={updateAddons}
-                />
-              </div>
-            ) : null}
-            <p className="mb-2.5 flex items-center justify-center gap-1.5 text-xs text-ink-400">
-              <Truck className="size-3.5" /> Pristatymas per 4–6 d. ·{" "}
-              <ShieldCheck className="size-3.5" /> Saugus atsiskaitymas
-            </p>
-            <div className="flex items-center justify-between text-[13px] text-ink-600">
+            {isMobile ? null : (
+              <p className="mb-2.5 flex items-center justify-center gap-1.5 text-xs text-ink-400">
+                <Truck className="size-3.5" /> Pristatymas per 4–6 d. ·{" "}
+                <ShieldCheck className="size-3.5" /> Saugus atsiskaitymas
+              </p>
+            )}
+            <div
+              className={`flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
+            >
               <span>Tarpinė suma</span>
-              <span>{formatPrice(subtotal)}</span>
+              <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
+                {formatPrice(subtotal)}
+              </span>
             </div>
             {mysteryCents ? (
-              <div className="mt-1 flex items-center justify-between text-[13px] text-ink-600">
+              <div
+                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
+              >
                 <span>{MYSTERY_GIFT.name}</span>
-                <span>{formatPrice(mysteryCents)}</span>
+                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
+                  {formatPrice(mysteryCents)}
+                </span>
               </div>
             ) : null}
             {extras.protection ? (
-              <div className="mt-1 flex items-center justify-between text-[13px] text-ink-600">
+              <div
+                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
+              >
                 <span>{addonLineLabel("protection")}</span>
-                <span>{formatPrice(extras.protection)}</span>
+                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
+                  {formatPrice(extras.protection)}
+                </span>
               </div>
             ) : null}
             {extras.donation ? (
-              <div className="mt-1 flex items-center justify-between text-[13px] text-ink-600">
+              <div
+                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
+              >
                 <span>{addonLineLabel("donation")}</span>
-                <span>{formatPrice(extras.donation)}</span>
+                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
+                  {formatPrice(extras.donation)}
+                </span>
               </div>
             ) : null}
             {extras.priority ? (
-              <div className="mt-1 flex items-center justify-between text-[13px] text-ink-600">
+              <div
+                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
+              >
                 <span>{addonLineLabel("priority")}</span>
-                <span>{formatPrice(extras.priority)}</span>
+                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
+                  {formatPrice(extras.priority)}
+                </span>
               </div>
             ) : null}
             <div className="mt-2 flex items-baseline justify-between">
               <span className="text-sm font-medium text-ink-600">Iš viso</span>
-              <span className="text-3xl font-extrabold tracking-tight text-burgundy-600">
+              <span
+                className={`font-extrabold tracking-tight text-burgundy-600 ${isMobile ? "text-4xl" : "text-3xl"}`}
+              >
                 {formatPrice(payable)}
               </span>
             </div>
-            <p className="mt-0.5 text-xs text-ink-400">
-              {freeShipping
-                ? "Nemokamas pristatymas įskaičiuotas"
-                : "Pristatymo kaina apskaičiuojama atsiskaitymo metu."}
-            </p>
+            {isMobile ? null : (
+              <p className="mt-0.5 text-xs text-ink-400">
+                {freeShipping
+                  ? "Nemokamas pristatymas įskaičiuotas"
+                  : "Pristatymo kaina apskaičiuojama atsiskaitymo metu."}
+              </p>
+            )}
             <Button
               size="lg"
               className="mt-3 w-full whitespace-normal text-center text-[15px] leading-snug"

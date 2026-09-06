@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { flags } from "@/lib/config/store.config";
-import { getChristmasCountdown, type ChristmasCountdown } from "@/lib/config/deadline";
+import {
+  getChristmasCountdown,
+  lithuanianDayWord,
+  type ChristmasCountdown,
+} from "@/lib/config/deadline";
 
-const units: { key: keyof Pick<ChristmasCountdown, "days" | "hours" | "minutes" | "seconds">; label: string }[] = [
-  { key: "days", label: "dienos" },
+const units: { key: keyof Pick<ChristmasCountdown, "hours" | "minutes" | "seconds">; label: string }[] = [
   { key: "hours", label: "val." },
   { key: "minutes", label: "min." },
   { key: "seconds", label: "sek." },
@@ -48,19 +51,23 @@ export function ChristmasCountdown() {
         <Spark />
       </div>
       <p className="xmas-count-row font-display text-[1.45rem] font-bold leading-none text-cream-50 sm:text-[1.65rem]">
-        {units.map((unit, i) => (
+        <span>
+          {parts ? parts.days : "··"}
+        </span>
+        {units.map((unit) => (
           <span key={unit.key}>
-            {i > 0 ? <span className="xmas-count-sep mx-1.5 text-[0.85rem]">·</span> : null}
+            <span className="xmas-count-sep mx-1.5 text-[0.85rem]">·</span>
             <span className={unit.key === "seconds" ? "xmas-count-tick" : undefined}>
-              {parts ? (unit.key === "days" ? parts.days : pad(parts[unit.key])) : "··"}
+              {parts ? pad(parts[unit.key]) : "··"}
             </span>
           </span>
         ))}
       </p>
       <p className="xmas-count-labels font-sans text-[8px] font-extrabold uppercase tracking-[0.16em] text-gold-400/80">
-        {units.map((unit, i) => (
+        <span>{parts ? lithuanianDayWord(parts.days) : "dienos"}</span>
+        {units.map((unit) => (
           <span key={unit.key}>
-            {i > 0 ? <span className="xmas-count-sep mx-1">·</span> : null}
+            <span className="xmas-count-sep mx-1">·</span>
             {unit.label}
           </span>
         ))}

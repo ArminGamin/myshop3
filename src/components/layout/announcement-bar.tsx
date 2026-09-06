@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { campaign, flags, store } from "@/lib/config/store.config";
-import { getDeadlineInfo, formatDeadline, getChristmasCountdown } from "@/lib/config/deadline";
+import {
+  getDeadlineInfo,
+  formatDeadline,
+  getChristmasCountdown,
+  lithuanianDayWord,
+} from "@/lib/config/deadline";
 import { SafeDiv } from "@/components/layout/safe-div";
 
 const ROTATE_MS = 4500;
@@ -13,10 +18,8 @@ function deadlineMessage(): string | null {
   if (deadline.phase === "before" && deadline.deadlineDate) {
     return `Užsisakykite iki ${formatDeadline(deadline.deadlineDate)}! ✨`;
   }
-  if (deadline.phase === "near" && deadline.deadlineDate) {
-    return deadline.daysLeft === 1
-      ? "Paskutinės dienos užsakymams iki Kalėdų — liko 1 diena! ✨"
-      : `Paskutinės dienos užsakymams iki Kalėdų — liko ${deadline.daysLeft} dienų! ✨`;
+  if (deadline.phase === "near" && deadline.deadlineDate && deadline.daysLeft != null) {
+    return `Paskutinės dienos užsakymams iki Kalėdų — liko ${deadline.daysLeft} ${lithuanianDayWord(deadline.daysLeft)}! ✨`;
   }
   return null;
 }
@@ -26,8 +29,7 @@ function christmasMessage(): string | null {
   const left = getChristmasCountdown();
   if (left.totalMs <= 0) return "Linksmų Kalėdų! 🤩";
   if (left.days === 0) return "Kalėdos jau šiandien! 🤩";
-  if (left.days === 1) return "Iki Kalėdų liko 1 diena! 🤩";
-  return `Iki Kalėdų liko ${left.days} dienų! 🤩`;
+  return `Iki Kalėdų liko ${left.days} ${lithuanianDayWord(left.days)}! 🤩`;
 }
 
 function buildMessages(): string[] {
@@ -66,9 +68,9 @@ export function AnnouncementBar() {
   if (messages.length === 0) return null;
 
   return (
-    <SafeDiv className="cta-bar relative z-[60] pt-[env(safe-area-inset-top)]">
+    <SafeDiv className="cta-bar relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
       <p
-        className={`mx-auto min-h-8 max-w-7xl px-3 py-1.5 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:px-4 sm:py-2 sm:text-[14.75px] ${
+        className={`min-h-8 w-fit py-1.5 ps-8 pe-4 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:ps-10 sm:pe-4 sm:text-[14.75px] ${
           visible ? "opacity-100" : "opacity-0"
         }`}
         aria-live="polite"

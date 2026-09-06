@@ -83,6 +83,8 @@ export async function POST(req: Request) {
           ? {
               email: customer.email,
               phone: customer.phone,
+              name: customer.name,
+              surname: customer.surname,
               address: `${customer.address}, ${customer.city} ${customer.postalCode}`,
             }
           : undefined

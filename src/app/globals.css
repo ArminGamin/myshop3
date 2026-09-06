@@ -318,6 +318,16 @@ html[data-sticky-buy="on"] .social-proof-toast {
 }
 
 @media (max-width: 639px) {
+  .hero-cluster {
+    margin-bottom: 2.75rem;
+  }
+  .hero-cluster > div {
+    padding-bottom: 1.5rem;
+  }
+  .trust-strip {
+    position: relative;
+    z-index: 1;
+  }
   .hero-cluster .hero-card:nth-child(3),
   .hero-cluster .hero-card:nth-child(4) {
     display: none;
@@ -332,8 +342,25 @@ html[data-sticky-buy="on"] .social-proof-toast {
     width: min(16rem, 78vw);
     padding: 0.75rem;
   }
+  .review-bought {
+    color: var(--color-burgundy-600);
+  }
+  .hero-stagger .xmas-count {
+    margin-inline: auto;
+  }
   .xmas-count {
-    padding: 0.36rem 0.75rem 0.38rem;
+    padding: 0.48rem 0.95rem 0.5rem;
+  }
+  .xmas-count-row {
+    font-size: 1.8rem;
+  }
+  .xmas-count-head {
+    font-size: 0.625rem;
+    letter-spacing: 0.22em;
+  }
+  .xmas-count-labels {
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
   }
   html:has([data-product-page]) .social-proof-toast,
   html:has([data-product-page])[data-sticky-buy="on"] .social-proof-toast {

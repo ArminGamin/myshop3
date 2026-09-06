@@ -9,6 +9,8 @@ interface Scored {
 function normalize(s: string): string {
   return s
     .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
     .replace(/[ąčęėįšųūž]/g, (c) => "aceeiisuuz".charAt("ąčęėįšųūž".indexOf(c)))
     .trim();
 }
@@ -35,8 +37,8 @@ const KEYWORD_MAP: Record<string, string[]> = {
   tevas: ["jam", "tevams", "viskis", "termosas"],
   tecio: ["jam", "tevams", "viskis", "termosas"],
   teciai: ["jam", "tevams", "viskis"],
-  vaikinas: ["jam", "termosas", "viskis", "kojines", "deklas", "ikroviklis", "masazas"],
-  vaikinui: ["jam", "termosas", "viskis", "kojines", "deklas", "ikroviklis", "masazas"],
+  vaikinas: ["jam", "termosas", "viskis", "kojines", "deklas", "ikroviklis", "masazas", "pakabukas", "ausines", "baterija"],
+  vaikinui: ["jam", "termosas", "viskis", "kojines", "deklas", "ikroviklis", "masazas", "pakabukas", "ausines", "baterija"],
   mergina: ["jai", "silkas", "zvakide", "vonia", "roze"],
   merginai: ["jai", "silkas", "zvakide", "vonia", "roze"],
   draugas: ["draugui", "zaidimai", "kojines"],
@@ -48,6 +50,7 @@ const KEYWORD_MAP: Record<string, string[]> = {
   senelis: ["slaptas-senelis", "sodas", "kojines"],
   vaikas: ["seimai", "zaidimas", "puodelis"],
   vaikams: ["seimai", "zaidimas", "zaisliukai", "galaktika", "menulis"],
+  paslaptis: ["zaidimas"],
   jauku: ["pledas", "kojines", "zvakide"],
   kvapas: ["zvakide", "difuzorius", "vonia"],
   zvak: ["zvakide"],
@@ -60,10 +63,11 @@ const KEYWORD_MAP: Record<string, string[]> = {
   vonia: ["vonia"],
   muilas: ["vonia"],
   ikroviklis: ["ikroviklis"],
+  elegancija: ["ikroviklis"],
   deklas: ["deklas"],
   uzrasine: ["uzrasine"],
   zaisliukai: ["zaisliukai", "egle"],
-  eglute: ["zaisliukai", "egle"],
+  eglute: ["zaisliukai", "egle", "pakabukas"],
   lempa: ["sildymo-lempa", "menulis", "saulelydis"],
   roze: ["roze"],
   menulis: ["menulis"],
@@ -72,9 +76,31 @@ const KEYWORD_MAP: Record<string, string[]> = {
   sildykle: ["sildykle", "pledas"],
   projektorius: ["galaktika", "saulelydis"],
   plakiklis: ["plakiklis", "puodelis"],
+  putos: ["plakiklis"],
   masazas: ["masazas"],
+  akimirka: ["masazas"],
   pagalve: ["uzvalkalas", "silkas"],
   gua: ["guasha", "vonia"],
+  ramybe: ["guasha"],
+  kilimas: ["kilimas", "pledas"],
+  kilimelis: ["kilimas"],
+  snieguole: ["kilimas"],
+  snieguoles: ["kilimas"],
+  grindys: ["kilimas"],
+  jaukumas: ["kilimas"],
+  ziema: ["kojines", "kilimas", "sildykle"],
+  raktai: ["pakabukas", "deklas"],
+  pakabukas: ["pakabukas"],
+  grotuvas: ["ausines", "baterija"],
+  garsiakalbis: ["ausines"],
+  ausines: ["ausines", "baterija"],
+  muzika: ["ausines"],
+  baterija: ["baterija", "ikroviklis"],
+  powerbank: ["baterija"],
+  visada: ["baterija"],
+  slepetes: ["slepetes", "kojines"],
+  stovas: ["stovas", "ikroviklis"],
+  telefonas: ["stovas", "ikroviklis", "ausines"],
 };
 
 export function searchProducts(query: string): Product[] {
@@ -94,12 +120,12 @@ export function searchProducts(query: string): Product[] {
     const haystack = `${name} ${tagline} ${extra} ${normalize(product.slug)}`;
 
     let score = 0;
-    if (normalize(product.slug).includes(q)) score += 6;
-    if (name.includes(q)) score += 5;
+    if (name.includes(q)) score += 8;
     else {
       const sim = similarity(q, name.split(" ")[0] ?? "");
       if (sim > 0.55) score += 3 * sim;
     }
+    if (normalize(product.slug).includes(q)) score += 3;
     if (haystack.includes(q)) score += 2;
 
     for (const word of words) {

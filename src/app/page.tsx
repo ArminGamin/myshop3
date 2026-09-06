@@ -45,7 +45,7 @@ const giftFinderTone: Record<string, string> = {
 export default function HomePage() {
   const best = bestsellers().slice(0, 4);
   const premium = premiumProducts().slice(0, 4);
-  const hamper = getProduct("sventinis-dovanu-krepselis");
+  const featured = getProduct("namu-kino-projektorius");
 
   return (
     <>
@@ -282,7 +282,7 @@ export default function HomePage() {
         </section>
       </Reveal>
 
-      {hamper ? (
+      {featured ? (
         <Reveal>
           <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-14">
             <div className="overflow-hidden rounded-cozy bg-gradient-to-br from-burgundy-700 via-burgundy-600 to-burgundy-800 shadow-lift">
@@ -292,26 +292,25 @@ export default function HomePage() {
                     Didžiausias efektas vienu pasirinkimu
                   </p>
                   <h2 className="mt-3 font-display text-[1.65rem] font-extrabold leading-snug sm:text-4xl">
-                    {hamper.name}
+                    {featured.name}
                   </h2>
                   <p className="mt-4 max-w-md text-[15px] font-semibold leading-relaxed text-cream-50">
-                    Žvakidė, kvapo difuzorius ir kojinės viename krepšelyje. Pirkus atskirai{" "}
-                    <span className="text-gold-300">{formatPrice(hamper.compareAtPriceCents ?? 7200)}</span>.
+                    Full HD filmai ant sienos iki 120 colių. Dovana, kuri nustebina vos išėmus iš dėžės!
                   </p>
                   <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                     <span className="font-display text-4xl font-extrabold text-gold-300 sm:text-5xl">
-                      {formatPrice(hamper.priceCents)}
+                      {formatPrice(featured.priceCents)}
                     </span>
-                    <ButtonLink href={`/produktai/${hamper.slug}`} variant="gold" size="lg" className="w-full sm:w-auto">
-                      Peržiūrėti krepšelį
+                    <ButtonLink href={`/produktai/${featured.slug}`} variant="gold" size="lg" className="w-full sm:w-auto">
+                      Žiūrėti dovaną <ArrowRight className="size-4" />
                     </ButtonLink>
                   </div>
                 </div>
                 <div className="order-1 overflow-hidden rounded-cozy shadow-lift lg:order-2">
                   <ProductImage
-                    images={hamper.images}
-                    seed={hamper.artSeed}
-                    alt={hamper.name}
+                    images={featured.images}
+                    seed={featured.artSeed}
+                    alt={featured.name}
                     size="hero"
                     className="aspect-square w-full object-cover"
                   />
@@ -344,10 +343,10 @@ export default function HomePage() {
             <SectionGlyph name="tree" className="size-6" />
           </span>
           <h2 id="nl-heading" className="mt-3 font-display text-2xl font-extrabold text-ink-900 sm:text-3xl">
-            Gaukite <span className="text-burgundy-600">10 %</span> nuolaidą pirmajam užsakymui
+            Prenumeruokite naujienlaiškį
           </h2>
           <p className="mx-auto mt-2 max-w-md text-sm font-semibold leading-relaxed text-ink-600">
-            Taip pat sužinosite apie naujas dovanas ir specialius Kalėdinius pasiūlymus.
+            Sužinosite apie naujas dovanas ir specialius Kalėdinius pasiūlymus.
           </p>
           <div className="mt-6">
             <NewsletterForm source="homepage" />

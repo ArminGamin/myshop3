@@ -1,18 +1,29 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
+import { notifyDiscordOrder } from "@/lib/orders/discord-webhook";
 import { getStripe } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
 function logOrder(payload: Record<string, unknown>) {
   console.log("[ORDER]", JSON.stringify({ ...payload, ts: new Date().toISOString() }));
-  const hook = process.env.ORDER_WEBHOOK_URL;
-  if (!hook) return;
-  fetch(hook, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  }).catch(() => {});
+}
+
+async function handlePaidOrder(input: {
+  orderId: string;
+  amountCents: number;
+  metadata: Stripe.Metadata;
+  shipping?: Stripe.PaymentIntent.Shipping | Stripe.Checkout.Session.CustomerDetails["address"] | null;
+  customerName?: string | null;
+}) {
+  logOrder({
+    type: "paid",
+    orderId: input.orderId,
+    amountCents: input.amountCents,
+    email: input.metadata.email,
+    metadata: input.metadata,
+  });
+  await notifyDiscordOrder(input);
 }
 
 export async function POST(req: Request) {
@@ -38,29 +49,26 @@ export async function POST(req: Request) {
 
   switch (event.type) {
     case "checkout.session.completed": {
-      const session = event.data.object;
-      logOrder({
-        type: event.type,
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.payment_status !== "paid") break;
+      await handlePaidOrder({
         orderId: session.id,
-        amountCents: session.amount_total,
-        currency: session.currency,
-        email: session.customer_details?.email,
-        shipping: session.customer_details?.address,
-        metadata: session.metadata,
+        amountCents: session.amount_total ?? 0,
+        metadata: session.metadata ?? {},
+        shipping: session.customer_details?.address ?? null,
+        customerName: session.customer_details?.name ?? null,
       });
       break;
     }
     case "payment_intent.succeeded": {
-      const intent = event.data.object;
+      const intent = event.data.object as Stripe.PaymentIntent;
       if (!intent.metadata?.cart) break;
-      logOrder({
-        type: event.type,
+      await handlePaidOrder({
         orderId: intent.id,
         amountCents: intent.amount_received || intent.amount,
-        currency: intent.currency,
-        email: intent.receipt_email ?? intent.metadata.email,
-        shipping: intent.shipping,
         metadata: intent.metadata,
+        shipping: intent.shipping ?? null,
+        customerName: intent.shipping?.name ?? null,
       });
       break;
     }

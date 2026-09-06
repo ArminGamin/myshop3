@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { store } from "@/lib/config/store.config";
+import { notifyDiscordNewsletter } from "@/lib/newsletter/discord-webhook";
 import { denyPost } from "@/lib/security/guard";
 import { isAllowedEmail, normalizeEmail } from "@/lib/security/email";
 
@@ -35,6 +35,8 @@ export async function POST(req: Request) {
     })
   );
 
+  await notifyDiscordNewsletter({ email, source: body.source ?? "unknown" });
+
   const klaviyoKey = process.env.KLAVIYO_API_KEY;
   const klaviyoList = process.env.KLAVIYO_LIST_ID;
   if (klaviyoKey && klaviyoList) {
@@ -62,6 +64,5 @@ export async function POST(req: Request) {
     }
   }
 
-  void store;
   return NextResponse.json({ ok: true, mode: "logged" });
 }

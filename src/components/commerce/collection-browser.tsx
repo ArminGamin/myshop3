@@ -8,6 +8,10 @@ import { ProductGrid } from "./product-card";
 
 type SortId = "recommended" | "price-asc" | "price-desc" | "newest";
 
+function skuRank(sku: string) {
+  return Number.parseInt(sku.replace(/\D/g, ""), 10) || 0;
+}
+
 const sortLabels: Record<SortId, string> = {
   recommended: "Rekomenduojama",
   "price-asc": "Kaina: žemiausia",
@@ -38,12 +42,10 @@ export function CollectionBrowser({
       case "price-desc":
         return [...list].sort((a, b) => b.priceCents - a.priceCents);
       case "newest":
-        return [...list].sort(
-          (a, b) => Number(b.isNew) - Number(a.isNew) || Number(b.bestseller) - Number(a.bestseller)
-        );
+        return [...list].sort((a, b) => skuRank(b.sku) - skuRank(a.sku));
       default:
         return [...list].sort(
-          (a, b) => Number(b.bestseller) - Number(a.bestseller)
+          (a, b) => Number(b.bestseller) - Number(a.bestseller) || skuRank(b.sku) - skuRank(a.sku)
         );
     }
   }, [products, range, sort]);

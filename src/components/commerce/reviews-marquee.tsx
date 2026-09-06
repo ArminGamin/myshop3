@@ -29,7 +29,7 @@ function ReviewCard({ review, compact = false }: { review: StorefrontReview; com
       <div className="mt-2">
         <Stars value={review.rating} size={compact ? 12 : 14} />
       </div>
-      <p className={`mt-1.5 font-bold text-burgundy-700 ${compact ? "text-[11px]" : "text-xs"}`}>
+      <p className={`review-bought mt-1.5 font-bold text-burgundy-700 ${compact ? "text-[11px]" : "text-xs"}`}>
         Pirkta: {review.bought}
       </p>
       <p className={`mt-2 font-semibold leading-relaxed text-ink-600 ${compact ? "text-[12px]" : "text-[13px]"}`}>{review.text}</p>
@@ -43,6 +43,18 @@ export function ReviewsMarquee() {
     <section className="overflow-hidden py-9 lg:py-11" aria-label="Ką sako klientai">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading eyebrow="Tikri atsiliepimai" title="Ką sako klientai" />
+        <div className="mt-3 flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <span className="inline-flex items-center gap-1.5">
+            <Stars value={REVIEW_SUMMARY.rating} size={16} />
+            <span className="text-sm font-bold leading-none text-ink-900">
+              {String(REVIEW_SUMMARY.rating).replace(".", ",")}
+            </span>
+          </span>
+          <span aria-hidden className="size-2 shrink-0 rounded-full bg-ink-400" />
+          <span className="text-sm font-semibold leading-none text-ink-500">
+            {REVIEW_SUMMARY.count} atsiliepimai
+          </span>
+        </div>
       </div>
       <div className="reviews-marquee mt-7">
         <div className="reviews-marquee-track">

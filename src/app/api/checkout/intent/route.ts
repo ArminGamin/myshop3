@@ -65,6 +65,8 @@ export async function POST(req: Request) {
       metadata: orderMetadata(order, {
         email: customer.email,
         phone: customer.phone,
+        name: customer.name,
+        surname: customer.surname,
         address: `${customer.address}, ${customer.city} ${customer.postalCode}`,
       }),
     });

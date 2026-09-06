@@ -15,6 +15,20 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [64, 96, 128, 256, 384, 480],
   },
+  async redirects() {
+    return [
+      {
+        source: "/produktai/sventinis-dovanu-krepselis",
+        destination: "/produktai/namu-kino-projektorius",
+        permanent: true,
+      },
+      {
+        source: "/produktai/bluetooth-grotuvas-garsas",
+        destination: "/produktai/isoreine-baterija-kelione",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

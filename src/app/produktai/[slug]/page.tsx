@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { RECIPIENT_LABELS } from "@/types";
 import { Gallery } from "@/components/commerce/gallery";
 import { AddToCartForm, StickyBuyBar } from "@/components/commerce/add-to-cart";
+import { ProductVariantProvider } from "@/components/commerce/product-variant";
 import { FrequentlyBoughtTogether } from "@/components/commerce/fbt";
 import { TrackProductView } from "@/components/commerce/track-product-view";
 import { RecentlyViewed } from "@/components/commerce/recently-viewed";
@@ -61,6 +62,7 @@ export default async function ProductPage({ params }: Props) {
         <span className="max-w-[46vw] truncate font-medium text-ink-600">{product.name}</span>
       </nav>
 
+      <ProductVariantProvider product={product}>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Gallery product={product} />
@@ -94,6 +96,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
       </div>
+      </ProductVariantProvider>
 
       {/* Aprašymas ir savybės */}
       <section className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]" aria-labelledby="desc-heading">

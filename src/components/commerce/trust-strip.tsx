@@ -25,7 +25,7 @@ export function TrustStrip({ tone = "light" }: { tone?: "light" | "cream" }) {
   return (
     <section
       aria-label="Pasitikėjimo garantijos"
-      className={`texture-knit border-y ${
+      className={`trust-strip texture-knit border-y ${
         tone === "light" ? "border-cream-300 bg-white/70 shadow-card" : "border-transparent bg-cream-200/80"
       }`}
     >

@@ -10,11 +10,17 @@ import { store } from "@/lib/config/store.config";
 import { formatPrice, discountPercent } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { track } from "@/lib/analytics";
+import {
+  variantButtonClasses,
+  variantSwatch,
+  variantSwatchRingClass,
+} from "@/lib/commerce/color-swatches";
+import { useProductVariant } from "./product-variant";
 
 // Pagrindinė pirkimo forma: variantai + kiekio rinkiniai (1/2/3) + CTA.
 export function AddToCartForm({ product }: { product: Product }) {
   const cart = useCart();
-  const [variantId, setVariantId] = useState(product.defaultVariantId);
+  const { variantId, setVariantId } = useProductVariant(product.defaultVariantId);
   const [qtyChoice, setQtyChoice] = useState(1);
 
   const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
@@ -42,6 +48,7 @@ export function AddToCartForm({ product }: { product: Product }) {
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Variantas">
             {product.variants.map((v) => {
               const selected = v.id === variantId;
+              const swatch = variantSwatch(v.id);
               return (
                 <button
                   key={v.id}
@@ -49,12 +56,14 @@ export function AddToCartForm({ product }: { product: Product }) {
                   role="radio"
                   aria-checked={selected}
                   onClick={() => setVariantId(v.id)}
-                  className={`min-h-11 rounded-full border px-4 py-2.5 text-[13.5px] font-semibold transition ${
-                    selected
-                      ? "border-burgundy-600 bg-burgundy-600 text-cream-50"
-                      : "border-cream-400 bg-white text-ink-900 hover:border-burgundy-600/50"
-                  }`}
+                  className={variantButtonClasses(v.id, selected)}
                 >
+                  {swatch ? (
+                    <span
+                      className={`size-4 shrink-0 rounded-full ring-1 ${variantSwatchRingClass(v.id, selected)} ${swatch}`}
+                      aria-hidden
+                    />
+                  ) : null}
                   {v.name}
                 </button>
               );

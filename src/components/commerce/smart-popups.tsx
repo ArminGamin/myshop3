@@ -177,10 +177,10 @@ function WelcomePopup({ onClose, visible }: { onClose: () => void; visible: bool
     <PopupShell visible={visible} onClose={onClose} label="Sveiki atvykę">
       <p className="text-center font-display text-4xl" aria-hidden>🎄</p>
       <h2 className="mt-2 text-center font-display text-2xl font-semibold leading-snug text-ink-900">
-        Gaukite {store.popups.discountPercentFirstOrder} % nuolaidą pirmajam užsakymui
+        Prenumeruokite naujienlaiškį
       </h2>
       <p className="mx-auto mt-2 max-w-xs text-center text-sm leading-relaxed text-ink-600">
-        Taip pat sužinosite apie naujas dovanas ir specialius Kalėdinius pasiūlymus.
+        Sužinosite apie naujas dovanas ir specialius Kalėdinius pasiūlymus.
       </p>
       <div className="mt-5">
         <NewsletterInline onSuccess={onClose} />
@@ -282,7 +282,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
   if (state === "ok")
     return (
       <p role="status" className="rounded-cozy border border-gold-400/55 bg-cream-100 py-3 text-center text-sm font-semibold text-burgundy-700">
-        🎄 Nuolaida išsiųsta!
+        🎄 Ačiū! Esate prenumeratorius.
       </p>
     );
 
@@ -307,7 +307,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
         disabled={state === "loading"}
         className="flex min-h-12 w-full items-center justify-center rounded-full bg-gold-500 text-[15px] font-bold text-burgundy-800 transition hover:bg-gold-400 disabled:opacity-50"
       >
-        {state === "loading" ? "Siunčiama…" : `Gauti ${store.popups.discountPercentFirstOrder} % nuolaidą`}
+        {state === "loading" ? "Siunčiama…" : "Prenumeruoti"}
       </button>
       {state === "error" ? (
         <p role="alert" className="text-center text-xs font-semibold text-burgundy-600">

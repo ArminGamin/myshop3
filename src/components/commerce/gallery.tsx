@@ -1,13 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/types";
 import { ProductImage, ProductArt } from "./product-art";
+import { useProductVariant } from "./product-variant";
 
 export function Gallery({ product }: { product: Product }) {
+  const { variantId, setVariantId } = useProductVariant(product.defaultVariantId);
+  const images = useMemo(() => {
+    const fromVariants = product.variants.map((v) => v.image).filter((src): src is string => Boolean(src));
+    if (fromVariants.length > 1) return [...new Set(fromVariants)];
+    return product.images;
+  }, [product]);
+  const selectedSrc = product.variants.find((v) => v.id === variantId)?.image;
   const [active, setActive] = useState(0);
   const [zoom, setZoom] = useState(false);
-  const hasImages = product.images.length > 0;
+
+  useEffect(() => {
+    if (!selectedSrc) return;
+    const index = images.indexOf(selectedSrc);
+    if (index >= 0) setActive(index);
+  }, [selectedSrc, images]);
+
+  const hasImages = images.length > 0;
+  const current = images[active] ?? images[0];
 
   return (
     <div className="flex flex-col gap-3">
@@ -20,9 +36,9 @@ export function Gallery({ product }: { product: Product }) {
         }}
         onMouseLeave={() => setZoom(false)}
       >
-        {hasImages ? (
+        {current ? (
           <ProductImage
-            images={[product.images[active]]}
+            images={[current]}
             seed={product.artSeed}
             alt={product.name}
             size="hero"
@@ -34,16 +50,20 @@ export function Gallery({ product }: { product: Product }) {
         )}
       </div>
 
-      {hasImages && product.images.length > 1 ? (
+      {hasImages && images.length > 1 ? (
         <div className="no-scrollbar flex gap-2 overflow-x-auto" role="tablist" aria-label="Prekės nuotraukos">
-          {product.images.map((src, i) => (
+          {images.map((src, i) => (
             <button
               key={src}
               type="button"
               role="tab"
               aria-selected={i === active}
               aria-label={`Nuotrauka ${i + 1}`}
-              onClick={() => setActive(i)}
+              onClick={() => {
+                setActive(i);
+                const match = product.variants.find((v) => v.image === src);
+                if (match) setVariantId(match.id);
+              }}
               className={`size-16 shrink-0 overflow-hidden rounded-xl border-2 transition sm:size-20 ${
                 i === active ? "border-burgundy-600" : "border-transparent opacity-70 hover:opacity-100"
               }`}

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { store } from "@/lib/config/store.config";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import { formatPrice } from "@/lib/format";
+import { useIsMobile } from "@/lib/mobile-chrome";
 import { CheckoutReviews } from "./reviews-marquee";
 
 export function formatMmSs(total: number) {
@@ -15,24 +16,27 @@ export function formatMmSs(total: number) {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-const RESERVE_KEY = "jaukumas.checkout-reserve.v1";
-const RESERVE_MS = 45 * 60 * 1000;
+const RESERVE_KEY = "jaukumas.checkout-reserve.v2";
+const RESERVE_MS_DESKTOP = 45 * 60 * 1000;
+const RESERVE_MS_MOBILE = 20 * 60 * 1000;
 
 export function useCheckoutReserve(active: boolean) {
-  const [left, setLeft] = useState(45 * 60);
+  const isMobile = useIsMobile();
+  const reserveMs = isMobile ? RESERVE_MS_MOBILE : RESERVE_MS_DESKTOP;
+  const [left, setLeft] = useState(() => (isMobile ? 20 : 45) * 60);
 
   useEffect(() => {
     if (!active) return;
     let end = Number(sessionStorage.getItem(RESERVE_KEY) || 0);
     if (!Number.isFinite(end) || end < Date.now()) {
-      end = Date.now() + RESERVE_MS;
+      end = Date.now() + reserveMs;
       sessionStorage.setItem(RESERVE_KEY, String(end));
     }
     const tick = () => setLeft(Math.max(0, Math.round((end - Date.now()) / 1000)));
     tick();
     const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
-  }, [active]);
+  }, [active, reserveMs]);
 
   return left;
 }
@@ -104,7 +108,7 @@ export function CheckoutLeave({
         </h2>
         <p className="relative mx-auto mt-3 max-w-md text-[15px] font-semibold leading-relaxed text-ink-600">
           Jūsų <strong className="font-extrabold text-burgundy-600">{MYSTERY_GIFT.name}</strong> jau rezervuotas, o
-          pristatymas dabar <strong className="font-extrabold text-forest-500">nemokamas</strong>. Sutaupote{" "}
+          pristatymas dabar <strong className="font-extrabold text-forest-500">NEMOKAMAS</strong>. Sutaupote{" "}
           {formatPrice(store.shipping.flatRateCents)}. Išėjus viskas bus anuliuota po{" "}
           <strong className="font-mono font-extrabold text-burgundy-600">{formatMmSs(seconds)}</strong>.
         </p>
@@ -115,7 +119,7 @@ export function CheckoutLeave({
         <button
           type="button"
           onClick={onLeave}
-          className="relative mx-auto mt-3 block w-full rounded-cozy bg-forest-700 px-3 py-1.5 text-[10px] font-semibold tracking-wide text-cream-100/45"
+          className="relative mx-auto mt-3 block w-full px-3 py-1.5 text-sm font-medium text-ink-900 underline underline-offset-4 hover:text-burgundy-600"
         >
           Ačiū, man nereikia
         </button>

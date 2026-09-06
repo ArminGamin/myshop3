@@ -12,7 +12,7 @@ const palettes: Record<string, { from: string; to: string; ink: string }> = {
   kojines: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
   termosas: { from: "#F0EBE1", to: "#D8CCB6", ink: "#5C1A1B" },
   zaidimai: { from: "#F4EAD6", to: "#E0CFA0", ink: "#A98534" },
-  krepselis: { from: "#F4E8DC", to: "#E0C8B4", ink: "#5C1A1B" },
+  projektorius: { from: "#F0EBE1", to: "#D8CCB6", ink: "#5C1A1B" },
   arbata: { from: "#F3EEE4", to: "#DDD2BE", ink: "#5C1A1B" },
   vonia: { from: "#F5EEE6", to: "#E4D4C4", ink: "#5C1A1B" },
   zaisliukai: { from: "#F4E8D4", to: "#E0C8A0", ink: "#A98534" },
@@ -33,6 +33,13 @@ const palettes: Record<string, { from: string; to: string; ink: string }> = {
   masazas: { from: "#EFE8DC", to: "#D6C8B0", ink: "#2A2420" },
   uzvalkalas: { from: "#F6EFE4", to: "#E8D8C2", ink: "#5C1A1B" },
   guasha: { from: "#F6E8EA", to: "#E8C8D0", ink: "#5C1A1B" },
+  kilimas: { from: "#F3EEE2", to: "#E0D4C0", ink: "#5C1A1B" },
+  pakabukas: { from: "#EFE6D8", to: "#D4C4A8", ink: "#3D1011" },
+  grotuvas: { from: "#EFE8DC", to: "#D6C8B0", ink: "#2A2420" },
+  baterija: { from: "#EFE8DC", to: "#D6C8B0", ink: "#2A2420" },
+  ausines: { from: "#F0EBE1", to: "#D8CCB6", ink: "#5C1A1B" },
+  slepetes: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
+  stovas: { from: "#EFE8DC", to: "#D6C8B0", ink: "#2A2420" },
 };
 
 function hashSeed(seed: string): number {
@@ -175,7 +182,7 @@ export function ProductImage({
   priority?: boolean;
   sizes?: string;
 }) {
-  const src = images[0];
+  const src = images?.[0];
   if (!src) return <ProductArt seed={seed} size={size} className={className} />;
 
   const meta = IMAGE_META[size];

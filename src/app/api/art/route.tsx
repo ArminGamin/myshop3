@@ -16,7 +16,7 @@ const palettes: Record<string, [string, string]> = {
   kojines: ["#F6EEE6", "#E5CDB9"],
   termosas: ["#ECEEF0", "#BFC8CD"],
   zaidimai: ["#F6ECDD", "#EBCB9E"],
-  krepselis: ["#F5E6E0", "#DDB9AC"],
+  projektorius: ["#F0EBE1", "#D8CCB6"],
   arbata: ["#F1EFE6", "#D6D2BE"],
   "sildymo-lempa": ["#F5F0E6", "#E4D4B4"],
   roze: ["#F6E8EA", "#E3C2C8"],
@@ -29,6 +29,13 @@ const palettes: Record<string, [string, string]> = {
   masazas: ["#EFE8DC", "#D6C8B0"],
   uzvalkalas: ["#F6EFE4", "#E8D8C2"],
   guasha: ["#F6E8EA", "#E8C8D0"],
+  kilimas: ["#F3EEE2", "#E0D4C0"],
+  pakabukas: ["#EFE6D8", "#D4C4A8"],
+  grotuvas: ["#EFE8DC", "#D6C8B0"],
+  baterija: ["#EFE8DC", "#D6C8B0"],
+  ausines: ["#F0EBE1", "#D8CCB6"],
+  slepetes: ["#F5EEE4", "#E4D4BC"],
+  stovas: ["#EFE8DC", "#D6C8B0"],
 };
 
 export async function GET(req: Request) {

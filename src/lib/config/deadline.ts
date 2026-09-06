@@ -32,6 +32,15 @@ export function formatDeadline(date: Date): string {
     .replace(/\s*d\.\s*$/u, "");
 }
 
+/** Lithuanian plural for „diena“: 1 diena, 2 dienos, 5 dienos, 109 dienos, 10 dienų, 11 dienų */
+export function lithuanianDayWord(count: number): string {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return "diena";
+  if (mod10 >= 2 && mod10 <= 9 && (mod100 < 11 || mod100 > 19)) return "dienos";
+  return "dienų";
+}
+
 export type ChristmasCountdown = {
   days: number;
   hours: number;

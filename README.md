@@ -37,7 +37,8 @@ Komandos: `npm run build` · `npm run lint` · `npx tsc --noEmit`
 | `NEXT_PUBLIC_CLARITY_ID` | — | Microsoft Clarity |
 | `NEXT_PUBLIC_META_PIXEL_ID` / `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | — | pikseliai |
 | `KLAVIYO_API_KEY`, `KLAVIYO_LIST_ID` | — | naujienlaiškio sinchronizacija |
-| `ORDER_WEBHOOK_URL` | — | užsakymų persiuntimas (Make/Zapier/ERP) |
+| `ORDER_WEBHOOK_URL` | — | Discord webhook — embed pranešimas po mokėjimo |
+| `NEWSLETTER_WEBHOOK_URL` | — | Discord webhook — naujas naujienlaiškio prenumeratorius |
 
 4. Stripe → Developers → Webhooks → `Add endpoint`:
    `https://jusu-domenas.lt/api/stripe/webhook` → events: `checkout.session.completed`,

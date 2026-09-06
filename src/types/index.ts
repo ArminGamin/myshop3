@@ -28,6 +28,7 @@ export interface ProductVariant {
   id: string;
   name: string;
   priceDeltaCents?: number;
+  image?: string;
 }
 
 export interface ProductSpec {
