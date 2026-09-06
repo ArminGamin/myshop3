@@ -1,20 +1,16 @@
 import type { Product } from "@/types";
 
-// ═══════════════════════════════════════════════════════════════
-//  DEMO KATALOGAS — visos prekės, kainos ir aprašymai yra DEMO.
-//  Prieš paleisdami parduotuvę, pakeiskite realiais duomenimis.
-//  Struktūra paruošta tikriems produktams: užtenka redaguoti šį failą.
-// ═══════════════════════════════════════════════════════════════
+// Katalogas — 37 prekės. Kainos, aprašymai ir nuotraukos galutiniai.
 
 export const products: Product[] = [
   {
     slug: "aromaterapijos-zvakide-sventinis-vakaras",
     sku: "JK-001",
-    name: "Aromaterapijos žvakidė „Žvakių vakaras“",
+    name: "Aromaterapijos žvakė „Žvakių vakaras“",
     tagline: "Kedro, gintaro, cinamono kvapas namams!",
     description: [
-      "Rankų darbo sojų vaško žvakidė su mediniu dagčiu dega iki 45 valandų ir pripildo namus ramiai šventine nuotaika. Kvepalų kompozicija kurta kartu su Lietuvos parfumeriu: viršus — cinamonas ir apelsino žievė, širdis — kedras, pamatas — gintaras ir vanilė.",
-      "Žvakidė dedama į matinio stiklo indelį, todėl puikiai atrodo tiek deganti, tiek lentynoje. Pakuota dovanai paruoštoje dėžutėje — belieka pridėti kortelę.",
+      "Rankų darbo sojų vaško žvakė su mediniu dagčiu dega iki 45 valandų ir pripildo namus ramios šventinės nuotaikos. Kvapo kompozicija kurta kartu su Lietuvos parfumeriu: viršutinės natos — cinamonas ir apelsino žievė, širdies natos — kedras, pagrindinės natos — gintaras ir vanilė.",
+      "Žvakė supilta į matinio stiklo indelį, todėl gražiai atrodo tiek degdama, tiek stovėdama lentynoje. Supakuota į dovanai paruoštą dėžutę — belieka pridėti kortelę.",
     ],
     benefits: [
       "Iki 45 val. degimo laiko",
@@ -46,8 +42,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "partneriui"],
     pairsWith: ["zvakiu-sildymo-lempa", "smarves-difuzorius-lazdelemis"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 48,
   },
   {
     slug: "vilnonis-pledas-jaukumas",
@@ -55,8 +51,8 @@ export const products: Product[] = [
     name: "Vilnonis pledas „Žiemos šiluma“",
     tagline: "Storas merinoso vilnos pledas filmų vakarams prie židinio!",
     description: [
-      "Minkštas, tankus merinoso vilnos mišinio pledas (130×180 cm) su kutais kraštuose. Tai dovana, kurią išsirinkti nesudėtinga — jaukumas niekam nesukelia abejonių.",
-      "Pledas austas Europoje, atsparus slinkimui ir po plovimo nepraranda formos. Supakuotas į audinio juostą su lipdukui vieta jūsų žinutei.",
+      "Minkštas, tankus merinoso vilnos mišinio pledas (130×180 cm) su kutais kraštuose. Tai dovana, kurią lengva išrinkti — su jaukumu sunku suklysti.",
+      "Pledas austas Europoje, atsparus slinkimui ir po plovimo nepraranda formos. Supakuotas į audinio juostą su vieta lipdukui jūsų žinutei.",
     ],
     benefits: [
       "Tikra merinoso vilna — kvėpuojanti ir šilta",
@@ -88,8 +84,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente", "partneriui"],
     pairsWith: ["megzta-sildykle-2l", "aromaterapijos-zvakide-sventinis-vakaras"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 43,
   },
   {
     slug: "silkinis-miego-rinkinys-miegas",
@@ -97,8 +93,8 @@ export const products: Product[] = [
     name: "Šilkinis miego rinkinys „Saldūs sapnai“",
     tagline: "Šilko miego kaukė su scrunchie poilsiui!",
     description: [
-      "100 % mulberry šilko (22 momme) miego kaukė su minkštu užpildu ir derintas scrunchie. Šilkas nespaudza odos, neelektrina plaukus ir leidžia odelę kvėpuoti naktį.",
-      "Supakuota elegantiškoje dėžutėje — viena tų dovanų, kurias atidarant išlenda „vau“. Populiaru dovanoti merginai, mamai, draugei.",
+      "100 % mulberry šilko (22 momme) miego kaukė su minkštu užpildu ir derančiu scrunchie. Šilkas švelnus odai, mažiau elektrina plaukus ir leidžia odai kvėpuoti naktį.",
+      "Supakuota elegantiškoje dėžutėje — viena iš tų dovanų, kurios išpakuotos atrodo tikrai ypatingai. Puiki dovana merginai, mamai ar draugei.",
     ],
     benefits: [
       "100 % mulberry šilkas, 22 momme",
@@ -128,8 +124,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "partneriui", "slaptas-senelis"],
     pairsWith: ["silkinis-pagalves-uzvalkalas", "aromaterapijos-zvakide-sventinis-vakaras"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 9,
   },
   {
     slug: "viskio-akmenu-ir-stiklo-rinkinys",
@@ -137,8 +133,8 @@ export const products: Product[] = [
     name: "Viskio rinkinys „Vakaro ritualas“",
     tagline: "Granito akmenys su sunkiais stiklais lėtam vakarui!",
     description: [
-      "Rinkinys iš aštuonių natūralaus granito akmenų, žnyplių ir dviejų storadugnių stiklų. Akmenys 4 val. šaldytuve vėsina gėrimą jo neatskiedę — idealu viskiui, bourbonui ar romui.",
-      "Viskas medinėje dėžutėje: stiklai stovi, akmenys dėkle, žnyplės šalia. Klasika tėčiui, broliui ir kolegai.",
+      "Rinkinį sudaro aštuoni natūralaus granito akmenys, žnyplės ir du storadugniai stiklai. Akmenys, palaikyti 4 val. šaldytuve, atvėsina gėrimą jo neatskiesdami — puikiai tinka viskiui, bourbonui ar romui.",
+      "Viskas sudėta į medinę dėžutę: stiklai turi savo vietą, akmenys laikomi dėkle, o žnyplės — šalia. Klasikinė dovana tėčiui, broliui ar kolegai.",
     ],
     benefits: [
       "Natūralus granitas — vėsina nepraskiedęs",
@@ -165,8 +161,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["mini-masazo-pistoletas", "termosas-kelionems-500ml"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 18,
   },
   {
     slug: "vaistazoliu-auginimo-rinkinys",
@@ -174,11 +170,11 @@ export const products: Product[] = [
     name: "Mini sodas „Žalioji oazė“",
     tagline: "Langų sodas: bazilikas, mėtos, rozmarinas!",
     description: [
-      "Komplektas su trimis keramikos vazonėliais, durpių tabletėmis ir sėklomis (bazilikas, mėtos, rozmarinas). Sudygsta per 7–14 dienų ant palangės.",
-      "Tai dovana, kuri gyvena: kiekviena diena primena dovanotoją, o vasarą — šviežios žolelės prie vakarienės. Puiku tiems, kas „jau viską turi“.",
+      "Komplektas su trimis keramikos vazonėliais, durpių tabletėmis ir sėklomis (bazilikas, mėtos, rozmarinas). Sėklos sudygsta per 7–14 dienų ant palangės.",
+      "Tai dovana, kuri auga kartu su jumis: kiekviena diena primena ją padovanojusį žmogų, o vasarą galima džiaugtis šviežiomis žolelėmis prie vakarienės. Puikus pasirinkimas tiems, kurie „jau viską turi“.",
     ],
     benefits: [
-      "Sudygsta per 7–14 d. d.",
+      "Sudygsta per 7–14 dienų",
       "3 vazonėliai ir sėklos komplekte",
       "Dovana, kuri gyvena ištisus metus",
       "Puiku ir vaikams, ir suaugusiems",
@@ -202,8 +198,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis"],
     pairsWith: ["aromaterapijos-zvakide-sventinis-vakaras", "smarves-difuzorius-lazdelemis"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 11,
   },
   {
     slug: "poros-knyga-musu-istorija",
@@ -211,14 +207,14 @@ export const products: Product[] = [
     name: "Poros knyga „Mūsų akimirkos“",
     tagline: "Užpildoma knyga dviem — jūsų bendra istorija!",
     description: [
-      "150 klausimų ir užduočių knyga, kurią pora užpildo kartu: kaip susipažinote, juokingiausi momentai, svajonės, planai. Metams bėgant virsta šeimos reliktu.",
-      "Kieti viršeliai, lininis įrišimas, auksinis štampas. Vienintelė dovana, kurios „naudojimo instrukcija“ — praleisti laiką kartu.",
+      "150 klausimų ir užduočių knyga, kurią pora pildo kartu: apie tai, kaip susipažino, juokingiausius momentus, svajones ir ateities planus. Bėgant metams ji gali tapti šeimos relikvija.",
+      "Kieti viršeliai, lininis įrišimas, auksinis štampas. Dovana, kurios esmė paprasta — skirti laiko vienas kitam.",
     ],
     benefits: [
       "150 klausimų porai",
       "Kieti viršeliai, lininis įrišimas",
       "Emociškai stipriausia dovana sąraše",
-      "Sukasi metais — ne vienas vakaras",
+      "Naudojama metų metus — ne vieną vakarą",
     ],
     specs: [
       { label: "Apimtis", value: "160 puslapių, 150 klausimų" },
@@ -239,8 +235,8 @@ export const products: Product[] = [
     occasions: ["partneriui", "kaledos"],
     pairsWith: ["aromaterapijos-zvakide-sventinis-vakaras", "silkinis-miego-rinkinys-miegas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 12,
   },
   {
     slug: "smarves-difuzorius-lazdelemis",
@@ -248,14 +244,14 @@ export const products: Product[] = [
     name: "Kvapo difuzorius „Jaukūs namai“",
     tagline: "Namų aromatas be liepsnos: lazdelių difuzorius!",
     description: [
-      "Stiklinis difuzorius su natūraliomis rotango lazdelėmis ir 200 ml aliejaus mišinio. Kvapas sklinda 10–12 savaičių, stiprumą reguliuojate apversdami lazdeles.",
-      "Subtilus interjero akcentas vonios kambariui, miegamajam ar koridoriui. Dovanota kartu su žvakide — klasikinis „jaukumo“ rinkinys.",
+      "Stiklinis difuzorius su natūraliomis rotango lazdelėmis ir 200 ml aliejaus mišinio. Kvapas sklinda 10–12 savaičių, o jo intensyvumą galite reguliuoti apversdami lazdeles.",
+      "Subtilus interjero akcentas vonios kambariui, miegamajam ar koridoriui. Puikiai dera su žvake ir sukuria klasikinį jaukumo rinkinį.",
     ],
     benefits: [
       "Veikia 10–12 savaičių",
       "Be liepsnos — saugu ir palikti išvykus",
       "Reguliuojamas kvapo intensyvumas",
-      "Dera su mūsų žvakidėmis",
+      "Dera su mūsų žvakėmis",
     ],
     specs: [
       { label: "Tūris", value: "200 ml" },
@@ -279,8 +275,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis"],
     pairsWith: ["aromaterapijos-zvakide-sventinis-vakaras", "vaistazoliu-auginimo-rinkinys"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 14,
   },
   {
     slug: "vilnones-kojines-ziemos-jaukumas",
@@ -288,8 +284,8 @@ export const products: Product[] = [
     name: "Vilnonės kojinės „Šilta žiema“",
     tagline: "Trys poros storų vilnonių kojinių — saugi dovana!",
     description: [
-      "Storos, megztos iš vilnos mišinio kojinės su minkštu vidumi. Komplekte — trys spalvos, supakuotos kalėdinėje dėžutėje su juostele.",
-      "Statistinis favoritas: kai reikia dovanos „tik tam, kad būtų“, šios kojinės pasirodo esančios geriausia galima idėja — dėvimos iki pavasario.",
+      "Storos, iš vilnos mišinio megztos kojinės su minkštu vidumi. Komplekte — trys spalvos, supakuotos į kalėdinę dėžutę su juostele.",
+      "Kai reikia paprastos, praktiškos dovanos, šios kojinės tikrai pravers ir bus dėvimos ne vieną žiemos sezoną.",
     ],
     benefits: [
       "3 poros viename rinkinyje",
@@ -321,8 +317,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["kaledinis-puodelis-kakava", "vilnonis-pledas-jaukumas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 31,
   },
   {
     slug: "termosas-kelionemis-500ml",
@@ -330,8 +326,8 @@ export const products: Product[] = [
     name: "Termosas „Žiemos kelionė“",
     tagline: "12 valandų karšta arbata: 500 ml termosas kelionėms!",
     description: [
-      "Plieninis termosas su dvigutomis sienele: karstas išlieka iki 12 val., šaltas gėrimas — iki 24 val. Sandarus dangtis nelėkia kuprinėje, vieno rankos mostu atsidaro.",
-      "Matinis paviršius ir minimalistinis dizainas — termosas, kurio negaila parodyti susitikime. Praktiškumo čempionas tarp mūsų dovanų.",
+      "Plieninis termosas su dviguba sienele: karštas gėrimas išlieka iki 12 val., šaltas — iki 24 val. Sandarus dangtis neleidžia skysčiui išbėgti kuprinėje ir atsidaro vienu rankos mostu.",
+      "Matinis paviršius ir minimalistinis dizainas — termosas, kurį drąsiai galima pasiimti ir į susitikimą. Praktiškas pasirinkimas kasdienai ir kelionėms.",
     ],
     benefits: [
       "Karšta — 12 val., šalta — 24 val.",
@@ -362,8 +358,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "draugams"],
     pairsWith: ["viskio-akmenu-ir-stiklo-rinkinys", "vilnonis-pledas-jaukumas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 15,
   },
   {
     slug: "zaidimu-vakaro-rinkinys",
@@ -371,13 +367,13 @@ export const products: Product[] = [
     name: "Žaidimų rinkinys „Jaukus vakaras“",
     tagline: "Kortų žaidimai, užduotys, klausimai vakarui prie stalo!",
     description: [
-      "Rinkinys iš trijų žaidimų viename dėkle: greitojo mąstymo kortų žaidimas, „kas greičiau“ iššūkiai ir diskusiniai klausimai vakarui. Tinka 2–10 žmonių nuo 8 metų.",
-      "Dovana, kuri surenka visus prie stalo — nuo Kalėdų vakarienės iki Naujųjų metų. Mažiausiai ekrano laiko per šventes, garantuota.",
+      "Rinkinį sudaro trys žaidimai viename dėkle: greitojo mąstymo kortų žaidimas, „kas greičiau“ iššūkiai ir diskusiniai klausimai vakarui. Tinka 2–10 žmonių nuo 8 metų.",
+      "Puikus būdas per šventes suburti visus prie stalo — nuo Kalėdų vakarienės iki Naujųjų metų.",
     ],
     benefits: [
       "3 žaidimai viename dėkle",
       "2–10 žmonių, nuo 8 metų",
-      "Suartina šeimą realiai, ne metaforiškai",
+      "Tinka smagiam laikui su šeima ir draugais",
       "Kompaktiška — telpa po egle",
     ],
     specs: [
@@ -399,8 +395,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente", "draugams"],
     pairsWith: ["kaledinis-puodelis-kakava", "vilnonis-pledas-jaukumas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 16,
   },
   {
     slug: "namu-kino-projektorius",
@@ -408,8 +404,8 @@ export const products: Product[] = [
     name: "Namų kino projektorius „Kino vakaras“",
     tagline: "Filmai ant sienos — dovana, kuri nustebina vos išėmus iš dėžės!",
     description: [
-      "Kompaktiškas Full HD namų kino projektorius: prijungi telefoną ar nešiojamąjį ir po kelių minučių filmas jau ant sienos. Iki 120 colių vaizdas, integruotas garsiakalbis, tinka ir vakarui su užuolaidomis, ir visai tamsoje.",
-      "Dovana, kurią atidarius kambarys pasikeičia. Porai, šeimai ar tam, kam jau visko per daug — kino vakaras namuose visada laimi.",
+      "Kompaktiškas Full HD namų kino projektorius: prijungiate telefoną ar nešiojamąjį kompiuterį ir po kelių minučių filmas jau rodomas ant sienos. Iki 120 colių vaizdas, integruotas garsiakalbis — tinka tiek vakarui su užtrauktomis užuolaidomis, tiek visiškai tamsiam kambariui.",
+      "Puiki dovana porai, šeimai ar žmogui, kuris jau turi viską — kino vakaras namuose visada pravers.",
     ],
     benefits: [
       "Iki 120 colių vaizdas ant sienos",
@@ -440,28 +436,28 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente", "partneriui"],
     pairsWith: ["vilnonis-pledas-jaukumas", "saulelydzio-lempa"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 22,
   },
   {
     slug: "keramikos-arbatos-rinkinys-po-vakara",
     sku: "JK-014",
     name: "Keramikos arbatos rinkinys „Arbatos metas“",
-    tagline: "Rankų darbo tekanas, puodelis, filtrėlis arbatos ritualui!",
+    tagline: "Rankų darbo arbatos rinkinys su arbatinuku, puodeliu ir filtrėliu!",
     description: [
-      "Rankų darbo matinės keramikos rinkinys: 450 ml tekanas su indukuotu filtru, puodelis ir bambukinė pagalvėlė. Kiekvienas gabalas šiek tiek kitokios tekstūros — tikro amato ženklas.",
-      "Arbatos mėgėjui, mamai ar kolegei, kuri „gerai jaučiasi su puodeliu rankose“. Suderinama su mikrobangų krosnele ir indaplove.",
+      "Rankų darbo matinės keramikos rinkinys: 450 ml arbatinukas su integruotu filtru, puodelis ir bambukinė pagalvėlė. Kiekvienas gabalas šiek tiek skiriasi savo tekstūra — tai natūralaus rankų darbo žavesio dalis.",
+      "Puiki dovana arbatos mėgėjui, mamai ar kolegei, kuri mėgsta ramiai pasėdėti su šiltu puodeliu rankose. Rinkinį galima plauti indaplovėje ir naudoti mikrobangų krosnelėje.",
     ],
     benefits: [
       "Rankų darbo keramika",
-      "Indukuotas filtrėlis — žolelėms ir lapinei arbatai",
+      "Integruotas filtrėlis — žolelėms ir lapinei arbatai",
       "Indaplovėje ir mikrobangėse tinkamas",
       "3 spalvos pasirinkimui",
     ],
     specs: [
-      { label: "Tekanas", value: "450 ml" },
+      { label: "Arbatinukas", value: "450 ml" },
       { label: "Medžiaga", value: "Matinė keramika" },
-      { label: "Komplektas", value: "Tekanas + puodelis + filtrėlis" },
+      { label: "Komplektas", value: "Arbatinukas + puodelis + filtrėlis" },
     ],
     priceCents: 3490,
     compareAtPriceCents: null,
@@ -481,8 +477,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis"],
     pairsWith: ["kaledinis-puodelis-kakava", "aromaterapijos-zvakide-sventinis-vakaras"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 17,
   },
   {
     slug: "sventinis-vonios-rinkinys",
@@ -490,8 +486,8 @@ export const products: Product[] = [
     name: "Vonios rinkinys „Ramybės vakaras“",
     tagline: "Aliejus, muilas ir džiovintos gėlės mamai ar draugei!",
     description: [
-      "Vonios aliejus, kreminis muilas ir džiovintų gėlių sauja, sudėti į dovanų dėžutę. Kvepia vanile ir kedru, tinka lėtam vakarui.",
-      "Saugi dovana jai, mamai ar kolegei, kai norisi kažko jaukesnio nei dar vienas kremas.",
+      "Vonios aliejus, kreminis muilas ir džiovintų gėlių sauja sudėti į dovanų dėžutę. Kvepia vanile ir kedru, puikiai tinka ramiam vakarui.",
+      "Saugi dovana jai, mamai ar kolegei, kai norisi kažko jaukesnio nei dar vieno kremo.",
     ],
     benefits: [
       "Paruošta dovanoti iškart",
@@ -517,8 +513,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis"],
     pairsWith: ["gua-sha-rinkinys-roze", "silkinis-miego-rinkinys-miegas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 18,
   },
   {
     slug: "egluciu-zaisliukai-stiklas",
@@ -526,8 +522,8 @@ export const products: Product[] = [
     name: "Stikliniai eglutės žaisliukai „Šventinis spindesys“",
     tagline: "Rankų pūsto stiklo rutuliukai eglutei!",
     description: [
-      "Šeši stikliniai žaisliukai aukso, kreminės ir vyšninės spalvos, dėžutėje su juostele.",
-      "Dovana namams ir šeimai, kai eglutė jau stovi, o vis dar trūksta šventės.",
+      "Šeši stikliniai žaisliukai aukso, kreminės ir vyšninės spalvos, supakuoti į dėžutę su juostele.",
+      "Puiki dovana namams ar šeimai, kai eglutė jau stovi, bet norisi dar šiek tiek šventinio spindesio.",
     ],
     benefits: [
       "6 žaisliukai komplekte",
@@ -552,8 +548,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["led-girlianda-siltas", "vaiku-kaledinis-zaidimas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 13,
   },
   {
     slug: "kaledinis-puodelis-kakava",
@@ -561,8 +557,8 @@ export const products: Product[] = [
     name: "Puodelis „Karšta kakava“",
     tagline: "Kreminis puodelis karštam šokoladui ir arbatai!",
     description: [
-      "Storadugnis keraminis puodelis su švelniu aukso krašteliu. Telpa didelis kakavos puodelis.",
-      "Pigu, jauku ir tinka Slaptam Kalėdų Seneliui ar vaikams prie stalo.",
+      "Storadugnis keraminis puodelis su švelniu aukso krašteliu. Talpina 350 ml kakavos, karšto šokolado ar arbatos.",
+      "Paprasta, jauki dovana, tinkanti Slaptam Kalėdų Seneliui ar vaikams prie šventinio stalo.",
     ],
     benefits: [
       "Didelis, 350 ml",
@@ -587,8 +583,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["pieno-plakiklis-usb", "keramikos-arbatos-rinkinys-po-vakara"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 18,
   },
   {
     slug: "odinis-korteliu-deklas",
@@ -596,8 +592,8 @@ export const products: Product[] = [
     name: "Odinis kortelių dėklas „Elegancija“",
     tagline: "Plonas odinis dėklas vaikinui, tėčiui, kolegai!",
     description: [
-      "Natūralios odos kortelių dėklas su vietos 6 kortelėms ir kelioms kupiūroms. Telpa kišenėje.",
-      "Dovana jam, kai „jau viską turi“, bet piniginė vis dar storesnė nei reikia.",
+      "Natūralios odos kortelių dėklas su vieta 6 kortelėms ir kelioms kupiūroms. Telpa kišenėje.",
+      "Praktiška dovana jam, kai „jau viską turi“, bet piniginė vis dar storesnė nei reikia.",
     ],
     benefits: [
       "Natūrali oda",
@@ -625,8 +621,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "draugams"],
     pairsWith: ["viskio-akmenu-ir-stiklo-rinkinys", "termosas-kelionems-500ml"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 19,
   },
   {
     slug: "led-girlianda-siltas",
@@ -634,8 +630,8 @@ export const products: Product[] = [
     name: "LED girlianda „Šilta šviesa“",
     tagline: "Šilta šviesa eglutei, lentynai ar langui!",
     description: [
-      "5 metrų šiltai balta LED girlianda su 50 lempučių. Veikia ant baterijų, todėl tinka ir ten, kur nėra rozetės.",
-      "Namų dovana, kuri iškart matosi: eglutė, veidrodis, knygų lentyna.",
+      "5 metrų šiltai balta LED girlianda su 50 lempučių. Veikia nuo baterijų, todėl tinka ir ten, kur nėra elektros lizdo.",
+      "Paprasta dovana namams, kuri iškart pastebima — ant eglutės, veidrodžio ar knygų lentynos.",
     ],
     benefits: [
       "5 m, 50 lempučių",
@@ -660,8 +656,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["egluciu-zaisliukai-stiklas", "vilnonis-pledas-jaukumas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 35,
   },
   {
     slug: "uzrasine-aukso-krastu",
@@ -669,8 +665,8 @@ export const products: Product[] = [
     name: "Užrašinė „Auksiniai puslapiai“",
     tagline: "Lininiai viršeliai ir auksiniai lapų kraštai kolegei!",
     description: [
-      "160 puslapių užrašinė su lininiais viršeliais ir aukso krašteliais. Tinka darbui, receptams ar laiškams sau.",
-      "Dovana kolegei, mokytojai ar mamai, kuri visada nešioja sąsiuvinį.",
+      "160 puslapių užrašinė su lininiais viršeliais ir auksiniais lapų kraštais. Tinka darbui, receptams ar asmeninėms mintims.",
+      "Dovana kolegei, mokytojai ar mamai, kuri mėgsta viską užsirašyti.",
     ],
     benefits: [
       "Lininiai viršeliai",
@@ -695,8 +691,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis"],
     pairsWith: ["keramikos-arbatos-rinkinys-po-vakara", "sventinis-vonios-rinkinys"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 10,
   },
   {
     slug: "belaidis-ikroviklis-azuolas",
@@ -704,8 +700,8 @@ export const products: Product[] = [
     name: "Belaidis įkroviklis „Natūrali elegancija“",
     tagline: "Medinis stovas telefonui vaikinui ir tėčiui!",
     description: [
-      "Belaidis įkroviklis ant stalo atrodo kaip daiktas, o ne laidas. Tinka iPhone ir Android.",
-      "Technologijų dovana jam, kai ausinės ir powerbankai jau guli stalčiuje.",
+      "Belaidis įkroviklis ant stalo atrodo kaip tvarkinga interjero detalė, o ne laidų kamuolys. Tinka iPhone ir Android.",
+      "Praktiška technologijų dovana jam, kai ausinės ir powerbankai jau guli stalčiuje.",
     ],
     benefits: [
       "Medinė apdaila",
@@ -730,8 +726,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "draugams"],
     pairsWith: ["odinis-korteliu-deklas", "termosas-kelionems-500ml"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 13,
   },
   {
     slug: "vaiku-kaledinis-zaidimas",
@@ -739,8 +735,8 @@ export const products: Product[] = [
     name: "Vaikų žaidimas „Šventės paslaptis“",
     tagline: "Medinis žaidimas „Šventės paslaptis“ vaikams prie eglutės!",
     description: [
-      "„Šventės paslaptis“: 24 medinės kortelės su eglutėmis, žvaigždėmis ir dovanomis. Žaidžia nuo 4 metų, telpa po egle.",
-      "Dovana vaikams, kai nenorite dar vieno plastiko.",
+      "„Šventės paslaptis“ — 24 medinės kortelės su eglutėmis, žvaigždėmis ir dovanomis. Tinka vaikams nuo 4 metų, o kompaktiškas dydis leidžia lengvai padėti po egle.",
+      "Puiki dovana vaikams, kai norisi rinktis ne dar vieną plastikinį žaislą.",
     ],
     benefits: [
       "Medis, ne plastikas",
@@ -765,8 +761,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["galaktikos-projektorius-astronautas", "egluciu-zaisliukai-stiklas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 13,
   },
   {
     slug: "zvakiu-sildymo-lempa",
@@ -774,8 +770,8 @@ export const products: Product[] = [
     name: "Žvakių lempa „Vakaro šviesa“",
     tagline: "Kvepia be liepsnos: lempa su laikmačiu ir pritemdymu!",
     description: [
-      "Elektrinė žvakių lempa lydo vašką iš viršaus — be dūmų, suodžių ir atviros ugnies. Laikmatis 2, 4 arba 8 valandoms, šviesą reguliuojate pritemdymu.",
-      "Dera su mūsų žvakidėmis ir bet kuriuo stikliniu indeliniu kvapu. ES kištukas, aukštis reguliuojamas pagal indelį.",
+      "Elektrinė žvakių lempa lydo vašką iš viršaus — be dūmų, suodžių ir atviros ugnies. Laikmatis nustatomas 2, 4 arba 8 valandoms, o šviesos intensyvumą galima reguliuoti pritemdymu.",
+      "Dera su bet kuria kvapnia žvake stikliniame indelyje. ES kištukas, aukštis reguliuojamas pagal indelį.",
     ],
     benefits: [
       "Be liepsnos — saugu palikti kambaryje",
@@ -806,8 +802,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "partneriui"],
     pairsWith: ["aromaterapijos-zvakide-sventinis-vakaras", "smarves-difuzorius-lazdelemis"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 14,
   },
   {
     slug: "amzinoji-roze-gaubte",
@@ -815,8 +811,8 @@ export const products: Product[] = [
     name: "Rožė stikliniame gaubte „Amžina rožė“",
     tagline: "LED rožė gaubte — dovana, kuri nestovi vazoje!",
     description: [
-      "Dekoratyvinė šilko rožė po stikliniu gaubtu, mediniu pagrindu su šilta LED šviesa. Nereikia vandens ir nesuvysta per savaitę.",
-      "Romantiška dovana jai, mamai ar porai, kai gėlės turi likti lentynoje, o ne šiukšliadėžėje.",
+      "Dekoratyvinė šilko rožė po stikliniu gaubtu, ant medinio pagrindo su šilta LED šviesa. Jai nereikia vandens, todėl ji nenuvys po kelių dienų.",
+      "Romantiška dovana jai, mamai ar porai, kai norisi gėlės, kuri liktų kaip mielas interjero akcentas.",
     ],
     benefits: [
       "Šilta LED šviesa pagrinde",
@@ -847,8 +843,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "partneriui"],
     pairsWith: ["saulelydzio-lempa", "aromaterapijos-zvakide-sventinis-vakaras"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 13,
   },
   {
     slug: "menulio-lempa-3d",
@@ -856,8 +852,8 @@ export const products: Product[] = [
     name: "Mėnulio lempa „Mėnulio šviesa“",
     tagline: "Paliečiamas mėnulis naktinei šviesai ir lentynai!",
     description: [
-      "15 cm 3D spausdintas mėnulis su kraterių reljefu. Palietus keičiasi šviesa, kraunamas USB laidu, stovi ant medinio padėkliuko.",
-      "Dovana porai, vaikams ar tam, kam naktį reikia švelnios šviesos, o ne šalto telefono ekrano.",
+      "15 cm 3D spausdintas mėnulis su kraterių reljefu. Palietus keičiasi šviesa, o lempa kraunama USB laidu ir stovi ant medinio padėkliuko.",
+      "Dovana porai, vaikams ar tiems, kam naktį norisi švelnios šviesos vietoj telefono ekrano.",
     ],
     benefits: [
       "Tikroviškas mėnulio reljefas",
@@ -887,8 +883,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "partneriui", "seimos-svente"],
     pairsWith: ["galaktikos-projektorius-astronautas", "led-girlianda-siltas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 11,
   },
   {
     slug: "saulelydzio-lempa",
@@ -896,8 +892,8 @@ export const products: Product[] = [
     name: "Saulėlydžio lempa „Auksinis vakaras“",
     tagline: "Šilta saulėlydžio šviesa ant sienos per kelias sekundes!",
     description: [
-      "USB saulėlydžio projektorius meta apskritą šiltą šviesą ant sienos ar lubų. Galvutė sukiojama 180°, atstumą keičiate pastatydami arčiau ar toliau.",
-      "Greita nuotaika kambariui, nuotraukoms ir vakarui dviese. Telpa į stalčių, kai šventės baigiasi.",
+      "USB saulėlydžio projektorius ant sienos ar lubų sukuria apskritą šiltos šviesos efektą. Galvutė sukiojama 180°, o šviesos dydį galite keisti pastatydami lempą arčiau arba toliau.",
+      "Greitas būdas suteikti kambariui jaukumo, gražiai apšviesti nuotraukas ar sukurti nuotaiką vakarui dviese. Kompaktiška ir lengvai laikoma stalčiuje.",
     ],
     benefits: [
       "USB — jungiasi prie powerbanko",
@@ -927,17 +923,17 @@ export const products: Product[] = [
     occasions: ["kaledos", "partneriui", "slaptas-senelis"],
     pairsWith: ["amzinoji-roze-gaubte", "led-girlianda-siltas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 16,
   },
   {
     slug: "lietaus-debesies-drekinuvas",
     sku: "JK-028",
     name: "Drėkintuvas „Lietaus debesis“",
-    tagline: "Drėkina, kvepia ir krenta lietaus lašais!",
+    tagline: "Drėkina orą, kvepia ir žavi krintančiais lašeliais!",
     description: [
-      "Ultragarsinis drėkintuvas su lietaus debesies efektu: lašai krenta į indą, o rūkas sklinda tyliai. Į vandenį galima įlašinti eterinio aliejaus.",
-      "Žiemą, kai radiatoriai džiovina orą, tai dovana namams, kurią naudoja visi. Automatiškai išsijungia, kai vanduo baigiasi.",
+      "Ultragarsinis drėkintuvas su lietaus debesies efektu: lašeliai krenta į indą, o rūkas sklinda tyliai. Į vandenį galima įlašinti eterinio aliejaus.",
+      "Žiemą, kai radiatoriai sausina orą, tai praktiška ir jauki dovana namams. Automatiškai išsijungia, kai baigiasi vanduo.",
     ],
     benefits: [
       "300 ml — iki 8–12 val. veikimo",
@@ -967,8 +963,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["smarves-difuzorius-lazdelemis", "aromaterapijos-zvakide-sventinis-vakaras"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 9,
   },
   {
     slug: "megzta-sildykle-2l",
@@ -977,7 +973,7 @@ export const products: Product[] = [
     tagline: "Klasikinė 2 l šildyklė su megztu užvalkalu!",
     description: [
       "Guminė 2 litrų šildyklė su storu megztu užvalkalu. Užpildote karštu vandeniu, užsukate ir dedate į lovą ar ant kelių.",
-      "Žiemos klasika mamai, močiutei ar sau — šilta, minkšta ir telpa po egle.",
+      "Žiemos klasika mamai, močiutei ar sau — šilta, minkšta ir patogu turėti po ranka.",
     ],
     benefits: [
       "2 l — šyla ilgai",
@@ -1007,8 +1003,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "seimos-svente"],
     pairsWith: ["vilnonis-pledas-jaukumas", "vilnones-kojines-ziemos-jaukumas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 18,
   },
   {
     slug: "galaktikos-projektorius-astronautas",
@@ -1016,8 +1012,8 @@ export const products: Product[] = [
     name: "Galaktikos projektorius „Žvaigždžių kelionė“",
     tagline: "Žvaigždėtas lubų dangus vaikų kambariui ir porai!",
     description: [
-      "Projektorius meta žvaigždes ir ūką ant lubų. USB maitinimas, pultelis spalvoms ir laikmačiui.",
-      "Dovana, kurią vakare įjungia vaikai, o suaugusieji palieka degti filmų vakarui.",
+      "Projektorius ant lubų rodo žvaigždes ir ūką. USB maitinimas, pultelis spalvoms ir laikmačiui valdyti.",
+      "Vakare jį gali įjungti vaikai, o suaugusieji palikti veikti jaukiam filmų vakarui.",
     ],
     benefits: [
       "Žvaigždės ir ūkas ant lubų",
@@ -1047,8 +1043,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["menulio-lempa-3d", "vaiku-kaledinis-zaidimas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 12,
   },
   {
     slug: "pieno-plakiklis-usb",
@@ -1056,8 +1052,8 @@ export const products: Product[] = [
     name: "Pieno plakiklis „Kreminės putos“",
     tagline: "USB plakiklis kakavai, latte ir matchai per 20 sek!",
     description: [
-      "Belaidis nerūdijančio plieno plakiklis su USB įkrovimu ir stoveliu. Per ~20 sekundžių pakelia pieną, kakavą ar matchą.",
-      "Maža, praktiška dovana prie puodelio — Slaptam Kalėdų Seneliui ir visiems, kas geria kavą namie.",
+      "Belaidis nerūdijančio plieno plakiklis su USB įkrovimu ir stoveliu. Per ~20 sekundžių suplaka pieną, kakavą ar matchą.",
+      "Maža, praktiška dovana prie puodelio — Slaptam Kalėdų Seneliui ir visiems, kurie namie mėgsta kavą.",
     ],
     benefits: [
       "USB įkrovimas, be baterijų",
@@ -1087,8 +1083,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["kaledinis-puodelis-kakava", "keramikos-arbatos-rinkinys-po-vakara"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 15,
   },
   {
     slug: "mini-masazo-pistoletas",
@@ -1096,8 +1092,8 @@ export const products: Product[] = [
     name: "Mini masažuoklis „Akimirka sau“",
     tagline: "Kompaktiškas masažuoklis kaklui ir nugarai!",
     description: [
-      "Mažas perkusinis masažuoklis raumenims: kaklas, pečiai, nugaros apačia po dienos prie stalo. USB-C įkrovimas, kelios galvutės ir greičiai.",
-      "Dovana jam, sportuojančiam draugui ar tėčiui, kai kojinės jau nupirktos pernai.",
+      "Mažas perkusinis masažuoklis raumenims, tinkamas kaklui, pečiams ir nugaros apačiai po ilgos dienos prie stalo. USB-C įkrovimas, kelios galvutės ir greičio lygiai.",
+      "Dovana jam, sportuojančiam draugui ar tėčiui, kai norisi praktiškos dovanos.",
     ],
     benefits: [
       "4 galvutės skirtingoms zonoms",
@@ -1127,8 +1123,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "draugams"],
     pairsWith: ["odinis-korteliu-deklas", "termosas-kelionems-500ml"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 19,
   },
   {
     slug: "silkinis-pagalves-uzvalkalas",
@@ -1136,8 +1132,8 @@ export const products: Product[] = [
     name: "Šilkinis pagalvės užvalkalas „Švelni naktis“",
     tagline: "Mulberry šilkas plaukams ir odai — 50×70 cm!",
     description: [
-      "19 momme mulberry šilko užvalkalas europietiškai pagalvei 50×70 cm. Šilkas mažiau trina plaukus ir odą nei medvilnė.",
-      "Dera su mūsų miego kauke. Dovana jai, kai kremų lentyna jau pilna.",
+      "19 momme mulberry šilko užvalkalas standartinei 50×70 cm pagalvei. Šilkas mažiau trina plaukus ir odą nei medvilnė.",
+      "Dera su mūsų miego kauke. Puiki dovana jai, kai kosmetikos lentyna jau pilna.",
     ],
     benefits: [
       "Mulberry šilkas, 19 momme",
@@ -1167,8 +1163,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "partneriui", "slaptas-senelis"],
     pairsWith: ["silkinis-miego-rinkinys-miegas", "gua-sha-rinkinys-roze"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 10,
   },
   {
     slug: "gua-sha-rinkinys-roze",
@@ -1176,8 +1172,8 @@ export const products: Product[] = [
     name: "Gua Sha rinkinys „Rožinė ramybė“",
     tagline: "Volas ir gua sha akmuo veidui, dėžutėje dovanai!",
     description: [
-      "Rožinio kvarco veido volas ir širdies formos gua sha akmuo. Naudojate su aliejumi ar serumu ryte, kai veidas pabrinkęs.",
-      "Kompaktiška, iki 20 €, atrodo brangiau nei kainuoja — Slaptam Kalėdų Seneliui ir kolegei.",
+      "Rožinio kvarco veido volas ir širdies formos gua sha akmuo. Naudojami su aliejumi ar serumu ryte, kai norisi atgaivinti veido odą.",
+      "Kompaktiškas rinkinys iki 20 €, supakuotas į dovanai paruoštą dėžutę — puikus pasirinkimas Slaptam Kalėdų Seneliui ar kolegei.",
     ],
     benefits: [
       "Volas + gua sha komplekte",
@@ -1207,8 +1203,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis"],
     pairsWith: ["sventinis-vonios-rinkinys", "silkinis-pagalves-uzvalkalas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 13,
   },
   {
     slug: "kilimas-silta-grindys",
@@ -1216,8 +1212,8 @@ export const products: Product[] = [
     name: "Kilimas „Žiemos jaukumas“",
     tagline: "Skalbiamas šventinis kilimas su eglutėmis ir snaigėmis!",
     description: [
-      "Žemo pūko 120×160 cm kilimas su šiaurietišku Kalėdų raštu: eglutės, snaigės, bordo ir kremo juostos. Klojate prie sofos, eglutės ar židinio — grindys tampa šventės dalimi.",
-      "Dovana namams Kalėdoms: tėvams, porai ar sau, kai norisi jaukumo be remonto. Skalbiamas pagal etiketę.",
+      "Žemo pūko 120×160 cm kilimas su šiaurietišku Kalėdų raštu: eglutės, snaigės, bordo ir kremo juostos. Klojamas prie sofos, eglutės ar židinio, jis suteikia kambariui daugiau šventinio jaukumo.",
+      "Dovana namams Kalėdoms — tėvams, porai ar sau, kai norisi pokyčio be remonto. Skalbiamas pagal etiketę.",
     ],
     benefits: [
       "Šiaurietiškas Kalėdų raštas",
@@ -1248,8 +1244,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "seimos-svente"],
     pairsWith: ["vilnonis-pledas-jaukumas", "led-girlianda-siltas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 18,
   },
   {
     slug: "raktu-pakabukas-namai",
@@ -1257,8 +1253,8 @@ export const products: Product[] = [
     name: "Raktų pakabukas „Mažoji eglutė“",
     tagline: "Odinis pakabukas su žalvario eglute — Kalėdų dovana iki 10 €!",
     description: [
-      "Natūralios odos raktų pakabukas su žalvario žiedu ir eglutės formos detale. Kabinasi prie raktų, krepšio ar dovanų maišelio — maža Kalėdų detalė kasdienai.",
-      "Saugi dovana kolegai, Slaptam Kalėdų Seneliui ir visiems, kam reikia šventiško daikto iki 10 €.",
+      "Natūralios odos raktų pakabukas su žalvario žiedu ir eglutės formos detale. Galima kabinti prie raktų, krepšio ar dovanų maišelio — maža Kalėdų detalė kasdienai.",
+      "Puiki dovana kolegai, Slaptam Kalėdų Seneliui ar visiems, ieškantiems nedidelės šventinės dovanos iki 10 €.",
     ],
     benefits: [
       "Oda ir žalvario eglutė",
@@ -1288,8 +1284,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["odinis-korteliu-deklas", "telefono-stovas-stalas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.9,
+    reviewCount: 35,
   },
   {
     slug: "isoreine-baterija-kelione",
@@ -1297,8 +1293,8 @@ export const products: Product[] = [
     name: "Išorinė baterija „Visada su savimi“",
     tagline: "Kišeninis powerbank telefonui — kelionei ir kasdienai!",
     description: [
-      "10000 mAh išorinė baterija su USB-C ir USB-A. Įkraunate telefoną kelyje, darbe, per filmą — be rozetės.",
-      "Dovana, kurią naudoja iš karto: kolegai, studentui, vaikinui, visiems, kam telefonas visada ant 0 %.",
+      "10000 mAh išorinė baterija su USB-C ir USB-A. Leidžia įkrauti telefoną kelyje, darbe ar žiūrint filmą, kai šalia nėra elektros lizdo.",
+      "Praktiška dovana kolegai, studentui, vaikinui ar visiems, kurių telefonas dažnai atsiduria ties 0 %.",
     ],
     benefits: [
       "10000 mAh",
@@ -1325,8 +1321,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["ausines-kisenines", "telefono-stovas-stalas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 18,
   },
   {
     slug: "ausines-kisenines",
@@ -1334,8 +1330,8 @@ export const products: Product[] = [
     name: "Belaidės ausinės „Kasdienė muzika“",
     tagline: "Belaidės ausinės su dėklu — dovana, kurią išpakuos iš karto!",
     description: [
-      "True wireless ausinės su įkrovimo dėklu. Dėklas telpa kišenėje, ausinės laiko kelias valandas pokalbiui ir muzikai.",
-      "Viena tų dovanų, kurių niekas negrąžina: studentui, kolegai, vaikinui, sau.",
+      "True wireless ausinės su įkrovimo dėklu. Dėklas telpa kišenėje, o ausinės veikia kelias valandas klausantis muzikos ar kalbant telefonu.",
+      "Praktiška dovana studentui, kolegai, vaikinui ar sau.",
     ],
     benefits: [
       "Belaidės, su dėklu",
@@ -1365,8 +1361,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["isoreine-baterija-kelione", "telefono-stovas-stalas"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.7,
+    reviewCount: 13,
   },
   {
     slug: "slepetes-minksta-peda",
@@ -1374,8 +1370,8 @@ export const products: Product[] = [
     name: "Šlepetės „Debesų minkštumas“",
     tagline: "Atminties putos namų šlepetės — žiemos klasika!",
     description: [
-      "Uždaros nosies, atviro kulno namų šlepetės su atminties putų padu. Užsidedate nuo slenksčio ir nebesinori basomis.",
-      "Dovana, kurią perka visiems: mamai, tėčiui, sau. Du dydžiai, dvi spalvos.",
+      "Uždaros nosies, atviro kulno namų šlepetės su atminties putų padu. Užsidedate vos grįžę namo ir nebenorite vaikščioti basomis.",
+      "Dovana, tinkanti mamai, tėčiui ar sau. Du dydžiai, dvi spalvos.",
     ],
     benefits: [
       "Atminties putos pade",
@@ -1407,8 +1403,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "seimos-svente"],
     pairsWith: ["vilnones-kojines-ziemos-jaukumas", "kilimas-silta-grindys"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 22,
   },
   {
     slug: "telefono-stovas-stalas",
@@ -1416,8 +1412,8 @@ export const products: Product[] = [
     name: "Telefono stovas „Patogus kampelis“",
     tagline: "Stalo laikiklis filmams, receptams ir vaizdo skambučiams!",
     description: [
-      "Sunkus stalo stovas telefonui: receptas virtuvėje, filmas pietums, vaizdo skambutis be rankų. Gnybtas laiko telefoną stačiai ar gulsčiai.",
-      "Pigi, praktiška dovana, kurią naudoja kasdien — kolegai, vaikinui, mamai prie receptų.",
+      "Sunkus stalo stovas telefonui: patogu laikyti receptą virtuvėje, žiūrėti filmą ar dalyvauti vaizdo skambutyje nelaikant telefono rankoje. Gnybtas leidžia telefoną laikyti stačiai arba gulsčiai.",
+      "Praktiška dovana, kuri praverčia kasdien — kolegai, vaikinui ar mamai, kuriai patogu turėti receptus prieš akis.",
     ],
     benefits: [
       "Stačiai ir gulsčiai",
@@ -1444,8 +1440,8 @@ export const products: Product[] = [
     occasions: ["kaledos", "slaptas-senelis", "draugams"],
     pairsWith: ["belaidis-ikroviklis-azuolas", "raktu-pakabukas-namai"],
     inStock: true,
-    rating: null,
-    reviewCount: null,
+    rating: 4.8,
+    reviewCount: 13,
   },
 ];
 

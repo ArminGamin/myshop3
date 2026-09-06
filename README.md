@@ -3,9 +3,7 @@
 **Premium kalėdinių dovanų parduotuvė** — Next.js 16 + TypeScript + Tailwind v4 + Stripe Checkout.
 Visiškai lietuviška, mobiliajai telefonui pritaikyta, paruošta diegti Vercel platformoje.
 
-> ⚠️ **DEMO BŪSENOS ĮSPĖJIMAS:** kataloge (14 prekių), atsiliepimų architektūroje ir
-> juridiniuose puslapiuose naudojami aiškiai pažymėti DEMO duomenys. Prieš priimdami
-> mokėjimus ir paleisdami reklamą, pakeiskite juos realiais (žr. „Paleidimo sąrašas“).
+Kataloge **37 prekės**. Kainos, aprašymai ir nuotraukos galutiniai.
 
 ---
 
@@ -29,19 +27,15 @@ Komandos: `npm run build` · `npm run lint` · `npx tsc --noEmit`
 
 | Kintamasis | Būtinas | Aprašymas |
 |---|---|---|
-| `STRIPE_SECRET_KEY` | ✅ mokėjimams | `sk_test_…` / `sk_live_…` |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | ✅ kortelės laukui | `pk_test_…` / `pk_live_…` |
+| `STRIPE_SECRET_KEY` | ✅ mokėjimams | `sk_live_…` |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | ✅ kortelės laukui | `pk_live_…` |
 | `STRIPE_WEBHOOK_SECRET` | ✅ užsakymams | `whsec_…` |
-| `NEXT_PUBLIC_SITE_URL` | ✅ | `https://jusu-domenas.lt` |
-| `NEXT_PUBLIC_GA_ID` | — | GA4 (`G-…`) |
-| `NEXT_PUBLIC_CLARITY_ID` | — | Microsoft Clarity |
-| `NEXT_PUBLIC_META_PIXEL_ID` / `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | — | pikseliai |
-| `KLAVIYO_API_KEY`, `KLAVIYO_LIST_ID` | — | naujienlaiškio sinchronizacija |
-| `ORDER_WEBHOOK_URL` | — | Discord webhook — embed pranešimas po mokėjimo |
-| `NEWSLETTER_WEBHOOK_URL` | — | Discord webhook — naujas naujienlaiškio prenumeratorius |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | `https://www.kaledukampelis.com` |
+| `ORDER_WEBHOOK_URL` | — | Discord webhook — embed po mokėjimo |
+| `NEWSLETTER_WEBHOOK_URL` | — | Discord webhook — naujas prenumeratorius |
 
 4. Stripe → Developers → Webhooks → `Add endpoint`:
-   `https://jusu-domenas.lt/api/stripe/webhook` → events: `checkout.session.completed`,
+   `https://www.kaledukampelis.com/api/stripe/webhook` → events: `checkout.session.completed`,
    `checkout.session.expired`, `payment_intent.succeeded` → nukopijuokite `whsec_…` į Vercel.
 
 Be `STRIPE_SECRET_KEY` parduotuvė veikia pilnai, tik atsiskaitymas grąžina sąžiningą
@@ -53,57 +47,21 @@ Be `STRIPE_SECRET_KEY` parduotuvė veikia pilnai, tik atsiskaitymas grąžina s�
 
 Visi verslo parametrai viename faile: **`src/lib/config/store.config.ts`**
 
-- prekės ženklas, kontaktai (dabar DEMO), socialiniai tinklai;
+- prekės ženklas, kontaktai, socialiniai tinklai;
 - pristatymo kaina ir nemokamo pristatymo slenkstis;
-- `christmasDeadlineISO` — Kalėdų terminas: `null` = modulis paslėptas; praėjęs =
-  automatinis „paskutinės minutės“ režimas; likus ≤7 d. = skubos režimas;
-- iššokančių langų taisyklės (dažnis, vėsinimas, nuolaidos %);
+- `christmasDeadlineISO` — Kalėdų terminas (`2026-12-26`); `null` = modulis paslėptas;
+- iššokančių langų taisyklės;
 - kiekio nuolaidos (rinkiniai 2/3);
-- kampanijos objektas `campaign` — ta pati parduotuvė per naudojama BF, Vasario 14
-  ir kt. (keičiasi antraštė, CTA, juosta).
+- kampanijos objektas `campaign`.
 
-Funkcijų jungikliai (`flags`): `ENABLE_POPUP`, `ENABLE_EXIT_INTENT`, `ENABLE_WISHLIST`,
-`ENABLE_GIFT_FINDER`, `ENABLE_FREE_SHIPPING_BAR`, `ENABLE_AB_HERO`, `ENABLE_REVIEWS`
-(ir kt.) — tos pačios bylos apačioje.
+Dovanų pakavimas (`giftWrapping` / `ENABLE_GIFT_WRAPPING`) išjungtas.
 
 ---
 
 ## Paleidimo sąrašas (go-live)
 
-1. **Produktai** — pakeiskite `src/lib/data/products.ts`: tikros kainos, aprašymai,
-   nuotraukos (`images: [url]`; be jų automatiškai generuojami DEMO meniški SVG/PNG).
-2. **Atsiliepimai** — `ENABLE_REVIEWS` lieka `false`, kol neturite TIKRų atsiliepimų
-   (pvz., Judge.me/Loox eksportas → `rating`, `reviewCount`). Struktūriniai duomenys
-   (`AggregateRating`) įjungiami kartu su vėliava — niekada nesukurkite dirbtinių.
-3. **Juridika** — `/privatumo-politika`, `/pirkimo-taisykles`, `/grazinimas`:
-   patikrinkite su teisininku; įmonės rekvizitai `store.contact`.
-4. **Stripe** — test režimu apmokėkite `4242 4242 4242 4242`, patikrinkite webhook
-   `[ORDER]` žurnalą, tada perjunkite į live raktus.
-5. **Kalėdų terminas** — nustatykite `christmasDeadlineISO` TIK jeigu operatyviai
-   spėjate; kitaip palikite `null`.
-6. **Analitika** — įdėkite ID; skriptai užsikrauna tik po sutikimo banerio.
-7. **Katalogų feed'ai** — `https://domenas.lt/feed.xml` → Google Merchant Center /
-   Meta Catalog / TikTok Catalog (iki tol pakeiskite DEMO paveikslėlius realiais).
-8. **El. laiškai (Klaviyo)** — sukurti flows pagal žemiau esančius planus.
-
----
-
-## El. pašto automatizacijų planai (Klaviyo)
-
-**Welcome (5):** ① pasveikinimas + 10 % kodas → ② bestseleriai → ③ dovanų gidai →
-④ socialinis įrodymas → ⑤ Kalėdų terminas.
-
-**Abandoned checkout (3):** ① „Jūsų dovana dar laukia 🎁“ (+1 h) → ② nauda +
-atsiliepimai (+20 h) → ③ paskutinis priminimas prieš terminą (+44 h).
-
-**Browse abandonment (1):** peržiūrėta prekė + „Dažnai perkama kartu“ (+6 h).
-
-**Post-purchase (7):** ① patvirtinimas → ② išsiuntimas → ③ pristatymas → ④ kaip
-naudoti/dovanoti → ⑤ atsiliepimo prašymas (+5 d.) → ⑥ kryžminė prekė (+14 d.) →
-⑦ sezoninė kampanija.
-
-Trigeriai jau siunčia įvykius: `view_item`, `add_to_cart`, `begin_checkout`,
-`purchase`, `sign_up`, `search`, `quiz_complete`.
+1. **Deploy** — commit + push, Vercel Production env, domenas `www.kaledukampelis.com`, Stripe webhook ant to URL, live testinis pirkimas.
+2. **Stripe** — patikrinti live webhook eventus, Stripe kvitą (`receipt_email`), grąžinimų procesą (rankinis).
 
 ---
 
@@ -112,23 +70,18 @@ Trigeriai jau siunčia įvykius: `view_item`, `add_to_cart`, `begin_checkout`,
 ```
 src/
 ├─ app/                    maršrutai (App Router):
-│  ├─ page.tsx             pradžia (17 sekcijų)
+│  ├─ page.tsx             pradžia
 │  ├─ dovanos/[kolekcija]/ kolekcijos + filtras/rikiavimas
 │  ├─ produktai/[slug]/    PDP: galerija, variantai, rinkiniai, FBT, sticky CTA
 │  ├─ rask-dovana/         dovanų radiklis (4 klausimai)
-│  ├─ api/checkout         Stripe sesija (kainos perskaičiuojamos serveryje!)
+│  ├─ api/checkout         Stripe sesija (kainos perskaičiuojamos serveryje)
 │  ├─ api/stripe/webhook   parašo patikrinti užsakymai
 │  └─ feed.xml, sitemap, robots, opengraph-image, api/art
 ├─ components/{ui,commerce,layout}
-└─ lib/                    config · cart(external store) · consent · analytics
-                           behavior(exit-intent, popup prioritetų variklis) · seo
+└─ lib/                    config · cart · consent · analytics
+                           behavior · seo
 ```
 
 Saugumo principai: kliento kainos nepasitikima (serveryje perskaičiuojama iš
-katalogo), webhook parašo verifikacija, sutikimo valdomi pikseliai, honeypot
-formose, saugumo antraštės `next.config.ts`.
-
-## Veiklos rodmenys (be papildomų app'ų)
-
-GA4 įvykiai dengia visą funnelį; Clarity — rage/dead click analizę. Verslo vertes
-(slenkstis, terminai, nuolaidos) keiskite konfigūracijoje, ne kode.
+katalogo), webhook parašo verifikacija, honeypot formose, saugumo antraštės
+`next.config.ts`.

@@ -12,7 +12,6 @@ function esc(s: string): string {
 }
 
 // Google Merchant Center / Meta / TikTok katalogų RSS 2.0 feed.
-// DEMO duomenys — prieš pateikdami į Merchant Center, naudokite realius.
 export async function GET() {
   const base = store.brand.url.replace(/\/$/, "");
 

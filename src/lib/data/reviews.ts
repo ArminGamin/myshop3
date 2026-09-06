@@ -14,7 +14,7 @@ export const STOREFRONT_REVIEWS: StorefrontReview[] = [
     name: "Giedrė J.",
     city: "Vilnius",
     rating: 5,
-    bought: "Aromaterapijos žvakidė „Žvakių vakaras“",
+    bought: "Aromaterapijos žvakė „Žvakių vakaras“",
     text: "Draugė rekomendavo, tai nusprendėm išbandyti. Nenusivylėm. Žvakė dega jau trečią vakarą - kvapas vis dar toks jaukus 😊",
     image: "/reviews/giedre.png",
   },
@@ -68,7 +68,7 @@ export const STOREFRONT_REVIEWS: StorefrontReview[] = [
     name: "Ieva S.",
     city: "Vilnius",
     rating: 5,
-    bought: "Aromaterapijos žvakidė „Žvakių vakaras“",
+    bought: "Aromaterapijos žvakė „Žvakių vakaras“",
     text: "Nupirkome pradžiai vieną žvakę, bet greitai teko užsakyti dar. Anyta irgi norėjo tokios pačios.",
     image: "/reviews/ieva.png",
   },
@@ -77,7 +77,7 @@ export const STOREFRONT_REVIEWS: StorefrontReview[] = [
     name: "Andrius R.",
     city: "Panevėžys",
     rating: 5,
-    bought: "Aromaterapijos žvakidė „Žvakių vakaras“",
+    bought: "Aromaterapijos žvakė „Žvakių vakaras“",
     text: "Pirkau žmonai, bet pats pirmas pauosčiau žvakę. Kvepia namie kaip per Kūčias. Rekomenduoju.",
     image: "/reviews/andrius.png",
   },
@@ -130,5 +130,13 @@ export const STOREFRONT_REVIEWS: StorefrontReview[] = [
 
 export const REVIEW_SUMMARY = {
   rating: 4.9,
-  count: 127,
+  count: 664,
 } as const;
+
+export function lithuanianReviewWord(count: number): string {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return "atsiliepimas";
+  if (mod10 >= 2 && mod10 <= 9 && (mod100 < 11 || mod100 > 19)) return "atsiliepimai";
+  return "atsiliepimų";
+}

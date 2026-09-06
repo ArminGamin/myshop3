@@ -109,7 +109,7 @@ export const collections: CollectionMeta[] = [
     emoji: "coins",
     seoTitle: "Kalėdinės dovanos iki 30 € — populiariausias biudžetas | Kalėdų Kampelis",
     description:
-      "Kalėdinės dovanos iki 30 eurų — auksinis biudžetas: žvakidės, masažuoklis „Akimirka sau“, ausinės „Kasdienė muzika“ ir dar daugiau.",
+      "Kalėdinės dovanos iki 30 eurų — auksinis biudžetas: žvakės, masažuoklis „Akimirka sau“, ausinės „Kasdienė muzika“ ir dar daugiau.",
     intro:
       "Populiariausias dovanų biudžetas Lietuvoje — ir mūsų didžiausias pasirinkimas.",
     filter: byMaxPrice(3000),

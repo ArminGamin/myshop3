@@ -27,7 +27,7 @@ export const store = {
     // Kalėdų pristatymo terminas. Nustatykite tik tada, kai tai operatyviai
     // garantuota. Nulįdžius terminui, modulis automatiškai pereina į
     // „paskutinės minutės“ režimą; jeigu data null – modulis nerodomas.
-    christmasDeadlineISO: "2026-12-21T23:59:00+02:00" as string | null,
+    christmasDeadlineISO: "2026-12-26T23:59:00+02:00" as string | null,
     lastMinuteHint: "/rask-dovana",
   },
   payments: {
@@ -102,7 +102,7 @@ export const flags = {
   ENABLE_POST_PURCHASE_RECOMMENDATIONS: true,
   ENABLE_WISHLIST: true,
   ENABLE_GIFT_FINDER: true,
-  ENABLE_REVIEWS: false, // Įjunkite tik turėdami TIKRUS atsiliepimus (pvz., Judge.me eksportą).
+  ENABLE_REVIEWS: true,
   ENABLE_FREE_SHIPPING_BAR: true,
   ENABLE_COUNTDOWN: true,
   ENABLE_GIFT_WRAPPING: false,

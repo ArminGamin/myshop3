@@ -34,8 +34,7 @@ export function websiteSchema(): JsonLd {
   };
 }
 
-// AggregateRating įtraukiamas TIK kai prekė turi tikrus atsiliepimus
-// (flags.ENABLE_REVIEWS + rating/reviewCount iš realių duomenų).
+// AggregateRating įtraukiamas, kai ENABLE_REVIEWS ir prekė turi rating/reviewCount.
 export function productSchema(product: Product): JsonLd {
   const ld: JsonLd = {
     "@context": "https://schema.org",

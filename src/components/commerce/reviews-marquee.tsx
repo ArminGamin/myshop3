@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Check } from "lucide-react";
-import { STOREFRONT_REVIEWS, REVIEW_SUMMARY, type StorefrontReview } from "@/lib/data/reviews";
+import { STOREFRONT_REVIEWS, REVIEW_SUMMARY, lithuanianReviewWord, type StorefrontReview } from "@/lib/data/reviews";
 import { SectionHeading, Stars } from "@/components/ui/primitives";
 
 function ReviewCard({ review, compact = false }: { review: StorefrontReview; compact?: boolean }) {
@@ -52,7 +52,7 @@ export function ReviewsMarquee() {
           </span>
           <span aria-hidden className="size-2 shrink-0 rounded-full bg-ink-400" />
           <span className="text-sm font-semibold leading-none text-ink-500">
-            {REVIEW_SUMMARY.count} atsiliepimai
+            {REVIEW_SUMMARY.count} {lithuanianReviewWord(REVIEW_SUMMARY.count)}
           </span>
         </div>
       </div>
@@ -91,7 +91,7 @@ export function CheckoutReviews() {
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <Stars value={REVIEW_SUMMARY.rating} size={14} />
         <span className="text-sm font-bold text-ink-900">{String(REVIEW_SUMMARY.rating).replace(".", ",")}</span>
-        <span className="text-xs text-ink-400">({REVIEW_SUMMARY.count} atsiliepimai)</span>
+        <span className="text-xs text-ink-400">({REVIEW_SUMMARY.count} {lithuanianReviewWord(REVIEW_SUMMARY.count)})</span>
         <span className="inline-flex items-center gap-0.5 rounded-full bg-forest-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-forest-600">
           <Check className="size-3" strokeWidth={2.4} /> Tikri
         </span>
