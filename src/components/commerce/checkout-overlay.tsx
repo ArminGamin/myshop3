@@ -1,6 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type MutableRefObject } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type Dispatch,
+  type FormEvent,
+  type MutableRefObject,
+  type SetStateAction,
+} from "react";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe, type StripeElements } from "@stripe/stripe-js";
 import { CreditCard, Lock, ShieldCheck, Clock, X } from "lucide-react";
@@ -76,6 +86,11 @@ function CheckoutView({
   const cart = useCart();
   const addons = readCartAddons();
   const [mystery, setMystery] = useState(readMysteryGift);
+  // Stripe Elements must remount when the amount changes. Keep customer-entered
+  // data above that boundary so adding the mystery gift does not clear the form.
+  const [form, setForm] = useState<CheckoutCustomer>(EMPTY_CUSTOMER);
+  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutCustomer, string>>>({});
+  const [banner, setBanner] = useState<string | null>(null);
   const items = resolveItems(cart.lines).filter((i) => i.slug !== MYSTERY_GIFT.slug);
   const subtotal = subtotalOf(items);
   const mysteryCents = mystery ? MYSTERY_GIFT.priceCents : 0;
@@ -99,6 +114,12 @@ function CheckoutView({
     shippingCents,
     totalCents,
     addons,
+    form,
+    setForm,
+    errors,
+    setErrors,
+    banner,
+    setBanner,
   };
 
   if (!stripeEnabled || !stripePromise) {
@@ -144,6 +165,12 @@ function CheckoutViewInner({
   extras,
   shippingCents,
   totalCents,
+  form,
+  setForm,
+  errors,
+  setErrors,
+  banner,
+  setBanner,
 }: {
   closeRef: MutableRefObject<() => void>;
   stripeEnabled: boolean;
@@ -159,12 +186,15 @@ function CheckoutViewInner({
   shippingCents: number;
   totalCents: number;
   addons: ReturnType<typeof readCartAddons>;
+  form: CheckoutCustomer;
+  setForm: Dispatch<SetStateAction<CheckoutCustomer>>;
+  errors: Partial<Record<keyof CheckoutCustomer, string>>;
+  setErrors: Dispatch<SetStateAction<Partial<Record<keyof CheckoutCustomer, string>>>>;
+  banner: string | null;
+  setBanner: Dispatch<SetStateAction<string | null>>;
 }) {
   const router = useRouter();
-  const [form, setForm] = useState<CheckoutCustomer>(EMPTY_CUSTOMER);
-  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutCustomer, string>>>({});
   const [busy, setBusy] = useState(false);
-  const [banner, setBanner] = useState<string | null>(null);
   const [leaveOpen, setLeaveOpen] = useState(false);
   const reserve = useCheckoutReserve(cart.checkoutOpen);
   const paymentReady = Boolean(stripe && elements);

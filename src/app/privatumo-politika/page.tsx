@@ -45,7 +45,7 @@ export default function PrivacyPage() {
         <li>prekių pristatymui;</li>
         <li>mokėjimų administravimui;</li>
         <li>klientų aptarnavimui;</li>
-        <li>grąžinimų, garantinių ar kitų su užsakymu susijusių klausimų sprendimui;</li>
+        <li>su užsakymu susijusių klausimų sprendimui;</li>
         <li>apsipirkimo patirties gerinimui;</li>
         <li>teisinių ir apskaitos pareigų vykdymui;</li>
         <li>naujienlaiškių, pasiūlymų ar akcijų siuntimui, jeigu tam davėte sutikimą.</li>

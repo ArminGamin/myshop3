@@ -6,7 +6,7 @@ import { InfoPage } from "@/components/layout/info-page";
 export const metadata: Metadata = {
   title: "Kontaktai",
   description:
-    "Susisiekite su mumis el. paštu — atsakome per 24 valandas. Visi klausimai apie dovanas, pristatymą ir grąžinimą.",
+    "Susisiekite su mumis el. paštu — atsakome per 24 valandas. Visi klausimai apie dovanas ir pristatymą.",
   alternates: { canonical: "/kontaktai" },
 };
 
@@ -14,7 +14,7 @@ export default function ContactPage() {
   return (
     <InfoPage
       title="Susisiekite su mumis"
-      intro="Klausimas apie dovaną, užsakymą ar grąžinimą? Padėsime."
+      intro="Klausimas apie dovaną, užsakymą ar pristatymą? Padėsime."
     >
       <div className="grid gap-4 sm:grid-cols-3">
         <a

@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { CheckCircle2, Mail, MessageCircleHeart, Share2 } from "lucide-react";
+import { CheckCircle2, Mail, PackageCheck, Share2, Truck } from "lucide-react";
 import { flags, store } from "@/lib/config/store.config";
 import { bestsellers } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 import { track } from "@/lib/analytics";
 import { ButtonLink } from "@/components/ui/button";
-import { ProductArt } from "@/components/commerce/product-art";
+import { ProductImage } from "@/components/commerce/product-art";
 
 interface Order {
   id: string;
@@ -70,7 +70,7 @@ export default function ThankYouPage() {
     return () => clearTimeout(first);
   }, []);
 
-  const suggestion = bestsellers()[0];
+  const suggestion = bestsellers().find((product) => product.images[0]);
 
   return (
     <div className="texture-knit glow-candle relative min-h-[75vh] overflow-hidden">
@@ -130,27 +130,50 @@ export default function ThankYouPage() {
           „Linksmų Kalėdų ir jaukių švenčių namams — dabar dar šiltesnių.“ ✨
         </p>
 
-        {flags.ENABLE_POST_PURCHASE_RECOMMENDATIONS && suggestion ? (
-          <div className="mx-auto mt-10 max-w-sm rounded-cozy border border-gold-400/50 bg-gradient-to-br from-cream-100 to-white p-5 shadow-card">
-            <p className="text-xs font-bold uppercase tracking-wide text-gold-600">
-              Dar viena mintis
-            </p>
-            <Link
-              href={`/produktai/${suggestion.slug}`}
-              className="group mt-3 flex items-center gap-4 text-left"
-            >
-              <ProductArt seed={suggestion.artSeed} size="thumb" />
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-semibold text-ink-900 group-hover:text-burgundy-600">
-                  {suggestion.name}
+        <div className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
+          <section className="rounded-cozy border border-forest-400/30 bg-forest-100/55 p-5 shadow-card">
+            <div className="flex items-center gap-2 text-forest-600">
+              <Truck className="size-4" strokeWidth={1.8} />
+              <h2 className="font-display text-base font-semibold text-ink-900">Kas toliau?</h2>
+            </div>
+            <ol className="mt-4 space-y-3 text-[13px] leading-relaxed text-ink-600">
+              <li className="flex gap-2.5">
+                <Mail className="mt-0.5 size-4 shrink-0 text-burgundy-600" strokeWidth={1.8} />
+                <span>Užsakymo patvirtinimą atsiųsime el. paštu.</span>
+              </li>
+              <li className="flex gap-2.5">
+                <PackageCheck className="mt-0.5 size-4 shrink-0 text-burgundy-600" strokeWidth={1.8} />
+                <span>Kai siunta iškeliaus, atsiųsime jos sekimo numerį.</span>
+              </li>
+            </ol>
+          </section>
+
+          {flags.ENABLE_POST_PURCHASE_RECOMMENDATIONS && suggestion ? (
+            <section className="rounded-cozy border border-gold-400/50 bg-gradient-to-br from-cream-100 to-white p-5 shadow-card">
+              <p className="text-xs font-bold uppercase tracking-wide text-gold-600">Dar viena mintis</p>
+              <Link
+                href={`/produktai/${suggestion.slug}`}
+                className="group mt-3 flex items-center gap-4"
+              >
+                <span className="relative size-20 shrink-0 overflow-hidden rounded-cozy bg-cream-200">
+                  <ProductImage
+                    images={suggestion.images}
+                    seed={suggestion.artSeed}
+                    alt={suggestion.name}
+                    size="thumb"
+                    className="size-full object-cover"
+                  />
                 </span>
-                <span className="text-sm font-bold text-burgundy-600">
-                  {formatPrice(suggestion.priceCents)}
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold text-ink-900 group-hover:text-burgundy-600">
+                    {suggestion.name}
+                  </span>
+                  <span className="text-sm font-bold text-burgundy-600">{formatPrice(suggestion.priceCents)}</span>
                 </span>
-              </span>
-            </Link>
-          </div>
-        ) : null}
+              </Link>
+            </section>
+          ) : null}
+        </div>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <ButtonLink href="/dovanos/visos-dovanos" variant="secondary" size="md">
@@ -172,8 +195,8 @@ export default function ThankYouPage() {
             Atsiliepimą paprašysime po kelių dienų — mums svarbi jūsų nuomonė.
           </li>
           <li className="flex items-start gap-2">
-            <MessageCircleHeart className="mt-0.5 size-4 shrink-0 text-burgundy-600" />
-            Dovana ne ta, kurios tikėjotės? Grąžiname per 14 d. d. be klausimų.
+            <Truck className="mt-0.5 size-4 shrink-0 text-burgundy-600" />
+            Pristatymas 4–6 d. nuo išsiuntimo — sekimo numerį atsiųsime el. paštu.
           </li>
         </ul>
       </div>

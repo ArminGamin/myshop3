@@ -9,7 +9,6 @@ const infoLinks = [
   { href: "/apie-mus", label: "Apie mus" },
   { href: "/kontaktai", label: "Kontaktai" },
   { href: "/pristatymas", label: "Pristatymas" },
-  { href: "/grazinimas", label: "Grąžinimas" },
   { href: "/duk", label: "DUK" },
 ];
 

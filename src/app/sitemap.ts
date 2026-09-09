@@ -23,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: `${base}/duk`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/pristatymas`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${base}/grazinimas`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/kontaktai`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${base}/apie-mus`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
   ];

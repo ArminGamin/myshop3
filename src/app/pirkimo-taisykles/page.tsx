@@ -7,7 +7,7 @@ import { InfoPage } from "@/components/layout/info-page";
 export const metadata: Metadata = {
   title: "Pirkimo taisyklės",
   description:
-    "Pirkimo taisyklės: užsakymo sudarymas, kainos, mokėjimas, pristatymas ir grąžinimas.",
+    "Pirkimo taisyklės: užsakymo sudarymas, kainos, mokėjimas ir pristatymas.",
   alternates: { canonical: "/pirkimo-taisykles" },
 };
 
@@ -30,10 +30,6 @@ export default function TermsPage() {
         klientas patvirtina, kad susipažino su{" "}
         <Link href="/pristatymas" className="font-semibold text-burgundy-600 underline underline-offset-2">
           pristatymo informacija
-        </Link>
-        ,{" "}
-        <Link href="/grazinimas" className="font-semibold text-burgundy-600 underline underline-offset-2">
-          grąžinimų politika
         </Link>{" "}
         ir šiomis taisyklėmis.
       </p>
@@ -62,15 +58,10 @@ export default function TermsPage() {
       <h2>6. {productPhotoDisclaimer.termsTitle}</h2>
       <p>{productPhotoDisclaimer.terms}</p>
 
-      <h2>7. Grąžinimas</h2>
+      <h2>7. Pagalba dėl užsakymo</h2>
       <p>
-        Kokybiškos, nenaudotos prekės grąžinamos per 14 dienų nuo gavimo. Grąžinant dėl
-        pirkėjo apsisprendimo, siuntimo išlaidas apmoka pirkėjas. Pinigai grąžinami po
-        prekės būklės patikrinimo. Išsami tvarka —{" "}
-        <Link href="/grazinimas" className="font-semibold text-burgundy-600 underline underline-offset-2">
-          grąžinimų puslapyje
-        </Link>
-        .
+        Jei turite klausimų dėl užsakymo ar pristatymo, parašykite mums el. paštu ir
+        nurodykite užsakymo numerį. Atsakome per 24 valandas.
       </p>
 
       <h2>8. Ginčai</h2>

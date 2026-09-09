@@ -7,7 +7,7 @@ import { FAQAccordion } from "@/components/commerce/faq-accordion";
 export const metadata: Metadata = {
   title: "Dažniausiai užduodami klausimai (DUK)",
   description:
-    "Atsakymai apie pristatymą, mokėjimą, grąžinimą ir prekes. Įprastai pristatome per 4–6 dienas, nemokamai nuo 80 €.",
+    "Atsakymai apie pristatymą, mokėjimą ir prekes. Įprastai pristatome per 4–6 dienas, nemokamai nuo 80 €.",
   alternates: { canonical: "/duk" },
 };
 

@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         destination: "/produktai/isoreine-baterija-kelione",
         permanent: true,
       },
+      {
+        source: "/grazinimas",
+        destination: "/kontaktai",
+        permanent: true,
+      },
     ];
   },
   async headers() {

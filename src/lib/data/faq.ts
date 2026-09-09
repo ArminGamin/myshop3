@@ -64,16 +64,16 @@ export const faqCategories: FaqCategory[] = [
     ],
   },
   {
-    id: "grazinimai",
-    title: "Grąžinimai",
+    id: "uzsakymas",
+    title: "Užsakymas",
     items: [
       {
-        q: "Koks grąžinimo terminas?",
-        a: "Kokybiškos prekės gali būti grąžinamos per 14 dienų nuo prekės gavimo dienos, jeigu prekė nebuvo naudota, nėra sugadinta, nepraradusi prekinės išvaizdos, yra švari, su originalia pakuote bei visais komplekte buvusiais priedais.",
+        q: "Reikia pagalbos dėl užsakymo?",
+        a: "Parašykite mums el. paštu ir nurodykite užsakymo numerį. Atsakome per 24 valandas.",
       },
       {
-        q: "Kas apmoka grąžinimą?",
-        a: "Jeigu prekė grąžinama dėl pirkėjo apsisprendimo, grąžinimo siuntimo išlaidas apmoka pirkėjas. Pinigai grąžinami po to, kai prekė grąžinama ir patikrinama jos būklė.",
+        q: "Kaip pakeisti užsakymo duomenis?",
+        a: "Jei užsakymas dar neišsiųstas, parašykite mums el. paštu su užsakymo numeriu — padėsime, kol dar galime pakeisti adresą ar pastabą kurjeriui.",
       },
     ],
   },

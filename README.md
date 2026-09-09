@@ -61,7 +61,7 @@ Dovanų pakavimas (`giftWrapping` / `ENABLE_GIFT_WRAPPING`) išjungtas.
 ## Paleidimo sąrašas (go-live)
 
 1. **Deploy** — commit + push, Vercel Production env, domenas `www.kaledukampelis.com`, Stripe webhook ant to URL, live testinis pirkimas.
-2. **Stripe** — patikrinti live webhook eventus, Stripe kvitą (`receipt_email`), grąžinimų procesą (rankinis).
+2. **Stripe** — patikrinti live webhook eventus, Stripe kvitą (`receipt_email`).
 
 ---
 
