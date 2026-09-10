@@ -42,9 +42,10 @@ export function DeadlineBanner() {
     );
   }
 
-  const dateStr = info.deadlineDate
+  const rawDateStr = info.deadlineDate
     ? new Intl.DateTimeFormat("lt-LT", { day: "numeric", month: "long" }).format(info.deadlineDate)
     : "";
+  const dateStr = rawDateStr.trim().endsWith(".") ? rawDateStr.trim() : `${rawDateStr.trim()}.`;
 
   if (info.phase === "near") {
     return (
@@ -54,7 +55,7 @@ export function DeadlineBanner() {
             Kalėdos jau visai čia. Paskutinės dienos užsakymams!
           </p>
           <p className="mt-2 text-sm font-semibold opacity-90">
-            Užsisakykite iki <strong>{dateStr}</strong>. Jei vėluojame mes, pristatymas jums nemokamas.
+            Užsisakykite iki <strong>{dateStr}</strong> Jei vėluojame mes, pristatymas jums nemokamas.
           </p>
         </div>
       </div>
@@ -65,7 +66,7 @@ export function DeadlineBanner() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="texture-knit rounded-cozy border border-gold-400/55 bg-cream-100 p-6 text-center sm:p-8">
         <p className="font-display text-xl font-extrabold text-ink-900 sm:text-2xl">
-          Užsisakykite iki <span className="text-burgundy-600">{dateStr}</span>. Dovana spės pasiekti jus{" "}
+          Užsisakykite iki <span className="text-burgundy-600">{dateStr}</span> Dovana spės pasiekti jus{" "}
           <span className="text-burgundy-600">iki Kalėdų</span>!
         </p>
         <p className="mt-2 text-sm font-semibold leading-relaxed text-ink-600">

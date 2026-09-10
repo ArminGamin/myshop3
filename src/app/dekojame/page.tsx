@@ -127,7 +127,7 @@ export default function ThankYouPage() {
         )}
 
         <p className="mx-auto mt-10 max-w-md font-display text-xl leading-relaxed text-forest-600">
-          „Linksmų Kalėdų ir jaukių švenčių namams — dabar dar šiltesnių.“ ✨
+          Tegul šios Kalėdos namams atneša dar daugiau jaukumo ir šilumos! ❤️
         </p>
 
         <div className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-2">

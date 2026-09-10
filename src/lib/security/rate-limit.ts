@@ -2,26 +2,39 @@ type Bucket = { count: number; resetAt: number };
 
 const hits = new Map<string, Bucket>();
 
+const MAX_BUCKET_ENTRIES = 3000;
+
 const LIMITS = {
   checkout: { limit: 8, windowMs: 15 * 60_000 },
   newsletter: { limit: 5, windowMs: 15 * 60_000 },
   checkoutHour: { limit: 24, windowMs: 60 * 60_000 },
   newsletterHour: { limit: 20, windowMs: 8 * 60 * 60_000 },
+  sessionQuery: { limit: 25, windowMs: 5 * 60_000 },
 } as const;
 
 export type RateBucket = keyof typeof LIMITS;
 
 function prune(now: number) {
-  if (hits.size < 400) return;
+  if (hits.size < 200) return;
   for (const [key, bucket] of hits) {
     if (bucket.resetAt <= now) hits.delete(key);
+  }
+  if (hits.size > MAX_BUCKET_ENTRIES) {
+    // If still oversized due to unique IPs, clear older entries
+    let count = 0;
+    for (const key of hits.keys()) {
+      hits.delete(key);
+      count++;
+      if (count > 1000) break;
+    }
   }
 }
 
 export function clientIp(req: Request): string {
   const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
-  return req.headers.get("x-real-ip") ?? "unknown";
+  const raw = forwarded ? forwarded.split(",")[0]?.trim() : req.headers.get("x-real-ip");
+  if (!raw) return "unknown";
+  return raw.replace(/[^a-fA-F0-9.:]/g, "").slice(0, 45) || "unknown";
 }
 
 export function takeToken(ip: string, bucket: RateBucket): { ok: true } | { ok: false; retryAfterSec: number } {

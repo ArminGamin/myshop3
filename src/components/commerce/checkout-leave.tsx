@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Gift } from "lucide-react";
+import { AlertCircle, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { store } from "@/lib/config/store.config";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
@@ -56,9 +56,14 @@ export function CheckoutLeave({
 }) {
   const [seconds, setSeconds] = useState(300);
   const [buyers, setBuyers] = useState(6);
+  const [confirmDecline, setConfirmDecline] = useState(false);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setConfirmDecline(false);
+      return;
+    }
+    setConfirmDecline(false);
     setSeconds(300);
     setBuyers(buyersNow());
     const tick = window.setInterval(() => {
@@ -100,29 +105,66 @@ export function CheckoutLeave({
           ))}
         </div>
 
-        <span className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-gold-400 bg-gold-200 text-burgundy-600">
-          <Gift className="size-7" strokeWidth={1.6} />
-        </span>
-        <h2 id="checkout-leave-title" className="relative mt-4 font-display text-2xl font-bold text-ink-900">
-          Beveik baigta!
-        </h2>
-        <p className="relative mx-auto mt-3 max-w-md text-[15px] font-semibold leading-relaxed text-ink-600">
-          Jūsų <strong className="font-extrabold text-burgundy-600">{MYSTERY_GIFT.name}</strong> jau rezervuotas, o
-          pristatymas dabar <strong className="font-extrabold text-forest-500">NEMOKAMAS</strong>. Sutaupote{" "}
-          {formatPrice(store.shipping.flatRateCents)}. Išėjus viskas bus anuliuota po{" "}
-          <strong className="font-mono font-extrabold text-burgundy-600">{formatMmSs(seconds)}</strong>.
-        </p>
+        {!confirmDecline ? (
+          <>
+            <span className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-gold-400 bg-gold-200 text-burgundy-600">
+              <Gift className="size-7" strokeWidth={1.6} />
+            </span>
+            <h2 id="checkout-leave-title" className="relative mt-4 font-display text-2xl font-bold text-ink-900">
+              Beveik baigta!
+            </h2>
+            <p className="relative mx-auto mt-3 max-w-md text-[15px] font-semibold leading-relaxed text-ink-600">
+              Jūsų <strong className="font-extrabold text-burgundy-600">{MYSTERY_GIFT.name}</strong> jau rezervuotas, o
+              pristatymas dabar <strong className="font-extrabold text-forest-500">NEMOKAMAS</strong>. Sutaupote{" "}
+              {formatPrice(store.shipping.flatRateCents)}. Išėjus viskas bus anuliuota po{" "}
+              <strong className="font-mono font-extrabold text-burgundy-600">{formatMmSs(seconds)}</strong>.
+            </p>
 
-        <Button type="button" autoFocus size="lg" className="cta-flash relative mt-6 min-h-14 w-full text-lg font-extrabold sm:min-h-16 sm:text-xl" onClick={onStay}>
-          Noriu savo dovanos →
-        </Button>
-        <button
-          type="button"
-          onClick={onLeave}
-          className="relative mx-auto mt-3 block w-full px-3 py-1.5 text-sm font-medium text-ink-900 underline underline-offset-4 hover:text-burgundy-600"
-        >
-          Ačiū, man nereikia
-        </button>
+            <Button type="button" autoFocus size="lg" className="cta-flash relative mt-6 min-h-14 w-full text-lg font-extrabold sm:min-h-16 sm:text-xl" onClick={onStay}>
+              Noriu savo dovanos →
+            </Button>
+            <button
+              type="button"
+              onClick={() => setConfirmDecline(true)}
+              className="relative mx-auto mt-3 block w-full px-3 py-1.5 text-sm font-medium text-ink-900 underline underline-offset-4 hover:text-burgundy-600"
+            >
+              Ačiū, man nereikia
+            </button>
+          </>
+        ) : (
+          <>
+            <span className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-burgundy-300 bg-burgundy-100 text-burgundy-600">
+              <AlertCircle className="size-8" strokeWidth={1.8} />
+            </span>
+            <h2 id="checkout-leave-title" className="relative mt-4 font-display text-2xl font-bold text-ink-900">
+              Ar tikrai norite atsisakyti?
+            </h2>
+            <p className="relative mx-auto mt-3 max-w-md text-[15px] font-semibold leading-relaxed text-ink-600">
+              Jūsų rezervuotas <strong className="font-extrabold text-burgundy-600">{MYSTERY_GIFT.name}</strong> ir{" "}
+              <strong className="font-extrabold text-forest-500">NEMOKAMAS pristatymas</strong> bus anuliuoti visam
+              laikui. Šio pasiūlymo pakartoti nebegalėsime po{" "}
+              <strong className="font-mono font-extrabold text-burgundy-600">{formatMmSs(seconds)}</strong>.
+            </p>
+
+            <Button type="button" autoFocus size="lg" className="cta-flash relative mt-6 min-h-14 w-full text-lg font-extrabold sm:min-h-16 sm:text-xl" onClick={onStay}>
+              Noriu pasilikti dovaną →
+            </Button>
+            <button
+              type="button"
+              onClick={onLeave}
+              className="relative mx-auto mt-3 block w-full px-3 py-1.5 text-sm font-medium text-ink-500 underline underline-offset-4 hover:text-burgundy-600"
+            >
+              Taip, atsisakyti ir išeiti
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirmDecline(false)}
+              className="relative mx-auto mt-1 block text-xs font-semibold text-ink-400 hover:text-ink-700"
+            >
+              ← Grįžti atgal
+            </button>
+          </>
+        )}
 
         <div className="relative mt-6 flex items-center justify-center gap-3 border-t border-cream-300 pt-4">
           <span className="flex -space-x-2" aria-hidden>

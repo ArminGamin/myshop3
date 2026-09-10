@@ -1,17 +1,37 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
+import { clientIp, takeToken } from "@/lib/security/rate-limit";
 
 export const runtime = "nodejs";
 
+const SESSION_ID_RE = /^cs_(?:test_)?[a-zA-Z0-9_]{10,120}$/;
+const PAYMENT_INTENT_RE = /^pi_(?:test_)?[a-zA-Z0-9_]{10,120}$/;
+
 export async function GET(req: Request) {
+  const ip = clientIp(req);
+  const check = takeToken(ip, "sessionQuery");
+  if (!check.ok) {
+    return NextResponse.json(
+      { error: "Per daug užklausų. Bandykite vėliau." },
+      { status: 429, headers: { "Retry-After": String(check.retryAfterSec) } }
+    );
+  }
+
   const stripe = getStripe();
   if (!stripe) {
     return NextResponse.json({ configured: false }, { status: 503 });
   }
 
   const url = new URL(req.url);
-  const sessionId = url.searchParams.get("session_id");
-  const paymentIntentId = url.searchParams.get("payment_intent");
+  const sessionId = url.searchParams.get("session_id")?.trim() ?? null;
+  const paymentIntentId = url.searchParams.get("payment_intent")?.trim() ?? null;
+
+  if (sessionId && !SESSION_ID_RE.test(sessionId)) {
+    return NextResponse.json({ error: "Netinkamas sesijos formatas." }, { status: 400 });
+  }
+  if (paymentIntentId && !PAYMENT_INTENT_RE.test(paymentIntentId)) {
+    return NextResponse.json({ error: "Netinkamas mokėjimo formatas." }, { status: 400 });
+  }
 
   try {
     if (sessionId?.startsWith("cs_")) {

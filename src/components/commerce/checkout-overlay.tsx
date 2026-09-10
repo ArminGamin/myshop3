@@ -101,6 +101,17 @@ function CheckoutView({
 
   const stripePromise = useMemo(() => (stripeEnabled ? loadStripe(STRIPE_PK) : null), [stripeEnabled]);
 
+  const elementsOptions = useMemo(
+    () => ({
+      mode: "payment" as const,
+      amount: Math.max(totalCents, 50),
+      currency: "eur",
+      locale: "lt" as const,
+      appearance: STRIPE_APPEARANCE,
+    }),
+    [totalCents]
+  );
+
   const shared = {
     closeRef,
     stripeEnabled,
@@ -127,17 +138,7 @@ function CheckoutView({
   }
 
   return (
-    <Elements
-      key={totalCents}
-      stripe={stripePromise}
-      options={{
-        mode: "payment",
-        amount: totalCents,
-        currency: "eur",
-        locale: "lt",
-        appearance: STRIPE_APPEARANCE,
-      }}
-    >
+    <Elements stripe={stripePromise} options={elementsOptions}>
       <CheckoutViewStripeBridge {...shared} />
     </Elements>
   );
@@ -541,7 +542,13 @@ function CheckoutViewInner({
       </form>
       <CheckoutLeave
         open={leaveOpen}
-        onStay={() => setLeaveOpen(false)}
+        onStay={() => {
+          if (!mystery) {
+            setMystery(true);
+            writeMysteryGift(true);
+          }
+          setLeaveOpen(false);
+        }}
         onLeave={() => {
           setLeaveOpen(false);
           cart.closeCheckout();

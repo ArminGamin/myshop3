@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 import { CSRF_COOKIE, CSRF_HEADER } from "./csrf-names";
 
 export { CSRF_COOKIE, CSRF_HEADER };
@@ -32,5 +33,12 @@ export function attachCsrfCookie(response: NextResponse, token: string) {
 export function csrfMatches(req: Request): boolean {
   const cookie = readCookie(req, CSRF_COOKIE);
   const header = req.headers.get(CSRF_HEADER);
-  return Boolean(cookie && header && cookie === header);
+  if (!cookie || !header || cookie.length !== header.length) return false;
+  try {
+    const a = Buffer.from(cookie, "utf8");
+    const b = Buffer.from(header, "utf8");
+    return timingSafeEqual(a, b);
+  } catch {
+    return false;
+  }
 }
