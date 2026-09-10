@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { headers } from "next/headers";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { store } from "@/lib/config/store.config";
 import { CartProvider } from "@/lib/cart/context";
@@ -114,6 +115,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <DeferredChrome />
           </CartProvider>
         </ConsentProvider>
+        <Analytics />
       </body>
     </html>
   );
