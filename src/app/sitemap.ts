@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { store, flags, campaign } from "@/lib/config/store.config";
 import { products } from "@/lib/data/products";
 import { collections } from "@/lib/data/collections";
+import { getArticles } from "@/lib/articles";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = store.brand.url.replace(/\/$/, "");
@@ -38,5 +39,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   void flags;
   void campaign;
-  return [...staticPages, ...productPages];
+  const articlePages: MetadataRoute.Sitemap = getArticles().map((post) => ({
+    url: `${base}/straipsniai/${post.slug}`, lastModified: new Date(post.published), changeFrequency: "monthly", priority: 0.6,
+  }));
+  return [...staticPages, ...productPages, { url: `${base}/straipsniai`, changeFrequency: "weekly", priority: 0.6 }, ...articlePages];
 }
