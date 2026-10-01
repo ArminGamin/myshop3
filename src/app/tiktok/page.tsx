@@ -7,7 +7,7 @@ import { DeadlineBanner } from "@/components/commerce/deadline-banner";
 export const metadata: Metadata = {
   title: "Kalėdinės dovanos iki 30 €",
   description:
-    "Iš TikTok atėjote į teisingą vietą: jaukios kalėdinės dovanos iki 30 eurų su pristatymu per 1–2 d. d.",
+    "Iš TikTok atėjote į teisingą vietą: jaukios kalėdinės dovanos iki 30 eurų su pristatymu per 4–6 dienas.",
   robots: { index: false },
   alternates: { canonical: "/tiktok" },
 };
@@ -28,8 +28,7 @@ export default function TikTokLanding() {
           🎁 Kalėdinės dovanos iki 30 €
         </h1>
         <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-600">
-            Tos pačios prekės, kurias matėte vaizdo įraše — pristatome per 1–2 d. d.,
-            kokybės garantija.
+            Tos pačios prekės, kurias matėte vaizdo įraše — pristatome visoje Lietuvoje.
         </p>
       </section>
 
@@ -37,9 +36,7 @@ export default function TikTokLanding() {
         <ProductGrid products={items} />
       </div>
 
-      <div className="mt-14">
-        <DeadlineBanner />
-      </div>
+      <DeadlineBanner className="mt-14" />
       <TrustStrip tone="cream" />
     </div>
   );

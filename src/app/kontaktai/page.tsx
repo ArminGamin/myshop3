@@ -42,8 +42,8 @@ export default function ContactPage() {
       <h2>Dažniausios situacijos</h2>
       <ul>
         <li>
-          <strong>Užsakymo keitimas / atšaukimas</strong> — parašykite kuo greičiau su
-          užsakymo numeriu.
+          <strong>Klausimas apie užsakymą</strong> — parašykite su užsakymo numeriu,
+          atsakome per 24 valandas.
         </li>
         <li>
           <strong>Siuntos sekimas</strong> — patikrinsime būseną ir atsakysime tą pačią

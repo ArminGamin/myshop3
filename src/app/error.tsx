@@ -1,8 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
+import posthog from "posthog-js";
+
 import { Button, ButtonLink } from "@/components/ui/button";
 
-export default function GlobalError({ reset }: { error: Error; reset: () => void }) {
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    if (
+      process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN &&
+      process.env.NEXT_PUBLIC_POSTHOG_HOST
+    ) {
+      posthog.captureException(error);
+    }
+  }, [error]);
+
   return (
     <div className="texture-knit">
       <div className="mx-auto max-w-xl px-4 py-24 text-center">

@@ -18,17 +18,18 @@ export async function GET() {
   const items = products
     .filter((p) => p.inStock)
     .map((p) => {
+      const apparel = Boolean(p.sizeGroups) || /^JK-05[2-6]$/.test(p.sku);
       return `    <item>
       <g:id>${esc(p.sku)}</g:id>
       <g:title>${esc(`${p.name} | ${store.brand.name}`)}</g:title>
       <g:description>${esc(p.tagline)}</g:description>
       <g:link>${base}/produktai/${p.slug}</g:link>
-      <g:image_link>${base}/api/art?seed=${p.artSeed}</g:image_link>
+      <g:image_link>${base}${esc(p.images[0])}</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in_stock</g:availability>
       <g:price>${(p.priceCents / 100).toFixed(2)} EUR</g:price>
       <g:brand>${esc(store.brand.name)}</g:brand>
-      <g:google_product_category>Home &amp; Garden &gt; Decor</g:google_product_category>
+      <g:google_product_category>${apparel ? "Apparel &amp; Accessories &gt; Clothing" : "Home &amp; Garden &gt; Decor"}</g:google_product_category>
       <g:identifier_exists>no</g:identifier_exists>
     </item>`;
     })

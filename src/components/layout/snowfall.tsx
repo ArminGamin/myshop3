@@ -38,6 +38,8 @@ export function Snowfall() {
     let fade = 0;
 
     function countForWidth(w: number) {
+      const checkout = document.documentElement.dataset.checkout === "on";
+      if (checkout) return w < 640 ? 15 : 30;
       if (w < 640) return lowPower ? 12 : 16;
       if (w < 1024) return lowPower ? 22 : 28;
       return lowPower ? 32 : 40;
@@ -45,14 +47,15 @@ export function Snowfall() {
 
     function seed(w: number, h: number) {
       const n = countForWidth(w);
+      const checkout = document.documentElement.dataset.checkout === "on";
       flakes = Array.from({ length: n }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        r: 0.6 + Math.random() * 1.8,
-        speed: 0.18 + Math.random() * 0.55,
+        r: checkout ? 1 + Math.random() * 1.5 : 0.6 + Math.random() * 1.8,
+        speed: checkout ? 0.12 + Math.random() * 0.28 : 0.18 + Math.random() * 0.55,
         sway: 8 + Math.random() * 16,
         phase: Math.random() * Math.PI * 2,
-        alpha: 0.12 + Math.random() * 0.13,
+        alpha: checkout ? 0.35 + Math.random() * 0.35 : 0.12 + Math.random() * 0.13,
       }));
     }
 
@@ -131,10 +134,13 @@ export function Snowfall() {
     window.addEventListener("motion-ready", ensureLoop);
     document.addEventListener("visibilitychange", ensureLoop);
 
-    const veilObserver = new MutationObserver(ensureLoop);
+    const veilObserver = new MutationObserver(() => {
+      resize();
+      ensureLoop();
+    });
     veilObserver.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ["data-veil", "data-intro", "data-motion-ready"],
+      attributeFilter: ["data-veil", "data-intro", "data-motion-ready", "data-checkout"],
     });
 
     return () => {

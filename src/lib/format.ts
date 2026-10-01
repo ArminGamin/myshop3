@@ -1,9 +1,9 @@
 export function formatPrice(cents: number): string {
-  return new Intl.NumberFormat("lt-LT", {
-    style: "currency",
-    currency: "EUR",
+  const amount = new Intl.NumberFormat("lt-LT", {
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(cents / 100);
+  return `${amount.replace(/\s/g, "\u00A0")}\u00A0€`;
 }
 
 export function discountPercent(price: number, compareAt: number | null): number | null {

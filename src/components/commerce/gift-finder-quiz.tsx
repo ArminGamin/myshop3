@@ -65,9 +65,9 @@ const steps: Step[] = [
 
 const budgetRange = {
   "iki-20": [0, 2000],
-  "20-30": [1900, 3000],
-  "30-50": [2900, 5000],
-  "50-plus": [4900, Infinity],
+  "20-30": [2000, 3000],
+  "30-50": [3000, 5000],
+  "50-plus": [5000, Infinity],
 } as const;
 
 type Answers = Partial<Record<string, string>>;
@@ -75,6 +75,11 @@ type Answers = Partial<Record<string, string>>;
 function scoreProducts(a: Answers) {
   return products
     .filter((p) => p.inStock)
+    .filter((p) => {
+      if (!a.budget) return true;
+      const [min, max] = budgetRange[a.budget as keyof typeof budgetRange];
+      return p.priceCents >= min && p.priceCents <= max;
+    })
     .map((p) => {
       let score = 0;
       if (a.recipient && p.recipients.includes(a.recipient as RecipientId)) score += 3;

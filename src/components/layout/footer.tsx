@@ -6,6 +6,7 @@ import { CookieSettingsButton } from "@/components/layout/cookie-settings-button
 import { SafeDiv } from "@/components/layout/safe-div";
 
 const infoLinks = [
+  { href: "/straipsniai", label: "Dovanų idėjos" },
   { href: "/apie-mus", label: "Apie mus" },
   { href: "/kontaktai", label: "Kontaktai" },
   { href: "/pristatymas", label: "Pristatymas" },
@@ -20,7 +21,7 @@ const legalLinks = [
 
 export function Footer() {
   return (
-    <footer className="band-forest relative z-[2] text-cream-100" suppressHydrationWarning>
+    <footer className="site-footer band-forest relative z-[2] text-cream-100" suppressHydrationWarning>
       <SafeDiv className="mx-auto max-w-7xl px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:px-8 lg:py-12">
         <SafeDiv className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
           <SafeDiv className="col-span-2 lg:col-span-1">

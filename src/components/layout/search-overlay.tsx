@@ -8,7 +8,7 @@ import { searchProducts } from "@/lib/search";
 import { store } from "@/lib/config/store.config";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types";
-import { ProductArt } from "@/components/commerce/product-art";
+import { ProductImage } from "@/components/commerce/product-art";
 import { track } from "@/lib/analytics";
 import { usePresence } from "@/lib/motion";
 
@@ -169,16 +169,19 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                       }}
                       className="flex items-center gap-3 rounded-cozy p-2 transition hover:bg-cream-200/70"
                     >
-                      <ProductArt seed={product.artSeed} size="thumb" />
+                      <ProductImage images={product.images} seed={product.artSeed} alt="" size="thumb" className="size-12 shrink-0 rounded-xl object-cover" />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14.5px] font-semibold text-ink-900">
+                        <span className="line-clamp-2 text-[14.5px] font-semibold text-ink-900">
                           {product.name}
                         </span>
                         <span className="block truncate text-[13px] text-ink-600">
                           {product.tagline}
                         </span>
+                        <span className="mt-0.5 block text-sm font-bold text-burgundy-600 sm:hidden">
+                          {formatPrice(product.priceCents)}
+                        </span>
                       </span>
-                      <span className="shrink-0 text-sm font-bold text-burgundy-600">
+                      <span className="hidden shrink-0 text-sm font-bold text-burgundy-600 sm:block">
                         {formatPrice(product.priceCents)}
                       </span>
                     </Link>

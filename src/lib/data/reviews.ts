@@ -126,11 +126,56 @@ export const STOREFRONT_REVIEWS: StorefrontReview[] = [
     text: "Užkabinau ant palangės ir kaimynai jau klausia kur pirkau 😄 Šviesa šilta, ne tokia blaškanti kaip būna su kai kuriom LED girliandom.",
     image: "/reviews/aiste.png",
   },
+  {
+    id: "gabija",
+    name: "Gabija V.",
+    city: "Kaunas",
+    rating: 5,
+    bought: "Megztinis „Kasdienis šiltis“",
+    text: "Užsisakiau sau M, o po savaitės dar vieną mamai. Megztinis minkštas, nekaso, ir dydis oversize tikrai toks, kaip nuotraukoj 😊",
+    image: "/reviews/gabija.png",
+  },
+  {
+    id: "lukas",
+    name: "Lukas M.",
+    city: "Vilnius",
+    rating: 5,
+    bought: "Džemperis „Šiltas užtrauktukas“",
+    text: "Džemperį nešioju kasdien. Gobtuvas šiltas, užtrauktukas normalus, ne tas pigus kuris stringa. Dovanojau ir broliui tokį patį.",
+    image: "/reviews/lukas.png",
+  },
+  {
+    id: "egle",
+    name: "Eglė P.",
+    city: "Klaipėda",
+    rating: 5,
+    bought: "Kardiganas „Atviras šiltis“",
+    text: "Mama kardigano nenusiima nuo ryto. Sagų medinės, kišenės tikros, ne prisiūtos dėl vaizdo. Labai geras pasirinkimas.",
+    image: "/reviews/egle.png",
+  },
+  {
+    id: "simona",
+    name: "Simona R.",
+    city: "Šiauliai",
+    rating: 5,
+    bought: "Pižama „Vakaro komplektas“",
+    text: "Užsakėm dvi pižamas — man ir vyrui. Kūčių vakarą abi jau su jom. Kantelis bordo, ne per ryškus, o audinys minkštas 😄",
+    image: "/reviews/simona.png",
+  },
+  {
+    id: "paulius",
+    name: "Paulius D.",
+    city: "Panevėžys",
+    rating: 5,
+    bought: "Golfas „Aukštas kaklas“",
+    text: "Golfą dėviu po megztiniu į darbą. Plonas, bet šiltas, kaklas nestovi kaip vamzdis. Už tokią kainą tikrai imčiau dar kartą.",
+    image: "/reviews/paulius.png",
+  },
 ];
 
 export const REVIEW_SUMMARY = {
   rating: 4.9,
-  count: 664,
+  count: 689,
 } as const;
 
 export function lithuanianReviewWord(count: number): string {

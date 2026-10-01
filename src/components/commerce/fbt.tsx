@@ -15,14 +15,14 @@ export function FrequentlyBoughtTogether({ product }: { product: Product }) {
     () =>
       product.pairsWith
         .map((s) => getProduct(s))
-        .filter((p): p is Product => p !== undefined && p.inStock)
+        .filter((p): p is Product => p !== undefined && p.inStock && !p.sizeGroups)
         .slice(0, 2),
     [product]
   );
 
   const [selected, setSelected] = useState<string[]>(companions.map((c) => c.slug));
 
-  if (companions.length === 0) return null;
+  if (product.sizeGroups || companions.length === 0) return null;
 
   const chosen = companions.filter((c) => selected.includes(c.slug));
   const totalCents =

@@ -10,6 +10,12 @@ function curtain() {
   return document.getElementById("intro-static");
 }
 
+function dismissCurtain() {
+  document.documentElement.removeAttribute("data-intro");
+  curtain()?.remove();
+  markMotionReady();
+}
+
 function splitCurtain() {
   const el = curtain();
   if (!el) return;
@@ -22,9 +28,7 @@ export function IntroCutscene() {
   const [phase, setPhase] = useState<IntroPhase>("off");
 
   const finish = useCallback(() => {
-    document.documentElement.removeAttribute("data-intro");
-    curtain()?.remove();
-    markMotionReady();
+    dismissCurtain();
     setPhase("done");
   }, []);
 
@@ -37,14 +41,15 @@ export function IntroCutscene() {
     }
 
     if (reduced || document.documentElement.dataset.intro !== "pending") {
-      finish();
+      dismissCurtain();
       return;
     }
 
-    setPhase("hold");
+    const startFrame = requestAnimationFrame(() => setPhase("hold"));
     const splitAt = window.setTimeout(() => setPhase("split"), MOTION.introHold);
     const endAt = window.setTimeout(finish, MOTION.introHold + MOTION.introCurtain + 60);
     return () => {
+      cancelAnimationFrame(startFrame);
       window.clearTimeout(splitAt);
       window.clearTimeout(endAt);
     };

@@ -22,14 +22,15 @@ export function ProductCard({ product }: { product: Product }) {
         <Link
           href={`/produktai/${product.slug}`}
           aria-label={product.name}
-          className="block aspect-[4/5]"
+          className="relative block aspect-[4/5]"
         >
           <ProductImage
+            fill
             images={product.images}
             seed={product.artSeed}
             alt={product.name}
             size="card"
-            className="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035]"
+            className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035]"
           />
         </Link>
 
@@ -57,31 +58,35 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Greitas pridėjimas — atsiranda užvedus (desktop) */}
         <div className="absolute inset-x-3 bottom-3 z-[2] hidden translate-y-1 opacity-0 transition-[opacity,transform] duration-500 sm:block sm:pointer-events-none sm:group-hover:pointer-events-auto sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-          <button
-            type="button"
-            onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
-            className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full bg-ink-900/82 py-2.5 text-[13px] font-semibold text-cream-50 backdrop-blur-sm transition hover:bg-burgundy-600"
-          >
-            <ShoppingBag className="size-3.5" strokeWidth={2} />
-            Į krepšelį
-          </button>
+          {product.sizeGroups ? (
+            <Link href={`/produktai/${product.slug}`} className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full bg-ink-900/82 py-2.5 text-[13px] font-semibold text-cream-50 backdrop-blur-sm transition hover:bg-burgundy-600">Rinktis dydžius</Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
+              className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full bg-ink-900/82 py-2.5 text-[13px] font-semibold text-cream-50 backdrop-blur-sm transition hover:bg-burgundy-600"
+            >
+              <ShoppingBag className="size-3.5" strokeWidth={2} />
+              Į krepšelį
+            </button>
+          )}
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col px-0.5 pt-2.5 sm:px-1 sm:pt-3.5">
-        <Link href={`/produktai/${product.slug}`} className="flex-1">
+      <div className="px-0.5 pt-2 sm:px-1 sm:pt-2.5">
+        <Link href={`/produktai/${product.slug}`} className="block">
           <h3 className="line-clamp-2 text-[14px] font-semibold leading-snug text-ink-900 transition group-hover:text-burgundy-600 sm:text-[14.5px]">
             {product.name}
           </h3>
         </Link>
         {flags.ENABLE_REVIEWS && product.rating && product.reviewCount ? (
-          <p className="mt-1 flex items-center gap-1.5 text-xs text-ink-600">
+          <p className="mt-1 flex items-center gap-1.5 text-xs leading-none text-ink-600">
             <span aria-hidden className="text-gold-500">★★★★★</span>
             {String(product.rating).replace(".", ",")} ({product.reviewCount})
           </p>
         ) : null}
-        <p className="mt-0.5 hidden line-clamp-1 text-[13px] text-ink-600 sm:block">{product.tagline}</p>
-        <div className="mt-1.5 flex items-baseline gap-2 sm:mt-2">
+        <p className="mt-1 hidden line-clamp-1 text-[13px] leading-snug text-ink-600 sm:block">{product.tagline}</p>
+        <div className="mt-1 flex items-baseline gap-2">
           <span className="font-display text-[17px] font-extrabold text-burgundy-600 sm:text-xl">
             {formatPrice(product.priceCents)}
           </span>
@@ -90,13 +95,17 @@ export function ProductCard({ product }: { product: Product }) {
           ) : null}
         </div>
 
-        <button
-          type="button"
-          onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
-          className="mt-2 flex min-h-11 w-full items-center justify-center rounded-full border border-burgundy-600/25 bg-white/70 text-[13px] font-semibold text-burgundy-600 transition hover:bg-burgundy-600 hover:text-cream-50 sm:hidden"
-        >
-          Į krepšelį
-        </button>
+        {product.sizeGroups ? (
+          <Link href={`/produktai/${product.slug}`} className="mt-2 flex min-h-11 w-full items-center justify-center rounded-full border border-burgundy-600/25 bg-white/70 text-[13px] font-semibold text-burgundy-600 transition hover:bg-burgundy-600 hover:text-cream-50 sm:hidden">Rinktis dydžius</Link>
+        ) : (
+          <button
+            type="button"
+            onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
+            className="mt-2 flex min-h-11 w-full items-center justify-center rounded-full border border-burgundy-600/25 bg-white/70 text-[13px] font-semibold text-burgundy-600 transition hover:bg-burgundy-600 hover:text-cream-50 sm:hidden"
+          >
+            Į krepšelį
+          </button>
+        )}
       </div>
     </article>
   );
@@ -104,7 +113,7 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+    <div className="grid grid-cols-2 items-start gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
       {products.map((product) => (
         <ProductCard key={product.slug} product={product} />
       ))}

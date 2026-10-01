@@ -19,12 +19,12 @@ export function TrustStrip({ tone = "light" }: { tone?: "light" | "cream" }) {
       label: `Nemokamas pristatymas nuo ${freeFrom} €`,
       shortLabel: `Nemokamai nuo ${freeFrom} €`,
     },
-    { icon: <ShieldCheck className="size-4.5" strokeWidth={1.8} />, label: "Kokybės garantija", shortLabel: "Kokybės garantija" },
+    { icon: <ShieldCheck className="size-4.5" strokeWidth={1.8} />, label: "Paruošta dovanoti", shortLabel: "Paruošta dovanoti" },
   ];
 
   return (
     <section
-      aria-label="Pasitikėjimo garantijos"
+      aria-label="Pasitikėjimo ženklai"
       className={`trust-strip texture-knit border-y ${
         tone === "light" ? "border-cream-300 bg-white/70 shadow-card" : "border-transparent bg-cream-200/80"
       }`}

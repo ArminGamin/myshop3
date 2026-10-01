@@ -12,6 +12,8 @@ interface Props {
   params: Promise<{ kolekcija: string }>;
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return collections.map((c) => ({ kolekcija: c.slug }));
 }
@@ -19,7 +21,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { kolekcija } = await params;
   const meta = getCollection(kolekcija);
-  if (!meta) return {};
+  if (!meta) notFound();
   return {
     title: meta.seoTitle,
     description: meta.description,

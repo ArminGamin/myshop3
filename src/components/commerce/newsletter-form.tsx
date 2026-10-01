@@ -31,7 +31,8 @@ export function NewsletterForm({
         headers: apiHeaders(),
         body: JSON.stringify({ email, consent: true, source, honey }),
       });
-      if (!res.ok) throw new Error();
+      const data = await res.json();
+      if (!res.ok || data.ok !== true || !["captured", "klaviyo"].includes(data.mode)) throw new Error();
       track("sign_up", { source });
       setStatus("ok");
     } catch {
@@ -47,7 +48,7 @@ export function NewsletterForm({
           compact ? "" : "mx-auto max-w-md"
         }`}
       >
-        Ačiū! Esate prenumeratorius — naujienas siųsime į <strong>{email}</strong>.
+        Ačiū! Gavome jūsų prašymą prenumeruoti naujienas adresu <strong>{email}</strong>.
       </div>
     );
   }
@@ -89,7 +90,7 @@ export function NewsletterForm({
       {(status === "invalid" || status === "error") && (
         <p role="alert" className="mt-2 text-left text-xs font-semibold text-burgundy-600">
           {status === "invalid"
-            ? "Įveskite gmail.com, outlook.com, icloud.com arba inbox.lt paštą."
+            ? "Įveskite galiojantį el. pašto adresą."
             : "Kažkas nepavyko — pabandykite dar kartą."}
         </p>
       )}

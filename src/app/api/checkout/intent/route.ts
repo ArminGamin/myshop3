@@ -1,11 +1,17 @@
-import { NextResponse } from "next/server";
+import { SeverityNumber } from "@opentelemetry/api-logs";
+import { after, NextResponse } from "next/server";
+import { posthogLoggerProvider } from "../../../../../instrumentation";
 import { getStripe } from "@/lib/stripe";
 import { denyPost } from "@/lib/security/guard";
-import { buildOrder, orderMetadata, parseLines } from "@/lib/cart/server-order";
+import { buildOrder, orderMetadata, orderTotalError, parseLines } from "@/lib/cart/server-order";
 import { validateCustomer } from "@/lib/checkout/customer";
 import { store } from "@/lib/config/store.config";
+import { orderSnapshot, snapshotMetadata } from "@/lib/email/templates";
+import { readCartSession } from "@/lib/email/tokens";
 
 export const runtime = "nodejs";
+
+const posthogCheckoutLogger = posthogLoggerProvider?.getLogger("posthog.checkout");
 
 export async function POST(req: Request) {
   const blocked = denyPost(req, "checkout");
@@ -16,9 +22,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Atsiskaitymas dar nesukonfigūruotas." }, { status: 503 });
   }
 
-  let body: { lines?: unknown; addons?: unknown; customer?: unknown; mysteryGift?: unknown };
+  let body: { lines?: unknown; addons?: unknown; customer?: unknown; mysteryGift?: unknown; expectedTotalCents?: unknown };
   try {
     body = await req.json();
+    if (!body || typeof body !== "object") throw new Error("Invalid payload");
   } catch {
     return NextResponse.json({ error: "Netinkama užklausa." }, { status: 400 });
   }
@@ -39,6 +46,9 @@ export async function POST(req: Request) {
   if ("error" in order) {
     return NextResponse.json({ error: order.error }, { status: 400 });
   }
+
+  const totalError = orderTotalError(order, body.expectedTotalCents);
+  if (totalError) return NextResponse.json({ error: totalError, totalCents: order.totalCents }, { status: 409 });
 
   if (order.totalCents < 1 || order.totalCents > 1_000_000) {
     return NextResponse.json({ error: "Netinkama suma." }, { status: 400 });
@@ -62,18 +72,47 @@ export async function POST(req: Request) {
           country: "LT",
         },
       },
-      metadata: orderMetadata(order, {
+      metadata: { ...orderMetadata(order, {
         email: customer.email,
         phone: customer.phone,
         name: customer.name,
         surname: customer.surname,
         address: `${customer.address}, ${customer.city} ${customer.postalCode}`,
-      }),
+      }), ...snapshotMetadata(orderSnapshot(order)), email_cart_run: readCartSession(req)?.runId ?? "" },
     });
 
-    return NextResponse.json({ clientSecret: intent.client_secret });
+    posthogCheckoutLogger?.emit({
+      body: "checkout payment intent created",
+      severityNumber: SeverityNumber.INFO,
+      attributes: {
+        event: "checkout.payment_intent_created",
+        currency: "eur",
+        item_count: order.lineItems.length,
+        total_cents: order.totalCents,
+      },
+    });
+    after(async () => {
+      await posthogLoggerProvider?.forceFlush();
+    });
+
+    return NextResponse.json({ clientSecret: intent.client_secret, totalCents: order.totalCents });
   } catch (e) {
     console.error("PaymentIntent klaida:", e);
+    posthogCheckoutLogger?.emit({
+      body: "checkout payment intent creation failed",
+      severityNumber: SeverityNumber.ERROR,
+      attributes: {
+        event: "checkout.payment_intent_failed",
+        currency: "eur",
+        item_count: order.lineItems.length,
+        total_cents: order.totalCents,
+        error_type: e instanceof Error ? e.name : "unknown_error",
+      },
+    });
+    after(async () => {
+      await posthogLoggerProvider?.forceFlush();
+    });
+
     return NextResponse.json({ error: "Nepavyko pradėti mokėjimo." }, { status: 500 });
   }
 }

@@ -12,6 +12,7 @@ import { useConsent } from "@/lib/consent";
 import { usePresence } from "@/lib/motion";
 import { apiHeaders } from "@/lib/security/csrf-client";
 import { isAllowedEmail } from "@/lib/security/email";
+import { CartExitPreview } from "./cart-exit-preview";
 
 type PopupKind = "welcome" | "exit-cart" | "exit-quiz" | null;
 
@@ -41,6 +42,7 @@ export function SmartPopups() {
   const cart = useCart();
   const { consent, hydrated } = useConsent();
   const [kind, setKind] = useState<PopupKind>(null);
+  const [lastKind, setLastKind] = useState<PopupKind>(null);
   const shownRef = useRef(false);
   const hydratedRef = useRef(cart.hydrated);
 
@@ -51,18 +53,24 @@ export function SmartPopups() {
   const eligible = useCallback((): PopupKind => {
     if (!flags.ENABLE_POPUP) return null;
     if (!hydrated || !consent) return null;
+    if (
+      cart.drawerOpen ||
+      document.documentElement.matches('[data-checkout="on"], [data-menu-open="on"]') ||
+      document.querySelector('[aria-modal="true"]')
+    ) return null;
     if (sessionStorage.getItem("jaukumas.popup-shown")) return null;
     const dismissedAt = readDismissed();
     if (dismissedAt && Date.now() - dismissedAt < store.popups.cooldownHours * 3_600_000)
       return null;
     return "pending" as unknown as PopupKind;
-  }, [hydrated, consent]);
+  }, [hydrated, consent, cart.drawerOpen]);
 
   const show = useCallback((candidate: Exclude<PopupKind, null>) => {
     if (shownRef.current || !eligible()) return;
     shownRef.current = true;
     sessionStorage.setItem("jaukumas.popup-shown", "1");
     setKind(candidate);
+    setLastKind(candidate);
     track("popup_view", { popup_type: candidate });
   }, [eligible]);
 
@@ -117,9 +125,7 @@ export function SmartPopups() {
   }
 
   const { mounted, visible } = usePresence(kind !== null);
-  const kindRef = useRef(kind);
-  if (kind) kindRef.current = kind;
-  const displayKind = kind ?? kindRef.current;
+  const displayKind = kind ?? lastKind;
 
   if (!flags.ENABLE_POPUP) return null;
   if (!mounted || !displayKind) return null;
@@ -228,17 +234,18 @@ function CartReminderPopup({ onClose, visible }: { onClose: () => void; visible:
       <p className="mx-auto mt-2 max-w-xs text-center text-sm leading-relaxed text-ink-600">
         Krepšelyje jau yra prekių. Užbaikite užsakymą, kad spėtumėte iki Kalėdų.
       </p>
+      <CartExitPreview />
       <div className="mt-5 flex flex-col gap-2">
         <button
           type="button"
           onClick={() => {
             track("popup_convert", { popup_type: "exit-cart" });
             onClose();
-            router.push("/krepselis");
+            router.push("/checkout");
           }}
           className="flex min-h-12 items-center justify-center rounded-full bg-burgundy-600 px-6 text-[15px] font-semibold text-cream-50 transition hover:bg-burgundy-700"
         >
-          Peržiūrėti krepšelį →
+          Tęsti užsakymą →
         </button>
         <button
           type="button"
@@ -269,7 +276,8 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
         headers: apiHeaders(),
         body: JSON.stringify({ email, consent: true, source: "popup-welcome" }),
       });
-      if (!res.ok) throw new Error();
+      const data = await res.json();
+      if (!res.ok || data.ok !== true || !["captured", "klaviyo"].includes(data.mode)) throw new Error();
       track("sign_up", { source: "popup-welcome" });
       track("popup_convert", { popup_type: "welcome" });
       setState("ok");
@@ -282,7 +290,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
   if (state === "ok")
     return (
       <p role="status" className="rounded-cozy border border-gold-400/55 bg-cream-100 py-3 text-center text-sm font-semibold text-burgundy-700">
-        🎄 Ačiū! Esate prenumeratorius.
+        🎄 Ačiū! Gavome jūsų prašymą prenumeruoti naujienas.
       </p>
     );
 

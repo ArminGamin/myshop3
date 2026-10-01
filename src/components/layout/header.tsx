@@ -7,7 +7,6 @@ import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
 import { collections } from "@/lib/data/collections";
 import { countOf, useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
-import { store } from "@/lib/config/store.config";
 import { usePresence } from "@/lib/motion";
 import { BrandLogo } from "./brand-logo";
 import { SafeDiv } from "./safe-div";
@@ -56,7 +55,7 @@ export function Header() {
   return (
     <>
       <header
-        className={`border-b border-cream-300 bg-cream-50/88 backdrop-blur-md transition-[box-shadow,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`site-header border-b border-cream-300 bg-cream-50/88 backdrop-blur-md transition-[box-shadow,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           scrolled ? "shadow-lift" : "shadow-card"
         }`}
       >
@@ -211,7 +210,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </ul>
         <div className="border-t border-cream-400 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-[13px] leading-relaxed text-ink-600">
           <p>Nemokamas pristatymas nuo 80 €</p>
-          <p>Kokybės garantija</p>
+          <p>Saugus atsiskaitymas</p>
           <p>Pristatome per 4–6 d.</p>
         </div>
       </nav>

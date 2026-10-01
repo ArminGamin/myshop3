@@ -43,7 +43,6 @@ export default function ThankYouPage() {
       : payment_intent
         ? `payment_intent=${encodeURIComponent(payment_intent)}`
         : null;
-    if (query) setCelebrate(true);
     const first = setTimeout(() => {
       if (!query) {
         setChecked(true);
@@ -80,7 +79,7 @@ export default function ThankYouPage() {
           <CheckCircle2 className="size-9" strokeWidth={1.6} />
         </span>
         <h1 className="mt-5 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
-          {celebrate ? "Kalėdos jau pakeliui!" : "Ačiū už jūsų užsakymą!"}
+          {celebrate ? "Kalėdos jau pakeliui!" : !checked ? "Tikriname mokėjimą" : "Mokėjimas nepatvirtintas"}
         </h1>
         {celebrate ? (
           <p className="mt-2 text-[15px] font-medium text-burgundy-600">Ačiū — jūsų dovana jau ruošiama.</p>
@@ -88,7 +87,7 @@ export default function ThankYouPage() {
 
         {!checked ? (
           <div className="mx-auto mt-8 h-24 max-w-md rounded-cozy skeleton" />
-        ) : order ? (
+        ) : order?.paid ? (
           <div className="mx-auto mt-8 max-w-md rounded-cozy border border-cream-300 bg-white/80 p-6 text-left">
             <dl className="space-y-2.5 text-sm">
               <div className="flex justify-between">
@@ -121,8 +120,7 @@ export default function ThankYouPage() {
           </div>
         ) : (
           <p className="mt-6 text-[15px] leading-relaxed text-ink-600">
-            Užsakymo informaciją ieškokite el. pašte — ten išsiuntėme patvirtinimą ir
-            sekimo instrukcijas.
+            Nepavyko patvirtinti mokėjimo. Patikrinkite krepšelį arba susisiekite su mumis, jei suma buvo nuskaičiuota.
           </p>
         )}
 
@@ -130,7 +128,7 @@ export default function ThankYouPage() {
           Tegul šios Kalėdos namams atneša dar daugiau jaukumo ir šilumos! ❤️
         </p>
 
-        <div className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
+        {order?.paid ? <div className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
           <section className="rounded-cozy border border-forest-400/30 bg-forest-100/55 p-5 shadow-card">
             <div className="flex items-center gap-2 text-forest-600">
               <Truck className="size-4" strokeWidth={1.8} />
@@ -151,29 +149,28 @@ export default function ThankYouPage() {
           {flags.ENABLE_POST_PURCHASE_RECOMMENDATIONS && suggestion ? (
             <section className="rounded-cozy border border-gold-400/50 bg-gradient-to-br from-cream-100 to-white p-5 shadow-card">
               <p className="text-xs font-bold uppercase tracking-wide text-gold-600">Dar viena mintis</p>
-              <Link
-                href={`/produktai/${suggestion.slug}`}
-                className="group mt-3 flex items-center gap-4"
-              >
-                <span className="relative size-20 shrink-0 overflow-hidden rounded-cozy bg-cream-200">
+              <Link href={`/produktai/${suggestion.slug}`} className="group mt-3 block">
+                <span className="relative block aspect-square w-full overflow-hidden rounded-cozy bg-cream-200">
                   <ProductImage
                     images={suggestion.images}
                     seed={suggestion.artSeed}
                     alt={suggestion.name}
-                    size="thumb"
+                    size="card"
                     className="size-full object-cover"
                   />
                 </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-semibold text-ink-900 group-hover:text-burgundy-600">
+                <span className="mt-3 flex items-start justify-between gap-3">
+                  <span className="min-w-0 text-sm font-semibold leading-snug text-ink-900 group-hover:text-burgundy-600">
                     {suggestion.name}
                   </span>
-                  <span className="text-sm font-bold text-burgundy-600">{formatPrice(suggestion.priceCents)}</span>
+                  <span className="shrink-0 text-sm font-bold text-burgundy-600">
+                    {formatPrice(suggestion.priceCents)}
+                  </span>
                 </span>
               </Link>
             </section>
           ) : null}
-        </div>
+        </div> : null}
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <ButtonLink href="/dovanos/visos-dovanos" variant="secondary" size="md">
@@ -189,7 +186,7 @@ export default function ThankYouPage() {
           </a>
         </div>
 
-        <ul className="mx-auto mt-12 grid max-w-lg gap-3 text-left text-[13px] leading-relaxed text-ink-600 sm:grid-cols-2">
+        {order?.paid ? <ul className="mx-auto mt-12 grid max-w-lg gap-3 text-left text-[13px] leading-relaxed text-ink-600 sm:grid-cols-2">
           <li className="flex items-start gap-2">
             <Mail className="mt-0.5 size-4 shrink-0 text-burgundy-600" />
             Atsiliepimą paprašysime po kelių dienų — mums svarbi jūsų nuomonė.
@@ -198,7 +195,7 @@ export default function ThankYouPage() {
             <Truck className="mt-0.5 size-4 shrink-0 text-burgundy-600" />
             Pristatymas 4–6 d. nuo išsiuntimo — sekimo numerį atsiųsime el. paštu.
           </li>
-        </ul>
+        </ul> : null}
       </div>
     </div>
   );

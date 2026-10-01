@@ -11,12 +11,12 @@ function sourceLabel(source: string): string {
 
 export async function notifyDiscordNewsletter(input: { email: string; source: string }) {
   const hook = process.env.NEWSLETTER_WEBHOOK_URL;
-  if (!hook) return;
+  if (!hook) return false;
 
   const payload = {
     embeds: [
       {
-        title: "📬 Naujas naujienlaiškio prenumeratorius",
+        title: "📬 Naujas naujienlaiškio prašymas",
         color: 0x5865f2,
         fields: [
           { name: "El. paštas", value: input.email, inline: true },
@@ -37,7 +37,9 @@ export async function notifyDiscordNewsletter(input: { email: string; source: st
     if (!res.ok) {
       console.error("[NEWSLETTER-DISCORD] Nepavyko:", res.status, await res.text().catch(() => ""));
     }
+    return res.ok;
   } catch (error) {
     console.error("[NEWSLETTER-DISCORD] Klaida:", error);
+    return false;
   }
 }

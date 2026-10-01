@@ -1,52 +1,89 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { campaign, flags, store } from "@/lib/config/store.config";
 import {
   getDeadlineInfo,
   formatDeadline,
-  getChristmasCountdown,
+  daysUntilChristmasEve,
   lithuanianDayWord,
 } from "@/lib/config/deadline";
 import { SafeDiv } from "@/components/layout/safe-div";
 
 const ROTATE_MS = 4500;
 
-function deadlineMessage(): string | null {
+function deadlineMessage(): { text: string; sparkle: boolean } | null {
   const deadline = getDeadlineInfo();
-  if (deadline.phase === "before" && deadline.deadlineDate) {
-    return `Užsisakykite iki ${formatDeadline(deadline.deadlineDate)}! ✨`;
+  if (!deadline.deadlineDate || deadline.phase === "none") return null;
+  if (deadline.phase === "near" && deadline.daysLeft != null) {
+    return {
+      text: `Paskutinės dienos užsakymams iki Kalėdų — liko ${deadline.daysLeft} ${lithuanianDayWord(deadline.daysLeft)}!`,
+      sparkle: true,
+    };
   }
-  if (deadline.phase === "near" && deadline.deadlineDate && deadline.daysLeft != null) {
-    return `Paskutinės dienos užsakymams iki Kalėdų — liko ${deadline.daysLeft} ${lithuanianDayWord(deadline.daysLeft)}! ✨`;
-  }
-  return null;
+  return { text: `Užsisakykite iki ${formatDeadline(deadline.deadlineDate)}!`, sparkle: true };
 }
 
-function christmasMessage(): string | null {
+function christmasMessage(): { text: string; sparkle: boolean } | null {
   if (!flags.ENABLE_COUNTDOWN) return null;
-  const left = getChristmasCountdown();
-  if (left.totalMs <= 0) return "Linksmų Kalėdų! 🤩";
-  if (left.days === 0) return "Kalėdos jau šiandien! 🤩";
-  return `Iki Kalėdų liko ${left.days} ${lithuanianDayWord(left.days)}! 🤩`;
+  const days = daysUntilChristmasEve();
+  if (days <= 0) return { text: "Linksmų Kalėdų!", sparkle: true };
+  if (days === 1) return { text: "Iki Kalėdų liko 1 diena!", sparkle: false };
+  return { text: `Iki Kalėdų liko ${days} ${lithuanianDayWord(days)}!`, sparkle: false };
 }
 
-function buildMessages(): string[] {
-  return [campaign.announcementText, christmasMessage(), deadlineMessage()].filter(
-    (text): text is string => Boolean(text)
+function buildMessages(): { text: string; sparkle: boolean }[] {
+  const campaignLine = campaign.announcementText
+    ? { text: campaign.announcementText, sparkle: false }
+    : null;
+  return [campaignLine, christmasMessage(), deadlineMessage()].filter(
+    (item): item is { text: string; sparkle: boolean } => Boolean(item)
   );
+}
+
+function BannerSparkle() {
+  return (
+    <svg viewBox="0 0 16 16" className="size-3.5 text-gold-200" aria-hidden="true">
+      <path fill="currentColor" d="M8 0 L9.1 6.2 L16 8 L9.1 9.8 L8 16 L6.9 9.8 L0 8 L6.9 6.2 Z" />
+    </svg>
+  );
+}
+
+const campaignOnly = campaign.announcementText
+  ? [{ text: campaign.announcementText, sparkle: false }]
+  : [];
+
+let clientMessages: { text: string; sparkle: boolean }[] | null = null;
+
+function readMessages() {
+  if (!clientMessages) clientMessages = buildMessages();
+  return clientMessages;
+}
+
+function emptySubscribe() {
+  return () => {};
 }
 
 export function AnnouncementBar() {
-  const [messages, setMessages] = useState<string[]>(() =>
-    [campaign.announcementText].filter((text): text is string => Boolean(text))
-  );
+  const barRef = useRef<HTMLDivElement>(null);
+  const messages = useSyncExternalStore(emptySubscribe, readMessages, () => campaignOnly);
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
-  useEffect(() => {
-    setMessages(buildMessages());
+  useLayoutEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const sync = () => {
+      document.documentElement.style.setProperty("--announcement-bar-h", `${el.offsetHeight}px`);
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      document.documentElement.style.removeProperty("--announcement-bar-h");
+    };
   }, []);
 
   useEffect(() => {
@@ -68,14 +105,17 @@ export function AnnouncementBar() {
   if (messages.length === 0) return null;
 
   return (
-    <SafeDiv className="cta-bar relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
+    <SafeDiv ref={barRef} className="cta-bar relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
       <p
         className={`min-h-8 w-fit py-1.5 ps-8 pe-4 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:ps-10 sm:pe-4 sm:text-[14.75px] ${
           visible ? "opacity-100" : "opacity-0"
         }`}
         aria-live="polite"
       >
-        {messages[index]}
+        <span className="inline-flex items-center justify-center gap-1.5">
+          {messages[index]?.sparkle ? <BannerSparkle /> : null}
+          {messages[index]?.text}
+        </span>
       </p>
       <Link
         href="/pristatymas"

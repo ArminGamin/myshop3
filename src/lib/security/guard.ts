@@ -17,7 +17,7 @@ export function denyPost(req: Request, bucket: RateBucket): NextResponse | null 
     );
   }
 
-  const hourly = takeToken(ip, bucket === "checkout" ? "checkoutHour" : "newsletterHour");
+  const hourly = takeToken(ip, bucket === "checkout" ? "checkoutHour" : bucket === "cartCapture" ? "cartCaptureHour" : "newsletterHour");
   if (!hourly.ok) {
     return NextResponse.json(
       { error: "Per daug bandymų. Palaukite ir bandykite dar kartą." },

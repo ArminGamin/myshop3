@@ -1,26 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { Product } from "@/types";
 import { ProductImage, ProductArt } from "./product-art";
 import { useProductVariant } from "./product-variant";
 
 export function Gallery({ product }: { product: Product }) {
-  const { variantId, setVariantId } = useProductVariant(product.defaultVariantId);
+  const { variantId } = useProductVariant(product.defaultVariantId);
   const images = useMemo(() => {
-    const fromVariants = product.variants.map((v) => v.image).filter((src): src is string => Boolean(src));
-    if (fromVariants.length > 1) return [...new Set(fromVariants)];
+    const selected = product.variants.find((v) => v.id === variantId);
+    if (selected?.images && selected.images.length > 0) return selected.images;
     return product.images;
-  }, [product]);
-  const selectedSrc = product.variants.find((v) => v.id === variantId)?.image;
-  const [active, setActive] = useState(0);
+  }, [product, variantId]);
+  const [selection, setSelection] = useState({ variantId, index: 0 });
+  if (selection.variantId !== variantId) setSelection({ variantId, index: 0 });
+  const active = selection.variantId === variantId ? selection.index : 0;
   const [zoom, setZoom] = useState(false);
-
-  useEffect(() => {
-    if (!selectedSrc) return;
-    const index = images.indexOf(selectedSrc);
-    if (index >= 0) setActive(index);
-  }, [selectedSrc, images]);
 
   const hasImages = images.length > 0;
   const current = images[active] ?? images[0];
@@ -59,11 +54,7 @@ export function Gallery({ product }: { product: Product }) {
               role="tab"
               aria-selected={i === active}
               aria-label={`Nuotrauka ${i + 1}`}
-              onClick={() => {
-                setActive(i);
-                const match = product.variants.find((v) => v.image === src);
-                if (match) setVariantId(match.id);
-              }}
+              onClick={() => setSelection({ variantId, index: i })}
               className={`size-16 shrink-0 overflow-hidden rounded-xl border-2 transition sm:size-20 ${
                 i === active ? "border-burgundy-600" : "border-transparent opacity-70 hover:opacity-100"
               }`}

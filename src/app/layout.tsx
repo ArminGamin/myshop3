@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { headers } from "next/headers";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
     template: `%s | ${store.brand.name}`,
   },
   description:
-    "Kruopščiai parinktos kalėdinės dovanos jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €, pristatymas per 4–6 dienas, kokybės garantija.",
+    "Kruopščiai parinktos kalėdinės dovanos jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €, pristatymas per 4–6 dienas.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -58,7 +60,7 @@ const stripExtensionAttrs = `(function(){function strip(n){if(n.nodeType!==1)ret
 
 const motionBootstrap = `try{function r(){document.documentElement.dataset.motionReady="1";window.dispatchEvent(new Event("motion-ready"))}if(matchMedia("(prefers-reduced-motion: reduce)").matches)r()}catch(e){}`;
 
-const introGate = `try{if(matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.removeAttribute("data-intro");var n=document.getElementById("intro-static");if(n)n.remove()}}catch(e){}`;
+const introGate = `try{var p=location.pathname;var checkout=p==="/checkout"||p.indexOf("/checkout/")===0||p==="/apmokejimas";if(checkout){document.documentElement.dataset.checkout="on";document.documentElement.dataset.motionReady="1"}if(matchMedia("(prefers-reduced-motion: reduce)").matches||checkout){document.documentElement.removeAttribute("data-intro")}if(matchMedia("(prefers-reduced-motion: reduce)").matches){var n=document.getElementById("intro-static");if(n)n.remove()}}catch(e){}`;
 
 const introPaint = `#intro-static{position:fixed;inset:0;z-index:200;background:#0b2a1f}#intro-static.is-leaving{background:transparent}#intro-static .intro-line{display:block;width:min(18rem,72vw);height:1px;background:#d6b35f;opacity:1;transform:none}#intro-static .intro-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}#intro-static .intro-mark{opacity:1;color:#f5f0e6;margin:1.15rem 0 0;font-size:clamp(1.65rem,5vw,2.75rem);font-weight:700;letter-spacing:0.14em}#intro-static .intro-tagline{opacity:1;color:#e8dfcc;margin:0.65rem 0 0;font-size:0.78rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase}`;
 
@@ -114,6 +116,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <DeferredChrome />
           </CartProvider>
         </ConsentProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

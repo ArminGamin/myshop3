@@ -6,6 +6,7 @@ import type { Product } from "@/types";
 import { useCart } from "@/lib/cart/context";
 import { useMobileChromeFlag, useIsMobile } from "@/lib/mobile-chrome";
 import { bundleUnitPriceCents, bundleTiers } from "@/lib/commerce/pricing";
+import { selectedSizeVariantId, SIZE_SELECTION_REQUIRED } from "@/lib/commerce/size-variants";
 import { store } from "@/lib/config/store.config";
 import { formatPrice, discountPercent } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ export function AddToCartForm({ product }: { product: Product }) {
   const cart = useCart();
   const { variantId, setVariantId } = useProductVariant(product.defaultVariantId);
   const [qtyChoice, setQtyChoice] = useState(1);
+  const [selectedSizes, setSelectedSizes] = useState<Record<string, string>>({});
 
   const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
   const baseUnit = product.priceCents + (variant.priceDeltaCents ?? 0);
@@ -38,9 +40,30 @@ export function AddToCartForm({ product }: { product: Product }) {
   );
 
   return (
-    <div className="space-y-5">
+    <div id="product-size-selection" className="space-y-5">
       {/* Variantai */}
-      {product.variants.length > 1 ? (
+      {product.sizeGroups ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          {product.sizeGroups.map((group) => (
+            <label key={group.id} className="block text-[13px] font-bold uppercase tracking-wide text-ink-600">
+              {group.label} — dydis
+              <select
+                value={selectedSizes[group.id] ?? ""}
+                onChange={(event) => {
+                  const next = { ...selectedSizes, [group.id]: event.target.value };
+                  setSelectedSizes(next);
+                  setVariantId(selectedSizeVariantId(product.sizeGroups!, next) ?? SIZE_SELECTION_REQUIRED);
+                }}
+                required
+                className="mt-2 min-h-11 w-full rounded-cozy border border-cream-300 bg-white px-3 text-sm font-medium normal-case tracking-normal text-ink-900 focus:border-burgundy-600 focus:outline-none"
+              >
+                <option value="">Pasirinkite dydį</option>
+                {group.sizes.map((size) => <option key={size} value={size}>{size}</option>)}
+              </select>
+            </label>
+          ))}
+        </div>
+      ) : product.variants.length > 1 ? (
         <fieldset>
           <legend className="mb-2 text-[13px] font-bold uppercase tracking-wide text-ink-600">
             Pasirinkite variantą
@@ -73,7 +96,7 @@ export function AddToCartForm({ product }: { product: Product }) {
       ) : null}
 
       {/* Kiekio rinkiniai */}
-      {store.bundles?.enabled && bundleTiers.length > 0 ? (
+      {product.inStock && store.bundles?.enabled && bundleTiers.length > 0 ? (
         <fieldset>
           <legend className="mb-2 text-[13px] font-bold uppercase tracking-wide text-ink-600">
             Rinkinys — kuo daugiau, tuo pigiau
@@ -125,7 +148,7 @@ export function AddToCartForm({ product }: { product: Product }) {
       <div>
         <div className="flex items-baseline gap-2.5">
           <span className="font-display text-3xl font-bold text-burgundy-600">
-            {formatPrice(total)}
+            {product.priceCents > 0 ? formatPrice(total) : "Kaina tikslinama"}
           </span>
           {compareTotal ? (
             <s className="text-lg text-ink-400">{formatPrice(compareTotal * 1)}</s>
@@ -145,7 +168,7 @@ export function AddToCartForm({ product }: { product: Product }) {
         <Button
           size="lg"
           className="mt-4 w-full"
-          disabled={!product.inStock}
+          disabled={!product.inStock || (Boolean(product.sizeGroups) && variantId === SIZE_SELECTION_REQUIRED)}
           onClick={() => {
             track("add_to_cart", {
               item_id: product.slug,
@@ -157,10 +180,10 @@ export function AddToCartForm({ product }: { product: Product }) {
           }}
         >
           <ShoppingBag className="size-5" strokeWidth={2} />
-          {product.inStock ? "Į krepšelį" : "Prekės nėra sandėlyje"}
+          {!product.inStock ? "Prekė tikrinama" : variantId === SIZE_SELECTION_REQUIRED ? "Pasirinkite dydžius" : "Į krepšelį"}
         </Button>
 
-        <ul className="mt-4 space-y-2 text-[13.5px] text-ink-600">
+        {product.inStock ? <ul className="mt-4 space-y-2 text-[13.5px] text-ink-600">
           <li className="flex items-center gap-2">
             <ShieldCheck className="size-4 shrink-0 text-burgundy-600" />
             Saugus atsiskaitymas per Stripe
@@ -171,9 +194,9 @@ export function AddToCartForm({ product }: { product: Product }) {
           </li>
           <li className="flex items-center gap-2">
             <ShieldCheck className="size-4 shrink-0 text-burgundy-600" />
-            Kokybės garantija — kruopščiai parinktos dovanos
+            Kruopščiai parinktos dovanos
           </li>
-        </ul>
+        </ul> : null}
       </div>
 
       {/* Nauda */}
@@ -205,7 +228,7 @@ export function StickyBuyBar({ product }: { product: Product }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const showBar = isMobile && visible && !dismissed && cart.hydrated;
+  const showBar = product.inStock && isMobile && visible && !dismissed && cart.hydrated;
   useMobileChromeFlag("stickyBuy", showBar);
 
   if (!showBar) return null;
@@ -223,11 +246,19 @@ export function StickyBuyBar({ product }: { product: Product }) {
           </p>
         </div>
         <Button
-          onClick={() => cart.addItem(product.slug, product.defaultVariantId)}
+          onClick={() => {
+            if (product.sizeGroups) {
+              const form = document.getElementById("product-size-selection");
+              form?.scrollIntoView({ behavior: "smooth", block: "center" });
+              form?.querySelector("select")?.focus({ preventScroll: true });
+            } else {
+              cart.addItem(product.slug, product.defaultVariantId);
+            }
+          }}
           className="shrink-0 px-4"
         >
           <ShoppingBag className="size-4" strokeWidth={2} />
-          Į krepšelį
+          {product.sizeGroups ? "Rinktis dydžius" : "Į krepšelį"}
         </Button>
         <button
           type="button"

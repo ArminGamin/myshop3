@@ -10,17 +10,60 @@ export interface DeadlineInfo {
 
 const NEAR_DAYS = 7;
 
+function vilniusYear(now: Date): number {
+  return Number(
+    new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Vilnius", year: "numeric" }).format(now)
+  );
+}
+
+function christmasEveEnd(year: number): Date {
+  return new Date(`${year}-12-24T23:59:59+02:00`);
+}
+
+export function daysUntilChristmasEve(now: Date = new Date()): number {
+  let year = vilniusYear(now);
+  let target = new Date(`${year}-12-24T00:00:00+02:00`);
+  if (now.getTime() >= target.getTime()) {
+    year += 1;
+    target = new Date(`${year}-12-24T00:00:00+02:00`);
+  }
+  return Math.max(0, Math.ceil((target.getTime() - now.getTime()) / 86_400_000));
+}
+
 export function getDeadlineInfo(now: Date = new Date()): DeadlineInfo {
-  const iso = store.shipping.christmasDeadlineISO;
+  const iso = store.shipping.lastChristmasOrderDateISO;
   if (!iso) return { phase: "none" };
   const deadline = new Date(iso);
   if (Number.isNaN(deadline.getTime())) return { phase: "none" };
+  if (deadline.getTime() > christmasEveEnd(vilniusYear(deadline)).getTime()) return { phase: "none" };
 
   const diffMs = deadline.getTime() - now.getTime();
-  if (diffMs <= 0) return { phase: "none" }; // terminas praėjęs — modulis slepiamas
+  if (diffMs <= 0) return { phase: "none" };
 
   const daysLeft = Math.ceil(diffMs / 86_400_000);
   return { phase: daysLeft <= NEAR_DAYS ? "near" : "before", deadlineDate: deadline, daysLeft };
+}
+
+function addBusinessDays(from: Date, days: number): Date {
+  const date = new Date(from.getTime());
+  let left = days;
+  while (left > 0) {
+    date.setUTCDate(date.getUTCDate() + 1);
+    const day = date.getUTCDay();
+    if (day !== 0 && day !== 6) left -= 1;
+  }
+  return date;
+}
+
+export function christmasDeliveryPromise(now: Date = new Date()): string | null {
+  const info = getDeadlineInfo(now);
+  if (!info.deadlineDate || info.phase === "none") return null;
+  const christmas = nextChristmas(now);
+  const eve = new Date(christmas.getTime() - 86_400_000);
+  if (info.deadlineDate.getTime() > eve.getTime()) return null;
+  if (now.getTime() > info.deadlineDate.getTime()) return null;
+  if (addBusinessDays(now, 6).getTime() > christmas.getTime()) return null;
+  return `Užsakykite iki ${formatDeadline(info.deadlineDate)} ir gausite iki Kalėdų`;
 }
 
 export function formatDeadline(date: Date): string {

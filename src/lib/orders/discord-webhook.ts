@@ -4,6 +4,7 @@ import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import { bundleUnitPriceCents } from "@/lib/commerce/pricing";
 import { store } from "@/lib/config/store.config";
 import { getProduct } from "@/lib/data/products";
+import { readSnapshot } from "@/lib/email/templates";
 
 type CartLine = { s: string; v: string; q: number };
 
@@ -103,6 +104,13 @@ function buildOrderLines(cart: CartLine[], addonsRaw: string | undefined): Order
   return lines;
 }
 
+function savedOrderLines(metadata: Stripe.Metadata): OrderLine[] {
+  const snapshot = readSnapshot(metadata);
+  return snapshot
+    ? snapshot.items.map((item) => ({ name: item.name, variant: null, qty: item.quantity, lineCents: item.unitAmount * item.quantity }))
+    : buildOrderLines(parseCart(metadata.cart), metadata.addons);
+}
+
 function buildDiscordEmbed(input: {
   orderId: string;
   amountCents: number;
@@ -111,8 +119,7 @@ function buildDiscordEmbed(input: {
   customerName?: string | null;
 }) {
   const meta = input.metadata;
-  const cart = parseCart(meta.cart);
-  const lines = buildOrderLines(cart, meta.addons);
+  const lines = savedOrderLines(meta);
   const orderNumber = makeOrderNumber(input.orderId);
 
   const name = meta.name || input.customerName?.split(" ")[0] || "—";
@@ -158,11 +165,14 @@ function buildDiscordEmbed(input: {
           { name: "El. paštas", value: email, inline: true },
           { name: "Telefonas", value: phone, inline: true },
           { name: "Adresas", value: address, inline: false },
-          { name: "Prekės", value: productsValue.slice(0, 1024), inline: false },
+          { name: "Prekės", value: productsValue.length > 1024 ? productsValue.slice(0, 900) + "\n… Visas sąrašas pridėtame faile." : productsValue, inline: false },
           ...(colorsValue !== "—"
             ? [{ name: "Spalva", value: colorsValue.slice(0, 1024), inline: false }]
             : []),
         ],
+        footer: {
+          text: "KALEDU KAMPELIS",
+        },
         timestamp: new Date().toISOString(),
       },
     ],
@@ -175,22 +185,36 @@ export async function notifyDiscordOrder(input: {
   metadata: Stripe.Metadata;
   shipping?: Stripe.PaymentIntent.Shipping | Stripe.Checkout.Session.CustomerDetails["address"] | null;
   customerName?: string | null;
-}) {
+}): Promise<boolean> {
   const hook = process.env.ORDER_WEBHOOK_URL;
-  if (!hook) return;
+  if (!hook) return false;
 
   const payload = buildDiscordEmbed(input);
+  const lines = savedOrderLines(input.metadata);
+  const details = lines.map((line) => `• ${line.name}${line.variant ? ` — ${line.variant}` : ""} × ${line.qty} — ${formatEuro(line.lineCents)}`).join("\n");
+  let body: string | FormData = JSON.stringify(payload);
+  if (details.length > 1024) {
+    const attachment = new FormData();
+    attachment.set("payload_json", JSON.stringify(payload));
+    attachment.append("files[0]", new Blob([
+      `Užsakymas: ${input.orderId}\nSuma: ${formatEuro(input.amountCents)}\n\n${details}\n`,
+    ], { type: "text/plain;charset=utf-8" }), "uzsakymas.txt");
+    body = attachment;
+  }
 
   try {
     const res = await fetch(hook, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      headers: typeof body === "string" ? { "Content-Type": "application/json" } : undefined,
+      body,
     });
     if (!res.ok) {
       console.error("[ORDER-DISCORD] Nepavyko:", res.status, await res.text().catch(() => ""));
+      return false;
     }
+    return true;
   } catch (error) {
     console.error("[ORDER-DISCORD] Klaida:", error);
+    return false;
   }
 }

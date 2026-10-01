@@ -25,7 +25,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "Kalėdinės dovanos internetu — pristatymas visoje Lietuvoje | Kalėdų Kampelis",
     description:
-      "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 49 €, kokybės garantija.",
+      "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €.",
     intro:
       "Visas mūsų kalėdinių dovanų pasirinkimas — nuo mažų malonumų iki premium rinkinių. Kiekviena prekė parinkta pagal tą patį principą: kad dovana būtų tokia, kurią iš tikrųjų norisi dovanoti.",
     filter: () => true,
@@ -49,7 +49,7 @@ export const collections: CollectionMeta[] = [
     emoji: "heart",
     seoTitle: "Kalėdinės dovanos jai — moteriai, mamai, draugei | Kalėdų Kampelis",
     description:
-      "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 1–2 d. d., nemokamai nuo 49 €.",
+      "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 4–6 dienas, nemokamai nuo 80 €.",
     intro:
       "Dovanos, kurios rodo dėmesį: kvapai, tekstūros ir detalės, kurias ji pastebės. Nuo „saugių“ iki tikrai įspūdingų.",
     filter: byRecipient("jai"),
@@ -85,7 +85,7 @@ export const collections: CollectionMeta[] = [
     emoji: "hearts",
     seoTitle: "Kalėdinės dovanos porai — romantiškos ir jaukios | Kalėdų Kampelis",
     description:
-      "Dovanos porai Kalėdoms: užpildomos akimirkų knygos, jaukumo rinkiniai, vakaro komplektai. Nemokamas pristatymas nuo 49 €.",
+      "Dovanos porai Kalėdoms: užpildomos akimirkų knygos, jaukumo rinkiniai, vakaro komplektai. Nemokamas pristatymas nuo 80 €.",
     intro:
       "Kai dovana skirta „jums dviem“ — apie bendrus vakarus, prisiminimus ir planus kartu.",
     filter: byRecipient("porai"),
@@ -121,7 +121,7 @@ export const collections: CollectionMeta[] = [
     emoji: "coins",
     seoTitle: "Kalėdinės dovanos iki 50 € — įspūdingos ir praktiškos | Kalėdų Kampelis",
     description:
-      "Įspūdingos kalėdinės dovanos iki 50 eurų: vilnos pledai, termosai, viskio rinkiniai. Pristatymas per 1–2 d. d.",
+      "Įspūdingos kalėdinės dovanos iki 50 eurų: vilnos pledai, termosai, viskio rinkiniai. Pristatymas per 4–6 dienas.",
     intro:
       "Biudžetas, kuriame jau galima dovanoti tai, kas naudojama kasdien — ir dėl ko tikrai padėkos.",
     filter: byMaxPrice(5000),
@@ -133,10 +133,10 @@ export const collections: CollectionMeta[] = [
     emoji: "sparkles",
     seoTitle: "Premium kalėdinės dovanos — įspūdžiui, kuris lieka | Kalėdų Kampelis",
     description:
-      "Premium kalėdinės dovanos: namų kino projektorius, merinoso vilnos pledai, rankų darbo keramika. Verslo dovanoms — sąskaita su PVN.",
+      "Visas Kalėdų Kampelio katalogas — visos prekės yra premium dovanos. Verslo dovanoms — sąskaita su PVN.",
     intro:
-      "Kai dovana turi kalbėti pati už save. Mūsų kruopščiausiai parinktos prekės ir rinkiniai.",
-    filter: (p) => p.premium || p.priceCents >= 5000,
+      "Kai dovana turi kalbėti pati už save. Visas mūsų katalogas parinktas pagal tą patį principą.",
+    filter: () => true,
   },
 ];
 

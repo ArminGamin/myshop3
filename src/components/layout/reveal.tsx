@@ -18,14 +18,14 @@ export function Reveal({
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(true);
-      return;
+      const frame = requestAnimationFrame(() => setShown(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight - 48 && rect.bottom > 0) {
-      setShown(true);
-      return;
+      const frame = requestAnimationFrame(() => setShown(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     const io = new IntersectionObserver(

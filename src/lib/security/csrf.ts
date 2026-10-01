@@ -15,7 +15,13 @@ export function readCookie(req: Request, name: string): string | null {
   if (!raw) return null;
   for (const part of raw.split(";")) {
     const [key, ...rest] = part.trim().split("=");
-    if (key === name) return decodeURIComponent(rest.join("="));
+    if (key === name) {
+      try {
+        return decodeURIComponent(rest.join("="));
+      } catch {
+        return null;
+      }
+    }
   }
   return null;
 }

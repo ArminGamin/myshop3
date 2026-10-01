@@ -17,7 +17,7 @@ export default function FaqPage() {
   return (
     <div className="texture-knit">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-        <FAQAccordion items={allItems.length ? allItems : homeFaqs} />
+        <FAQAccordion items={allItems.length ? allItems : homeFaqs} headingLevel={1} />
       </div>
       <JsonLd data={faqSchema(allItems)} />
     </div>

@@ -36,6 +36,17 @@ const palettes: Record<string, [string, string]> = {
   ausines: ["#F0EBE1", "#D8CCB6"],
   slepetes: ["#F5EEE4", "#E4D4BC"],
   stovas: ["#EFE8DC", "#D6C8B0"],
+  kojine: ["#F5EEE4", "#E4D4BC"],
+  gaublys: ["#F0EBE1", "#D8CCB6"],
+  takelis: ["#F3EEE2", "#E0D4C0"],
+  spaudiklis: ["#F4E8D4", "#E0C8A0"],
+  sijonas: ["#F5EEE4", "#E4D4BC"],
+  zibintas: ["#F5F0E6", "#E4D4B4"],
+  megztinis: ["#F5EEE4", "#E4D4BC"],
+  dzemperis: ["#F3EEE2", "#E0D4C0"],
+  kardiganas: ["#F5EEE4", "#E4D4BC"],
+  pizama: ["#F6EFE4", "#E8D8C2"],
+  golfas: ["#F0EBE1", "#D8CCB6"],
 };
 
 export async function GET(req: Request) {

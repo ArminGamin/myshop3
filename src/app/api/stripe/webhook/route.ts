@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { notifyDiscordOrder } from "@/lib/orders/discord-webhook";
 import { getStripe } from "@/lib/stripe";
+import { queuePurchaseEmail } from "@/lib/email/automation";
 
 export const runtime = "nodejs";
 
@@ -23,6 +24,7 @@ async function handlePaidOrder(input: {
     email: input.metadata.email,
     metadata: input.metadata,
   });
+  await queuePurchaseEmail(input.orderId, input.metadata);
   await notifyDiscordOrder(input);
 }
 
@@ -48,13 +50,14 @@ export async function POST(req: Request) {
   }
 
   switch (event.type) {
-    case "checkout.session.completed": {
+    case "checkout.session.completed":
+    case "checkout.session.async_payment_succeeded": {
       const session = event.data.object as Stripe.Checkout.Session;
       if (session.payment_status !== "paid") break;
       await handlePaidOrder({
         orderId: session.id,
         amountCents: session.amount_total ?? 0,
-        metadata: session.metadata ?? {},
+        metadata: { ...(session.metadata ?? {}), email: session.customer_details?.email || session.metadata?.email || "" },
         shipping: session.customer_details?.address ?? null,
         customerName: session.customer_details?.name ?? null,
       });

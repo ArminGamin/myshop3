@@ -4,6 +4,7 @@ import { bundleUnitPriceCents } from "@/lib/commerce/pricing";
 import { store } from "@/lib/config/store.config";
 import { addonAmounts, parseCheckoutAddons, type CartAddonSelection } from "@/lib/cart/addons";
 import { MYSTERY_GIFT, parseMysteryGift } from "@/lib/cart/mystery-gift";
+import { MAX_ORDER_LINES, normalizeQuantity } from "@/lib/cart/limits";
 
 export type CheckoutLineIn = { slug: string; variantId: string; qty: number };
 
@@ -21,12 +22,12 @@ export type BuiltOrder = {
 
 export function parseLines(value: unknown): CheckoutLineIn[] {
   if (!Array.isArray(value)) return [];
-  return value.slice(0, 30).flatMap((line) => {
+  return value.flatMap((line) => {
     if (!line || typeof line !== "object") return [];
     const slug = typeof (line as CheckoutLineIn).slug === "string" ? (line as CheckoutLineIn).slug : "";
     const variantId =
       typeof (line as CheckoutLineIn).variantId === "string" ? (line as CheckoutLineIn).variantId : "";
-    const qty = Math.min(10, Math.max(1, Math.floor(Number((line as CheckoutLineIn).qty) || 0)));
+    const qty = normalizeQuantity((line as CheckoutLineIn).qty);
     if (!slug || !qty) return [];
     return [{ slug, variantId, qty }];
   });
@@ -37,6 +38,9 @@ export function buildOrder(
   addonsRaw: unknown,
   mysteryRaw?: unknown
 ): BuiltOrder | { error: string } {
+  if (rawLines.length > MAX_ORDER_LINES) {
+    return { error: `Krepšelyje gali būti iki ${MAX_ORDER_LINES} skirtingų prekių. Sumažinkite jų skaičių.` };
+  }
   const addons = parseCheckoutAddons(addonsRaw);
   const mysteryGift = parseMysteryGift(mysteryRaw);
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
@@ -45,6 +49,9 @@ export function buildOrder(
   for (const line of rawLines) {
     const product = getProduct(line.slug);
     if (!product || !product.inStock) continue;
+    if (product.sizeGroups && !product.variants.some((v) => v.id === line.variantId)) {
+      return { error: "Pasirinkite visų drabužių dydžius." };
+    }
     const variant = product.variants.find((v) => v.id === line.variantId) ?? product.variants[0];
     const unit = bundleUnitPriceCents(product.priceCents + (variant.priceDeltaCents ?? 0), line.qty);
     subtotal += unit * line.qty;
@@ -123,6 +130,13 @@ export function buildOrder(
     mysteryCents,
     rawLines,
   };
+}
+
+export function orderTotalError(order: BuiltOrder, expectedTotalCents: unknown): string | null {
+  if (!Number.isSafeInteger(expectedTotalCents) || expectedTotalCents !== order.totalCents) {
+    return "Krepšelio suma pasikeitė. Atnaujinkite puslapį ir patikrinkite sumą prieš mokėdami.";
+  }
+  return null;
 }
 
 export function orderMetadata(

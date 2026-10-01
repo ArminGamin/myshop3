@@ -8,21 +8,19 @@ import {
   addonAmounts,
   donationBaseCents,
   donationCents,
-  readCartAddons,
-  writeCartAddons,
   type CartAddonSelection,
 } from "@/lib/cart/addons";
 import { store, flags } from "@/lib/config/store.config";
 import { useIsMobile, useMobileChromeFlag } from "@/lib/mobile-chrome";
 import { formatPrice } from "@/lib/format";
-import { getProduct } from "@/lib/data/products";
-import { track } from "@/lib/analytics";
+import { findPairsWithUpsell } from "@/lib/cart/pairs-with-upsell";
 import { Button } from "@/components/ui/button";
 import { Overlay } from "@/components/ui/overlay";
 import { ProductImage } from "./product-art";
 import { addonLineLabel, CartAddonRows } from "./cart-addons";
-import { MysteryGiftCard } from "./mystery-gift-card";
-import { MYSTERY_GIFT, readMysteryGift, writeMysteryGift } from "@/lib/cart/mystery-gift";
+import { CheckoutLeave } from "./checkout-leave";
+import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
+import { useCheckoutAddons, useMysterySelection, updateCheckoutAddons } from "@/lib/checkout/draft-store";
 
 export function FreeShippingBar({ subtotalCents }: { subtotalCents: number }) {
   if (!flags.ENABLE_FREE_SHIPPING_BAR) return null;
@@ -35,7 +33,7 @@ export function FreeShippingBar({ subtotalCents }: { subtotalCents: number }) {
       <div className="rounded-cozy border border-gold-400 bg-gradient-to-r from-gold-200 via-cream-50 to-forest-100 px-4 py-3.5">
         <p className="flex items-start gap-2 text-[14px] font-bold text-burgundy-700">
           <Check className="mt-0.5 size-4 shrink-0 text-gold-500" strokeWidth={2.4} />
-          🎉 ATRIŠTA! Nemokamas pristatymas jau jūsų
+          🎉 Atrakinta! Nemokamas pristatymas jau jūsų
         </p>
         <p className="mt-1 pl-6 text-[12px] font-semibold text-forest-500">
           Siunta keliauja be jokio papildomo mokesčio.
@@ -73,52 +71,50 @@ export function CartDrawer() {
   const open = cart.drawerOpen;
   const isMobile = useIsMobile();
   useMobileChromeFlag("cartOpen", open);
-  const [addons, setAddons] = useState<CartAddonSelection>(readCartAddons);
-  const [mystery, setMystery] = useState(readMysteryGift);
+  const addons = useCheckoutAddons();
+  const mystery = useMysterySelection();
+  const [leaveOpen, setLeaveOpen] = useState(false);
+
   const mysteryCents = mystery ? MYSTERY_GIFT.priceCents : 0;
 
   useEffect(() => {
     const beforeDonation = donationBaseCents(subtotal + mysteryCents, addons);
     if (donationCents(beforeDonation) > 0) return;
-    setAddons((prev) => {
-      if (!prev.donation) return prev;
-      const next = { ...prev, donation: false };
-      writeCartAddons(next);
-      return next;
-    });
-  }, [subtotal, mysteryCents, addons.protection, addons.priority]);
+    if (addons.donation) updateCheckoutAddons({ ...addons, donation: false });
+  }, [subtotal, mysteryCents, addons]);
 
   function updateAddons(next: CartAddonSelection) {
-    setAddons(next);
-    writeCartAddons(next);
+    updateCheckoutAddons(next);
   }
 
   const extras = addonAmounts(subtotal + mysteryCents, addons);
   const payable = subtotal + mysteryCents + extras.total;
   const freeShipping = mystery || subtotal >= store.shipping.freeThresholdCents;
 
-  const inCartSlugs = new Set(items.map((i) => i.slug));
-  const upsell =
-    flags.ENABLE_CART_UPSELL && items.length > 0
-      ? items.flatMap((i) => i.product.pairsWith)
-          .filter((s) => !inCartSlugs.has(s))
-          .map((s) => getProduct(s))
-          .find((p) => p?.inStock) ?? null
-      : null;
+  const upsell = findPairsWithUpsell(items);
 
   function close() {
+    setLeaveOpen(false);
     cart.closeDrawer();
   }
 
+  function requestClose() {
+    if (items.length > 0) {
+      setLeaveOpen(true);
+      return;
+    }
+    close();
+  }
+
   function beginCheckout() {
-    track("begin_checkout", { value: payable / 100 });
     cart.openCheckout();
   }
 
   return (
+    <>
     <Overlay
       open={open}
-      onClose={close}
+      onClose={requestClose}
       label="Krepšelis"
       side={isMobile ? "bottom" : "right"}
       widthClass={isMobile ? "max-w-none" : "max-w-lg"}
@@ -129,14 +125,14 @@ export function CartDrawer() {
           <ShoppingBag className="size-6 text-burgundy-600" strokeWidth={1.8} />
           Jūsų krepšelis
           {items.length > 0 ? (
-            <span className="text-sm font-normal text-ink-400">
+            <span className="num text-xl font-bold text-ink-500">
               ({items.reduce((n, i) => n + i.qty, 0)})
             </span>
           ) : null}
         </h2>
         <button
           type="button"
-          onClick={close}
+          onClick={requestClose}
           aria-label="Uždaryti krepšelį"
           className="inline-flex size-11 items-center justify-center rounded-full transition hover:bg-cream-200"
         >
@@ -183,7 +179,7 @@ export function CartDrawer() {
                     tabIndex={-1}
                   >
                     <ProductImage
-                      images={item.product.images}
+                      images={item.variant.images?.length ? item.variant.images : item.product.images}
                       seed={item.product.artSeed}
                       alt=""
                       size="thumb"
@@ -202,7 +198,7 @@ export function CartDrawer() {
                     item.variant.name !== "Vienetas" ? (
                       <p className="mt-0.5 truncate text-xs text-ink-400">{item.variant.name}</p>
                     ) : null}
-                    <div className="mt-2 flex items-center justify-between">
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center rounded-full border border-cream-300 bg-white">
                         <button
                           type="button"
@@ -222,7 +218,7 @@ export function CartDrawer() {
                           <Plus className="block size-3.5 shrink-0" strokeWidth={2.25} />
                         </button>
                       </div>
-                      <div className="flex items-baseline gap-2">
+                      <div className="flex items-baseline gap-2 whitespace-nowrap">
                         <span
                           className={
                             isMobile
@@ -286,16 +282,6 @@ export function CartDrawer() {
                   </Button>
                 </div>
               </div>
-            ) : null}
-
-            {items.length > 0 ? (
-              <MysteryGiftCard
-                selected={mystery}
-                onToggle={(next) => {
-                  setMystery(next);
-                  writeMysteryGift(next);
-                }}
-              />
             ) : null}
 
             {isMobile ? null : (
@@ -363,20 +349,18 @@ export function CartDrawer() {
               </div>
             ) : null}
             <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-sm font-medium text-ink-600">Iš viso</span>
+              <span className="text-sm font-medium text-ink-600">{freeShipping ? "Iš viso" : "Suma be pristatymo"}</span>
               <span
                 className={`font-extrabold tracking-tight text-burgundy-600 ${isMobile ? "text-4xl" : "text-3xl"}`}
               >
                 {formatPrice(payable)}
               </span>
             </div>
-            {isMobile ? null : (
-              <p className="mt-0.5 text-xs text-ink-400">
+              <p className={`mt-1 text-sm ${freeShipping ? "font-semibold text-forest-500" : "font-medium text-ink-600"}`}>
                 {freeShipping
                   ? "Nemokamas pristatymas įskaičiuotas"
-                  : "Pristatymo kaina apskaičiuojama atsiskaitymo metu."}
+                  : `Pristatymas: +${formatPrice(store.shipping.flatRateCents)}. Galutinė suma: ${formatPrice(payable + store.shipping.flatRateCents)}.`}
               </p>
-            )}
             <Button
               size="lg"
               className="mt-3 w-full whitespace-normal text-center text-[15px] leading-snug"
@@ -395,5 +379,16 @@ export function CartDrawer() {
         </>
       )}
     </Overlay>
+    <CheckoutLeave
+      open={open && leaveOpen}
+      onStay={() => {
+        setLeaveOpen(false);
+      }}
+      onLeave={() => {
+        setLeaveOpen(false);
+        close();
+      }}
+    />
+    </>
   );
 }

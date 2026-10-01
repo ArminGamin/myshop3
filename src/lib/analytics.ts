@@ -1,8 +1,13 @@
+import posthog from "posthog-js";
+
 export type AnalyticsEvent =
   | "view_item"
   | "add_to_cart"
   | "view_cart"
   | "begin_checkout"
+  | "add_payment_info"
+  | "upsell_add"
+  | "upsell_remove"
   | "purchase"
   | "search"
   | "sign_up"
@@ -36,10 +41,30 @@ function getConsent(): Consent {
   }
 }
 
+function posthogProperties(params: TrackParams) {
+  const properties: Record<string, string | number> = {};
+  const allowedKeys = ["item_id", "item_name", "value", "quantity", "currency", "variant", "popup_type", "source"] as const;
+
+  for (const key of allowedKeys) {
+    const value = params[key];
+    if (typeof value === "string" || typeof value === "number") properties[key] = value;
+  }
+
+  return properties;
+}
+
+const posthogConfigured = Boolean(
+  process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN && process.env.NEXT_PUBLIC_POSTHOG_HOST
+);
+
 export function track(event: AnalyticsEvent, params: TrackParams = {}) {
   if (typeof window === "undefined") return;
   const consent = getConsent();
   const payload = { ...params, currency: params.currency ?? "EUR" };
+
+  if (consent?.analytics && posthogConfigured) {
+    posthog.capture(event, posthogProperties(params));
+  }
 
   // GA4 (analytics sutikimas)
   if (consent?.analytics && typeof window.gtag === "function") {

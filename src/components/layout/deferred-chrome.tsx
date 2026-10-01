@@ -10,13 +10,6 @@ const CartDrawer = dynamic(
   () => import("@/components/commerce/cart-drawer").then((m) => ({ default: m.CartDrawer })),
   { ssr: false }
 );
-const CheckoutOverlay = dynamic(
-  () =>
-    import("@/components/commerce/checkout-overlay").then((m) => ({
-      default: m.CheckoutOverlay,
-    })),
-  { ssr: false }
-);
 const SocialProofToast = dynamic(
   () =>
     import("@/components/commerce/social-proof-toast").then((m) => ({
@@ -42,7 +35,6 @@ export function DeferredChrome() {
     <>
       <Snowfall />
       <CartDrawer />
-      <CheckoutOverlay />
       <SocialProofToast />
       <SmartPopups />
       <CookieBanner />

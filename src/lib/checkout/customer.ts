@@ -22,6 +22,49 @@ export const EMPTY_CUSTOMER: CheckoutCustomer = {
   phone: "",
 };
 
+const DRAFT_KEY = "jaukumas.checkout-customer.v1";
+
+export function readCustomerDraft(): CheckoutCustomer {
+  if (typeof window === "undefined") return { ...EMPTY_CUSTOMER };
+  try {
+    const raw = sessionStorage.getItem(DRAFT_KEY);
+    if (!raw) return { ...EMPTY_CUSTOMER };
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return { ...EMPTY_CUSTOMER };
+    const source = parsed as Partial<CheckoutCustomer>;
+    return {
+      email: typeof source.email === "string" ? source.email : "",
+      name: typeof source.name === "string" ? source.name : "",
+      surname: typeof source.surname === "string" ? source.surname : "",
+      address: typeof source.address === "string" ? source.address : "",
+      city: typeof source.city === "string" ? source.city : "",
+      region: typeof source.region === "string" ? source.region : "",
+      postalCode: typeof source.postalCode === "string" ? source.postalCode : "",
+      phone: typeof source.phone === "string" ? source.phone : "",
+    };
+  } catch {
+    return { ...EMPTY_CUSTOMER };
+  }
+}
+
+export function writeCustomerDraft(value: CheckoutCustomer) {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(value));
+  } catch {
+    /* neprieinama */
+  }
+}
+
+export function clearCustomerDraft() {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.removeItem(DRAFT_KEY);
+  } catch {
+    /* neprieinama */
+  }
+}
+
 const LT_NAME = /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ\s-]{2,40}$/;
 
 export function sanitizeText(value: string, maxLength: number): string {

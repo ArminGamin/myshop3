@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Gift, HeartHandshake, PackageCheck, ShieldCheck } from "lucide-react";
+import { ArrowRight, HeartHandshake, PackageCheck, ShieldCheck } from "lucide-react";
 import { CollectionGlyph, SectionGlyph } from "@/components/ui/line-icons";
 import { campaign, store } from "@/lib/config/store.config";
 import { bestsellers, getProduct, premiumProducts } from "@/lib/data/products";
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const trustChips = [
   `Pristatymas per 4–6 d.`,
   `Nemokamai nuo ${store.shipping.freeThresholdCents / 100} €`,
-  `Kokybės garantija`,
+  `Kruopšti atranka`,
 ];
 
 const giftFinderTone: Record<string, string> = {
@@ -106,7 +106,7 @@ export default function HomePage() {
                 className="hero-card absolute left-[4%] top-[2%] z-10 w-[58%] rotate-[-6deg] sm:w-[54%] sm:rotate-[-7deg]"
               />
               <HeroCard
-                slug="aromaterapijos-zvakide-sventinis-vakaras"
+                slug="aromaterapijos-zvake-zvakiu-vakaras"
                 priority
                 className="hero-card absolute right-[2%] top-[14%] z-20 w-[58%] rotate-[5deg] sm:w-[56%] sm:rotate-[6deg]"
               />
@@ -246,8 +246,8 @@ export default function HomePage() {
               },
               {
                 icon: <ShieldCheck className="size-7" strokeWidth={1.5} />,
-                t: "Kokybės garantija",
-                d: "Renkame tik aukštos kokybės prekes, kurias patys norėtume gauti. Kiekviena dovana turi būti verta dovanoti.",
+                t: "Aukšta kokybė",
+                d: "Renkame tik tas prekes, kurias patys norėtume gauti. Kiekviena dovana turi būti verta dovanoti.",
               },
             ].map((item) => (
               <div key={item.t} className="flex flex-col items-center">
@@ -321,9 +321,7 @@ export default function HomePage() {
         </Reveal>
       ) : null}
 
-      <section className="py-10 lg:py-14">
-        <DeadlineBanner />
-      </section>
+      <DeadlineBanner className="py-10 lg:py-14" />
 
       <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-14" aria-labelledby="faq-heading">
         <FAQAccordion items={homeFaqs} />

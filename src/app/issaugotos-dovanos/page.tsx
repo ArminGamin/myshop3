@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Heart } from "lucide-react";
 import { getProduct } from "@/lib/data/products";
 import { useWishlist } from "@/lib/behavior/storage";
@@ -45,10 +44,7 @@ export default function WishlistPage() {
             )}
           </div>
           <p className="mt-10 text-sm text-ink-400">
-            Norite pasidalinti su šeima? Nukopijuokite nuorodą:{" "}
-            <Link href="/issaugotos-dovanos" className="font-semibold text-burgundy-600">
-              kaledukampelis.lt/issaugotos-dovanos
-            </Link>
+            Išsaugotos dovanos matomos tik šiame įrenginyje ir naršyklėje.
           </p>
         </>
       )}

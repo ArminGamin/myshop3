@@ -29,6 +29,13 @@ export interface ProductVariant {
   name: string;
   priceDeltaCents?: number;
   image?: string;
+  images?: string[];
+}
+
+export interface ProductSizeGroup {
+  id: "child" | "woman" | "man";
+  label: string;
+  sizes: string[];
 }
 
 export interface ProductSpec {
@@ -47,6 +54,7 @@ export interface Product {
   priceCents: number;
   compareAtPriceCents: number | null;
   variants: ProductVariant[];
+  sizeGroups?: ProductSizeGroup[];
   defaultVariantId: string;
   images: string[];
   artSeed: string;
@@ -58,6 +66,7 @@ export interface Product {
   occasions: OccasionId[];
   pairsWith: string[];
   inStock: boolean;
+  previewDraft?: boolean;
   rating: number | null;
   reviewCount: number | null;
 }

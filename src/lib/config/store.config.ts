@@ -28,11 +28,13 @@ export const store = {
     // garantuota. Nulįdžius terminui, modulis automatiškai pereina į
     // „paskutinės minutės“ režimą; jeigu data null – modulis nerodomas.
     christmasDeadlineISO: "2026-12-26T23:59:00+02:00" as string | null,
+    // TODO(owner): paskutinė diena, kai užsakymas dar išsiunčiamas iki Kūčių. Rodyti tik jei data yra iki gruodžio 24 d. imtinai.
+    lastChristmasOrderDateISO: null as string | null,
     lastMinuteHint: "/rask-dovana",
   },
   payments: {
     provider: "Stripe",
-    methods: ["Visa", "Mastercard", "American Express", "Apple Pay", "Google Pay", "Link"],
+    methods: ["Visa", "Mastercard", "American Express", "Apple Pay", "Google Pay"],
   },
   social: {
     instagram: "https://instagram.com/kaledukampelis",
@@ -83,7 +85,7 @@ export const store = {
     tagline: "Paslaptinga dovana, kurią atidarysite šventėms.",
     priceCents: 899,
     compareAtCents: 1499,
-    image: "/mystery-gift.png",
+    image: "/mystery-gift-q2-3088eba2dc.webp",
   },
   // Kiekio („rinkinio") nuolaidos — taikomos automatiškai, rodomos aiškiai.
   bundles: {
@@ -137,7 +139,7 @@ export const campaign: CampaignTheme = {
     "Raskite išskirtinę dovaną šeimai, draugams ir artimiausiems!",
   primaryCTA: "Rasti dovaną →",
   secondaryCTA: "Peržiūrėti bestsellerius",
-  bannerText: "Nemokamas pristatymas nuo 80 € · Kokybės garantija",
+  bannerText: "Nemokamas pristatymas nuo 80 € · Saugus atsiskaitymas",
   announcementText: "Kalėdinis pristatymas visoje Lietuvoje! 🎄",
   discountCode: null,
   theme: "christmas",

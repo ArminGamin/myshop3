@@ -1,91 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AlertCircle, Gift } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Gift, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { store } from "@/lib/config/store.config";
-import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
-import { formatPrice } from "@/lib/format";
-import { useIsMobile } from "@/lib/mobile-chrome";
+import { CartExitPreview } from "./cart-exit-preview";
 import { CheckoutReviews } from "./reviews-marquee";
 
-export function formatMmSs(total: number) {
-  const sec = Math.max(0, Math.floor(total));
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
-
-const RESERVE_KEY = "jaukumas.checkout-reserve.v2";
-const RESERVE_MS_DESKTOP = 45 * 60 * 1000;
-const RESERVE_MS_MOBILE = 20 * 60 * 1000;
-
-export function useCheckoutReserve(active: boolean) {
-  const isMobile = useIsMobile();
-  const reserveMs = isMobile ? RESERVE_MS_MOBILE : RESERVE_MS_DESKTOP;
-  const [left, setLeft] = useState(() => (isMobile ? 20 : 45) * 60);
-
-  useEffect(() => {
-    if (!active) return;
-    let end = Number(sessionStorage.getItem(RESERVE_KEY) || 0);
-    if (!Number.isFinite(end) || end < Date.now()) {
-      end = Date.now() + reserveMs;
-      sessionStorage.setItem(RESERVE_KEY, String(end));
-    }
-    const tick = () => setLeft(Math.max(0, Math.round((end - Date.now()) / 1000)));
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
-  }, [active, reserveMs]);
-
-  return left;
-}
-
-function buyersNow() {
-  return 4 + Math.floor(Math.random() * 14);
-}
-
-export function CheckoutLeave({
-  open,
-  onStay,
-  onLeave,
-}: {
-  open: boolean;
-  onStay: () => void;
-  onLeave: () => void;
-}) {
-  const [seconds, setSeconds] = useState(300);
-  const [buyers, setBuyers] = useState(6);
-  const [confirmDecline, setConfirmDecline] = useState(false);
-
-  useEffect(() => {
-    if (!open) {
-      setConfirmDecline(false);
-      return;
-    }
-    setConfirmDecline(false);
-    setSeconds(300);
-    setBuyers(buyersNow());
-    const tick = window.setInterval(() => {
-      setSeconds((n) => (n > 0 ? n - 1 : 0));
-    }, 1000);
-    const crowd = window.setInterval(() => setBuyers(buyersNow()), 10 * 60 * 1000);
-    return () => {
-      window.clearInterval(tick);
-      window.clearInterval(crowd);
-    };
-  }, [open]);
+export function CheckoutLeave({ open, onStay, onLeave }: { open: boolean; onStay: () => void; onLeave: () => void }) {
+  const dialog = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    function onKey(e: KeyboardEvent) {
-      if (e.key !== "Escape") return;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      onStay();
+    const previous = document.activeElement as HTMLElement | null;
+    dialog.current?.focus({ preventScroll: true });
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        onStay();
+      } else if (event.key === "Tab") {
+        const targets = dialog.current?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), a[href]');
+        if (!targets?.length) return;
+        const first = targets[0];
+        const last = targets[targets.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
     }
     document.addEventListener("keydown", onKey, true);
-    return () => document.removeEventListener("keydown", onKey, true);
+    return () => { document.removeEventListener("keydown", onKey, true); previous?.focus({ preventScroll: true }); };
   }, [open, onStay]);
 
   if (!open) return null;
@@ -93,93 +36,15 @@ export function CheckoutLeave({
   return (
     <div className="pointer-events-auto fixed inset-0 z-[90] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-forest-700/45 backdrop-blur-[2px]" onClick={onStay} aria-hidden />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="checkout-leave-title"
-        className="relative max-h-[92dvh] w-full max-w-xl overflow-y-auto overflow-x-hidden rounded-cozy border border-gold-300/60 bg-cream-50 px-7 py-8 text-center shadow-lift"
-      >
-        <div className="checkout-leave-confetti pointer-events-none absolute inset-x-0 top-0 h-28 overflow-hidden" aria-hidden>
-          {Array.from({ length: 8 }, (_, i) => (
-            <span key={i} />
-          ))}
-        </div>
-
-        {!confirmDecline ? (
-          <>
-            <span className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-gold-400 bg-gold-200 text-burgundy-600">
-              <Gift className="size-7" strokeWidth={1.6} />
-            </span>
-            <h2 id="checkout-leave-title" className="relative mt-4 font-display text-2xl font-bold text-ink-900">
-              Beveik baigta!
-            </h2>
-            <p className="relative mx-auto mt-3 max-w-md text-[15px] font-semibold leading-relaxed text-ink-600">
-              Jūsų <strong className="font-extrabold text-burgundy-600">{MYSTERY_GIFT.name}</strong> jau rezervuotas, o
-              pristatymas dabar <strong className="font-extrabold text-forest-500">NEMOKAMAS</strong>. Sutaupote{" "}
-              {formatPrice(store.shipping.flatRateCents)}. Išėjus viskas bus anuliuota po{" "}
-              <strong className="font-mono font-extrabold text-burgundy-600">{formatMmSs(seconds)}</strong>.
-            </p>
-
-            <Button type="button" autoFocus size="lg" className="cta-flash relative mt-6 min-h-14 w-full text-lg font-extrabold sm:min-h-16 sm:text-xl" onClick={onStay}>
-              Noriu savo dovanos →
-            </Button>
-            <button
-              type="button"
-              onClick={() => setConfirmDecline(true)}
-              className="relative mx-auto mt-3 block w-full px-3 py-1.5 text-sm font-medium text-ink-900 underline underline-offset-4 hover:text-burgundy-600"
-            >
-              Ačiū, man nereikia
-            </button>
-          </>
-        ) : (
-          <>
-            <span className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-burgundy-300 bg-burgundy-100 text-burgundy-600">
-              <AlertCircle className="size-8" strokeWidth={1.8} />
-            </span>
-            <h2 id="checkout-leave-title" className="relative mt-4 font-display text-2xl font-bold text-ink-900">
-              Ar tikrai norite atsisakyti?
-            </h2>
-            <p className="relative mx-auto mt-3 max-w-md text-[15px] font-semibold leading-relaxed text-ink-600">
-              Jūsų rezervuotas <strong className="font-extrabold text-burgundy-600">{MYSTERY_GIFT.name}</strong> ir{" "}
-              <strong className="font-extrabold text-forest-500">NEMOKAMAS pristatymas</strong> bus anuliuoti visam
-              laikui. Šio pasiūlymo pakartoti nebegalėsime po{" "}
-              <strong className="font-mono font-extrabold text-burgundy-600">{formatMmSs(seconds)}</strong>.
-            </p>
-
-            <Button type="button" autoFocus size="lg" className="cta-flash relative mt-6 min-h-14 w-full text-lg font-extrabold sm:min-h-16 sm:text-xl" onClick={onStay}>
-              Noriu pasilikti dovaną →
-            </Button>
-            <button
-              type="button"
-              onClick={onLeave}
-              className="relative mx-auto mt-3 block w-full px-3 py-1.5 text-sm font-medium text-ink-500 underline underline-offset-4 hover:text-burgundy-600"
-            >
-              Taip, atsisakyti ir išeiti
-            </button>
-            <button
-              type="button"
-              onClick={() => setConfirmDecline(false)}
-              className="relative mx-auto mt-1 block text-xs font-semibold text-ink-400 hover:text-ink-700"
-            >
-              ← Grįžti atgal
-            </button>
-          </>
-        )}
-
-        <div className="relative mt-6 flex items-center justify-center gap-3 border-t border-cream-300 pt-4">
-          <span className="flex -space-x-2" aria-hidden>
-            <span className="size-7 rounded-full border-2 border-cream-50 bg-burgundy-500" />
-            <span className="size-7 rounded-full border-2 border-cream-50 bg-forest-500" />
-            <span className="size-7 rounded-full border-2 border-cream-50 bg-gold-500" />
-          </span>
-          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-ink-400">
-            Šiuo metu perka dar {buyers} žmonės
-          </p>
-        </div>
-
-        <div className="text-left">
-          <CheckoutReviews />
-        </div>
+      <div ref={dialog} role="dialog" tabIndex={-1} aria-modal="true" aria-labelledby="checkout-leave-title" className="relative max-h-[92dvh] w-full max-w-xl overflow-y-auto overflow-x-hidden rounded-cozy border border-gold-300/60 bg-cream-50 px-5 py-6 text-center shadow-lift outline-none sm:px-7 sm:py-8">
+        <button type="button" onClick={onStay} aria-label="Uždaryti" className="absolute right-2 top-2 flex size-11 items-center justify-center rounded-full text-ink-600 hover:bg-cream-200"><X className="size-5" /></button>
+        <span className="mx-auto flex size-16 items-center justify-center rounded-full border border-gold-400 bg-gold-200 text-burgundy-600"><Gift className="size-7" strokeWidth={1.6} /></span>
+        <h2 id="checkout-leave-title" className="mt-4 font-display text-2xl font-bold text-ink-900">Jūsų dovanos dar laukia</h2>
+        <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-ink-600">Užbaikite užsakymą arba išsaugokite krepšelį, kad galėtumėte grįžti vėliau.</p>
+        <CartExitPreview />
+        <Button type="button" size="lg" className="relative mt-5 min-h-14 w-full text-lg font-extrabold" onClick={onStay}>Tęsti užsakymą →</Button>
+        <button type="button" onClick={onLeave} className="mx-auto mt-2 block min-h-11 w-full px-3 text-sm font-medium text-ink-600 underline underline-offset-4 hover:text-burgundy-600">Grįžti į parduotuvę</button>
+        <div className="mt-3 text-left"><CheckoutReviews /></div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 export const MOTION = {
   introHold: 1600,
@@ -16,35 +16,34 @@ export function markMotionReady() {
 export function usePresence(open: boolean, duration = MOTION.overlayExit) {
   const [mounted, setMounted] = useState(open);
   const [visible, setVisible] = useState(false);
+  const [wasOpen, setWasOpen] = useState(open);
+
+  if (wasOpen !== open) {
+    setWasOpen(open);
+    setVisible(false);
+    if (open) setMounted(true);
+  }
 
   useEffect(() => {
     if (open) {
-      setMounted(true);
+      let nextRaf = 0;
       const raf = requestAnimationFrame(() => {
-        requestAnimationFrame(() => setVisible(true));
+        nextRaf = requestAnimationFrame(() => setVisible(true));
       });
-      return () => cancelAnimationFrame(raf);
+      return () => { cancelAnimationFrame(raf); cancelAnimationFrame(nextRaf); };
     }
-    setVisible(false);
     const timer = window.setTimeout(() => setMounted(false), duration);
     return () => clearTimeout(timer);
   }, [open, duration]);
 
-  return { mounted, visible };
+  return { mounted: open || mounted, visible: open && visible };
+}
+
+function subscribeMotionReady(listener: () => void) {
+  window.addEventListener("motion-ready", listener);
+  return () => window.removeEventListener("motion-ready", listener);
 }
 
 export function useMotionReady() {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    if (document.documentElement.dataset.motionReady === "1") {
-      setReady(true);
-      return;
-    }
-    const onReady = () => setReady(true);
-    window.addEventListener("motion-ready", onReady);
-    return () => window.removeEventListener("motion-ready", onReady);
-  }, []);
-
-  return ready;
+  return useSyncExternalStore(subscribeMotionReady, () => document.documentElement.dataset.motionReady === "1", () => false);
 }

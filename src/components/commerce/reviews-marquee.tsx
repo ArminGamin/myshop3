@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { STOREFRONT_REVIEWS, REVIEW_SUMMARY, lithuanianReviewWord, type StorefrontReview } from "@/lib/data/reviews";
 import { SectionHeading, Stars } from "@/components/ui/primitives";
 
@@ -77,7 +77,7 @@ export function CheckoutReviews() {
     if (!el) return;
     function onScroll() {
       if (!el) return;
-      const card = el.firstElementChild as HTMLElement | null;
+      const card = el.querySelector<HTMLElement>(".snap-start");
       if (!card) return;
       const step = card.offsetWidth + 10;
       setIndex(Math.round(el.scrollLeft / step));
@@ -90,21 +90,41 @@ export function CheckoutReviews() {
     <div className="mt-5 border-t border-cream-300 pt-4">
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <Stars value={REVIEW_SUMMARY.rating} size={14} />
-        <span className="text-sm font-bold text-ink-900">{String(REVIEW_SUMMARY.rating).replace(".", ",")}</span>
+        <span className="num text-sm font-bold text-ink-900">{String(REVIEW_SUMMARY.rating).replace(".", ",")}</span>
         <span className="text-xs text-ink-400">({REVIEW_SUMMARY.count} {lithuanianReviewWord(REVIEW_SUMMARY.count)})</span>
         <span className="inline-flex items-center gap-0.5 rounded-full bg-forest-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-forest-600">
           <Check className="size-3" strokeWidth={2.4} /> Tikri
         </span>
       </div>
-      <div
-        ref={scroller}
-        className="flex snap-x snap-mandatory gap-2.5 overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {slice.map((review) => (
-          <div key={review.id} className="snap-start">
-            <ReviewCard review={review} compact />
+      <div className="flex items-center gap-2 lg:gap-3">
+        <button
+          type="button"
+          aria-label="Ankstesnis atsiliepimas"
+          onClick={() => scroller.current?.scrollBy({ left: -280, behavior: "smooth" })}
+          className="hidden size-11 shrink-0 items-center justify-center rounded-full border border-cream-400 bg-cream-50 text-burgundy-700 shadow-card lg:inline-flex"
+        >
+          <ChevronLeft className="size-4" strokeWidth={2} />
+        </button>
+        <div
+          ref={scroller}
+          className="min-w-0 flex-1 snap-x snap-mandatory overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline:0.5rem] [&::-webkit-scrollbar]:hidden"
+        >
+          <div className="flex gap-2.5 px-0.5">
+            {slice.map((review) => (
+              <div key={review.id} className="snap-start">
+                <ReviewCard review={review} compact />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        <button
+          type="button"
+          aria-label="Kitas atsiliepimas"
+          onClick={() => scroller.current?.scrollBy({ left: 280, behavior: "smooth" })}
+          className="hidden size-11 shrink-0 items-center justify-center rounded-full border border-cream-400 bg-cream-50 text-burgundy-700 shadow-card lg:inline-flex"
+        >
+          <ChevronRight className="size-4" strokeWidth={2} />
+        </button>
       </div>
       <div className="mt-2.5 flex justify-center gap-1.5">
         {slice.map((review, i) => (

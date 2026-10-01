@@ -1,0 +1,300 @@
+{
+  "source": "https://www.internationaldays.co/download-emojis",
+  "downloadedAt": "2026-09-22T19:12:31.040Z",
+  "results": [],
+  "missing": [
+    {
+      "emoji": "😵‍💫",
+      "id": "dizzy-face",
+      "names": [
+        "face with spiral eyes",
+        "dizzy face",
+        "spiral eyes"
+      ],
+      "intent": "stress",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "😩",
+      "id": "weary-face",
+      "names": [
+        "weary face"
+      ],
+      "intent": "stress",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🥲",
+      "id": "smiling-tear",
+      "names": [
+        "smiling face with tear",
+        "smiling tear"
+      ],
+      "intent": "stress",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🤯",
+      "id": "mind-blown",
+      "names": [
+        "exploding head",
+        "mind blown"
+      ],
+      "intent": "surprise",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "😳",
+      "id": "flushed-face",
+      "names": [
+        "flushed face"
+      ],
+      "intent": "surprise",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "👀",
+      "id": "eyes",
+      "names": [
+        "eyes"
+      ],
+      "intent": "surprise",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🤔",
+      "id": "thinking-face",
+      "names": [
+        "thinking face"
+      ],
+      "intent": "thinking",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "❤️",
+      "id": "red-heart",
+      "names": [
+        "red heart",
+        "heart"
+      ],
+      "intent": "warmth",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🤍",
+      "id": "white-heart",
+      "names": [
+        "white heart"
+      ],
+      "intent": "warmth",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🥰",
+      "id": "smiling-hearts",
+      "names": [
+        "smiling face with hearts",
+        "smiling hearts"
+      ],
+      "intent": "warmth",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🎁",
+      "id": "wrapped-gift",
+      "names": [
+        "wrapped gift",
+        "gift"
+      ],
+      "intent": "gift",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "🎄",
+      "id": "christmas-tree",
+      "names": [
+        "christmas tree"
+      ],
+      "intent": "christmas",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "✨",
+      "id": "sparkles",
+      "names": [
+        "sparkles"
+      ],
+      "intent": "cozy",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "☕️",
+      "id": "hot-beverage",
+      "names": [
+        "hot beverage",
+        "coffee"
+      ],
+      "intent": "cozy",
+      "reason": "no candidate image found"
+    },
+    {
+      "emoji": "😍",
+      "id": "heart-eyes",
+      "names": [
+        "smiling face with heart-eyes",
+        "heart eyes"
+      ],
+      "intent": "positive",
+      "reason": "candidate fetch failed",
+      "candidate": {
+        "index": 3,
+        "src": "https://assets.softr-files.com/applications/14a72927-507c-4324-8cd4-d1161c747a27/assets/26f5e195-f220-4d53-a69e-1aa41ae04313.svg",
+        "alt": "Image alt",
+        "title": "",
+        "aria": "",
+        "width": 300,
+        "height": 27,
+        "parentText": "BACK TO INTERNATIONALDAYS.CO SIGN IN CREATE ACCOUNT Download emojis in PNG Access Apple emojis with transparent background. You can download all emojis in 1000 x 1000 px. All skin tones, genders, hair and age are available. 😊 Smileys & Emotion 👁 People & Body 🐠 Animals & Nature 🌱 Plant & Flower 🍎 Food & Drink 🌋 Travel & Places 🤿 Activities 🔦 Objects ✅ Symbols 🏳️‍🌈 Flags 🏼 Component ​ ​ Category ​ Hair, skin, gender, ... ​ Download all 3639 emojis in PNG And get access to the International Days website, its newsletters and extensive search. 5 € /month Download all 😊 emojis in PNG Transparent backgrounds 1000 x 1000 px Explore 3500+ Days Search using 18 Categories See Days classified by SDG View the Days chronologically Search by date Receive monthly newsletters per Days category SUBSCRIBE NOW We plant one tree for each 1000 pages you look at Why? Because we can To compensate for the CO2 emissions of the site So we fight the impending climate doom And because trees are pretty! Btw, this palm tree is the emoji in 1000x1000 px Frequently Asked Questions Are the Apple emojis free to use? What is the value you provide if the emojis are public? Can I convert an emoji into an i",
+        "links": [
+          {
+            "href": "https://www.internationaldays.co/",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": "Home Link"
+          },
+          {
+            "href": "https://www.internationaldays.co/",
+            "text": "BACK TO INTERNATIONALDAYS.CO",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.treeferral.com/?via=greenchange#select-plan",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.green-change.ch/",
+            "text": "Green Change",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://twitter.com/intldaysco/",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.facebook.com/internationaldays.co/",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.instagram.com/internationaldays.co/",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.pinterest.fr/internationaldaysco/",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.linkedin.com/company/internationaldays/",
+            "text": "",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/about",
+            "text": "About",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/contact",
+            "text": "Contact",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/download-emojis",
+            "text": "😍⬇️ Emoji Download",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/submit-day",
+            "text": "Submit a Day",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/",
+            "text": "Advertise soon",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/widget",
+            "text": "Widget",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/terms",
+            "text": "Terms of Service",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/privacy",
+            "text": "Privacy Policy",
+            "download": "",
+            "title": "",
+            "aria": ""
+          },
+          {
+            "href": "https://www.internationaldays.co/impressum",
+            "text": "Impressum",
+            "download": "",
+            "title": "",
+            "aria": ""
+          }
+        ],
+        "score": 535
+      }
+    },
+    {
+      "emoji": "👌",
+      "id": "ok-hand",
+      "names": [
+        "ok hand",
+        "OK hand"
+      ],
+      "intent": "positive",
+      "reason": "no candidate image found"
+    }
+  ]
+}

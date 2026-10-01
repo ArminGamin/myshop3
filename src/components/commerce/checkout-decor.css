@@ -1,0 +1,591 @@
+/* ==========================================================================
+   checkout-decor.css
+   Styles for checkout-decor.tsx. Plain CSS: no Tailwind, no @apply, no
+   dependency on any other stylesheet. Every class is prefixed `cd-`, so it
+   cannot clash with the old `checkout-*` / `sleigh-*` rules (delete those).
+   ========================================================================== */
+
+/* --- 1. Tokens -------------------------------------------------------------
+   Each one uses your theme colour when it exists (--color-*) and otherwise
+   falls back to the hex after the comma. The hexes are approximations taken
+   from the screenshots: replace them with your exact brand values here, once.
+   (Tailwind v4 only emits theme variables it sees being used in utilities,
+   so a bare var(--color-gold-500) inside TSX can resolve to nothing. The
+   fallbacks make that impossible.)
+   ------------------------------------------------------------------------- */
+:root {
+  --cd-gold-300: var(--color-gold-300, #ead18f);
+  --cd-gold-400: var(--color-gold-400, #ddbb6e);
+  --cd-gold-500: var(--color-gold-500, #d4af5f);
+  --cd-gold-600: var(--color-gold-600, #b8923f);
+  --cd-forest-400: var(--color-forest-400, #2f6a4f);
+  --cd-forest-500: var(--color-forest-500, #1f4d3a);
+  --cd-forest-600: var(--color-forest-600, #163a2b);
+  --cd-burgundy-600: var(--color-burgundy-600, #6b2027);
+  --cd-burgundy-700: var(--color-burgundy-700, #5b1a1f);
+  --cd-ink-400: var(--color-ink-400, #8a7d76);
+  --cd-ink-600: var(--color-ink-600, #4d403c);
+  --cd-tan: #d9c9a3;
+  --cd-rail: #eadfc3;
+  --cd-cream: #f7f2e6;
+
+  --cd-garland-h: 56px;
+}
+
+@media (max-width: 639px) {
+  :root {
+    --cd-garland-h: 36px;
+  }
+}
+
+.cd-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cd-num {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* --- 2. Garland ------------------------------------------------------------ */
+.cd-garland {
+  position: relative;
+  width: 100%;
+  height: var(--cd-garland-h);
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.cd-garland__track {
+  display: flex;
+  width: max-content;
+  margin-left: -1.5rem;
+}
+
+/* Width is derived from the height so the tile never letterboxes:
+   360 / 56 is the viewBox ratio. (The old file forced w-[360px] with h-9 on
+   mobile, which left a ~64px gap between every tile.) */
+.cd-garland__tile {
+  display: block;
+  flex: none;
+  height: var(--cd-garland-h);
+  width: calc(var(--cd-garland-h) * 360 / 56);
+  overflow: visible;
+}
+
+.cd-rope {
+  fill: none;
+  stroke: var(--cd-forest-600);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.cd-needles {
+  fill: none;
+  stroke-linecap: round;
+}
+.cd-needles--dark {
+  stroke: var(--cd-forest-500);
+  stroke-width: 1.6;
+}
+.cd-needles--light {
+  stroke: var(--cd-forest-400);
+  stroke-width: 1.2;
+  opacity: 0.85;
+}
+
+.cd-berries {
+  fill: var(--cd-burgundy-600);
+}
+.cd-wire {
+  fill: none;
+  stroke: var(--cd-gold-600);
+  stroke-width: 0.8;
+}
+/* One circle per light: the soft glow is a wide, translucent stroke drawn
+   underneath the fill (paint-order: stroke). */
+.cd-bulb {
+  fill: var(--cd-gold-500);
+  stroke: var(--cd-gold-300);
+  stroke-opacity: 0.45;
+  stroke-width: 8;
+  paint-order: stroke;
+}
+
+.cd-orn-cap {
+  fill: var(--cd-gold-500);
+}
+.cd-orn-wire {
+  fill: none;
+  stroke: var(--cd-gold-600);
+  stroke-width: 0.8;
+}
+.cd-orn-shine {
+  fill: #fff;
+  opacity: 0.38;
+}
+.cd-orn--gold .cd-orn-body {
+  fill: var(--cd-gold-400);
+}
+.cd-orn--burgundy .cd-orn-body {
+  fill: var(--cd-burgundy-600);
+}
+
+/* Twinkle: three phases so lights don't blink in unison.
+   Negative delays start each group mid-cycle (no flash on load). */
+@keyframes cd-twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.cd-light {
+  animation: cd-twinkle 2.6s ease-in-out infinite;
+}
+.cd-light--b {
+  animation-duration: 3.3s;
+  animation-delay: -1s;
+}
+.cd-light--c {
+  animation-duration: 2.9s;
+  animation-delay: -1.9s;
+}
+
+/* --- 3. Steps -------------------------------------------------------------- */
+.cd-steps {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 640px) {
+  .cd-steps {
+    gap: 0.75rem;
+  }
+}
+
+.cd-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+@media (min-width: 640px) {
+  .cd-step {
+    gap: 0.75rem;
+  }
+}
+
+.cd-step__btn,
+.cd-step__static {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+.cd-step__btn {
+  cursor: pointer;
+  border-radius: 999px;
+}
+.cd-step__btn:focus-visible {
+  outline: 2px solid var(--cd-burgundy-600);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(212, 175, 95, 0.45);
+}
+
+.cd-step__label {
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--cd-ink-400);
+  white-space: nowrap;
+}
+.cd-step.is-active .cd-step__label {
+  color: var(--cd-burgundy-700);
+}
+.cd-step.is-done .cd-step__label {
+  color: var(--cd-ink-600);
+}
+
+/* Small phones: only the current step keeps a visible label. */
+@media (max-width: 479px) {
+  .cd-step:not(.is-active) .cd-step__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+.cd-thread {
+  display: block;
+  flex: none;
+  width: 2.5rem;
+  height: 0;
+  border-top: 1.5px dashed var(--cd-tan);
+}
+.cd-thread.is-done {
+  border-top-style: solid;
+  border-top-color: var(--cd-gold-500);
+}
+@media (max-width: 639px) {
+  .cd-thread {
+    width: 0.875rem;
+  }
+}
+
+/* Bauble */
+.cd-bauble {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 38px;
+}
+.cd-bauble__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.cd-b-cap {
+  fill: var(--cd-tan);
+}
+.cd-b-hook {
+  fill: none;
+  stroke: var(--cd-tan);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+.cd-b-body {
+  fill: var(--cd-cream);
+  stroke: var(--cd-tan);
+  stroke-width: 1.5;
+}
+.cd-b-shine {
+  fill: #fff;
+  opacity: 0;
+}
+
+.cd-bauble.is-current .cd-b-cap {
+  fill: var(--cd-gold-600);
+}
+.cd-bauble.is-current .cd-b-hook {
+  stroke: var(--cd-gold-600);
+}
+.cd-bauble.is-current .cd-b-body {
+  fill: var(--cd-gold-500);
+  stroke: var(--cd-gold-600);
+}
+.cd-bauble.is-current .cd-b-shine {
+  opacity: 0.4;
+}
+.cd-bauble.is-current {
+  filter: drop-shadow(0 0 6px rgba(212, 175, 95, 0.6));
+}
+
+.cd-bauble.is-done .cd-b-cap {
+  fill: var(--cd-gold-500);
+}
+.cd-bauble.is-done .cd-b-hook {
+  stroke: var(--cd-gold-500);
+}
+.cd-bauble.is-done .cd-b-body {
+  fill: var(--cd-burgundy-600);
+  stroke: var(--cd-burgundy-700);
+}
+.cd-bauble.is-done .cd-b-shine {
+  opacity: 0.25;
+}
+
+.cd-bauble__num,
+.cd-bauble__check {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 23px;
+  transform: translateY(-50%);
+  text-align: center;
+}
+.cd-bauble__num {
+  font-size: 0.8125rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--cd-ink-400);
+}
+.cd-bauble.is-current .cd-bauble__num {
+  color: var(--cd-burgundy-700);
+}
+.cd-bauble__check {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 0 auto;
+  fill: none;
+  stroke: var(--cd-gold-300);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- 4. Divider ------------------------------------------------------------ */
+.cd-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-block: 2rem;
+}
+.cd-divider__line {
+  flex: 1;
+  height: 1px;
+}
+.cd-divider__line--l {
+  background: linear-gradient(90deg, transparent, var(--cd-tan));
+}
+.cd-divider__line--r {
+  background: linear-gradient(270deg, transparent, var(--cd-tan));
+}
+.cd-divider__flake {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--cd-gold-500);
+}
+
+/* --- 5. Ribbon bow (parent card needs position: relative) ------------------ */
+.cd-bow {
+  position: absolute;
+  top: -1.3rem;
+  right: -0.9rem;
+  z-index: 2;
+  width: 5.25rem;
+  height: auto;
+  pointer-events: none;
+  transform: rotate(7deg);
+  transform-origin: 50% 40%;
+  filter: drop-shadow(0 3px 3px rgba(91, 26, 31, 0.22));
+}
+.cd-bow-loop {
+  fill: var(--cd-gold-400);
+}
+.cd-bow-loop-in {
+  fill: var(--cd-gold-500);
+}
+.cd-bow-edge {
+  fill: none;
+  stroke: var(--cd-gold-300);
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+.cd-bow-tail {
+  fill: var(--cd-gold-500);
+}
+.cd-bow-tail-in {
+  fill: var(--cd-gold-600);
+  opacity: 0.35;
+}
+.cd-bow-knot {
+  fill: var(--cd-burgundy-600);
+}
+.cd-bow-shine {
+  fill: var(--cd-gold-300);
+  opacity: 0.6;
+}
+
+/* --- 6. Edge decoration (wide screens only) -------------------------------- */
+.cd-edge {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+@media (min-width: 1440px) {
+  .cd-edge {
+    display: block;
+  }
+}
+.cd-edge__branch {
+  position: absolute;
+  width: 7.5rem;
+  height: auto;
+  color: var(--cd-forest-600);
+  opacity: 0.17;
+}
+.cd-edge__branch--l {
+  top: 6rem;
+  left: -0.5rem;
+}
+.cd-edge__branch--r {
+  top: 11rem;
+  right: -0.5rem;
+  transform: scaleX(-1);
+}
+.cd-edge__glow {
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 209, 143, 0.55), rgba(234, 209, 143, 0) 65%);
+  opacity: 0.35;
+  animation: cd-glow 6s ease-in-out infinite;
+}
+.cd-edge__glow--1 {
+  top: 24%;
+  left: 3%;
+}
+.cd-edge__glow--2 {
+  top: 58%;
+  left: 6%;
+  width: 3.5rem;
+  height: 3.5rem;
+  animation-delay: -2.5s;
+}
+.cd-edge__glow--3 {
+  top: 34%;
+  right: 4%;
+  animation-delay: -1.2s;
+}
+.cd-edge__glow--4 {
+  top: 68%;
+  right: 7%;
+  width: 3.5rem;
+  height: 3.5rem;
+  animation-delay: -4s;
+}
+@keyframes cd-glow {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* --- 7. Free-delivery sleigh ------------------------------------------------ */
+.cd-sleigh {
+  margin-top: 1rem;
+}
+.cd-sleigh__label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--cd-ink-600);
+}
+.cd-sleigh.is-reached .cd-sleigh__label {
+  color: var(--cd-forest-500);
+}
+.cd-sleigh__check {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* --cd-p is 0..1 and is set from the component. The sleigh (--cd-sl-w wide)
+   rides at p * (track - sleigh); the gold fill ends under its middle. */
+.cd-sleigh__track {
+  --cd-p: 0;
+  --cd-sl-w: 3rem;
+  position: relative;
+  height: 2.75rem;
+  margin-top: 0.25rem;
+}
+.cd-sleigh__rail,
+.cd-sleigh__fill {
+  position: absolute;
+  bottom: 0.25rem;
+  height: 0.5rem;
+  border-radius: 999px;
+}
+.cd-sleigh__rail {
+  left: 0;
+  right: 0;
+  background: var(--cd-rail);
+  box-shadow: inset 0 0 0 1px rgba(184, 146, 63, 0.25);
+}
+.cd-sleigh__fill {
+  left: 0;
+  width: calc(var(--cd-p) * (100% - var(--cd-sl-w)) + var(--cd-sl-w) / 2);
+  background: linear-gradient(90deg, var(--cd-gold-400), var(--cd-gold-500));
+  transition: width 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+.cd-sleigh__icon {
+  position: absolute;
+  bottom: 0.4rem;
+  left: calc(var(--cd-p) * (100% - var(--cd-sl-w)));
+  width: var(--cd-sl-w);
+  height: auto;
+  transition: left 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+.cd-sl-body {
+  fill: var(--cd-burgundy-700);
+}
+.cd-sl-trim {
+  fill: none;
+  stroke: var(--cd-gold-400);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+.cd-sl-runner {
+  fill: none;
+  stroke: var(--cd-gold-600);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.cd-sl-post {
+  fill: none;
+  stroke: var(--cd-gold-600);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.cd-sl-gift {
+  fill: var(--cd-gold-400);
+}
+.cd-sl-ribbon {
+  fill: none;
+  stroke: var(--cd-burgundy-600);
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+/* --- 8. Reduced motion ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cd-light,
+  .cd-edge__glow {
+    animation: none;
+  }
+  .cd-sleigh__fill,
+  .cd-sleigh__icon {
+    transition: none;
+  }
+}

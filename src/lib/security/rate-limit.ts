@@ -7,6 +7,8 @@ const MAX_BUCKET_ENTRIES = 3000;
 const LIMITS = {
   checkout: { limit: 8, windowMs: 15 * 60_000 },
   newsletter: { limit: 5, windowMs: 15 * 60_000 },
+  cartCapture: { limit: 60, windowMs: 15 * 60_000 },
+  cartCaptureHour: { limit: 180, windowMs: 60 * 60_000 },
   checkoutHour: { limit: 24, windowMs: 60 * 60_000 },
   newsletterHour: { limit: 20, windowMs: 8 * 60 * 60_000 },
   sessionQuery: { limit: 25, windowMs: 5 * 60_000 },

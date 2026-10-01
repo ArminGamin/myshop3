@@ -3,8 +3,10 @@ import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { store } from "@/lib/config/store.config";
 import { denyPost } from "@/lib/security/guard";
-import { buildOrder, orderMetadata, parseLines } from "@/lib/cart/server-order";
+import { buildOrder, orderMetadata, orderTotalError, parseLines } from "@/lib/cart/server-order";
 import { validateCustomer } from "@/lib/checkout/customer";
+import { orderSnapshot, snapshotMetadata } from "@/lib/email/templates";
+import { readCartSession } from "@/lib/email/tokens";
 
 export const runtime = "nodejs";
 
@@ -23,9 +25,10 @@ export async function POST(req: Request) {
     );
   }
 
-  let body: { lines?: unknown; addons?: unknown; customer?: unknown; mysteryGift?: unknown };
+  let body: { lines?: unknown; addons?: unknown; customer?: unknown; mysteryGift?: unknown; expectedTotalCents?: unknown };
   try {
     body = await req.json();
+    if (!body || typeof body !== "object") throw new Error("Invalid payload");
   } catch {
     return NextResponse.json({ error: "Netinkama užklausa." }, { status: 400 });
   }
@@ -39,6 +42,9 @@ export async function POST(req: Request) {
   if ("error" in order) {
     return NextResponse.json({ error: order.error }, { status: 400 });
   }
+
+  const totalError = orderTotalError(order, body.expectedTotalCents);
+  if (totalError) return NextResponse.json({ error: totalError, totalCents: order.totalCents }, { status: 409 });
 
   const customer =
     body.customer && typeof body.customer === "object"
@@ -75,9 +81,9 @@ export async function POST(req: Request) {
       phone_number_collection: { enabled: true },
       billing_address_collection: "auto",
       customer_email: customer?.email || undefined,
-      success_url: `${origin}/dekojame?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/krepselis?atnaujinta=1`,
-      metadata: orderMetadata(
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/checkout?klaida=mokejimas`,
+      metadata: { ...orderMetadata(
         order,
         customer
           ? {
@@ -88,10 +94,10 @@ export async function POST(req: Request) {
               address: `${customer.address}, ${customer.city} ${customer.postalCode}`,
             }
           : undefined
-      ),
+      ), ...snapshotMetadata(orderSnapshot(order)), email_cart_run: readCartSession(req)?.runId ?? "" },
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: session.url, totalCents: order.totalCents });
   } catch (e) {
     console.error("Stripe klaida:", e);
     return NextResponse.json({ error: "Nepavyko sukurti atsiskaitymo sesijos." }, { status: 500 });

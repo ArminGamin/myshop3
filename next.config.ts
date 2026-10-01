@@ -1,16 +1,26 @@
 import type { NextConfig } from "next";
+import { withWorkflow } from "workflow/next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
+  outputFileTracingIncludes: {
+    "/*": [
+      "./emails/kaledu_kampelis_purchase_confirmation.html",
+      "./emails/01_po_1_valandos.html",
+      "./emails/02_po_24_valandu.html",
+      "./emails/03_po_48_valandu.html",
+      "./emails/04_po_72_valandu_paskutinis.html",
+    ],
+  },
   allowedDevOrigins: ["127.0.0.1", "localhost"],
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [70, 75, 80],
+    qualities: [70, 75, 80, 85],
     minimumCacheTTL: 60 * 60 * 24 * 30,
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [64, 96, 128, 256, 384, 480],
@@ -28,9 +38,29 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/grazinimas",
-        destination: "/kontaktai",
+        source: "/produktai/aromaterapijos-zvakide-sventinis-vakaras",
+        destination: "/produktai/aromaterapijos-zvake-zvakiu-vakaras",
         permanent: true,
+      },
+      {
+        source: "/produktai/smarves-difuzorius-lazdelemis",
+        destination: "/produktai/kvapo-difuzorius-lazdelemis",
+        permanent: true,
+      },
+      {
+        source: "/produktai/belaidis-ikroviklis-azuolas",
+        destination: "/produktai/belaidis-ikroviklis-medis",
+        permanent: true,
+      },
+      {
+        source: "/produktai/galaktikos-projektorius-astronautas",
+        destination: "/produktai/galaktikos-projektorius-zvaigzdziu-kelione",
+        permanent: true,
+      },
+      {
+        source: "/apmokejimas",
+        destination: "/checkout",
+        permanent: false,
       },
     ];
   },
@@ -66,4 +96,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withWorkflow(nextConfig);

@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/dekojame", "/tiktok", "/instagram", "/krepselis"],
+        disallow: ["/api/", "/dekojame", "/checkout", "/apmokejimas", "/tiktok", "/instagram", "/krepselis"],
       },
     ],
     sitemap: `${store.brand.url.replace(/\/$/, "")}/sitemap.xml`,

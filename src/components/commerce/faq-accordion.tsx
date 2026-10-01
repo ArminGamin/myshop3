@@ -32,11 +32,14 @@ function FaqAnswer({ text }: { text: string }) {
 export function FAQAccordion({
   items,
   showContact = true,
+  headingLevel = 2,
 }: {
   items: FaqItem[];
   showContact?: boolean;
+  headingLevel?: 1 | 2;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const Heading = headingLevel === 1 ? "h1" : "h2";
 
   return (
     <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-12 lg:gap-8 xl:gap-10">
@@ -45,9 +48,9 @@ export function FAQAccordion({
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-burgundy-600">
             Pagalba
           </p>
-          <h2 id="faq-heading" className="mb-3 font-display text-[1.45rem] font-extrabold leading-snug text-ink-900 sm:text-3xl xl:text-[2rem]">
+          <Heading id="faq-heading" className="mb-3 font-display text-[1.45rem] font-extrabold leading-snug text-ink-900 sm:text-3xl xl:text-[2rem]">
             Dažniausiai užduodami klausimai
-          </h2>
+          </Heading>
           <p className="mb-5 text-base font-semibold leading-relaxed text-ink-600 md:mb-6">
             Neradote atsakymo? Susisiekite ir atsakysime greitai!
           </p>

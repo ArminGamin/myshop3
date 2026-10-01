@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, Package, ShieldCheck, Truck } from "lucide-react";
-import { products, getProduct } from "@/lib/data/products";
+import { products, canViewProduct, getProduct } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
 import { discountPercent, formatPrice } from "@/lib/format";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
@@ -21,6 +21,8 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
@@ -28,10 +30,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
-  if (!product) return {};
+  if (!canViewProduct(product)) notFound();
+  const draftPreview = !product.inStock;
   return {
-    title: `${product.name} — ${formatPrice(product.priceCents)}`,
-    description: `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €. Pristatome per 4–6 dienas. Kokybės garantija.`,
+    title: draftPreview ? `${product.name} — peržiūros juodraštis` : `${product.name} — ${formatPrice(product.priceCents)}`,
+    description: draftPreview ? product.tagline : `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €. Pristatome per 4–6 dienas.`,
+    robots: draftPreview ? { index: false, follow: false } : undefined,
     alternates: { canonical: `/produktai/${product.slug}` },
     openGraph: {
       title: product.name,
@@ -44,7 +48,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = getProduct(slug);
-  if (!product || !product.inStock) notFound();
+  if (!canViewProduct(product)) notFound();
+  const draftPreview = !product.inStock;
 
   const related = product.pairsWith
     .map((s) => getProduct(s))
@@ -53,6 +58,11 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div data-product-page="" className="mx-auto max-w-7xl px-4 pb-mobile-sticky pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pb-14 lg:pt-8">
+      {draftPreview ? (
+        <p className="mb-5 rounded-cozy border border-gold-400 bg-cream-100 p-4 text-sm font-semibold text-ink-900">
+          Peržiūros juodraštis — tiekėjo komplektacija dar tikrinama. Pirkti negalima.
+        </p>
+      ) : null}
       {/* Naršymo takeliai */}
       <nav aria-label="Naršymo takelis" className="mb-3 flex flex-wrap items-center gap-1 text-[13px] text-ink-400 sm:mb-5">
         <Link href="/" className="inline-flex min-h-9 items-center hover:text-burgundy-600">Pradžia</Link>
@@ -111,7 +121,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
 
           {/* Objektų atsakymai — pristatymas / kokybė */}
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          {!draftPreview ? <div className="mt-8 grid gap-3 sm:grid-cols-3">
             {[
               {
                 icon: <Truck className="size-5" strokeWidth={1.7} />,
@@ -120,7 +130,7 @@ export default async function ProductPage({ params }: Props) {
               },
               {
                 icon: <ShieldCheck className="size-5" strokeWidth={1.7} />,
-                t: "Kokybės garantija",
+                t: "Kokybė",
                 d: "Aukštos kokybės medžiagos ir kruopšti atranka",
               },
               {
@@ -135,7 +145,7 @@ export default async function ProductPage({ params }: Props) {
                 <p className="mt-0.5 text-[13px] leading-snug text-ink-600">{x.d}</p>
               </div>
             ))}
-          </div>
+          </div> : null}
         </div>
 
         <aside aria-labelledby="specs-heading" className="h-fit rounded-cozy border border-cream-300 bg-cream-100/60 p-5">
@@ -178,7 +188,7 @@ export default async function ProductPage({ params }: Props) {
 
       <JsonLd
         data={[
-          productSchema(product),
+          ...(draftPreview ? [] : [productSchema(product)]),
           breadcrumbSchema([
             { name: "Pradžia", href: "/" },
             { name: "Dovanos", href: "/dovanos/visos-dovanos" },
@@ -186,7 +196,7 @@ export default async function ProductPage({ params }: Props) {
           ]),
         ]}
       />
-      <TrackProductView product={product} />
+      {!draftPreview ? <TrackProductView product={product} /> : null}
     </div>
   );
 }

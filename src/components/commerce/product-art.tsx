@@ -40,6 +40,22 @@ const palettes: Record<string, { from: string; to: string; ink: string }> = {
   ausines: { from: "#F0EBE1", to: "#D8CCB6", ink: "#5C1A1B" },
   slepetes: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
   stovas: { from: "#EFE8DC", to: "#D6C8B0", ink: "#2A2420" },
+  remelis: { from: "#F4EDE3", to: "#E0D2B8", ink: "#5C1A1B" },
+  pakavimas: { from: "#F4E8D4", to: "#E0C8A0", ink: "#A98534" },
+  lenta: { from: "#EFE6D8", to: "#D4C4A8", ink: "#3D1011" },
+  purskiklis: { from: "#F2EDE4", to: "#DDD0B8", ink: "#5C1A1B" },
+  adventas: { from: "#F5F0E0", to: "#E6D6A8", ink: "#A98534" },
+  kojine: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
+  gaublys: { from: "#F0EBE1", to: "#D8CCB6", ink: "#5C1A1B" },
+  takelis: { from: "#F3EEE2", to: "#E0D4C0", ink: "#5C1A1B" },
+  spaudiklis: { from: "#F4E8D4", to: "#E0C8A0", ink: "#A98534" },
+  sijonas: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
+  zibintas: { from: "#F5F0E6", to: "#E4D4B4", ink: "#5C1A1B" },
+  megztinis: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
+  dzemperis: { from: "#F3EEE2", to: "#E0D4C0", ink: "#5C1A1B" },
+  kardiganas: { from: "#F5EEE4", to: "#E4D4BC", ink: "#5C1A1B" },
+  pizama: { from: "#F6EFE4", to: "#E8D8C2", ink: "#5C1A1B" },
+  golfas: { from: "#F0EBE1", to: "#D8CCB6", ink: "#5C1A1B" },
 };
 
 function hashSeed(seed: string): number {
@@ -155,13 +171,13 @@ const IMAGE_META = {
     width: 480,
     height: 600,
     sizes: "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px",
-    quality: 75,
+    quality: 80,
   },
   hero: {
     width: 900,
     height: 1125,
     sizes: "(max-width: 768px) 92vw, 560px",
-    quality: 80,
+    quality: 85,
   },
 } as const;
 
@@ -173,6 +189,7 @@ export function ProductImage({
   className = "",
   priority = false,
   sizes,
+  fill = false,
 }: {
   images: string[];
   seed: string;
@@ -181,11 +198,25 @@ export function ProductImage({
   className?: string;
   priority?: boolean;
   sizes?: string;
+  fill?: boolean;
 }) {
   const src = images?.[0];
   if (!src) return <ProductArt seed={seed} size={size} className={className} />;
 
   const meta = IMAGE_META[size];
+  if (fill) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes ?? meta.sizes}
+        quality={meta.quality}
+        priority={priority}
+        className={className}
+      />
+    );
+  }
   return (
     <Image
       src={src}

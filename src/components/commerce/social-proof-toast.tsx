@@ -4,14 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useCart } from "@/lib/cart/context";
 import { flags } from "@/lib/config/store.config";
-import { useMobileChromeFlag } from "@/lib/mobile-chrome";
 import { useMotionReady } from "@/lib/motion";
 import {
   pickNextToast,
   progressKey,
   rand,
+  nudgeViewers,
   randViewersLt,
-  rollPinnedNums,
   sliceLine,
   type ToastSlice,
 } from "@/lib/social-proof";
@@ -26,18 +25,14 @@ export function SocialProofToast() {
   const [slice, setSlice] = useState<ToastSlice | null>(null);
   const [displayMs, setDisplayMs] = useState(3000);
   const [phase, setPhase] = useState<"in" | "out">("in");
-  const [pinned, setPinned] = useState(rollPinnedNums);
   const [viewerCount, setViewerCount] = useState(() => randViewersLt());
+  const [lineNow, setLineNow] = useState(() => Date.now());
 
   const startTimerRef = useRef<number | null>(null);
   const phaseOutTimerRef = useRef<number | null>(null);
   const afterOutTimerRef = useRef<number | null>(null);
   const pauseTimerRef = useRef<number | null>(null);
-  const slowPinsTimerRef = useRef<number | null>(null);
-  const pinnedRef = useRef(pinned);
   const lastShownKindRef = useRef<ToastSlice["kind"] | null>(null);
-
-  pinnedRef.current = pinned;
 
   const eligible = flags.ENABLE_SOCIAL_PROOF && !dismissed && !cart.drawerOpen && motionReady;
 
@@ -52,54 +47,22 @@ export function SocialProofToast() {
 
   useEffect(() => {
     if (!eligible) return undefined;
-    const tickViewers = () => setViewerCount(randViewersLt());
-    tickViewers();
-    const id = window.setInterval(tickViewers, 10000);
+    const id = window.setInterval(() => {
+      setViewerCount((current) => nudgeViewers(current));
+    }, 9000);
     return () => window.clearInterval(id);
   }, [eligible]);
 
-  const scheduleSlowPins = useCallback(() => {
-    if (slowPinsTimerRef.current !== null) {
-      window.clearTimeout(slowPinsTimerRef.current);
-      slowPinsTimerRef.current = null;
-    }
-    function tick() {
-      setPinned(rollPinnedNums());
-      slowPinsTimerRef.current = window.setTimeout(tick, rand(10, 15) * 60 * 1000);
-    }
-    slowPinsTimerRef.current = window.setTimeout(tick, rand(10, 15) * 60 * 1000);
-  }, []);
-
   useEffect(() => {
-    if (!eligible) {
-      if (slowPinsTimerRef.current !== null) {
-        window.clearTimeout(slowPinsTimerRef.current);
-        slowPinsTimerRef.current = null;
-      }
-      lastShownKindRef.current = null;
-      clearCarouselTimersOnly();
-      setVisible(false);
-      setSlice(null);
-      setPhase("in");
-      return undefined;
-    }
-
-    scheduleSlowPins();
-    return () => {
-      if (slowPinsTimerRef.current !== null) {
-        window.clearTimeout(slowPinsTimerRef.current);
-        slowPinsTimerRef.current = null;
-      }
-    };
-  }, [eligible, scheduleSlowPins, clearCarouselTimersOnly]);
+    if (!eligible || !visible || slice?.kind !== "package") return undefined;
+    const id = window.setInterval(() => setLineNow(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, [eligible, visible, slice?.kind]);
 
   useEffect(() => {
     if (!eligible) {
       lastShownKindRef.current = null;
       clearCarouselTimersOnly();
-      setVisible(false);
-      setSlice(null);
-      setPhase("in");
       return undefined;
     }
 
@@ -107,17 +70,19 @@ export function SocialProofToast() {
 
     const showStep = () => {
       if (cancelled) return;
-      const displayFor = rand(2600, 3400);
-      const pauseAfter = rand(2600, 4200);
+      const displayFor = rand(4200, 5200);
+      const pauseAfter = rand(1600, 2800);
+      const fadeMs = 480;
 
-      const next = pickNextToast(pinnedRef.current, lastShownKindRef.current);
+      const next = pickNextToast(lastShownKindRef.current);
       lastShownKindRef.current = next.kind;
       setDisplayMs(displayFor);
       setSlice(next);
+      setLineNow(Date.now());
       setPhase("in");
       setVisible(true);
 
-      const fadeOutStart = Math.max(120, displayFor - 280);
+      const fadeOutStart = Math.max(120, displayFor - fadeMs);
       phaseOutTimerRef.current = window.setTimeout(() => {
         if (cancelled) return;
         setPhase("out");
@@ -125,15 +90,23 @@ export function SocialProofToast() {
           if (cancelled) return;
           setVisible(false);
           pauseTimerRef.current = window.setTimeout(showStep, pauseAfter);
-        }, 280);
+        }, fadeMs);
       }, fadeOutStart);
     };
 
     clearCarouselTimersOnly();
+    const reset = window.setTimeout(() => {
+      if (!cancelled) {
+        setVisible(false);
+        setSlice(null);
+        setPhase("in");
+      }
+    }, 0);
     startTimerRef.current = window.setTimeout(showStep, 1200);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(reset);
       clearCarouselTimersOnly();
     };
   }, [eligible, clearCarouselTimersOnly]);
@@ -146,7 +119,7 @@ export function SocialProofToast() {
 
   if (!eligible) return null;
 
-  const lineShown = slice ? sliceLine(slice, viewerCount) : "";
+  const lineShown = slice ? sliceLine(slice, viewerCount, lineNow) : "";
   const pk = progressKey(slice, displayMs);
 
   return (
