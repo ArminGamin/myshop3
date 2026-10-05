@@ -141,7 +141,7 @@ export default function HomePage() {
         <p className="mt-6 text-center">
           <Link
             href="/duk"
-            className="text-sm font-semibold text-burgundy-600 underline underline-offset-4 hover:text-burgundy-700"
+            className="inline-flex min-h-11 items-center text-sm font-semibold text-burgundy-600 underline underline-offset-4 hover:text-burgundy-700"
           >
             Visi klausimai ir atsakymai →
           </Link>
@@ -157,7 +157,7 @@ export default function HomePage() {
             href={store.social.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-burgundy-600 underline underline-offset-4"
+            className="relative font-semibold text-burgundy-600 underline underline-offset-4 after:absolute after:-inset-x-1 after:-inset-y-3 after:content-['']"
           >
             @{store.brand.handle}
           </a>{" "}

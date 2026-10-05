@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useConsent } from "@/lib/consent";
 import { useMobileChromeFlag } from "@/lib/mobile-chrome";
@@ -39,9 +40,9 @@ export function CookieBanner() {
       <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-600">
         Būtinieji slapukai užtikrina parduotuvės darbą (krepšelis, atsisakymų atmintis).
         Statistikos ir rinkodaros slapukus naudojame tik su jūsų sutikimu.{" "}
-        <a href="/slapuku-politika" className="font-semibold text-burgundy-600 underline underline-offset-2">
+        <Link href="/slapuku-politika" className="font-semibold text-burgundy-600 underline underline-offset-2">
           Slapukų politika
-        </a>
+        </Link>
       </p>
       <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
         <Button

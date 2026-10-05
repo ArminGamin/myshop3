@@ -42,12 +42,12 @@ export function Footer() {
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-gold-300">
               Parduotuvė
             </p>
-            <ul className="space-y-2.5 text-[13.5px]">
+            <ul className="text-[13.5px] sm:space-y-2.5">
               {collections.slice(1, 8).map((c) => (
                 <li key={c.slug}>
                   <Link
                     href={`/dovanos/${c.slug}`}
-                    className="text-cream-100/85 transition hover:text-gold-300"
+                    className="footer-link text-cream-100/85 transition hover:text-gold-300"
                   >
                     {c.shortTitle}
                   </Link>
@@ -60,17 +60,17 @@ export function Footer() {
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-gold-300">
               Informacija
             </p>
-            <ul className="space-y-2.5 text-[13.5px]">
+            <ul className="text-[13.5px] sm:space-y-2.5">
               {infoLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-cream-100/85 transition hover:text-gold-300">
+                  <Link href={l.href} className="footer-link text-cream-100/85 transition hover:text-gold-300">
                     {l.label}
                   </Link>
                 </li>
               ))}
               {legalLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-cream-100/70 transition hover:text-gold-300">
+                  <Link href={l.href} className="footer-link text-cream-100/70 transition hover:text-gold-300">
                     {l.label}
                   </Link>
                 </li>
@@ -82,13 +82,13 @@ export function Footer() {
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-gold-300">
               Kontaktai
             </p>
-            <ul className="space-y-2.5 text-[13.5px] text-cream-100/85">
+            <ul className="text-[13.5px] text-cream-100/85 sm:space-y-2.5">
               <li>
-                <a href={`mailto:${store.contact.email}`} className="transition hover:text-gold-300">
+                <a href={`mailto:${store.contact.email}`} className="footer-link transition hover:text-gold-300">
                   {store.contact.email}
                 </a>
               </li>
-              <li>{store.contact.responseTime}</li>
+              <li className="py-2.5 sm:py-0">{store.contact.responseTime}</li>
             </ul>
             <CookieSettingsButton />
           </SafeDiv>

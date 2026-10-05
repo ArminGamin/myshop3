@@ -4071,3 +4071,12 @@ html[data-intro="pending"] .hero-shell *::before,
 html[data-intro="pending"] .hero-shell *::after {
   animation-play-state: paused !important;
 }
+
+/* Telefone poraštės nuorodos – bent 44px aukščio paspaudimo zona. */
+@media (max-width: 639px) {
+  .footer-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+}
