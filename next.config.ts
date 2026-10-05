@@ -18,8 +18,12 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
+  compiler: {
+    // Produkcijoje pašalinami derinimo console.log (klaidos ir įspėjimai lieka).
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+  },
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
     qualities: [70, 75, 80, 85],
     minimumCacheTTL: 60 * 60 * 24 * 30,
     deviceSizes: [640, 750, 828, 1080, 1200],

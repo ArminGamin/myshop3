@@ -1,32 +1,23 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ComponentType } from "react";
-import { Check, Heart, Info, Shield, Sparkles } from "lucide-react";
+import { Check, Info, Shield, Sparkles } from "lucide-react";
 import { store } from "@/lib/config/store.config";
 import { formatPrice } from "@/lib/format";
 import {
-  donationBaseCents,
-  donationCents,
-  donationTargetCents,
   type CartAddonId,
   type CartAddonSelection,
 } from "@/lib/cart/addons";
 
 export function CartAddonRows({
-  subtotalCents,
   selected,
   onChange,
   compact = false,
 }: {
-  subtotalCents: number;
   selected: CartAddonSelection;
   onChange: (next: CartAddonSelection) => void;
   compact?: boolean;
 }) {
-  const beforeDonation = donationBaseCents(subtotalCents, selected);
-  const donation = donationCents(beforeDonation);
-  const target = donationTargetCents(beforeDonation);
-
   return (
     <div
       className={
@@ -54,17 +45,6 @@ export function CartAddonRows({
           price={`+${formatPrice(store.addons.protection.priceCents)}`}
           tip="Nedidelis mokestis, kad pamestą ar pažeistą siuntą galėtume pakeisti be papildomo laukimo."
         />
-        {donation > 0 ? (
-          <AddonRow
-            compact={compact}
-            checked={selected.donation}
-            onChange={(on) => onChange({ ...selected, donation: on })}
-            icon={Heart}
-            title={`Suapvalinkite iki ${formatPrice(target)}`}
-            price={`+${formatPrice(donation)}`}
-            tip={`Skirtumas ${formatPrice(donation)} keliaus ${store.addons.donation.cause}. Parama savanoriška.`}
-          />
-        ) : null}
         <AddonRow
           compact={compact}
           checked={selected.priority}

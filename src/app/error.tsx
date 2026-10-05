@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import posthog from "posthog-js";
+import { loadPosthog } from "@/lib/posthog-client";
 
 import { Button, ButtonLink } from "@/components/ui/button";
 
@@ -13,12 +13,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    if (
-      process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN &&
-      process.env.NEXT_PUBLIC_POSTHOG_HOST
-    ) {
-      posthog.captureException(error);
-    }
+    void loadPosthog().then((posthog) => posthog?.captureException(error));
   }, [error]);
 
   return (

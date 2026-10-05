@@ -44,7 +44,7 @@ function buildMessages(): { text: string; sparkle: boolean }[] {
 
 function BannerSparkle() {
   return (
-    <svg viewBox="0 0 16 16" className="size-3.5 text-gold-200" aria-hidden="true">
+    <svg viewBox="0 0 16 16" className="announce-spark size-3 shrink-0 text-gold-300" aria-hidden="true">
       <path fill="currentColor" d="M8 0 L9.1 6.2 L16 8 L9.1 9.8 L8 16 L6.9 9.8 L0 8 L6.9 6.2 Z" />
     </svg>
   );
@@ -105,16 +105,17 @@ export function AnnouncementBar() {
   if (messages.length === 0) return null;
 
   return (
-    <SafeDiv ref={barRef} className="cta-bar relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
+    <SafeDiv ref={barRef} className="cta-bar announce relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
       <p
-        className={`min-h-8 w-fit py-1.5 ps-8 pe-4 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:ps-10 sm:pe-4 sm:text-[14.75px] ${
+        className={`min-h-8 w-fit px-4 py-1.5 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:text-[13.5px] sm:tracking-[0.04em] ${
           visible ? "opacity-100" : "opacity-0"
         }`}
         aria-live="polite"
       >
-        <span className="inline-flex items-center justify-center gap-1.5">
-          {messages[index]?.sparkle ? <BannerSparkle /> : null}
+        <span className="inline-flex items-center justify-center gap-2">
+          <BannerSparkle />
           {messages[index]?.text}
+          <BannerSparkle />
         </span>
       </p>
       <Link

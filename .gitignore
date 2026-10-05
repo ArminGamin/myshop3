@@ -52,3 +52,22 @@ next-env.d.ts
 .env.local
 /.swc
 /.workflow-data/
+
+# Ne svetainės failai (vaizdo įrašai, archyvai, darbiniai aplankai) - laikomi tik lokaliai
+/promo-vids/
+/showcase-*/
+/.tmp-clip/
+/.tmp-qa/
+/facebook_pics/
+/instagram_pics/
+/apple-emojis/
+/exports/
+/ugc pics/
+/pics/
+/.posthog/
+/product-pngs.zip
+/tmp-home-grid.png
+/.claude/*-backup/
+*.zip
+*.mp4
+*.mov

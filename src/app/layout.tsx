@@ -24,6 +24,15 @@ const display = Cormorant_Garamond({
   weight: ["500", "600", "700"],
 });
 
+// Kursyvas naudojamas tik antraščių išryškinimams: vienas svoris.
+const displayItalic = Cormorant_Garamond({
+  variable: "--font-display-italic",
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  weight: "600",
+  style: "italic",
+});
+
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-manrope",
   subsets: ["latin", "latin-ext"],
@@ -60,7 +69,7 @@ const stripExtensionAttrs = `(function(){function strip(n){if(n.nodeType!==1)ret
 
 const motionBootstrap = `try{function r(){document.documentElement.dataset.motionReady="1";window.dispatchEvent(new Event("motion-ready"))}if(matchMedia("(prefers-reduced-motion: reduce)").matches)r()}catch(e){}`;
 
-const introGate = `try{var p=location.pathname;var checkout=p==="/checkout"||p.indexOf("/checkout/")===0||p==="/apmokejimas";if(checkout){document.documentElement.dataset.checkout="on";document.documentElement.dataset.motionReady="1"}if(matchMedia("(prefers-reduced-motion: reduce)").matches||checkout){document.documentElement.removeAttribute("data-intro")}if(matchMedia("(prefers-reduced-motion: reduce)").matches){var n=document.getElementById("intro-static");if(n)n.remove()}}catch(e){}`;
+const introGate = `try{var p=location.pathname;var checkout=p==="/checkout"||p.indexOf("/checkout/")===0||p==="/apmokejimas";if(checkout){document.documentElement.dataset.checkout="on";document.documentElement.dataset.motionReady="1"}if(matchMedia("(prefers-reduced-motion: reduce)").matches||checkout){document.documentElement.removeAttribute("data-intro")}if(matchMedia("(prefers-reduced-motion: reduce)").matches){var n=document.getElementById("intro-static");if(n)n.remove()}setTimeout(function(){var d=document.documentElement;if(d.dataset.intro==="pending"){d.removeAttribute("data-intro");d.dataset.motionReady="1";var x=document.getElementById("intro-static");if(x)x.remove()}},5200)}catch(e){}`;
 
 const introPaint = `#intro-static{position:fixed;inset:0;z-index:200;background:#0b2a1f}#intro-static.is-leaving{background:transparent}#intro-static .intro-line{display:block;width:min(18rem,72vw);height:1px;background:#d6b35f;opacity:1;transform:none}#intro-static .intro-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}#intro-static .intro-mark{opacity:1;color:#f5f0e6;margin:1.15rem 0 0;font-size:clamp(1.65rem,5vw,2.75rem);font-weight:700;letter-spacing:0.14em}#intro-static .intro-tagline{opacity:1;color:#e8dfcc;margin:0.65rem 0 0;font-size:0.78rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase}`;
 
@@ -72,7 +81,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="lt"
       data-intro="pending"
-      className={`${display.variable} ${plusJakarta.variable} h-full antialiased`}
+      className={`${display.variable} ${displayItalic.variable} ${plusJakarta.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

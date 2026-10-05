@@ -10,11 +10,9 @@ export function BrandLogo({ className = "" }: BrandLogoProps) {
     <Link
       href="/"
       aria-label={`${store.brand.name} — pradžia`}
-      className={`group flex shrink-0 items-center ${className}`}
+      className={`brand-logo flex shrink-0 items-center ${className}`}
     >
-      <span className="font-display max-w-[9.25rem] truncate text-[15px] font-extrabold leading-none text-burgundy-600 sm:max-w-none sm:text-[20px] lg:text-[22px]">
-        {store.brand.name}
-      </span>
+      <span className="brand-logo-word font-display">{store.brand.name}</span>
     </Link>
   );
 }

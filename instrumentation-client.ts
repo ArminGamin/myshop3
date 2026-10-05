@@ -1,11 +1,8 @@
-import posthog from "posthog-js";
+import { loadPosthog, posthogConfigured } from "@/lib/posthog-client";
 
-const projectToken = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
-const host = process.env.NEXT_PUBLIC_POSTHOG_HOST;
-
-if (!projectToken || !host) {
+if (!posthogConfigured) {
   if (process.env.NODE_ENV === "development") {
-    const missingVariable = !projectToken
+    const missingVariable = !process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN
       ? "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN"
       : "NEXT_PUBLIC_POSTHOG_HOST";
 
@@ -14,10 +11,11 @@ if (!projectToken || !host) {
     );
   }
 } else {
-  posthog.init(projectToken, {
-    api_host: host,
-    defaults: "2026-01-30",
-    capture_exceptions: true,
-    debug: process.env.NODE_ENV === "development",
-  });
+  // Inicializuojame, kai naršyklė laisva: PostHog nebeblokuoja hidratacijos.
+  const start = () => void loadPosthog();
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(start, { timeout: 4000 });
+  } else {
+    setTimeout(start, 2500);
+  }
 }

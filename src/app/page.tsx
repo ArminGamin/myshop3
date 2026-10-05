@@ -1,59 +1,74 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, HeartHandshake, PackageCheck, ShieldCheck } from "lucide-react";
-import { CollectionGlyph, SectionGlyph } from "@/components/ui/line-icons";
 import { campaign, store } from "@/lib/config/store.config";
-import { bestsellers, getProduct, premiumProducts } from "@/lib/data/products";
-import { collections } from "@/lib/data/collections";
+import { getProduct, premiumProducts } from "@/lib/data/products";
 import { homeFaqs } from "@/lib/data/faq";
 import { formatPrice } from "@/lib/format";
 import { faqSchema } from "@/lib/seo/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ButtonLink } from "@/components/ui/button";
-import { SectionHeading } from "@/components/ui/primitives";
-import { ProductGrid } from "@/components/commerce/product-card";
-import { ProductImage } from "@/components/commerce/product-art";
 import { TrustStrip } from "@/components/commerce/trust-strip";
 import { DeadlineBanner } from "@/components/commerce/deadline-banner";
-import { ChristmasCountdown } from "@/components/commerce/christmas-countdown";
 import { FAQAccordion } from "@/components/commerce/faq-accordion";
 import { HeroHeadline } from "@/components/layout/hero-headline";
+import { HeroGarland } from "@/components/layout/hero-garland";
+import { HeroShowcase, type HeroSlide } from "@/components/layout/hero-showcase";
 import { Reveal } from "@/components/layout/reveal";
-import { NewsletterForm } from "@/components/commerce/newsletter-form";
 import { ReviewsMarquee } from "@/components/commerce/reviews-marquee";
+import { RecipientBento } from "@/components/home/recipient-bento";
+import { WhyUs } from "@/components/home/why-us";
+import { PremiumShowcase } from "@/components/home/premium-showcase";
+import { NewsletterPanel } from "@/components/home/newsletter-panel";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const trustChips = [
-  `Pristatymas per 4–6 d.`,
-  `Nemokamai nuo ${store.shipping.freeThresholdCents / 100} €`,
-  `Kruopšti atranka`,
+// Hero vitrinos skaidrės: emocija (megztiniai) ir jaukumas (sniego gaublys, girlianda).
+const HERO_SLIDES: { slug: string; image: string; focus: string }[] = [
+  {
+    slug: "kalediniai-megztiniai-sniego-duetas",
+    image: "/products/kalediniai-megztiniai-sniego-duetas-couple-real-v2-af063818.webp",
+    focus: "50% 18%",
+  },
+  {
+    slug: "seimos-megztiniai-kaledu-dziaugsmas",
+    image: "/products/seimos-megztiniai-kaledu-dziaugsmas-family-real-v2-3f445505.webp",
+    focus: "50% 28%",
+  },
+  {
+    slug: "sniego-gaublys-ziemos-pasaka",
+    image: "/products/sniego-gaublys-pasaka-q2-c757c15f20.webp",
+    focus: "50% 50%",
+  },
+  {
+    slug: "led-girlianda-siltas",
+    image: "/products/led-girlianda-lentyna-q2-ac567c7e43.webp",
+    focus: "45% 45%",
+  },
 ];
 
-const giftFinderTone: Record<string, string> = {
-  "dovanos-jai": "text-burgundy-600",
-  "dovanos-jam": "text-burgundy-600",
-  "dovanos-seimai": "text-burgundy-600",
-  "dovanos-poroms": "text-burgundy-600",
-  "dovanos-iki-20-euru": "text-ink-900",
-  "dovanos-iki-50-euru": "text-ink-900",
-  "premium-dovanos": "text-gold-500",
-};
-
 export default function HomePage() {
-  const best = bestsellers().slice(0, 4);
-  const premium = premiumProducts().slice(0, 4);
   const featured = getProduct("namu-kino-projektorius");
+  // Premium tinklelyje nekartojame prekių, kurios jau rodomos hero vitrinoje.
+  const shown = new Set([featured?.slug, ...HERO_SLIDES.map((slide) => slide.slug)]);
+  const premium = premiumProducts()
+    .filter((p) => !shown.has(p.slug))
+    .slice(0, 4);
+  const heroSlides: HeroSlide[] = HERO_SLIDES.flatMap((slide) => {
+    const product = getProduct(slide.slug);
+    if (!product) return [];
+    return [{ ...slide, name: product.name, price: formatPrice(product.priceCents) }];
+  });
 
   return (
     <>
-      <section className="glow-candle texture-knit relative overflow-hidden lg:min-h-[80svh]">
+      <section className="hero-shell glow-candle texture-knit relative overflow-hidden">
         <div className="hero-wash" aria-hidden />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-5 px-4 pb-6 pt-4 sm:gap-10 sm:px-6 sm:pb-10 sm:pt-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:px-8 lg:pb-16 lg:pt-12">
+        <HeroGarland />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 pb-8 pt-14 sm:gap-14 sm:px-6 sm:pb-16 sm:pt-20 lg:min-h-[min(47rem,calc(100svh-var(--header-stack)-3.25rem))] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-8 lg:px-8 lg:pb-16 lg:pt-20">
           <div className="hero-stagger text-left">
-            <p className="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-burgundy-700 sm:mb-5 sm:text-[13px] sm:tracking-[0.18em]">
+            <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-burgundy-700 sm:mb-6 sm:text-[13px]">
               <svg
                 aria-hidden
                 viewBox="0 0 24 24"
@@ -70,14 +85,14 @@ export default function HomePage() {
               </svg>
               {campaign.heroEyebrow}
             </p>
-            <h1 className="font-display text-[2rem] font-bold leading-[1.18] text-ink-900 sm:text-[3.15rem] sm:leading-[1.14] lg:text-[3.85rem] lg:leading-[1.1]">
+            <h1 className="hero-title font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.012em] text-ink-900 sm:text-[3.6rem] lg:text-[4rem] xl:text-[4.6rem]">
               <HeroHeadline />
             </h1>
-            <p className="mt-3 max-w-lg text-[15px] font-semibold leading-relaxed text-ink-600 sm:mt-5 sm:text-[17px]">
+            <p className="mt-5 max-w-md text-[15.5px] font-medium leading-relaxed text-ink-600 sm:mt-7 sm:text-lg">
               {campaign.heroSubtext}
             </p>
-            <div className="mt-4 flex flex-col items-stretch gap-2 sm:mt-7 sm:flex-row sm:items-center sm:gap-3">
-              <ButtonLink href="/rask-dovana" size="lg" className="w-full sm:w-auto">
+            <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-6">
+              <ButtonLink href="/rask-dovana" size="lg" className="hero-cta w-full sm:w-auto">
                 {campaign.primaryCTA}
               </ButtonLink>
               <Link
@@ -87,243 +102,41 @@ export default function HomePage() {
                 {campaign.secondaryCTA}
               </Link>
             </div>
-            <ChristmasCountdown />
-            <ul className="mt-5 flex flex-col gap-1.5 border-t border-gold-400/55 pt-3 text-[13px] font-medium text-ink-600 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-1.5 sm:pt-4 sm:text-sm">
-              {trustChips.map((chip) => (
-                <li key={chip} className="flex items-center gap-2">
-                  <span className="size-1 rounded-full bg-gold-500" aria-hidden />
-                  {chip}
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div className="hero-cluster relative mx-auto w-full max-w-[17.5rem] sm:max-w-lg lg:max-w-none">
-            <div className="relative mx-auto aspect-[5/4] w-full max-w-[17.5rem] sm:max-w-[28rem] sm:aspect-[4/5] lg:max-w-none lg:aspect-[5/6]">
-              <HeroCard
-                slug="vilnonis-pledas-jaukumas"
-                priority
-                className="hero-card absolute left-[4%] top-[2%] z-10 w-[58%] rotate-[-6deg] sm:w-[54%] sm:rotate-[-7deg]"
-              />
-              <HeroCard
-                slug="aromaterapijos-zvake-zvakiu-vakaras"
-                priority
-                className="hero-card absolute right-[2%] top-[14%] z-20 w-[58%] rotate-[5deg] sm:w-[56%] sm:rotate-[6deg]"
-              />
-              <HeroCard
-                slug="kaledinis-puodelis-kakava"
-                className="hero-card absolute bottom-[8%] left-[10%] z-30 w-[50%] rotate-[2.5deg]"
-              />
-              <HeroCard
-                slug="led-girlianda-siltas"
-                className="hero-card absolute bottom-[0%] right-[6%] z-40 w-[44%] rotate-[-4deg]"
-              />
-            </div>
-            <svg
-              aria-hidden
-              viewBox="0 0 100 100"
-              className="animate-sparkle absolute -left-1 top-6 hidden size-8 text-gold-500 sm:block lg:left-0 lg:size-9"
-            >
-              <path fill="currentColor" d="M50 5l9 36 36 9-36 9-9 36-9-36-36-9 36-9z" />
-            </svg>
-          </div>
+          <HeroShowcase slides={heroSlides} />
         </div>
       </section>
 
       <TrustStrip />
 
       <Reveal>
-        <section className="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-11" aria-labelledby="best-heading">
-          <SectionHeading
-            eyebrow="Populiarūs pasirinkimai"
-            title="Bestselleriai: išsirinkimo problema išspręsta"
-            sub="Šios dovanos mūsų pirkėjus pasiekia dažniausiai. Saugiausias pasirinkimas, kai norisi pataikyti."
-          />
-          <div className="mt-7">
-            <ProductGrid products={best} />
-          </div>
-          <div className="mt-7 text-center">
-            <ButtonLink href="/dovanos/bestselleriai" className="cta-live">
-              Visi bestselleriai <ArrowRight className="size-4" />
-            </ButtonLink>
-          </div>
-        </section>
-      </Reveal>
-
-      <Reveal>
         <ReviewsMarquee />
       </Reveal>
 
       <Reveal className="band-wash">
-        <section className="band-forest py-9 lg:py-11" aria-labelledby="cat-heading">
+        <section className="home-recipients band-forest py-14 lg:py-20" aria-labelledby="cat-heading">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-gold-300">
-                Pasirinkite pagal gavėją
-              </p>
-              <h2 id="cat-heading" className="font-display text-[1.65rem] font-extrabold text-cream-50 sm:text-4xl">
-                Kam ieškote dovanos?
-              </h2>
-            </div>
-            <ul className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {[
-                collections[2],
-                collections[3],
-                collections[4],
-                collections[5],
-                collections[6],
-                collections[8],
-                collections[9],
-              ].map((c) => (
-                <li key={c.slug}>
-                  <Link
-                    href={`/dovanos/${c.slug}`}
-                    className="group flex min-h-[5.5rem] flex-col items-center justify-center gap-1.5 rounded-cozy border border-cream-300 bg-cream-50 px-2 py-3.5 text-center shadow-card transition-[transform,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-white hover:shadow-lift sm:min-h-24 sm:gap-2 sm:px-3 sm:py-4"
-                  >
-                    <span className={`${giftFinderTone[c.slug] ?? "text-burgundy-600"} transition-transform duration-500 group-hover:scale-[1.06]`}>
-                      <CollectionGlyph slug={c.slug} />
-                    </span>
-                    <span className={`text-[13px] font-extrabold sm:text-sm ${giftFinderTone[c.slug] ?? "text-burgundy-600"}`}>
-                      {c.shortTitle}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  href="/rask-dovana"
-                  className="group flex min-h-[5.5rem] flex-col items-center justify-center gap-1.5 rounded-cozy border border-gold-400/60 bg-gold-400/15 px-2 py-3.5 text-center transition-[background-color] duration-500 hover:bg-gold-400/30 sm:min-h-24 sm:gap-2 sm:px-3 sm:py-4"
-                >
-                  <span className="text-gold-200">
-                    <SectionGlyph name="search" className="size-6" />
-                  </span>
-                  <span className="text-[13px] font-extrabold text-gold-200 sm:text-sm">Rasti dovaną</span>
-                </Link>
-              </li>
-            </ul>
+            <h2
+              id="cat-heading"
+              className="home-h2 home-h2-dark font-display text-[2rem] font-bold leading-[1.06] text-cream-50 sm:text-[2.6rem] lg:text-[3rem]"
+            >
+              Kam ieškote <em>dovanos?</em>
+            </h2>
+            <RecipientBento />
           </div>
         </section>
       </Reveal>
 
-      <Reveal>
-        <section id="dovanu-radiklis" className="mx-auto max-w-7xl scroll-mt-32 px-4 py-9 sm:px-6 lg:px-8 lg:py-11" aria-labelledby="quiz-heading">
-          <div className="glow-candle texture-knit overflow-hidden rounded-cozy border border-cream-300 bg-cream-100 p-5 shadow-lift sm:p-9">
-            <div className="mx-auto max-w-xl text-center">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-gold-600">
-                Per 30 sekundžių
-              </p>
-              <h2 id="quiz-heading" className="font-display text-[1.65rem] font-extrabold text-ink-900 sm:text-4xl">
-                Nežinote, ką rinktis?
-              </h2>
-              <p className="mt-4 text-[15px] font-semibold leading-relaxed text-ink-600">
-                Atsakykite į 4 klausimus ir padėsime išsirinkti!
-              </p>
-              <ButtonLink href="/rask-dovana" size="lg" className="mt-6">
-                Rasti mano dovaną →
-              </ButtonLink>
-            </div>
-          </div>
-        </section>
+      <WhyUs />
+
+      <Reveal className="cv-auto">
+        <PremiumShowcase featured={featured} products={premium} />
       </Reveal>
-
-      <section className="panel-inset border-y border-cream-300 bg-cream-200/80 py-9 lg:py-11" aria-labelledby="why-heading">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            eyebrow="Kodėl mes"
-            title="Dovanos, kurias renkame taip, kaip rinktumėmės savo šeimai"
-          />
-          <div className="mt-8 grid gap-6 text-center sm:grid-cols-3">
-            {[
-              {
-                icon: <HeartHandshake className="size-7" strokeWidth={1.5} />,
-                t: "Kruopšti atranka",
-                d: "Kiekviena prekė patenka į katalogą tik po to, kai ją išbandome ir įvertiname patys. Jokių atsitiktinių daiktų.",
-              },
-              {
-                icon: <PackageCheck className="size-7" strokeWidth={1.5} />,
-                t: "Paruošta dovanoti",
-                d: "Dauguma prekių atkeliauja gražioje pakuotėje. Belieka pridėti žinutę. Papildomo pakavimo nereikia.",
-              },
-              {
-                icon: <ShieldCheck className="size-7" strokeWidth={1.5} />,
-                t: "Aukšta kokybė",
-                d: "Renkame tik tas prekes, kurias patys norėtume gauti. Kiekviena dovana turi būti verta dovanoti.",
-              },
-            ].map((item) => (
-              <div key={item.t} className="flex flex-col items-center">
-                <span className="flex size-14 items-center justify-center rounded-full bg-burgundy-100 text-burgundy-600">
-                  {item.icon}
-                </span>
-                <h3 className="mt-4 font-display text-lg font-extrabold text-ink-900">{item.t}</h3>
-                <p className="mx-auto mt-2 max-w-xs text-sm font-bold leading-relaxed text-ink-600">
-                  {item.d}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Reveal>
-        <section className="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-11" aria-labelledby="prem-heading">
-          <SectionHeading
-            eyebrow="Įspūdžiui, kuris lieka"
-            title="Premium dovanos"
-            sub="Kai dovana turi kalbėti pati už save."
-          />
-          <div className="mt-7">
-            <ProductGrid products={premium} />
-          </div>
-          <div className="mt-7 text-center">
-            <ButtonLink href="/dovanos/premium-dovanos" className="cta-live">
-              Visos premium dovanos <ArrowRight className="size-4" />
-            </ButtonLink>
-          </div>
-        </section>
-      </Reveal>
-
-      {featured ? (
-        <Reveal>
-          <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-14">
-            <div className="overflow-hidden rounded-cozy bg-gradient-to-br from-burgundy-700 via-burgundy-600 to-burgundy-800 shadow-lift">
-              <div className="grid items-center gap-6 p-5 sm:p-9 lg:grid-cols-[1fr_380px]">
-                <div className="order-2 text-cream-100 lg:order-1">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-gold-300">
-                    Didžiausias efektas vienu pasirinkimu
-                  </p>
-                  <h2 className="mt-3 font-display text-[1.65rem] font-extrabold leading-snug sm:text-4xl">
-                    {featured.name}
-                  </h2>
-                  <p className="mt-4 max-w-md text-[15px] font-semibold leading-relaxed text-cream-50">
-                    Full HD filmai ant sienos iki 120 colių. Dovana, kuri nustebina vos išėmus iš dėžės!
-                  </p>
-                  <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-                    <span className="font-display text-4xl font-extrabold text-gold-300 sm:text-5xl">
-                      {formatPrice(featured.priceCents)}
-                    </span>
-                    <ButtonLink href={`/produktai/${featured.slug}`} variant="gold" size="lg" className="w-full sm:w-auto">
-                      Žiūrėti dovaną <ArrowRight className="size-4" />
-                    </ButtonLink>
-                  </div>
-                </div>
-                <div className="order-1 overflow-hidden rounded-cozy shadow-lift lg:order-2">
-                  <ProductImage
-                    images={featured.images}
-                    seed={featured.artSeed}
-                    alt={featured.name}
-                    size="hero"
-                    className="aspect-square w-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-        </Reveal>
-      ) : null}
 
       <DeadlineBanner className="py-10 lg:py-14" />
 
-      <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-14" aria-labelledby="faq-heading">
+      <section className="cv-auto mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-16" aria-labelledby="faq-heading">
         <FAQAccordion items={homeFaqs} />
         <p className="mt-6 text-center">
           <Link
@@ -335,24 +148,9 @@ export default function HomePage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8" aria-labelledby="nl-heading">
-        <div className="texture-knit glow-candle rounded-cozy border border-gold-400/40 bg-gradient-to-br from-cream-100 to-cream-200 p-5 text-center shadow-lift sm:p-9">
-          <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-burgundy-100 text-burgundy-600">
-            <SectionGlyph name="tree" className="size-6" />
-          </span>
-          <h2 id="nl-heading" className="mt-3 font-display text-2xl font-extrabold text-ink-900 sm:text-3xl">
-            Prenumeruokite naujienlaiškį
-          </h2>
-          <p className="mx-auto mt-2 max-w-md text-sm font-semibold leading-relaxed text-ink-600">
-            Sužinosite apie naujas dovanas ir specialius Kalėdinius pasiūlymus.
-          </p>
-          <div className="mt-6">
-            <NewsletterForm source="homepage" />
-          </div>
-        </div>
-      </section>
+      <NewsletterPanel />
 
-      <section className="mx-auto max-w-7xl px-4 pb-4 text-center sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pb-6 text-center sm:px-6 lg:px-8">
         <p className="text-sm text-ink-600">
           Parodykite savo dovaną! Pažymėkite mus{" "}
           <a
@@ -363,45 +161,11 @@ export default function HomePage() {
           >
             @{store.brand.handle}
           </a>{" "}
-          Instagrame 💗
+          Instagrame
         </p>
       </section>
 
       <JsonLd data={faqSchema(homeFaqs)} />
     </>
-  );
-}
-
-function HeroCard({
-  slug,
-  className,
-  priority = false,
-}: {
-  slug: string;
-  className?: string;
-  priority?: boolean;
-}) {
-  const product = getProduct(slug);
-  if (!product) return null;
-  return (
-    <Link
-      href={`/produktai/${product.slug}`}
-      className={`group block overflow-hidden rounded-cozy bg-white shadow-lift transition-[transform,box-shadow] duration-700 ease-cinematic hover:-translate-y-0.5 hover:shadow-lift ${className ?? ""}`}
-    >
-      <div className="aspect-[4/5] overflow-hidden bg-cream-100">
-        <ProductImage
-          images={product.images}
-          seed={product.artSeed}
-          alt={product.name}
-          size="card"
-          priority={priority}
-          className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-        />
-      </div>
-      <div className="border-t border-cream-300/80 px-2 py-1.5 sm:px-3 sm:py-2.5">
-        <p className="line-clamp-2 text-[11px] font-semibold leading-snug text-ink-900 sm:text-[12.5px]">{product.name}</p>
-        <p className="font-display text-sm font-extrabold text-burgundy-600 sm:text-base">{formatPrice(product.priceCents)}</p>
-      </div>
-    </Link>
   );
 }

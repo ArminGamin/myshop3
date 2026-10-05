@@ -17,8 +17,8 @@ export default function ShippingPage() {
   return (
     <InfoPage title="Pristatymo informacija">
       <p>
-        Įprastai užsakymus pristatome per 4–6 dienas, priklausomai nuo užsakymo kiekio,
-        prekės tiekėjo sandėlio lokacijos ir pristatymo vietos.
+        Įprastai užsakymus pristatome per 4–6 dienas, priklausomai nuo užsakymo kiekio ir
+        pristatymo vietos.
       </p>
       <p>
         Kadangi bendradarbiaujame su tarptautiniais tiekėjais, dalis prekių gali būti
@@ -26,13 +26,13 @@ export default function ShippingPage() {
         gali užtrukti ilgiau.
       </p>
       <p>
-        Didesnio užimtumo laikotarpiais, esant padidėjusiam užsakymų kiekiui, tiekėjų ar
-        kurjerių apkrovai, pristatymas gali užtrukti iki 16 dienų.
+        Didesnio užimtumo laikotarpiais, esant padidėjusiam užsakymų kiekiui ar kurjerių
+        apkrovai, pristatymas gali užtrukti iki 16 dienų.
       </p>
       <p>
         Dedame visas pastangas, kad prekės klientus pasiektų kuo greičiau. Pateikdamas
         užsakymą klientas patvirtina, kad susipažino su pristatymo informacija ir supranta,
-        jog pristatymo terminas gali priklausyti nuo tiekėjų, kurjerių bei užsakymų srauto.
+        jog pristatymo terminas gali priklausyti nuo kurjerių bei užsakymų srauto.
       </p>
       <p>{productPhotoDisclaimer.shipping}</p>
       <p>

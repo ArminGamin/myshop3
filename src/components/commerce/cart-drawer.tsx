@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Check, Minus, Plus, ShieldCheck, ShoppingBag, Truck, X } from "lucide-react";
 import { resolveItems, subtotalOf, useCart } from "@/lib/cart/context";
 import {
   addonAmounts,
-  donationBaseCents,
-  donationCents,
   type CartAddonSelection,
 } from "@/lib/cart/addons";
 import { store, flags } from "@/lib/config/store.config";
@@ -30,22 +28,29 @@ export function FreeShippingBar({ subtotalCents }: { subtotalCents: number }) {
 
   if (remaining <= 0) {
     return (
-      <div className="rounded-cozy border border-gold-400 bg-gradient-to-r from-gold-200 via-cream-50 to-forest-100 px-4 py-3.5">
-        <p className="flex items-start gap-2 text-[14px] font-bold text-burgundy-700">
-          <Check className="mt-0.5 size-4 shrink-0 text-gold-500" strokeWidth={2.4} />
-          🎉 Atrakinta! Nemokamas pristatymas jau jūsų
-        </p>
-        <p className="mt-1 pl-6 text-[12px] font-semibold text-forest-500">
-          Siunta keliauja be jokio papildomo mokesčio.
-        </p>
+      <div className="cart-ship cart-ship-done">
+        <span aria-hidden className="cart-ship-seal">
+          <Check className="size-4" strokeWidth={2.6} />
+        </span>
+        <div className="min-w-0">
+          <p className="text-[14px] font-bold leading-snug text-cream-50">
+            Atrakinta! Nemokamas pristatymas jau jūsų
+          </p>
+          <p className="mt-0.5 text-[12.5px] font-medium text-cream-100/80">
+            Siunta keliauja be jokio papildomo mokesčio.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="rounded-cozy bg-cream-200/70 px-4 py-3">
-      <p className="text-[13px] font-medium text-ink-900">
-        Trūksta tik <strong>{formatPrice(remaining)}</strong> iki nemokamo pristatymo
+    <div className="cart-ship">
+      <p className="flex items-center gap-2 text-[13.5px] font-medium text-ink-900">
+        <Truck aria-hidden className="size-4 shrink-0 text-burgundy-600" strokeWidth={1.9} />
+        <span>
+          Trūksta tik <strong className="text-burgundy-700">{formatPrice(remaining)}</strong> iki nemokamo pristatymo
+        </span>
       </p>
       <div
         role="progressbar"
@@ -53,12 +58,9 @@ export function FreeShippingBar({ subtotalCents }: { subtotalCents: number }) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label="Pažanga iki nemokamo pristatymo"
-        className="mt-2 h-2 overflow-hidden rounded-full bg-white"
+        className="cart-ship-track mt-2.5"
       >
-        <div
-          className="h-full rounded-full bg-gradient-to-r from-gold-400 to-burgundy-500 transition-all duration-700 ease-cinematic"
-          style={{ width: `${pct}%` }}
-        />
+        <div className="cart-ship-fill" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );
@@ -77,12 +79,6 @@ export function CartDrawer() {
 
   const mysteryCents = mystery ? MYSTERY_GIFT.priceCents : 0;
 
-  useEffect(() => {
-    const beforeDonation = donationBaseCents(subtotal + mysteryCents, addons);
-    if (donationCents(beforeDonation) > 0) return;
-    if (addons.donation) updateCheckoutAddons({ ...addons, donation: false });
-  }, [subtotal, mysteryCents, addons]);
-
   function updateAddons(next: CartAddonSelection) {
     updateCheckoutAddons(next);
   }
@@ -90,8 +86,17 @@ export function CartDrawer() {
   const extras = addonAmounts(subtotal + mysteryCents, addons);
   const payable = subtotal + mysteryCents + extras.total;
   const freeShipping = mystery || subtotal >= store.shipping.freeThresholdCents;
+  const count = items.reduce((n, i) => n + i.qty, 0);
 
   const upsell = findPairsWithUpsell(items);
+
+  const summaryRows: { label: string; cents: number }[] = [
+    { label: "Tarpinė suma", cents: subtotal },
+    ...(mysteryCents ? [{ label: MYSTERY_GIFT.name, cents: mysteryCents }] : []),
+    ...(extras.protection ? [{ label: addonLineLabel("protection"), cents: extras.protection }] : []),
+    ...(extras.donation ? [{ label: addonLineLabel("donation"), cents: extras.donation }] : []),
+    ...(extras.priority ? [{ label: addonLineLabel("priority"), cents: extras.priority }] : []),
+  ];
 
   function close() {
     setLeaveOpen(false);
@@ -120,13 +125,17 @@ export function CartDrawer() {
       widthClass={isMobile ? "max-w-none" : "max-w-lg"}
     >
       {/* Antraštė */}
-      <div className="flex shrink-0 items-center justify-between border-b border-cream-300/70 px-5 py-4">
-        <h2 className="flex items-center gap-2 font-display text-2xl font-extrabold text-ink-900">
-          <ShoppingBag className="size-6 text-burgundy-600" strokeWidth={1.8} />
-          Jūsų krepšelis
+      <div className="cart-head flex shrink-0 items-center justify-between gap-3 px-5 py-4">
+        <h2 className="flex items-center gap-3 font-display text-[1.75rem] font-bold leading-none text-ink-900">
+          <span aria-hidden className="cart-head-icon">
+            <ShoppingBag className="size-5" strokeWidth={1.8} />
+          </span>
+          <span>
+            Jūsų <em className="font-semibold text-burgundy-600">krepšelis</em>
+          </span>
           {items.length > 0 ? (
-            <span className="num text-xl font-bold text-ink-500">
-              ({items.reduce((n, i) => n + i.qty, 0)})
+            <span className="cart-count num" aria-label={`${count} prekės`}>
+              {count}
             </span>
           ) : null}
         </h2>
@@ -134,7 +143,7 @@ export function CartDrawer() {
           type="button"
           onClick={requestClose}
           aria-label="Uždaryti krepšelį"
-          className="inline-flex size-11 items-center justify-center rounded-full transition hover:bg-cream-200"
+          className="cart-close inline-flex size-11 shrink-0 items-center justify-center rounded-full"
         >
           <X className="block size-5 shrink-0" strokeWidth={1.8} />
         </button>
@@ -142,16 +151,18 @@ export function CartDrawer() {
 
       {items.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 py-10 text-center">
-          <ShoppingBag className="size-10 text-burgundy-600" strokeWidth={1.5} />
-          <p className="font-display text-xl font-extrabold text-ink-900">
+          <span aria-hidden className="cart-empty-icon">
+            <ShoppingBag className="size-8" strokeWidth={1.5} />
+          </span>
+          <p className="mt-2 font-display text-[1.8rem] font-bold leading-tight text-ink-900">
             Jūsų krepšelis dar tuščias
           </p>
-          <p className="max-w-xs text-sm font-bold leading-relaxed text-ink-600">
+          <p className="max-w-xs text-sm font-medium leading-relaxed text-ink-600">
             Gal laikas išsirinkti pirmąją dovaną? Bestselleriai išsirinkimo problemą
             išsprendžia greičiausiai.
           </p>
           <Link href="/dovanos/bestselleriai" onClick={close}>
-            <Button className="mt-2">Peržiūrėti dovanas</Button>
+            <Button className="hero-cta mt-2">Peržiūrėti dovanas</Button>
           </Link>
           <Link
             href="/rask-dovana"
@@ -163,18 +174,18 @@ export function CartDrawer() {
         </div>
       ) : (
         <>
-          <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-y-contain px-5 py-3">
+          <div className="cart-body flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-y-contain px-4 py-4 sm:px-5">
             <FreeShippingBar
               subtotalCents={mystery ? store.shipping.freeThresholdCents : subtotal}
             />
 
-            <ul className="divide-y divide-cream-300/60">
+            <ul className="flex flex-col gap-2.5">
               {items.map((item) => (
-                <li key={`${item.slug}-${item.variantId}`} className="flex gap-3.5 py-4 first:pt-1">
+                <li key={`${item.slug}-${item.variantId}`} className="cart-line">
                   <Link
                     href={`/produktai/${item.slug}`}
                     onClick={close}
-                    className="shrink-0 overflow-hidden rounded-xl"
+                    className="cart-line-media"
                     aria-hidden
                     tabIndex={-1}
                   >
@@ -183,60 +194,56 @@ export function CartDrawer() {
                       seed={item.product.artSeed}
                       alt=""
                       size="thumb"
-                      className="size-14 object-cover"
+                      className="size-full object-cover"
                     />
                   </Link>
                   <div className="min-w-0 flex-1">
-                    <Link
-                      href={`/produktai/${item.slug}`}
-                      onClick={close}
-                      className="line-clamp-2 text-sm font-semibold leading-snug text-ink-900 hover:text-burgundy-600"
-                    >
-                      {item.product.name}
-                    </Link>
-                    {item.variant.name !== "Standartinis rinkinys" &&
-                    item.variant.name !== "Vienetas" ? (
-                      <p className="mt-0.5 truncate text-xs text-ink-400">{item.variant.name}</p>
-                    ) : null}
-                    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center rounded-full border border-cream-300 bg-white">
+                    <div className="flex items-start gap-2">
+                      <div className="min-w-0 flex-1">
+                        <Link
+                          href={`/produktai/${item.slug}`}
+                          onClick={close}
+                          className="line-clamp-2 text-[14.5px] font-semibold leading-snug text-ink-900 transition hover:text-burgundy-600"
+                        >
+                          {item.product.name}
+                        </Link>
+                        {item.variant.name !== "Standartinis rinkinys" &&
+                        item.variant.name !== "Vienetas" ? (
+                          <p className="mt-0.5 truncate text-xs font-medium text-ink-400">{item.variant.name}</p>
+                        ) : null}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => cart.removeItem(item.slug, item.variantId)}
+                        aria-label={`Pašalinti ${item.product.name}`}
+                        className="cart-remove -mr-2 -mt-2 inline-flex size-10 shrink-0 items-center justify-center rounded-full"
+                      >
+                        <X className="block size-4 shrink-0" strokeWidth={2.25} />
+                      </button>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <div className="cart-stepper">
                         <button
                           type="button"
                           onClick={() => cart.setQty(item.slug, item.variantId, item.qty - 1)}
                           aria-label={`Sumažinti ${item.product.name} kiekį`}
-                          className="inline-flex size-11 items-center justify-center rounded-full text-ink-600 hover:text-burgundy-600"
+                          className="cart-stepper-btn"
                         >
                           <Minus className="block size-3.5 shrink-0" strokeWidth={2.25} />
                         </button>
-                        <span className="w-7 text-center text-sm font-bold">{item.qty}</span>
+                        <span className="num w-7 text-center text-sm font-bold text-ink-900">{item.qty}</span>
                         <button
                           type="button"
                           onClick={() => cart.setQty(item.slug, item.variantId, item.qty + 1)}
                           aria-label={`Padidinti ${item.product.name} kiekį`}
-                          className="inline-flex size-11 items-center justify-center rounded-full text-ink-600 hover:text-burgundy-600"
+                          className="cart-stepper-btn"
                         >
                           <Plus className="block size-3.5 shrink-0" strokeWidth={2.25} />
                         </button>
                       </div>
-                      <div className="flex items-baseline gap-2 whitespace-nowrap">
-                        <span
-                          className={
-                            isMobile
-                              ? "text-base font-extrabold text-burgundy-600"
-                              : "text-sm font-bold text-burgundy-600"
-                          }
-                        >
-                          {formatPrice(item.lineTotalCents)}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => cart.removeItem(item.slug, item.variantId)}
-                          aria-label={`Pašalinti ${item.product.name}`}
-                          className="-mr-1.5 inline-flex size-11 items-center justify-center rounded-full text-ink-600 transition hover:bg-cream-200 hover:text-burgundy-700"
-                        >
-                          <X className="block size-5 shrink-0" strokeWidth={2.25} />
-                        </button>
-                      </div>
+                      <span className="num text-[16px] font-extrabold leading-none text-burgundy-600">
+                        {formatPrice(item.lineTotalCents)}
+                      </span>
                     </div>
                   </div>
                 </li>
@@ -246,7 +253,6 @@ export function CartDrawer() {
             {isMobile ? (
               <CartAddonRows
                 compact
-                subtotalCents={subtotal + mysteryCents}
                 selected={addons}
                 onChange={updateAddons}
               />
@@ -254,127 +260,88 @@ export function CartDrawer() {
 
             {/* Krepšelio papildymas */}
             {upsell ? (
-              <div className="rounded-cozy border border-gold-300/60 bg-gradient-to-br from-cream-100 to-cream-200/50 p-4">
-                <p className="text-[13px] font-semibold text-ink-900">
+              <div className="cart-upsell">
+                <p className="text-[12px] font-extrabold uppercase tracking-[0.14em] text-gold-600">
                   Puikiai dera su jūsų pasirinkimu
                 </p>
-                <div className="mt-2.5 flex items-center gap-3">
-                  <ProductImage
-                    images={upsell.images}
-                    seed={upsell.artSeed}
-                    alt=""
-                    size="thumb"
-                    className="size-14 object-cover"
-                  />
+                <div className="mt-3 flex items-center gap-3">
+                  <span className="cart-line-media">
+                    <ProductImage
+                      images={upsell.images}
+                      seed={upsell.artSeed}
+                      alt=""
+                      size="thumb"
+                      className="size-full object-cover"
+                    />
+                  </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[13px] font-medium text-ink-900">{upsell.name}</p>
-                    <p className="text-[13px] font-bold text-burgundy-600">
+                    <p className="line-clamp-2 text-[13.5px] font-semibold leading-snug text-ink-900">{upsell.name}</p>
+                    <p className="num mt-0.5 text-[14px] font-extrabold text-burgundy-600">
                       {formatPrice(upsell.priceCents)}
                     </p>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="min-h-11 shrink-0"
+                  <button
+                    type="button"
+                    className="cart-upsell-add"
                     onClick={() => cart.addItem(upsell.slug, upsell.defaultVariantId)}
                   >
-                    Pridėti +
-                  </Button>
+                    <Plus className="size-4" strokeWidth={2.4} />
+                    Pridėti
+                  </button>
                 </div>
               </div>
             ) : null}
 
             {isMobile ? null : (
               <CartAddonRows
-                subtotalCents={subtotal + mysteryCents}
                 selected={addons}
                 onChange={updateAddons}
               />
             )}
           </div>
 
-          <div className="shrink-0 border-t border-cream-300/70 bg-cream-100/80 px-5 py-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
-            {isMobile ? null : (
-              <p className="mb-2.5 flex items-center justify-center gap-1.5 text-xs text-ink-400">
-                <Truck className="size-3.5" /> Pristatymas per 4–6 d. ·{" "}
-                <ShieldCheck className="size-3.5" /> Saugus atsiskaitymas
-              </p>
-            )}
-            <div
-              className={`flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
-            >
-              <span>Tarpinė suma</span>
-              <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
-                {formatPrice(subtotal)}
-              </span>
-            </div>
-            {mysteryCents ? (
-              <div
-                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
-              >
-                <span>{MYSTERY_GIFT.name}</span>
-                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
-                  {formatPrice(mysteryCents)}
-                </span>
+          <div className="cart-foot shrink-0 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 sm:px-5 sm:pt-4">
+            <dl className="space-y-0.5 text-[13px] text-ink-600 sm:space-y-1 sm:text-[13.5px]">
+              {summaryRows.map((row) => (
+                <div key={row.label} className="flex items-center justify-between gap-3">
+                  <dt>{row.label}</dt>
+                  <dd className="num font-semibold text-ink-900">{formatPrice(row.cents)}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-2.5 flex items-end justify-between gap-3 border-t border-gold-400/35 pt-2.5 sm:mt-3 sm:pt-3">
+              <div>
+                <p className="text-sm font-semibold text-ink-900">{freeShipping ? "Iš viso" : "Suma be pristatymo"}</p>
+                <p className={`mt-0.5 text-[12.5px] ${freeShipping ? "font-semibold text-forest-500" : "font-medium text-ink-600"}`}>
+                  {freeShipping
+                    ? "Nemokamas pristatymas įskaičiuotas"
+                    : `Pristatymas: +${formatPrice(store.shipping.flatRateCents)}. Galutinė suma: ${formatPrice(payable + store.shipping.flatRateCents)}.`}
+                </p>
               </div>
-            ) : null}
-            {extras.protection ? (
-              <div
-                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
-              >
-                <span>{addonLineLabel("protection")}</span>
-                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
-                  {formatPrice(extras.protection)}
-                </span>
-              </div>
-            ) : null}
-            {extras.donation ? (
-              <div
-                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
-              >
-                <span>{addonLineLabel("donation")}</span>
-                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
-                  {formatPrice(extras.donation)}
-                </span>
-              </div>
-            ) : null}
-            {extras.priority ? (
-              <div
-                className={`mt-1 flex items-center justify-between ${isMobile ? "text-sm font-semibold text-ink-600" : "text-[13px] text-ink-600"}`}
-              >
-                <span>{addonLineLabel("priority")}</span>
-                <span className={isMobile ? "font-bold text-burgundy-600" : undefined}>
-                  {formatPrice(extras.priority)}
-                </span>
-              </div>
-            ) : null}
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-sm font-medium text-ink-600">{freeShipping ? "Iš viso" : "Suma be pristatymo"}</span>
-              <span
-                className={`font-extrabold tracking-tight text-burgundy-600 ${isMobile ? "text-4xl" : "text-3xl"}`}
-              >
+              <span className="num shrink-0 text-[1.85rem] font-extrabold leading-none tracking-tight text-burgundy-600 sm:text-[2.1rem]">
                 {formatPrice(payable)}
               </span>
             </div>
-              <p className={`mt-1 text-sm ${freeShipping ? "font-semibold text-forest-500" : "font-medium text-ink-600"}`}>
-                {freeShipping
-                  ? "Nemokamas pristatymas įskaičiuotas"
-                  : `Pristatymas: +${formatPrice(store.shipping.flatRateCents)}. Galutinė suma: ${formatPrice(payable + store.shipping.flatRateCents)}.`}
-              </p>
             <Button
               size="lg"
-              className="mt-3 w-full whitespace-normal text-center text-[15px] leading-snug"
+              className="hero-cta mt-3 min-h-[3.25rem] w-full whitespace-normal text-center text-[15.5px] leading-snug sm:mt-4 sm:min-h-14 sm:text-[16px]"
               onClick={beginCheckout}
             >
-              SAUGIAI TĘSTI ATSISKAITYMĄ →
+              <ShieldCheck className="size-5 shrink-0" strokeWidth={2} />
+              Saugiai tęsti atsiskaitymą →
             </Button>
-            <button
-              type="button"
-              onClick={close}
-              className="mx-auto mt-2.5 flex min-h-11 items-center text-sm font-medium text-ink-600 underline underline-offset-4 hover:text-burgundy-600"
-            >
-              Tęsti apsipirkimą
-            </button>
+            <div className="mt-1 flex items-center justify-between gap-3 sm:mt-2">
+              <p className="flex items-center gap-1.5 text-xs font-medium text-ink-400">
+                <Truck className="size-3.5" /> Pristatymas per 4-6 d.
+              </p>
+              <button
+                type="button"
+                onClick={close}
+                className="flex min-h-11 items-center text-sm font-semibold text-ink-600 underline decoration-gold-500/70 underline-offset-4 transition hover:text-burgundy-600"
+              >
+                Tęsti apsipirkimą
+              </button>
+            </div>
           </div>
         </>
       )}

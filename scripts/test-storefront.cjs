@@ -28,7 +28,7 @@ require.extensions[".ts"] = (module, filename) => module._compile(ts.transpileMo
 global.fetch = async () => { throw new Error("Unmocked network access is forbidden in tests"); };
 after(() => { global.fetch = originalFetch; Module._load = originalLoad; });
 const { canViewProduct, products } = require("../src/lib/data/products.ts");
-const { makeSizeVariants, selectedSizeVariantId, SIZE_SELECTION_REQUIRED } = require("../src/lib/commerce/size-variants.ts");
+const { makeSizeVariants, selectedSizeVariantId, sizeLabel, SIZE_SELECTION_REQUIRED } = require("../src/lib/commerce/size-variants.ts");
 const { buildOrder, parseLines, orderTotalError } = require("../src/lib/cart/server-order.ts");
 const { MAX_ORDER_LINES, normalizeQuantity } = require("../src/lib/cart/limits.ts");
 const { resolveItems, subtotalOf } = require("../src/lib/cart/store.ts");
@@ -114,7 +114,7 @@ test("all variant, quantity, gift and add-on combinations retain identical check
 
 test("new Christmas clothing uses screenshot-confirmed sizes and reviewed retail prices", async () => {
   const roles = { "JK-057": ["woman"], "JK-058": ["child", "woman", "man"], "JK-059": ["woman", "man"], "JK-060": ["child", "woman", "man"] };
-  const prices = { "JK-057": 1799, "JK-058": 1999, "JK-059": 1899, "JK-060": 1999 };
+  const prices = { "JK-057": 1899, "JK-058": 2199, "JK-059": 2399, "JK-060": 2299 };
   const confirmedSizes = {
     "JK-057": [["S (EU 36)", "M (EU 38)", "L (EU 40/42)"]],
     "JK-058": [["3Y", "4Y", "5Y", "6Y", "7Y"], ["S", "M", "L", "XL", "2XL", "3XL"], ["S", "M", "L", "XL", "2XL", "3XL"]],
@@ -129,7 +129,7 @@ test("new Christmas clothing uses screenshot-confirmed sizes and reviewed retail
     assert(product, sku);
     assert.equal(product.inStock, true);
     assert.equal(product.priceCents, prices[sku]);
-    assert(product.priceCents >= 1500 && product.priceCents <= 2000);
+    assert(product.priceCents >= 1899 && product.priceCents <= 2399);
     assert.equal(product.defaultVariantId, SIZE_SELECTION_REQUIRED);
     assert.deepEqual(product.sizeGroups.map(group => group.id), expectedRoles);
     assert.deepEqual(product.sizeGroups.map(group => group.sizes), confirmedSizes[sku]);
@@ -183,7 +183,7 @@ test("each chosen family size survives cart resolution, Stripe line naming and f
     const order = buildOrder(parseLines(lines), {}, false);
     assert.equal(order.subtotal, resolved[0].lineTotalCents);
     assert.equal(orderSnapshot(order).items[0].name, order.lineItems[0].price_data.product_data.name);
-    for (const value of [selected.child, selected.woman, selected.man]) assert(order.lineItems[0].price_data.product_data.name.includes(value));
+    for (const value of [selected.child, selected.woman, selected.man]) assert(order.lineItems[0].price_data.product_data.name.includes(sizeLabel(value)));
     assert.match(buildOrder(parseLines([line(product, 1, SIZE_SELECTION_REQUIRED)]), {}, false).error, /dydžius/);
     const xml = await (await feed.GET()).text();
     assert(xml.includes(`<g:id>${product.sku}</g:id>`));

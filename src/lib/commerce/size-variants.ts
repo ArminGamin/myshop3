@@ -2,6 +2,10 @@ import type { ProductSizeGroup, ProductVariant } from "@/types";
 
 export const SIZE_SELECTION_REQUIRED = "select-sizes";
 
+export function sizeLabel(size: string): string {
+  return size.replace(/^(Kids|Mom|Dad)\s+/, "").replace(/^(\d+(?:-\d+)?)Y$/, (_, age: string) => `${age.replace("-", "–")} m.`);
+}
+
 export function sizeVariantId(sizes: { id: ProductSizeGroup["id"]; size: string }[]): string {
   const roleOrder = { child: 0, woman: 1, man: 2 };
   return `size:${[...sizes]
@@ -27,7 +31,7 @@ export function makeSizeVariants(groups: ProductSizeGroup[]): ProductVariant[] {
     combinations = combinations.flatMap((combination) =>
       group.sizes.map((size) => ({
         sizes: [...combination.sizes, { id: group.id, size }],
-        names: [...combination.names, `${group.label}: ${size}`],
+        names: [...combination.names, `${group.label}: ${sizeLabel(size)}`],
       }))
     );
   }

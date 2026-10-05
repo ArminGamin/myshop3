@@ -54,7 +54,7 @@ export function CartExitPreview() {
   return (
     <div className="relative mt-5 rounded-[12px] border border-cream-300 bg-white p-3 text-left sm:p-4">
       <h3 className="text-sm font-semibold text-ink-900">Jūsų krepšelis</h3>
-      <ul className="mt-3 max-h-44 space-y-3 overflow-y-auto">
+      <ul className="mt-3 space-y-3">
         {items.map((item) => (
           <li key={`${item.slug}-${item.variantId}`} className="flex items-center gap-3">
             <ProductImage images={item.variant.images?.length ? item.variant.images : item.product.images} seed={item.product.artSeed} alt={`${item.product.name} — ${item.variant.name}`} size="thumb" sizes="56px" className="size-14 shrink-0 rounded-lg object-cover" />

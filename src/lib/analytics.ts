@@ -1,4 +1,4 @@
-import posthog from "posthog-js";
+import { loadPosthog, posthogConfigured } from "@/lib/posthog-client";
 
 export type AnalyticsEvent =
   | "view_item"
@@ -53,17 +53,14 @@ function posthogProperties(params: TrackParams) {
   return properties;
 }
 
-const posthogConfigured = Boolean(
-  process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN && process.env.NEXT_PUBLIC_POSTHOG_HOST
-);
-
 export function track(event: AnalyticsEvent, params: TrackParams = {}) {
   if (typeof window === "undefined") return;
   const consent = getConsent();
   const payload = { ...params, currency: params.currency ?? "EUR" };
 
   if (consent?.analytics && posthogConfigured) {
-    posthog.capture(event, posthogProperties(params));
+    const properties = posthogProperties(params);
+    void loadPosthog().then((posthog) => posthog?.capture(event, properties));
   }
 
   // GA4 (analytics sutikimas)

@@ -204,6 +204,7 @@ export function ProductImage({
   if (!src) return <ProductArt seed={seed} size={size} className={className} />;
 
   const meta = IMAGE_META[size];
+  const unoptimized = src.startsWith("/products/") && src.endsWith(".webp");
   if (fill) {
     return (
       <Image
@@ -212,6 +213,7 @@ export function ProductImage({
         fill
         sizes={sizes ?? meta.sizes}
         quality={meta.quality}
+        unoptimized={unoptimized}
         priority={priority}
         className={className}
       />
@@ -225,6 +227,7 @@ export function ProductImage({
       height={meta.height}
       sizes={sizes ?? meta.sizes}
       quality={meta.quality}
+      unoptimized={unoptimized}
       priority={priority}
       className={className}
     />

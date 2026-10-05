@@ -6,6 +6,7 @@ import { getProduct } from "@/lib/data/products";
 import { useCart } from "@/lib/cart/context";
 import { formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 import { ProductImage } from "./product-art";
 
 // „Dažnai perkama kartu" — 2–3 papildančios prekės su bendro rinkinio kaina.
@@ -46,22 +47,22 @@ export function FrequentlyBoughtTogether({ product }: { product: Product }) {
   }
 
   return (
-    <section aria-labelledby="fbt-heading" className="rounded-cozy border border-cream-300 bg-white/60 p-5 sm:p-6">
-      <h2 id="fbt-heading" className="font-display text-xl font-semibold text-ink-900">
-        Dažnai perkama kartu
+    <section aria-labelledby="fbt-heading" className="pdp-fbt">
+      <h2 id="fbt-heading" className="home-h2 font-display text-[1.8rem] font-bold leading-[1.06] text-ink-900 sm:text-[2.2rem]">
+        Dažnai perkama <em>kartu</em>
       </h2>
-      <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-center">
+      <div className="mt-6 flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
           {[product, ...companions].map((p, i) => (
             <div key={p.slug} className="flex min-w-0 items-center gap-2 sm:gap-3">
-              {i > 0 ? <span aria-hidden className="hidden text-xl text-gold-500 sm:inline">+</span> : null}
+              {i > 0 ? <span aria-hidden className="pdp-fbt-plus hidden sm:flex">+</span> : null}
               <label
-                className={`flex w-full cursor-pointer flex-col items-center gap-1.5 rounded-cozy border-2 p-1.5 text-center transition sm:w-36 sm:p-2.5 ${
-                  i === 0 || selected.includes(p.slug)
-                    ? "border-burgundy-600/70 bg-burgundy-100/30"
-                    : "border-cream-300 opacity-60 hover:opacity-100"
-                } ${i === 0 ? "pointer-events-none" : ""}`}
+                className={`pdp-fbt-item ${i === 0 ? "pointer-events-none" : ""}`}
+                data-selected={i === 0 || selected.includes(p.slug) || undefined}
               >
+                <span aria-hidden className="pdp-tier-check">
+                  <Check className="size-3" strokeWidth={3} />
+                </span>
                 <input
                   type="checkbox"
                   checked={i === 0 || selected.includes(p.slug)}
@@ -80,7 +81,7 @@ export function FrequentlyBoughtTogether({ product }: { product: Product }) {
                 <span className="line-clamp-2 text-[11.5px] font-semibold leading-tight text-ink-900">
                   {p.name}
                 </span>
-                <span className="text-[12px] font-bold text-burgundy-600">
+                <span className="num text-[12.5px] font-extrabold text-burgundy-600">
                   {formatPrice(p.priceCents)}
                 </span>
               </label>
@@ -88,19 +89,19 @@ export function FrequentlyBoughtTogether({ product }: { product: Product }) {
           ))}
         </div>
 
-        <div className="lg:ml-auto lg:text-right">
+        <div className="pdp-fbt-total lg:ml-auto lg:text-right">
           <p className="text-[13px] text-ink-600">
             Bendra kaina ({1 + chosen.length} prekės)
           </p>
-          <p className="font-display text-2xl font-bold text-ink-900">
+          <p className="num mt-1 text-[1.8rem] font-extrabold leading-none text-burgundy-600">
             {formatPrice(totalCents)}
           </p>
           {separateCents > totalCents ? (
-            <p className="text-xs text-forest-500">
+            <p className="mt-1 text-xs font-semibold text-forest-500">
               Pirkus atskirai: <s>{formatPrice(separateCents)}</s>
             </p>
           ) : null}
-          <Button onClick={addAll} className="mt-3 w-full lg:w-auto">
+          <Button onClick={addAll} className="hero-cta mt-4 w-full lg:w-auto">
             Pridėti visus į krepšelį
           </Button>
         </div>
