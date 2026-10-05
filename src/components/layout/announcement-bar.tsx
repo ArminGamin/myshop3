@@ -50,6 +50,17 @@ function BannerSparkle() {
   );
 }
 
+// Gale esantis jaustukas turi platų dešinį tarpą, todėl tekstas atrodo pasislinkęs į kairę.
+function AnnouncementText({ text }: { text: string }) {
+  const match = text.match(/^(.*?)\s*(\p{Extended_Pictographic}️?)$/u);
+  if (!match) return <>{text}</>;
+  return (
+    <span>
+      {match[1]} <span className="announce-emoji">{match[2]}</span>
+    </span>
+  );
+}
+
 const campaignOnly = campaign.announcementText
   ? [{ text: campaign.announcementText, sparkle: false }]
   : [];
@@ -114,7 +125,7 @@ export function AnnouncementBar() {
       >
         <span className="inline-flex items-center justify-center gap-2">
           <BannerSparkle />
-          {messages[index]?.text}
+          <AnnouncementText text={messages[index]?.text ?? ""} />
           <BannerSparkle />
         </span>
       </p>
