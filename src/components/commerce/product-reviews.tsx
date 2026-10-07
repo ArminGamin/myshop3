@@ -33,6 +33,7 @@ export function ProductReviews({
               </div>
             </div>
           ) : null}
+          <p className="reviews-note">* Rodoma tik dalis pirkėjų atsiliepimų.</p>
         </aside>
 
         <div>

@@ -45,6 +45,21 @@ const quizEmojis: Record<string, string> = {
   draugui: "🎁",
   kolegai: "💼",
   tevams: "☕",
+  "iki-20": "🪙",
+  "20-30": "💶",
+  "30-50": "💳",
+  "50-plus": "💎",
+  praktiskas: "🧰",
+  romantiskas: "🌹",
+  linksmas: "🎉",
+  minimalistas: "🤍",
+  jaukus: "🕯️",
+  technologiskas: "🎧",
+  kaledos: "🎄",
+  "slaptas-senelis": "🎅",
+  "seimos-svente": "🥂",
+  draugams: "🥳",
+  partneriui: "❤️",
 };
 
 const quizIcons: Record<string, LucideIcon> = {

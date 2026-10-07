@@ -697,7 +697,18 @@ function CheckoutInner({
               ) : null}
               {model.stripeEnabled ? (
                 <div className="space-y-3">
-                  <div className="rounded-[12px] border border-gold-600 bg-white p-3.5 shadow-card">
+                  {/* Mokėjimo forma kraunasi fone, bet rodoma tik užpildžius pristatymo duomenis. */}
+                  {model.step === 1 ? (
+                    <div className="checkout-pay-locked" role="status">
+                      <span className="checkout-pay-locked-icon" aria-hidden>
+                        <Lock className="size-4" strokeWidth={2} />
+                      </span>
+                      <p className="self-center font-semibold text-ink-600">
+                        Mokėjimo būdai atsiras, kai užpildysite kontaktinę informaciją ir pristatymo adresą.
+                      </p>
+                    </div>
+                  ) : null}
+                  <div className={`rounded-[12px] border border-gold-600 bg-white p-3.5 shadow-card${model.step === 1 ? " hidden" : ""}`}>
                     {!paymentLoaded && !paymentLoadError ? (
                       <p role="status" className="py-2 text-sm text-ink-600">Kraunama mokėjimo forma…</p>
                     ) : null}
@@ -718,13 +729,14 @@ function CheckoutInner({
                       />
                     ) : null}
                   </div>
-                  <div className="flex flex-col gap-1 rounded-[12px] border border-gold-600 bg-white p-3 text-sm text-ink-600 sm:flex-row sm:items-center sm:gap-2">
+                  <div className="flex flex-col items-center gap-0.5 rounded-[12px] border border-gold-600 bg-white p-3 text-center text-[13px] text-ink-600 sm:flex-row sm:gap-2 sm:text-left sm:text-sm">
                     <span className="inline-flex items-center gap-1.5 font-semibold text-ink-900">
                       <Lock className="size-3.5 text-forest-500" strokeWidth={2} />
-                      256-bit SSL saugus atsiskaitymas
+                      256-bit SSL saugus atsiskaitymas.
                     </span>
-                    <span>Jūsų mokėjimo informacija yra visiškai saugi</span>
+                    <span>Jūsų mokėjimo informacija yra visiškai saugi.</span>
                   </div>
+                  <CheckoutPayMarks />
                 </div>
               ) : (
                 <p className="rounded-cozy border border-cream-300 bg-cream-100 px-4 py-3 text-sm text-ink-600">
@@ -854,12 +866,12 @@ function OrderSummary({
       <div className="mt-4 space-y-3 text-[15px] font-medium leading-snug text-ink-600">
         <div className="flex items-center justify-between gap-3">
           <span>Tarpinė suma</span>
-          <span className="num">{formatPrice(model.subtotal)}</span>
+          <span className="num font-bold text-ink-900">{formatPrice(model.subtotal)}</span>
         </div>
         {model.mysteryCents ? (
           <div className="flex items-center justify-between gap-3">
             <span>{MYSTERY_GIFT.name}</span>
-            <span className="num">{formatPrice(model.mysteryCents)}</span>
+            <span className="num font-bold text-ink-900">{formatPrice(model.mysteryCents)}</span>
           </div>
         ) : null}
         {model.extras.protection ? (
@@ -879,30 +891,30 @@ function OrderSummary({
                 </span>
               </span>
             </span>
-            <span className="num shrink-0">{formatPrice(model.extras.protection)}</span>
+            <span className="num shrink-0 font-bold text-ink-900">{formatPrice(model.extras.protection)}</span>
           </div>
         ) : null}
         {model.extras.donation ? (
           <div className="flex items-center justify-between gap-3">
             <span>{addonLineLabel("donation")}</span>
-            <span className="num">{formatPrice(model.extras.donation)}</span>
+            <span className="num font-bold text-ink-900">{formatPrice(model.extras.donation)}</span>
           </div>
         ) : null}
         {model.extras.priority ? (
           <div className="flex items-center justify-between gap-3">
             <span>{addonLineLabel("priority")}</span>
-            <span className="num">{formatPrice(model.extras.priority)}</span>
+            <span className="num font-bold text-ink-900">{formatPrice(model.extras.priority)}</span>
           </div>
         ) : null}
         <div className="flex items-center justify-between gap-3">
           <span>Pristatymas</span>
           {model.shippingCents === 0 ? (
             <span className="inline-flex items-baseline gap-2">
-              <s className="num text-ink-400">{formatPrice(store.shipping.flatRateCents)}</s>
-              <span className="font-semibold text-forest-500">Nemokamai</span>
+              <s className="num font-semibold text-ink-400">{formatPrice(store.shipping.flatRateCents)}</s>
+              <span className="font-bold text-forest-500">Nemokamai</span>
             </span>
           ) : (
-            <span className="num">{formatPrice(model.shippingCents)}</span>
+            <span className="num font-bold text-ink-900">{formatPrice(model.shippingCents)}</span>
           )}
         </div>
       </div>

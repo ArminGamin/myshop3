@@ -12,19 +12,19 @@ const MARKS = [
 export function CheckoutPayMarks() {
   return (
     <div className="mt-3 text-center">
-      <ul aria-label="Apmokėjimo būdai" className="flex flex-wrap items-center justify-center gap-1.5">
+      <ul aria-label="Apmokėjimo būdai" className="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5">
         {MARKS.map((mark) => (
           <li key={mark.src}>
             <span
               aria-label={mark.label}
-              className="inline-flex h-7 items-center rounded-md border border-cream-400 bg-white px-2"
+              className="inline-flex h-6 items-center rounded-md border border-cream-400 bg-white px-1.5 sm:h-7 sm:px-2"
             >
               <Image
                 src={mark.src}
                 alt=""
                 width={mark.w}
                 height={16}
-                className="h-4 w-auto max-w-[2.75rem] object-contain object-center"
+                className="h-3.5 w-auto max-w-[2.5rem] object-contain object-center sm:h-4 sm:max-w-[2.75rem]"
                 unoptimized
               />
             </span>

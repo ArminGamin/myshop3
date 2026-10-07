@@ -1,16 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import type { OccasionId, RecipientId, VibeId } from "@/types";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, RotateCcw, Sparkles } from "lucide-react";
+import type { OccasionId, Product, RecipientId, VibeId } from "@/types";
 import { products } from "@/lib/data/products";
 import { track } from "@/lib/analytics";
+import { formatPrice } from "@/lib/format";
 import { ProductImage } from "@/components/commerce/product-art";
 import { QuizGlyph } from "@/components/ui/line-icons";
 
 interface Step {
   id: string;
   q: string;
+  hint: string;
   options: { value: string; label: string }[];
 }
 
@@ -18,6 +21,7 @@ const steps: Step[] = [
   {
     id: "recipient",
     q: "Kam dovana?",
+    hint: "Pasirinkite žmogų, kurį norite nudžiuginti.",
     options: [
       { value: "jai", label: "Jai" },
       { value: "jam", label: "Jam" },
@@ -31,6 +35,7 @@ const steps: Step[] = [
   {
     id: "budget",
     q: "Koks biudžetas?",
+    hint: "Parodysime tik į jį telpančias dovanas.",
     options: [
       { value: "iki-20", label: "Iki 20 €" },
       { value: "20-30", label: "20–30 €" },
@@ -40,7 +45,8 @@ const steps: Step[] = [
   },
   {
     id: "vibe",
-    q: "Koks žmogaus tipas?",
+    q: "Koks tai žmogus?",
+    hint: "Kas geriausiai jį ar ją apibūdina?",
     options: [
       { value: "praktiskas", label: "Praktiškas" },
       { value: "romantiskas", label: "Romantiškas" },
@@ -53,9 +59,10 @@ const steps: Step[] = [
   {
     id: "occasion",
     q: "Kokia proga?",
+    hint: "Paskutinis klausimas – ir dovanos jau laukia.",
     options: [
       { value: "kaledos", label: "Kalėdos" },
-      { value: "slaptas-senelis", label: "Slaptas Kalėdų Senelis" },
+      { value: "slaptas-senelis", label: "Slaptasis Kalėdų Senelis" },
       { value: "seimos-svente", label: "Šeimos šventė" },
       { value: "draugams", label: "Draugams" },
       { value: "partneriui", label: "Partneriui" },
@@ -70,9 +77,12 @@ const budgetRange = {
   "50-plus": [5000, Infinity],
 } as const;
 
-type Answers = Partial<Record<string, string>>;
+const MAX_SCORE = 12.5;
 
-function scoreProducts(a: Answers) {
+type Answers = Partial<Record<string, string>>;
+type Scored = { p: Product; score: number };
+
+function scoreProducts(a: Answers): Scored[] {
   return products
     .filter((p) => p.inStock)
     .filter((p) => {
@@ -97,147 +107,244 @@ function scoreProducts(a: Answers) {
     .slice(0, 6);
 }
 
+function fallbackPicks(): Scored[] {
+  return products
+    .filter((p) => p.inStock && p.bestseller)
+    .slice(0, 6)
+    .map((p) => ({ p, score: 0 }));
+}
+
+const labelOf = (stepId: string, value?: string) =>
+  steps.find((s) => s.id === stepId)?.options.find((o) => o.value === value)?.label;
+
 // Interaktyvus „Rask tinkamą dovaną“ testas — greitas, mobiliai pritaikytas.
-export function GiftFinderQuiz({ compact = false }: { compact?: boolean }) {
+export function GiftFinderQuiz() {
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
-  const router = useRouter();
+  const [picked, setPicked] = useState<string | null>(null);
+  const [direction, setDirection] = useState<"fwd" | "back">("fwd");
+  const advanceRef = useRef<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const done = stepIndex >= steps.length;
-  const results = useMemo(() => (done ? scoreProducts(answers) : []), [done, answers]);
+  const matched = useMemo(() => (done ? scoreProducts(answers) : []), [done, answers]);
+  const results = matched.length ? matched : done ? fallbackPicks() : [];
+
+  useEffect(
+    () => () => {
+      if (advanceRef.current !== null) window.clearTimeout(advanceRef.current);
+    },
+    []
+  );
+
+  function keepInView() {
+    const el = rootRef.current;
+    if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   function pick(stepId: string, value: string) {
-    const next = { ...answers, [stepId]: value };
-    setAnswers(next);
+    if (picked) return;
+    setAnswers((prev) => ({ ...prev, [stepId]: value }));
+    setPicked(value);
     if (stepId === steps[0].id) track("quiz_start");
-    if (stepIndex + 1 > steps.length - 1 || Object.keys(next).length === steps.length) {
-      track("quiz_complete");
-      setStepIndex(steps.length);
-    } else {
-      setStepIndex((i) => i + 1);
-    }
+    // Trumpa pauzė, kad matytųsi pasirinkimas, tada kitas klausimas.
+    advanceRef.current = window.setTimeout(() => {
+      setPicked(null);
+      setDirection("fwd");
+      if (stepIndex + 1 >= steps.length) {
+        track("quiz_complete");
+        setStepIndex(steps.length);
+      } else {
+        setStepIndex(stepIndex + 1);
+      }
+      keepInView();
+    }, 260);
+  }
+
+  function back() {
+    setDirection("back");
+    setStepIndex((i) => Math.max(0, i - 1));
   }
 
   function reset() {
     setAnswers({});
+    setDirection("back");
     setStepIndex(0);
+    keepInView();
   }
 
-  if (done) {
-    const url =
-      `/dovanos/visos-dovanos` +
-      (aToQuery(answers) ? `?${aToQuery(answers)}` : "");
-    void url;
-    return (
-      <div className={compact ? "quiz-step" : "quiz-step rounded-cozy bg-white/60 p-4 sm:p-8"}>
-        <div className="mb-5 flex items-center justify-between">
-          <p className="font-display text-xl font-semibold text-ink-900">
-            Jūsų dovanos
-          </p>
-          <button
-            type="button"
-            onClick={reset}
-            className="text-sm font-semibold text-burgundy-600 underline underline-offset-4"
-          >
-            Pradėti iš naujo
-          </button>
-        </div>
-        {results.length === 0 ? (
-          <p className="text-sm leading-relaxed text-ink-600">
-            Šie kriterijai per griežti — bet turime puikių bestsellerių, kurie tinka beveik
-            visiems:
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
-            {results.map(({ p }) => (
-              <button
-                key={p.slug}
-                type="button"
-                onClick={() => router.push(`/produktai/${p.slug}`)}
-                className="group rounded-cozy border border-cream-300 bg-cream-50 p-3 text-left transition hover:border-gold-400 hover:shadow-card"
-              >
-                <span className="block aspect-square w-full overflow-hidden rounded-lg">
-                  <QuizArt images={p.images} seed={p.artSeed} alt={p.name} />
-                </span>
-                <span className="mt-2 line-clamp-2 block text-[12.5px] font-semibold leading-tight text-ink-900 group-hover:text-burgundy-600">
-                  {p.name}
-                </span>
-                <span className="mt-1 block text-[13px] font-bold text-burgundy-600">
-                  Nuo {(p.priceCents / 100).toFixed(2).replace(".", ",")} €
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  const step = steps[stepIndex];
+  const progress = done ? 1 : Math.max(stepIndex / steps.length, 0.04);
+  const chips = steps
+    .map((s, i) => (done || i < stepIndex ? labelOf(s.id, answers[s.id]) : undefined))
+    .filter((v): v is string => Boolean(v));
 
   return (
-    <div className={compact ? "" : "rounded-cozy bg-white/60 p-4 sm:p-8"}>
-      {/* Progreso juosta */}
-      <div className="mb-5 flex items-center gap-3">
-        <div className="flex flex-1 gap-1.5" aria-hidden>
+    <div ref={rootRef} className="quiz-card relative overflow-hidden rounded-[28px]">
+      <div className="quiz-card-glow" aria-hidden />
+
+      <div className="relative p-5 sm:p-9">
+        <div className="flex min-h-9 items-center justify-between gap-4">
+          <p className="quiz-step-label">
+            {done ? (
+              <>
+                <Sparkles className="size-3.5" strokeWidth={2} aria-hidden />
+                Jūsų rezultatai
+              </>
+            ) : (
+              <>
+                Klausimas <span className="text-ink-900">{stepIndex + 1}</span> iš {steps.length}
+              </>
+            )}
+          </p>
+          {done ? (
+            <button type="button" onClick={reset} className="quiz-back">
+              <RotateCcw className="size-3.5" strokeWidth={2.2} aria-hidden />
+              Iš naujo
+            </button>
+          ) : stepIndex > 0 ? (
+            <button type="button" onClick={back} className="quiz-back">
+              <ArrowLeft className="size-3.5" strokeWidth={2.2} aria-hidden />
+              Atgal
+            </button>
+          ) : null}
+        </div>
+
+        <div className="quiz-progress mt-3" aria-hidden>
+          <span style={{ transform: `scaleX(${progress})` }} />
           {steps.map((s, i) => (
-            <span
+            <i
               key={s.id}
-              className={`h-1.5 flex-1 rounded-full transition-colors ${
-                i <= stepIndex ? "bg-gold-500" : "bg-cream-300"
-              }`}
+              className={done || i < stepIndex ? "is-done" : ""}
+              style={{ left: `${((i + 1) / steps.length) * 100}%` }}
             />
           ))}
         </div>
-        <span className="text-xs font-bold text-ink-400">
-          {stepIndex + 1}/{steps.length}
-        </span>
+
+        {chips.length > 0 ? (
+          <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Jūsų pasirinkimai">
+            {chips.map((chip) => (
+              <li key={chip} className="quiz-chip">
+                {chip}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {done ? (
+          <div className="quiz-enter-fwd mt-6">
+            <h3 className="font-display text-[1.9rem] font-bold leading-[1.08] text-ink-900 sm:text-[2.4rem]">
+              {matched.length ? (
+                <>
+                  Štai jūsų <em>dovanos</em>
+                </>
+              ) : (
+                <>
+                  Pabandykime <em>kitaip</em>
+                </>
+              )}
+            </h3>
+            <p className="mt-2 text-[15px] font-medium text-ink-600">
+              {matched.length
+                ? "Atrinkome pagal jūsų atsakymus – tinkamiausios pirmos."
+                : "Šie kriterijai per griežti, bet šios dovanos tinka beveik visiems:"}
+            </p>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+              {results.map(({ p, score }, i) => {
+                const top = i === 0 && matched.length > 0;
+                return (
+                  <Link
+                    key={p.slug}
+                    href={`/produktai/${p.slug}`}
+                    className={`quiz-result group${top ? " is-top" : ""}`}
+                    style={{ animationDelay: `${i * 70}ms` }}
+                  >
+                    <span className="relative block aspect-square overflow-hidden rounded-[16px]">
+                      <ProductImage
+                        images={p.images}
+                        seed={p.artSeed}
+                        alt={p.name}
+                        size="card"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      />
+                      {top ? <span className="quiz-top-badge">Geriausias atitikimas</span> : null}
+                    </span>
+                    <span className="mt-3 line-clamp-2 block text-[13.5px] font-bold leading-snug text-ink-900">
+                      {p.name}
+                    </span>
+                    <span className="mt-auto flex items-center justify-between gap-2 pt-2">
+                      <span className="text-[14px] font-extrabold text-burgundy-600">{formatPrice(p.priceCents)}</span>
+                      {matched.length ? (
+                        <span className="quiz-match">{Math.min(99, Math.round((score / MAX_SCORE) * 100))}%</span>
+                      ) : null}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/dovanos/visos-dovanos" className="quiz-cta">
+                Visos dovanos
+                <ArrowRight className="size-4" strokeWidth={2} aria-hidden />
+              </Link>
+              <button type="button" onClick={reset} className="quiz-ghost">
+                Pradėti iš naujo
+              </button>
+            </div>
+          </div>
+        ) : (
+          <QuizStep
+            key={steps[stepIndex].id}
+            step={steps[stepIndex]}
+            direction={direction}
+            selected={picked ?? answers[steps[stepIndex].id] ?? null}
+            onPick={pick}
+          />
+        )}
       </div>
-
-      <div key={step.id} className="quiz-step">
-        <h3 className="font-display text-xl font-semibold text-ink-900 sm:text-2xl">{step.q}</h3>
-
-        <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-3 sm:gap-2.5 lg:grid-cols-4">
-          {step.options.map((opt, i) => (
-            <button
-              key={opt.value}
-              type="button"
-              onClick={() => pick(step.id, opt.value)}
-              className={`group flex min-h-16 flex-col items-center justify-center gap-1 rounded-cozy border-2 border-cream-300 bg-cream-50 px-2 py-2.5 transition-[transform,border-color,background-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-gold-400 hover:bg-gold-200/30 active:scale-[0.98] sm:min-h-28 sm:gap-1.5 sm:px-3 sm:py-4${
-                step.options.length % 2 === 1 && i === step.options.length - 1
-                  ? " col-span-2 mx-auto w-1/2 sm:col-span-1 sm:mx-0 sm:w-auto"
-                  : ""
-              }`}
-            >
-              <span className="text-burgundy-600 transition-transform duration-500 group-hover:scale-[1.06]">
-                <QuizGlyph value={opt.value} />
-              </span>
-              <span className="text-center text-[13.5px] font-semibold leading-tight text-ink-900">
-                {opt.label}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {stepIndex > 0 ? (
-        <button
-          type="button"
-          onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
-          className="mt-4 text-sm font-medium text-ink-600 underline underline-offset-4 hover:text-burgundy-600"
-        >
-          ← Atgal
-        </button>
-      ) : null}
     </div>
   );
 }
 
-function QuizArt({ images, seed, alt }: { images: string[]; seed: string; alt: string }) {
-  return <ProductImage images={images} seed={seed} alt={alt} size="card" className="h-full w-full object-cover" />;
-}
+function QuizStep({
+  step,
+  direction,
+  selected,
+  onPick,
+}: {
+  step: Step;
+  direction: "fwd" | "back";
+  selected: string | null;
+  onPick: (stepId: string, value: string) => void;
+}) {
+  const odd = step.options.length % 2 === 1;
+  return (
+    <div className={`mt-6 ${direction === "fwd" ? "quiz-enter-fwd" : "quiz-enter-back"}`}>
+      <h3 className="font-display text-[1.9rem] font-bold leading-[1.08] text-ink-900 sm:text-[2.4rem]">{step.q}</h3>
+      <p className="mt-2 text-[15px] font-medium text-ink-600">{step.hint}</p>
 
-function aToQuery(a: Answers): string {
-  const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(a)) if (v) params.set(k, v);
-  return params.toString();
+      <div role="group" aria-label={step.q} className="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
+        {step.options.map((opt, i) => {
+          const isSelected = selected === opt.value;
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              aria-pressed={isSelected}
+              onClick={() => onPick(step.id, opt.value)}
+              className={`quiz-option group${isSelected ? " is-selected" : ""}${
+                odd && i === step.options.length - 1 ? " col-span-2 sm:col-span-1" : ""
+              }`}
+              style={{ animationDelay: `${60 + i * 45}ms` }}
+            >
+              <span className="quiz-option-medal">
+                <QuizGlyph value={opt.value} />
+              </span>
+              <span className="text-center text-[14px] font-bold leading-tight text-ink-900">{opt.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }

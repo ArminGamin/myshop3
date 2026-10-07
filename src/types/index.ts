@@ -92,7 +92,7 @@ export const VIBE_LABELS: Record<VibeId, string> = {
 
 export const OCCASION_LABELS: Record<OccasionId, string> = {
   kaledos: "Kalėdos",
-  "slaptas-senelis": "Slaptas Kalėdų Senelis",
+  "slaptas-senelis": "Slaptasis Kalėdų Senelis",
   "seimos-svente": "Šeimos šventė",
   draugams: "Draugams",
   partneriui: "Partneriui",

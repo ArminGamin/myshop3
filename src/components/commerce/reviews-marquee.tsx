@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check } from "lucide-react";
 import { STOREFRONT_REVIEWS, REVIEW_SUMMARY, lithuanianReviewWord, type StorefrontReview } from "@/lib/data/reviews";
 import { SectionHeading, Stars } from "@/components/ui/primitives";
 
@@ -67,24 +66,10 @@ export function ReviewsMarquee() {
   );
 }
 
+// Atsiliepimai užsakymo puslapyje: slenka automatiškai, kaip pagrindiniame puslapyje.
 export function CheckoutReviews() {
-  const scroller = useRef<HTMLDivElement>(null);
-  const [index, setIndex] = useState(0);
-  const slice = STOREFRONT_REVIEWS.slice(0, 5);
-
-  useEffect(() => {
-    const el = scroller.current;
-    if (!el) return;
-    function onScroll() {
-      if (!el) return;
-      const card = el.querySelector<HTMLElement>(".snap-start");
-      if (!card) return;
-      const step = card.offsetWidth + 10;
-      setIndex(Math.round(el.scrollLeft / step));
-    }
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, []);
+  const slice = STOREFRONT_REVIEWS.slice(0, 8);
+  const track = [...slice, ...slice];
 
   return (
     <div className="mt-5 border-t border-cream-300 pt-4">
@@ -96,43 +81,14 @@ export function CheckoutReviews() {
           <Check className="size-3" strokeWidth={2.4} /> Tikri
         </span>
       </div>
-      <div className="flex items-center gap-2 lg:gap-3">
-        <button
-          type="button"
-          aria-label="Ankstesnis atsiliepimas"
-          onClick={() => scroller.current?.scrollBy({ left: -280, behavior: "smooth" })}
-          className="hidden size-11 shrink-0 items-center justify-center rounded-full border border-cream-400 bg-cream-50 text-burgundy-700 shadow-card lg:inline-flex"
-        >
-          <ChevronLeft className="size-4" strokeWidth={2} />
-        </button>
-        <div
-          ref={scroller}
-          className="min-w-0 flex-1 snap-x snap-mandatory overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline:0.5rem] [&::-webkit-scrollbar]:hidden"
-        >
-          <div className="flex gap-2.5 px-0.5">
-            {slice.map((review) => (
-              <div key={review.id} className="snap-start">
-                <ReviewCard review={review} compact />
-              </div>
-            ))}
-          </div>
+      <div className="reviews-marquee checkout-reviews-marquee" aria-label="Pirkėjų atsiliepimai">
+        <div className="reviews-marquee-track">
+          {track.map((review, i) => (
+            <div key={`${review.id}-${i}`} aria-hidden={i >= slice.length || undefined}>
+              <ReviewCard review={review} compact />
+            </div>
+          ))}
         </div>
-        <button
-          type="button"
-          aria-label="Kitas atsiliepimas"
-          onClick={() => scroller.current?.scrollBy({ left: 280, behavior: "smooth" })}
-          className="hidden size-11 shrink-0 items-center justify-center rounded-full border border-cream-400 bg-cream-50 text-burgundy-700 shadow-card lg:inline-flex"
-        >
-          <ChevronRight className="size-4" strokeWidth={2} />
-        </button>
-      </div>
-      <div className="mt-2.5 flex justify-center gap-1.5">
-        {slice.map((review, i) => (
-          <span
-            key={review.id}
-            className={`size-1.5 rounded-full ${i === index ? "bg-gold-500" : "bg-cream-400"}`}
-          />
-        ))}
       </div>
     </div>
   );

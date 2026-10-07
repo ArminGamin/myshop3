@@ -38,7 +38,7 @@ export const store = {
   },
   social: {
     instagram: "https://instagram.com/kaledukampelis",
-    facebook: "https://www.facebook.com/people/Kal%C4%97d%C5%B3-Kampelis/61583105739917/",
+    facebook: "https://www.facebook.com/profile.php?id=61594534475550",
     tiktok: "https://tiktok.com/@kaledukampelis",
   },
   search: {

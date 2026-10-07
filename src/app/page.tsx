@@ -161,7 +161,7 @@ export default function HomePage() {
           >
             @{store.brand.handle}
           </a>{" "}
-          Instagrame
+          Instagrame ❤️
         </p>
       </section>
 

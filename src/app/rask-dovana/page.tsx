@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Gift, Sparkles, Timer } from "lucide-react";
 import { GiftFinderQuiz } from "@/components/commerce/gift-finder-quiz";
 
 export const metadata: Metadata = {
@@ -10,22 +11,31 @@ export const metadata: Metadata = {
 
 export default function GiftFinderPage() {
   return (
-    <div className="texture-knit glow-candle">
-      <div className="mx-auto max-w-3xl px-4 py-5 sm:px-6 sm:py-6 lg:py-8">
-        <div className="mb-6 text-center sm:mb-8">
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-gold-600">
+    <div className="quiz-page">
+      <div className="mx-auto max-w-4xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20 sm:pt-10">
+        <div className="mb-7 text-center sm:mb-10">
+          <p className="quiz-eyebrow">
+            <Gift className="size-3.5" strokeWidth={2} aria-hidden />
             Dovanų radiklis
           </p>
-          <h1 className="font-display text-[1.75rem] font-semibold text-ink-900 sm:text-4xl">
-            Rask tinkamą dovaną
+          <h1 className="mt-4 font-display text-[2.5rem] font-bold leading-[1.02] tracking-[-0.01em] text-ink-900 sm:text-[3.6rem]">
+            Rask tinkamą <em>dovaną</em>
           </h1>
-          <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-ink-600">
+          <p className="mx-auto mt-3 max-w-md text-[15.5px] font-medium leading-relaxed text-ink-600 sm:text-[17px]">
             Keturi greiti klausimai ir jau žinote, ką dėti po egle.
           </p>
+          <ul className="quiz-perks mt-5" aria-label="Privalumai">
+            <li>
+              <Timer className="size-3.5" strokeWidth={2} aria-hidden />
+              ~30 sekundžių
+            </li>
+            <li>
+              <Sparkles className="size-3.5" strokeWidth={2} aria-hidden />
+              Asmeninės rekomendacijos
+            </li>
+          </ul>
         </div>
-        <div className="rounded-cozy border border-cream-300 bg-white/70 p-4 shadow-card sm:p-6">
-          <GiftFinderQuiz />
-        </div>
+        <GiftFinderQuiz />
       </div>
     </div>
   );

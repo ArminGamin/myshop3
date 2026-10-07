@@ -6,7 +6,6 @@ import { CookieSettingsButton } from "@/components/layout/cookie-settings-button
 import { SafeDiv } from "@/components/layout/safe-div";
 
 const infoLinks = [
-  { href: "/straipsniai", label: "Dovanų idėjos" },
   { href: "/apie-mus", label: "Apie mus" },
   { href: "/kontaktai", label: "Kontaktai" },
   { href: "/pristatymas", label: "Pristatymas" },
@@ -53,6 +52,11 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/straipsniai" className="footer-link text-cream-100/85 transition hover:text-gold-300">
+                  Dovanų idėjos
+                </Link>
+              </li>
             </ul>
           </nav>
 

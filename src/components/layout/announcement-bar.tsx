@@ -118,7 +118,7 @@ export function AnnouncementBar() {
   return (
     <SafeDiv ref={barRef} className="cta-bar announce relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
       <p
-        className={`min-h-8 w-fit px-4 py-1.5 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:text-[13.5px] sm:tracking-[0.04em] ${
+        className={`min-h-8 w-full px-4 py-1.5 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:text-[13.5px] sm:tracking-[0.04em] ${
           visible ? "opacity-100" : "opacity-0"
         }`}
         aria-live="polite"

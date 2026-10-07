@@ -4080,3 +4080,572 @@ html[data-intro="pending"] .hero-shell *::after {
     align-items: center;
   }
 }
+
+/* ===== Blogas (Dovanų idėjos) ===== */
+.blog-shell {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% -6%, color-mix(in srgb, var(--color-gold-300) 16%, transparent), transparent 70%);
+}
+.blog-shell .font-display em { color: var(--color-burgundy-600); }
+.blog-band .font-display em,
+.blog-aside-cta .font-display em,
+.blog-feature .font-display em { color: var(--color-gold-300); }
+.blog-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-gold-500) 45%, transparent);
+  background: color-mix(in srgb, var(--color-cream-50) 70%, transparent);
+  color: var(--color-burgundy-600);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.blog-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-600);
+}
+.blog-kicker-light { color: var(--color-gold-300); }
+
+.blog-cover { background: var(--color-cream-200); isolation: isolate; }
+.blog-cover-fallback {
+  background:
+    radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--color-gold-300) 38%, transparent), transparent 55%),
+    radial-gradient(circle at 80% 85%, color-mix(in srgb, var(--color-burgundy-500) 55%, transparent), transparent 60%),
+    linear-gradient(135deg, var(--color-forest-600), var(--color-forest-700));
+}
+.blog-cover-fallback::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgb(255 250 240 / 0.5) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+  opacity: 0.35;
+}
+.blog-cover-seal {
+  position: relative;
+  display: flex;
+  width: 4.25rem;
+  height: 4.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--color-gold-200);
+  border: 1px solid color-mix(in srgb, var(--color-gold-300) 55%, transparent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-gold-300) 10%, transparent);
+}
+
+.blog-card {
+  background: var(--color-cream-50);
+  border: 1px solid color-mix(in srgb, var(--color-gold-400) 30%, transparent);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--duration-hover) var(--ease-cinematic), box-shadow var(--duration-hover) var(--ease-cinematic);
+}
+@media (hover: hover) {
+  .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .blog-card:hover .blog-card-arrow { background: var(--color-burgundy-600); color: #fff; transform: rotate(45deg); }
+  .blog-feature:hover .blog-feature-cta { gap: 0.8rem; }
+}
+.blog-card-arrow {
+  display: flex;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--color-burgundy-600);
+  border: 1px solid color-mix(in srgb, var(--color-burgundy-600) 25%, transparent);
+  transition: all var(--duration-hover) var(--ease-cinematic);
+}
+
+.blog-feature {
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, color-mix(in srgb, var(--color-gold-400) 16%, transparent), transparent 70%),
+    linear-gradient(135deg, var(--color-forest-600), var(--color-forest-700));
+  box-shadow: var(--shadow-lift);
+}
+.blog-feature-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  background: var(--color-gold-300);
+  color: var(--color-forest-700);
+  font-size: 14px;
+  font-weight: 800;
+  transition: gap var(--duration-hover) var(--ease-cinematic);
+}
+.blog-empty {
+  background: var(--color-cream-50);
+  border: 1px dashed color-mix(in srgb, var(--color-gold-500) 55%, transparent);
+}
+
+.blog-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-400), transparent);
+}
+
+/* Straipsnio tekstas: patogus skaityti telefone. */
+.blog-prose {
+  color: var(--color-ink-600);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.75;
+}
+.blog-prose > section + section,
+.blog-prose > .blog-lead + section { margin-top: 2.4rem; }
+.blog-prose p + p { margin-top: 1.1rem; }
+.blog-prose h2 {
+  scroll-margin-top: calc(var(--header-stack, 6rem) + 1rem);
+  margin-bottom: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-ink-900);
+}
+.blog-prose h2::before {
+  content: "";
+  display: block;
+  width: 2.25rem;
+  height: 2px;
+  margin-bottom: 0.9rem;
+  border-radius: 2px;
+  background: var(--color-gold-500);
+}
+.blog-lead {
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--color-ink-900);
+}
+@media (min-width: 640px) {
+  .blog-prose { font-size: 18px; }
+  .blog-prose h2 { font-size: 2.05rem; }
+  .blog-lead { font-size: 21px; }
+}
+.blog-link {
+  color: var(--color-burgundy-600);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold-500);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--duration-hover) var(--ease-cinematic);
+}
+.blog-link:hover { text-decoration-color: var(--color-burgundy-600); }
+
+.blog-toc-mobile,
+.blog-faq {
+  border-radius: 18px;
+  background: var(--color-cream-50);
+  border: 1px solid color-mix(in srgb, var(--color-gold-400) 32%, transparent);
+}
+.blog-toc-mobile summary,
+.blog-faq summary {
+  display: flex;
+  min-height: 3.25rem;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.15rem;
+  font-weight: 800;
+  color: var(--color-ink-900);
+}
+.blog-toc-mobile summary::-webkit-details-marker,
+.blog-faq summary::-webkit-details-marker { display: none; }
+.blog-toc-mobile summary svg,
+.blog-faq-icon { color: var(--color-burgundy-600); transition: transform var(--duration-hover) var(--ease-cinematic); }
+.blog-toc-mobile[open] summary svg,
+.blog-faq[open] .blog-faq-icon { transform: rotate(45deg); }
+.blog-toc-mobile ol { padding: 0 1.15rem 0.9rem; }
+.blog-toc-mobile ol,
+.blog-toc ol { counter-reset: toc; }
+.blog-toc-mobile li,
+.blog-toc li { counter-increment: toc; }
+.blog-toc-mobile li a,
+.blog-toc li a {
+  display: flex;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-ink-600);
+}
+.blog-toc-mobile li a::before,
+.blog-toc li a::before {
+  content: counter(toc, decimal-leading-zero);
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-gold-600);
+}
+.blog-faq p {
+  padding: 0 1.15rem 1.1rem;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--color-ink-600);
+}
+
+.blog-toc ol { margin-top: 0.5rem; }
+.blog-toc li a { min-height: 0; padding: 0.45rem 0; font-size: 14px; }
+.blog-toc li a:hover { color: var(--color-burgundy-600); }
+.blog-toc-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-400);
+}
+.blog-aside-cta,
+.blog-band {
+  background:
+    radial-gradient(ellipse 70% 90% at 0% 0%, color-mix(in srgb, var(--color-gold-400) 18%, transparent), transparent 70%),
+    linear-gradient(135deg, var(--color-burgundy-600), var(--color-burgundy-800));
+  box-shadow: var(--shadow-lift);
+}
+.blog-aside-cta { border-radius: 22px; padding: 1.4rem; }
+.blog-aside-cta .blog-aside-btn { margin-top: 1rem; }
+.blog-aside-btn,
+.blog-ghost-btn {
+  display: inline-flex;
+  min-height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1.3rem;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 800;
+  transition: transform var(--duration-hover) var(--ease-cinematic), background-color var(--duration-hover) var(--ease-cinematic);
+}
+.blog-aside-btn { background: var(--color-gold-300); color: var(--color-burgundy-800); }
+.blog-aside-btn:hover { transform: translateY(-1px); background: var(--color-gold-200); }
+.blog-ghost-btn { color: var(--color-cream-50); border: 1px solid rgb(255 250 240 / 0.35); }
+.blog-ghost-btn:hover { background: rgb(255 250 240 / 0.08); }
+
+/* ===== Dovanų radiklis (testas) ===== */
+.quiz-page {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -8%, color-mix(in srgb, var(--color-gold-300) 20%, transparent), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 0% 100%, color-mix(in srgb, var(--color-burgundy-500) 7%, transparent), transparent 70%);
+}
+.quiz-page .font-display em,
+.quiz-card .font-display em { color: var(--color-burgundy-600); }
+.quiz-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-gold-500) 45%, transparent);
+  background: color-mix(in srgb, var(--color-cream-50) 70%, transparent);
+  color: var(--color-burgundy-600);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.quiz-perks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.1rem;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink-400);
+}
+.quiz-perks li { display: inline-flex; align-items: center; gap: 0.35rem; }
+.quiz-perks svg { color: var(--color-gold-600); }
+
+.quiz-card {
+  background: linear-gradient(180deg, #fffdf8, var(--color-cream-50));
+  border: 1px solid color-mix(in srgb, var(--color-gold-400) 40%, transparent);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 30px 60px -34px color-mix(in srgb, var(--color-burgundy-800) 40%, transparent),
+    0 0 0 6px color-mix(in srgb, var(--color-gold-300) 9%, transparent);
+}
+.quiz-card-glow {
+  position: absolute;
+  inset: -40% -20% auto;
+  height: 70%;
+  background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--color-gold-300) 22%, transparent), transparent 65%);
+  pointer-events: none;
+}
+.quiz-step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-400);
+}
+.quiz-step-label svg { color: var(--color-gold-600); }
+.quiz-back {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink-600);
+  border: 1px solid var(--color-cream-300);
+  background: rgb(255 255 255 / 0.6);
+  transition: border-color var(--duration-hover) var(--ease-cinematic), color var(--duration-hover) var(--ease-cinematic);
+}
+.quiz-back:hover { border-color: var(--color-gold-400); color: var(--color-burgundy-600); }
+
+.quiz-progress {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-cream-200);
+}
+.quiz-progress > span {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--color-gold-500), var(--color-gold-300) 85%, #fff8e6);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-gold-400) 55%, transparent);
+  transition: transform 600ms var(--ease-cinematic);
+}
+.quiz-progress > i {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-cream-50);
+  border: 2px solid var(--color-cream-300);
+  transform: translate(-50%, -50%);
+  transition: background-color 400ms var(--ease-cinematic), border-color 400ms var(--ease-cinematic);
+}
+.quiz-progress > i:last-of-type { transform: translate(-100%, -50%); }
+.quiz-progress > i.is-done { background: var(--color-gold-400); border-color: var(--color-gold-500); }
+
+.quiz-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-burgundy-600);
+  background: color-mix(in srgb, var(--color-gold-300) 22%, white);
+  border: 1px solid color-mix(in srgb, var(--color-gold-500) 35%, transparent);
+  animation: quiz-pop 420ms var(--ease-cinematic) both;
+}
+
+.quiz-option {
+  position: relative;
+  display: flex;
+  min-height: 7rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 0.75rem;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fff, var(--color-cream-50));
+  border: 1.5px solid var(--color-cream-300);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-ink-900) 6%, transparent);
+  animation: quiz-rise 520ms var(--ease-cinematic) both;
+  transition:
+    transform var(--duration-hover) var(--ease-cinematic),
+    border-color var(--duration-hover) var(--ease-cinematic),
+    box-shadow var(--duration-hover) var(--ease-cinematic),
+    background-color var(--duration-hover) var(--ease-cinematic);
+  -webkit-tap-highlight-color: transparent;
+}
+.quiz-option:active { transform: scale(0.97); }
+@media (hover: hover) {
+  .quiz-option:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold-400);
+    box-shadow: 0 16px 30px -18px color-mix(in srgb, var(--color-burgundy-700) 45%, transparent);
+  }
+  .quiz-option:hover .quiz-option-medal { transform: scale(1.08) rotate(-4deg); }
+}
+.quiz-option.is-selected {
+  border-color: var(--color-burgundy-600);
+  background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--color-gold-200) 45%, white));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-gold-300) 35%, transparent);
+}
+.quiz-option.is-selected .quiz-option-medal {
+  background: linear-gradient(135deg, var(--color-burgundy-600), var(--color-burgundy-800));
+  border-color: var(--color-gold-400);
+  transform: scale(1.1);
+}
+.quiz-option-medal {
+  display: flex;
+  width: 3.25rem;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--color-cream-100));
+  border: 1px solid color-mix(in srgb, var(--color-gold-400) 45%, transparent);
+  box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--color-gold-600) 60%, transparent);
+  transition: transform 420ms var(--ease-cinematic), background 300ms var(--ease-cinematic);
+}
+@media (min-width: 640px) {
+  .quiz-option { min-height: 8.5rem; }
+  .quiz-option-medal { width: 3.75rem; height: 3.75rem; }
+}
+
+.quiz-enter-fwd { animation: quiz-in-fwd 520ms var(--ease-cinematic) both; }
+.quiz-enter-back { animation: quiz-in-back 520ms var(--ease-cinematic) both; }
+
+.quiz-result {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.6rem 0.85rem;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--color-cream-300);
+  box-shadow: var(--shadow-card);
+  animation: quiz-rise 560ms var(--ease-cinematic) both;
+  transition: transform var(--duration-hover) var(--ease-cinematic), box-shadow var(--duration-hover) var(--ease-cinematic), border-color var(--duration-hover) var(--ease-cinematic);
+}
+@media (hover: hover) {
+  .quiz-result:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--color-gold-400); }
+}
+.quiz-result.is-top {
+  border-color: var(--color-gold-400);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold-300) 30%, transparent), var(--shadow-lift);
+}
+.quiz-top-badge {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-burgundy-600), var(--color-burgundy-800));
+  color: var(--color-gold-200);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 14px -6px rgb(0 0 0 / 0.4);
+}
+.quiz-match {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--color-forest-600);
+  background: var(--color-forest-100);
+}
+.quiz-cta,
+.quiz-ghost {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform var(--duration-hover) var(--ease-cinematic), background-color var(--duration-hover) var(--ease-cinematic);
+}
+.quiz-cta {
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-burgundy-600), var(--color-burgundy-800));
+  box-shadow: 0 12px 26px -14px color-mix(in srgb, var(--color-burgundy-700) 70%, transparent);
+}
+.quiz-cta:hover { transform: translateY(-1px); }
+.quiz-ghost { color: var(--color-ink-600); border: 1px solid var(--color-cream-300); background: #fff; }
+.quiz-ghost:hover { border-color: var(--color-gold-400); }
+
+@keyframes quiz-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes quiz-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes quiz-in-fwd {
+  from { opacity: 0; transform: translateX(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes quiz-in-back {
+  from { opacity: 0; transform: translateX(-22px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quiz-option,
+  .quiz-result,
+  .quiz-chip,
+  .quiz-enter-fwd,
+  .quiz-enter-back { animation: none; }
+}
+
+.reviews-note {
+  margin-top: 1rem;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-ink-400);
+}
+
+/* Mokėjimo blokas, kol neužpildytas adresas. */
+.checkout-pay-locked {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, var(--color-gold-600) 70%, transparent);
+  background: color-mix(in srgb, var(--color-cream-50) 75%, white);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.checkout-pay-locked-icon {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--color-burgundy-600);
+  background: color-mix(in srgb, var(--color-gold-300) 28%, white);
+}
+@media (max-width: 639px) {
+  .checkout-pay-locked {
+    gap: 0.7rem;
+    padding: 0.85rem 0.9rem;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .checkout-pay-locked-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Užsakymo puslapio atsiliepimų juosta. */
+.checkout-reviews-marquee .reviews-marquee-track {
+  gap: 0.625rem;
+  animation-duration: 48s;
+}
