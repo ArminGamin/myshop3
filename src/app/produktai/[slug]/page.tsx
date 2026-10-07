@@ -44,6 +44,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: product.name,
       description: product.tagline,
       type: "website",
+      url: `/produktai/${product.slug}`,
+      ...(product.images[0] ? { images: [{ url: product.images[0], alt: product.name }] } : {}),
+    },
+    twitter: {
+      card: product.images[0] ? "summary_large_image" : "summary",
+      title: product.name,
+      description: product.tagline,
+      ...(product.images[0] ? { images: [product.images[0]] } : {}),
     },
   };
 }
