@@ -690,11 +690,10 @@ function CheckoutInner({
                 <CreditCard className="size-4 text-burgundy-600" strokeWidth={1.8} />
                 <h2 className="font-display text-[1.375rem] font-semibold text-ink-900">Mokėjimo informacija</h2>
               </div>
-              {current === 2 ? (
-                <div className="mb-4 lg:hidden">
-                  <CheckoutShippingUpsells />
-                </div>
-              ) : null}
+              {/* Visada rodomas, kad slenkant turinys nešokinėtų. */}
+              <div className="mb-4 lg:hidden">
+                <CheckoutShippingUpsells />
+              </div>
               {model.stripeEnabled ? (
                 <div className="space-y-3">
                   {/* Mokėjimo forma kraunasi fone, bet rodoma tik užpildžius pristatymo duomenis. */}
