@@ -948,12 +948,35 @@ function OrderSummary({
   if (variant === "mobile") {
     return (
       <details className="group relative overflow-hidden rounded-cozy border border-cream-300 bg-cream-100/80">
-        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 font-semibold text-ink-900 [&::-webkit-details-marker]:hidden">
-          <span>Užsakymo santrauka</span>
-          <span className="inline-flex items-center gap-2 text-burgundy-700">
-            <FadingPrice cents={model.totalCents} className="num text-lg font-extrabold" />
-            <span aria-hidden="true" className="text-ink-400 transition group-open:rotate-180">
-              ▾
+        <summary className="block min-h-12 cursor-pointer list-none px-4 py-3 font-semibold text-ink-900 [&::-webkit-details-marker]:hidden">
+          <span className="flex items-center justify-between gap-3">
+            <span>Užsakymo santrauka</span>
+            <span className="inline-flex items-center gap-2 text-burgundy-700">
+              <FadingPrice cents={model.totalCents} className="num text-lg font-extrabold" />
+              <span aria-hidden="true" className="text-ink-400 transition group-open:rotate-180">
+                ▾
+              </span>
+            </span>
+          </span>
+          {/* Suskleidus matosi, kas krepšelyje. */}
+          <span className="mt-2.5 flex items-center gap-3 group-open:hidden">
+            <span className="flex shrink-0 -space-x-3">
+              {model.items.slice(0, 3).map((item) => (
+                <ProductImage
+                  key={`${item.slug}-${item.variantId}`}
+                  images={item.variant.images?.length ? item.variant.images : item.product.images}
+                  seed={item.product.artSeed}
+                  alt=""
+                  size="thumb"
+                  className="size-11 rounded-[10px] border-2 border-cream-50 object-cover shadow-card"
+                />
+              ))}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[13.5px] font-semibold text-ink-900">
+                {model.items.length === 1 ? model.items[0].product.name : `${itemCount(model.items)} ${itemWord(itemCount(model.items))}`}
+              </span>
+              <span className="block text-[12.5px] font-semibold text-burgundy-600 underline underline-offset-2">Peržiūrėti prekes</span>
             </span>
           </span>
         </summary>
@@ -967,6 +990,18 @@ function OrderSummary({
       {body}
     </aside>
   );
+}
+
+function itemCount(items: { qty: number }[]) {
+  return items.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function itemWord(count: number) {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return "prekė";
+  if (mod10 >= 2 && (mod100 < 10 || mod100 >= 20)) return "prekės";
+  return "prekių";
 }
 
 function PayLabel({ busy, cents }: { busy: boolean; cents: number }) {
