@@ -1,3 +1,4 @@
+import { formatOrderNumber } from "@/lib/orders/order-number";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { BuiltOrder } from "@/lib/cart/server-order";
@@ -48,7 +49,7 @@ export async function renderPurchase(input: {
 }) {
   const items = [...input.order.items, { name: "Pristatymas", quantity: 1, unitAmount: input.order.shippingCents }];
   return render("purchase", {
-    order_number: escapeHtml(input.orderId),
+    order_number: escapeHtml(formatOrderNumber(input.orderId)),
     order_date: escapeHtml(new Intl.DateTimeFormat("lt-LT", { timeZone: "Europe/Vilnius", dateStyle: "long" }).format(new Date(input.paidAt))),
     order_total: escapeHtml(euro(input.order.totalCents)),
     order_items: itemsHtml(items),

@@ -9,6 +9,7 @@ import type { CheckoutOrderView } from "@/lib/checkout/order-view";
 import { formatPrice } from "@/lib/format";
 import { track } from "@/lib/analytics";
 import { cartStore } from "@/lib/cart/store";
+import { formatOrderNumber } from "@/lib/orders/order-number";
 import { ButtonLink } from "@/components/ui/button";
 import { CheckoutSteps } from "./checkout-decor";
 
@@ -35,7 +36,7 @@ export function CheckoutSuccess({
     clearCustomerDraft();
   }, [order]);
 
-  const orderNumber = order ? order.id.slice(-12).toUpperCase() : "";
+  const orderNumber = order ? formatOrderNumber(order.id) : "";
 
   return (
     <div className="success-shell relative overflow-hidden">

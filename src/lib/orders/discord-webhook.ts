@@ -1,3 +1,4 @@
+import { formatOrderNumber } from "@/lib/orders/order-number";
 import type Stripe from "stripe";
 import { addonAmounts, type CartAddonSelection } from "@/lib/cart/addons";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
@@ -17,11 +18,6 @@ type OrderLine = {
 
 function formatEuro(cents: number): string {
   return `€${(cents / 100).toFixed(2)}`;
-}
-
-function makeOrderNumber(stripeId: string): string {
-  const suffix = stripeId.replace(/\D/g, "").slice(-3) || String(Math.floor(Math.random() * 900) + 100);
-  return `ORD-${Date.now()}-${suffix}`;
 }
 
 function parseCart(raw: string | undefined): CartLine[] {
@@ -120,7 +116,7 @@ function buildDiscordEmbed(input: {
 }) {
   const meta = input.metadata;
   const lines = savedOrderLines(meta);
-  const orderNumber = makeOrderNumber(input.orderId);
+  const orderNumber = formatOrderNumber(input.orderId);
 
   const name = meta.name || input.customerName?.split(" ")[0] || "—";
   const surname = meta.surname || input.customerName?.split(" ").slice(1).join(" ") || "—";

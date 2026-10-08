@@ -7,6 +7,7 @@ import { flags, store } from "@/lib/config/store.config";
 import { bestsellers } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 import { track } from "@/lib/analytics";
+import { formatOrderNumber } from "@/lib/orders/order-number";
 import { ButtonLink } from "@/components/ui/button";
 import { ProductImage } from "@/components/commerce/product-art";
 
@@ -93,7 +94,7 @@ export default function ThankYouPage() {
               <div className="flex justify-between">
                 <dt className="text-ink-400">Užsakymo numeris</dt>
                 <dd className="font-mono text-[13px] font-semibold text-ink-900">
-                  {order.id.slice(-12).toUpperCase()}
+                  {formatOrderNumber(order.id)}
                 </dd>
               </div>
               <div className="flex justify-between">

@@ -246,7 +246,7 @@ test("captured cart reminders, signed successful order webhook and confirmation 
     assert.equal(started.length, 2);
     await workflows.purchaseConfirmationWorkflow(payment.id);
     assert.equal(sent.length, 5);
-    assert.ok(sent[4].body.html.includes("pi_local_success"));
+    assert.ok(sent[4].body.html.includes("pi_local_success".slice(-12).toUpperCase()));
     assert.ok(sent[4].body.html.includes(templates.euro(order.totalCents)));
     await workflows.purchaseConfirmationWorkflow(payment.id);
     await workflows.cartReminderWorkflow(savedCart);
