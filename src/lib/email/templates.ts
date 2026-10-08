@@ -10,6 +10,7 @@ const FILES = {
   24: "02_po_24_valandu.html",
   48: "03_po_48_valandu.html",
   72: "04_po_72_valandu_paskutinis.html",
+  welcome: "kaledu_kampelis_newsletter_welcome.html",
 } as const;
 
 export function escapeHtml(value: string): string {
@@ -66,6 +67,16 @@ export async function renderReminder(hour: ReminderHour, order: OrderEmailSnapsh
   });
   return html.replace(/mailto:kaleddovanos@gmail\.com\?subject=Atsisakau%20naujienlaiskio/g, escapeHtml(unsubscribeUrl))
     .replace(/Atsisakyti naujienlaiškio/g, "Atsisakyti krepšelio priminimų");
+}
+
+export const NEWSLETTER_UNSUBSCRIBE = "mailto:kaleddovanos@gmail.com?subject=Atsisakau%20naujienlaiskio";
+
+export async function renderNewsletterWelcome(siteUrl: string) {
+  const base = siteUrl.replace(/\/$/, "");
+  return render("welcome", {
+    shop_url: escapeHtml(`${base}/dovanos/visos-dovanos`),
+    quiz_url: escapeHtml(`${base}/rask-dovana`),
+  });
 }
 
 export function snapshotMetadata(snapshot: OrderEmailSnapshot): Record<string, string> {

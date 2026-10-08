@@ -15,7 +15,15 @@ export async function sendEmail(input: { to: string; subject: string; html: stri
     body: JSON.stringify({
       from, to: [input.to], subject: input.subject, html: input.html,
       reply_to: "kaleddovanos@gmail.com",
-      ...(input.unsubscribeUrl ? { headers: { "List-Unsubscribe": `<${input.unsubscribeUrl}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } } : {}),
+      // Vieno paspaudimo atsisakymas galimas tik su https nuoroda; mailto – be jo.
+      ...(input.unsubscribeUrl
+        ? {
+            headers: {
+              "List-Unsubscribe": `<${input.unsubscribeUrl}>`,
+              ...(input.unsubscribeUrl.startsWith("https:") ? { "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : {}),
+            },
+          }
+        : {}),
     }),
   });
   if (response.status === 409) {

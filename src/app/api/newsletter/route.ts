@@ -2,6 +2,26 @@ import { NextResponse } from "next/server";
 import { notifyDiscordNewsletter } from "@/lib/newsletter/discord-webhook";
 import { denyPost } from "@/lib/security/guard";
 import { isAllowedEmail, normalizeEmail } from "@/lib/security/email";
+import { sendEmail } from "@/lib/email/resend";
+import { NEWSLETTER_UNSUBSCRIBE, renderNewsletterWelcome } from "@/lib/email/templates";
+import { store } from "@/lib/config/store.config";
+
+// Pasisveikinimo laiškas naujam prenumeratoriui. Klaida nesugadina prenumeratos.
+async function sendWelcome(email: string) {
+  if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM) return;
+  try {
+    const html = await renderNewsletterWelcome(store.brand.url);
+    await sendEmail({
+      to: email,
+      subject: "🎄 Sveiki atvykę į Kalėdų Kampelį!",
+      html,
+      idempotencyKey: `newsletter-welcome/${email}`,
+      unsubscribeUrl: NEWSLETTER_UNSUBSCRIBE,
+    });
+  } catch (e) {
+    console.error("Naujienlaiškio pasisveikinimo laiško klaida:", e);
+  }
+}
 
 export const runtime = "nodejs";
 
@@ -62,6 +82,7 @@ export async function POST(req: Request) {
       });
       if (!response.ok) return NextResponse.json({ ok: false, error: "provider" }, { status: 502 });
       await notifyDiscordNewsletter({ email, source: typeof body.source === "string" ? body.source : "unknown" });
+      await sendWelcome(email);
       return NextResponse.json({ ok: true, mode: "klaviyo" });
     } catch (e) {
       console.error("Klaviyo klaida:", e);
@@ -70,6 +91,7 @@ export async function POST(req: Request) {
   }
 
   const captured = await notifyDiscordNewsletter({ email, source: typeof body.source === "string" ? body.source : "unknown" });
+  if (captured) await sendWelcome(email);
   return captured
     ? NextResponse.json({ ok: true, mode: "captured" })
     : NextResponse.json({ ok: false, error: "unavailable" }, { status: 503 });
