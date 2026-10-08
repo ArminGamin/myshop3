@@ -14,10 +14,10 @@ import { PREPURCHASE_WEBHOOKS, type PrepurchaseKind } from "@/lib/email/prepurch
 import { prepurchaseNotificationWorkflow } from "@/workflows/prepurchase-notification";
 
 const SUBJECTS = {
-  1: "Tavo dovanos laukia krepšelyje 🎁",
-  24: "Dar gali pasirūpinti savo kalėdinėmis dovanomis",
-  48: "Tavo Kalėdų Kampelio krepšelis vis dar laukia",
-  72: "Paskutinis priminimas apie tavo dovanų krepšelį",
+  1: "⏰ Tavo dovanos vis dar laukia tavęs krepšelyje!",
+  24: "⏰ Dar gali pasirūpinti savo kalėdinėmis dovanomis!",
+  48: "⏰ Tavo Kalėdų Kampelio krepšelis vis dar laukia!",
+  72: "⏰ Paskutinis priminimas apie tavo dovanų krepšelį!",
 };
 
 export async function cartReminderWorkflow(cart: CartEmailInput) {
@@ -116,7 +116,7 @@ async function sendPurchaseConfirmation(orderId: string) {
   const name = intent?.shipping?.name ?? session?.customer_details?.name;
   const address = shipping ? [name, shipping.line1, shipping.line2, [shipping.postal_code, shipping.city].filter(Boolean).join(" "), shipping.country].filter(Boolean).join("\n") : metadata.address || "Pristatymo adresas nurodytas užsakyme";
   const html = await renderPurchase({ orderId, paidAt: (intent?.created ?? session!.created) * 1000, order, address });
-  const emailId = await sendEmail({ to: email, subject: `Užsakymas patvirtintas · ${store.brand.name}`, html, idempotencyKey: `purchase/${orderId}` });
+  const emailId = await sendEmail({ to: email, subject: `🎁 Užsakymas patvirtintas! · ${store.brand.name}`, html, idempotencyKey: `purchase/${orderId}` });
   const update: Stripe.MetadataParam = { email_confirmation_sent: emailId };
   if (intent) await stripe.paymentIntents.update(orderId, { metadata: update });
   else await stripe.checkout.sessions.update(orderId, { metadata: update });
