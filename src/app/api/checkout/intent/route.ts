@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       amount: order.totalCents,
       currency: "eur",
       description: `${store.brand.name} užsakymas`,
-      receipt_email: customer.email,
+      // Be receipt_email Stripe nesiunčia savo kvito – klientas gauna tik mūsų patvirtinimo laišką.
       automatic_payment_methods: { enabled: true, allow_redirects: "never" },
       shipping: {
         name: `${customer.name} ${customer.surname}`,

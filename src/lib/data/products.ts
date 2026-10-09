@@ -2238,7 +2238,7 @@ export const products: Product[] = [
 ];
 
 // Testinė prekė už 1 €: nerodoma kataloge, paieškoje ar sitemap,
-// pasiekiama tik tiesiogine nuoroda /produktai/testine-preke. Prieš paleidimą ištrinti.
+// pasiekiama tik tiesiogine nuoroda /produktai/testine-preke. Paliekama mokėjimų testams.
 export const TEST_PRODUCT: Product = {
   slug: "testine-preke",
   sku: "JK-TEST",
