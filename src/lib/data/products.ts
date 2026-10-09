@@ -2237,8 +2237,36 @@ export const products: Product[] = [
   },
 ];
 
+// Testinė prekė už 1 €: nerodoma kataloge, paieškoje ar sitemap,
+// pasiekiama tik tiesiogine nuoroda /produktai/testine-preke. Prieš paleidimą ištrinti.
+export const TEST_PRODUCT: Product = {
+  slug: "testine-preke",
+  sku: "JK-TEST",
+  name: "Testinė prekė",
+  tagline: "Mokėjimų testavimui – nesiųsti.",
+  description: ["Ši prekė skirta tik mokėjimo ir užsakymo laiškų testavimui."],
+  benefits: ["Tik testavimui"],
+  specs: [{ label: "Paskirtis", value: "Testas" }],
+  priceCents: 100,
+  compareAtPriceCents: null,
+  variants: [{ id: "vienetas", name: "Standartinis rinkinys" }],
+  defaultVariantId: "vienetas",
+  images: [],
+  artSeed: "testas",
+  bestseller: false,
+  isNew: false,
+  premium: false,
+  recipients: [],
+  vibes: [],
+  occasions: [],
+  pairsWith: [],
+  inStock: true,
+  rating: null,
+  reviewCount: null,
+};
+
 export function getProduct(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
+  return products.find((p) => p.slug === slug) ?? (slug === TEST_PRODUCT.slug ? TEST_PRODUCT : undefined);
 }
 
 export function canViewProduct(product: Product | undefined): product is Product {

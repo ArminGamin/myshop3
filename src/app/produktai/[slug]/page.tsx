@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, Heart, Package, ShieldCheck, Truck } from "lucide-react";
-import { products, canViewProduct, getProduct } from "@/lib/data/products";
+import { products, canViewProduct, getProduct, TEST_PRODUCT } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
 import { discountPercent, formatPrice } from "@/lib/format";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
@@ -27,7 +27,7 @@ interface Props {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return [...products, TEST_PRODUCT].map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: draftPreview ? `${product.name} — peržiūros juodraštis` : `${product.name} — ${formatPrice(product.priceCents)}`,
     description: draftPreview ? product.tagline : `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €. Pristatome per 4–6 dienas.`,
-    robots: draftPreview ? { index: false, follow: false } : undefined,
+    robots: draftPreview || product.slug === TEST_PRODUCT.slug ? { index: false, follow: false } : undefined,
     alternates: { canonical: `/produktai/${product.slug}` },
     openGraph: {
       title: product.name,
