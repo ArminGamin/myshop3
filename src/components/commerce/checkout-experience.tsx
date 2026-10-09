@@ -690,21 +690,23 @@ function CheckoutInner({
                 <CreditCard className="size-4 text-burgundy-600" strokeWidth={1.8} />
                 <h2 className="font-display text-[1.375rem] font-semibold text-ink-900">Mokėjimo informacija</h2>
               </div>
-              {/* Visada rodomas, kad slenkant turinys nešokinėtų. */}
-              <div className="mb-4 lg:hidden">
-                <CheckoutShippingUpsells />
-              </div>
               {model.stripeEnabled ? (
                 <div className="space-y-3">
                   {/* Mokėjimo forma kraunasi fone, bet rodoma tik užpildžius pristatymo duomenis. */}
                   {model.step === 1 ? (
                     <div className="checkout-pay-locked" role="status">
                       <span className="checkout-pay-locked-icon" aria-hidden>
-                        <Lock className="size-4" strokeWidth={2} />
+                        <Lock className="size-[18px]" strokeWidth={2.2} />
                       </span>
-                      <p className="self-center font-semibold text-ink-600">
-                        Mokėjimo būdai atsiras, kai užpildysite kontaktinę informaciją ir pristatymo adresą.
-                      </p>
+                      <div className="min-w-0">
+                        <p className="checkout-pay-locked-tag">Svarbu</p>
+                        <p className="checkout-pay-locked-text">
+                          Mokėjimo būdai atsiras, kai užpildysite kontaktinę informaciją ir pristatymo adresą.
+                        </p>
+                        <button type="button" onClick={() => goTo(1)} className="checkout-pay-locked-link">
+                          Užpildyti duomenis ↑
+                        </button>
+                      </div>
                     </div>
                   ) : null}
                   <div className={`rounded-[12px] border border-gold-600 bg-white p-3.5 shadow-card${model.step === 1 ? " hidden" : ""}`}>
@@ -742,6 +744,10 @@ function CheckoutInner({
                   Mokėjimas dar nesukonfigūruotas.
                 </p>
               )}
+              {/* Telefone pasiūlymas po mokėjimo bloku, kad netrukdytų užpildyti duomenų. */}
+              <div className="mt-6 lg:hidden">
+                <CheckoutShippingUpsells />
+              </div>
             </section>
 
             <div className="lg:hidden">
