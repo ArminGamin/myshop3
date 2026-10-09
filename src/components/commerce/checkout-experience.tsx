@@ -39,6 +39,7 @@ import type { CartAddonSelection } from "@/lib/cart/addons";
 import { CHECKOUT_BEGIN_KEY, CHECKOUT_ENTRY_KEY, CHECKOUT_PAYINFO_KEY } from "@/lib/checkout/analytics-keys";
 import { formatMmSs, useCheckoutReserve } from "@/lib/checkout/reserve";
 import { christmasDeliveryPromise } from "@/lib/config/deadline";
+import { isTestOnlyCart } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
 import { formatPrice } from "@/lib/format";
 import { track } from "@/lib/analytics";
@@ -211,7 +212,9 @@ export function CheckoutExperience() {
   const mysteryCents = mystery ? MYSTERY_GIFT.priceCents : 0;
   const extras = addonAmounts(subtotal + mysteryCents, addons);
   const shippingCents =
-    mystery || subtotal >= store.shipping.freeThresholdCents ? 0 : store.shipping.flatRateCents;
+    mystery || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(items.map((i) => i.slug))
+      ? 0
+      : store.shipping.flatRateCents;
   const totalCents = subtotal + mysteryCents + extras.total + shippingCents;
   const stripeEnabled = Boolean(STRIPE_PK);
   const formValid = Object.keys(validateCustomer(form).errors).length === 0;

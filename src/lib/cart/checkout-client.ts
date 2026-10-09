@@ -8,6 +8,7 @@ import { addonAmounts, readCartAddons } from "./addons";
 import { MYSTERY_GIFT, readMysteryGift } from "./mystery-gift";
 import { resolveItems, subtotalOf } from "./context";
 import { store } from "@/lib/config/store.config";
+import { isTestOnlyCart } from "@/lib/data/products";
 
 export async function startCheckout(
   lines: CartLine[],
@@ -18,7 +19,10 @@ export async function startCheckout(
     const mysteryGift = readMysteryGift();
     const subtotal = subtotalOf(resolveItems(lines));
     const mysteryCents = mysteryGift ? MYSTERY_GIFT.priceCents : 0;
-    const shipping = mysteryGift || subtotal >= store.shipping.freeThresholdCents ? 0 : store.shipping.flatRateCents;
+    const shipping =
+      mysteryGift || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(lines.map((l) => l.slug))
+        ? 0
+        : store.shipping.flatRateCents;
     const expectedTotalCents = subtotal + mysteryCents + addonAmounts(subtotal + mysteryCents, addons).total + shipping;
     const res = await fetch("/api/checkout", {
       method: "POST",

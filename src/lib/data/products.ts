@@ -2265,6 +2265,11 @@ export const TEST_PRODUCT: Product = {
   reviewCount: null,
 };
 
+// Krepšelis tik su testine preke – be pristatymo mokesčio, kad testas kainuotų 1 €.
+export function isTestOnlyCart(slugs: string[]): boolean {
+  return slugs.length > 0 && slugs.every((slug) => slug === TEST_PRODUCT.slug);
+}
+
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug) ?? (slug === TEST_PRODUCT.slug ? TEST_PRODUCT : undefined);
 }

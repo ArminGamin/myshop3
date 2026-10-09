@@ -1,5 +1,5 @@
 import type Stripe from "stripe";
-import { getProduct } from "@/lib/data/products";
+import { getProduct, isTestOnlyCart } from "@/lib/data/products";
 import { bundleUnitPriceCents } from "@/lib/commerce/pricing";
 import { store } from "@/lib/config/store.config";
 import { addonAmounts, parseCheckoutAddons, type CartAddonSelection } from "@/lib/cart/addons";
@@ -116,7 +116,9 @@ export function buildOrder(
   }
 
   const shippingCents =
-    mysteryGift || subtotal >= store.shipping.freeThresholdCents ? 0 : store.shipping.flatRateCents;
+    mysteryGift || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(rawLines.map((l) => l.slug))
+      ? 0
+      : store.shipping.flatRateCents;
   const totalCents = subtotal + mysteryCents + extras.total + shippingCents;
 
   return {

@@ -80,7 +80,6 @@ export function AnnouncementBar() {
   const barRef = useRef<HTMLDivElement>(null);
   const messages = useSyncExternalStore(emptySubscribe, readMessages, () => campaignOnly);
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
 
   useLayoutEffect(() => {
     const el = barRef.current;
@@ -99,36 +98,34 @@ export function AnnouncementBar() {
 
   useEffect(() => {
     if (messages.length < 2) return;
-    let fadeId = 0;
     const id = window.setInterval(() => {
-      setVisible(false);
-      fadeId = window.setTimeout(() => {
-        setIndex((current) => (current + 1) % messages.length);
-        setVisible(true);
-      }, 280);
+      setIndex((current) => (current + 1) % messages.length);
     }, ROTATE_MS);
-    return () => {
-      window.clearInterval(id);
-      window.clearTimeout(fadeId);
-    };
+    return () => window.clearInterval(id);
   }, [messages.length]);
 
   if (messages.length === 0) return null;
 
+  // Visi pranešimai sukrauti vienoje vietoje ir keičiamas tik jų matomumas:
+  // tekstas DOM'e nesikeičia, todėl iOS Safari nepalieka senų raidžių likučių.
   return (
     <SafeDiv ref={barRef} className="cta-bar announce relative z-[60] flex justify-center pt-[env(safe-area-inset-top)]">
-      <p
-        className={`min-h-8 w-full px-4 py-1.5 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:min-h-10 sm:py-2 sm:text-[13.5px] sm:tracking-[0.04em] ${
-          visible ? "opacity-100" : "opacity-0"
-        }`}
-        aria-live="polite"
-      >
-        <span className="inline-flex items-center justify-center gap-2">
-          <BannerSparkle />
-          <AnnouncementText text={messages[index]?.text ?? ""} />
-          <BannerSparkle />
-        </span>
-      </p>
+      <div className="announce-stack min-h-8 w-full px-4 py-1.5 text-center text-[12px] font-semibold leading-snug tracking-[0.02em] sm:min-h-10 sm:py-2 sm:text-[13.5px] sm:tracking-[0.04em]">
+        {messages.map((message, i) => (
+          <p
+            key={message.text}
+            className={`announce-msg ${i === index ? "is-active" : ""}`}
+            aria-hidden={i !== index}
+            aria-live={i === index ? "polite" : undefined}
+          >
+            <span className="inline-flex items-center justify-center gap-2">
+              <BannerSparkle />
+              <AnnouncementText text={message.text} />
+              <BannerSparkle />
+            </span>
+          </p>
+        ))}
+      </div>
       <Link
         href="/pristatymas"
         aria-label="Daugiau apie pristatymą"
