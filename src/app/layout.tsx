@@ -43,7 +43,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(store.brand.url),
   title: {
-    default: `${store.brand.name} | Kalėdinės dovanos internetu | Pristatymas visoje Lietuvoje`,
+    default: `Kalėdinės dovanos internetu | ${store.brand.name}`,
     template: `%s | ${store.brand.name}`,
   },
   description:

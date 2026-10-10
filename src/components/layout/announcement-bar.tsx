@@ -131,7 +131,9 @@ export function AnnouncementBar() {
         aria-label="Daugiau apie pristatymą"
         className="absolute inset-0"
         tabIndex={-1}
-      />
+      >
+        <span className="sr-only">Daugiau apie pristatymą</span>
+      </Link>
     </SafeDiv>
   );
 }

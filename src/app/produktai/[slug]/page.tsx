@@ -19,6 +19,8 @@ import { ProductTitle } from "@/components/commerce/product-title";
 import { ProductReviews } from "@/components/commerce/product-reviews";
 import { getProductReviews } from "@/lib/data/product-reviews";
 import { Badge } from "@/components/ui/primitives";
+import { ArticleCard } from "@/components/blog/article-card";
+import { getArticles, linkedProductSlugs } from "@/lib/articles";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -35,8 +37,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = getProduct(slug);
   if (!canViewProduct(product)) notFound();
   const draftPreview = !product.inStock;
+  // Ilgiems pavadinimams kaina nerodoma, kad pavadinimas tilptų paieškos rezultatuose (~70 simbolių).
+  const priced = `${product.name} — ${formatPrice(product.priceCents)}`;
   return {
-    title: draftPreview ? `${product.name} — peržiūros juodraštis` : `${product.name} — ${formatPrice(product.priceCents)}`,
+    title: draftPreview ? `${product.name} — peržiūros juodraštis` : priced.length + store.brand.name.length + 3 > 70 ? product.name : priced,
     description: draftPreview ? product.tagline : `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €. Pristatome per 4–6 dienas.`,
     robots: draftPreview || product.slug === TEST_PRODUCT.slug ? { index: false, follow: false } : undefined,
     alternates: { canonical: `/produktai/${product.slug}` },
@@ -76,6 +80,10 @@ export default async function ProductPage({ params }: Props) {
     .map((s) => getProduct(s))
     .filter((p) => p && p.inStock)
     .slice(0, 4);
+  // Straipsniai, kuriuose rekomenduojama ši prekė: nuoroda atgal padeda abiem puslapiams paieškoje.
+  const articles = getArticles()
+    .filter((post) => linkedProductSlugs(post).includes(product.slug))
+    .slice(0, 3);
 
   return (
     <div data-product-page="" className="pdp mx-auto max-w-7xl px-4 pb-mobile-sticky pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pb-16 lg:pt-8">
@@ -212,6 +220,20 @@ export default async function ProductPage({ params }: Props) {
           <div className="grid grid-cols-2 items-start gap-x-3 gap-y-6 md:grid-cols-4 md:gap-x-4 md:gap-y-8 lg:gap-x-6">
             {related.map((p) => (
               <ProductCard key={p!.slug} product={p!} />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Straipsniai apie šią prekę */}
+      {articles.length > 0 ? (
+        <section className="mt-16" aria-labelledby="articles-heading">
+          <h2 id="articles-heading" className="home-h2 mb-7 font-display text-[2rem] font-bold leading-[1.06] text-ink-900 sm:text-[2.5rem]">
+            Patarimai <em>ir idėjos</em>
+          </h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {articles.map((post) => (
+              <ArticleCard key={post.slug} post={post} />
             ))}
           </div>
         </section>

@@ -119,6 +119,7 @@ function SocialLink({ href, label, icon }: { href: string; label: string; icon: 
       className="flex size-11 items-center justify-center rounded-[10px] border border-cream-100/20 text-cream-100/80 transition hover:border-gold-300 hover:text-gold-300"
     >
       {icon}
+      <span className="sr-only">{label}</span>
     </a>
   );
 }

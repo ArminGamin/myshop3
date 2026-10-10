@@ -23,7 +23,7 @@ export const collections: CollectionMeta[] = [
     title: "Visos dovanos",
     shortTitle: "Visos dovanos",
     emoji: "gift",
-    seoTitle: "Kalėdinės dovanos internetu — pristatymas visoje Lietuvoje | Kalėdų Kampelis",
+    seoTitle: "Visos kalėdinės dovanos — pristatymas Lietuvoje",
     description:
       "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €.",
     intro:
@@ -35,7 +35,7 @@ export const collections: CollectionMeta[] = [
     title: "Bestselleriai",
     shortTitle: "Bestselleriai",
     emoji: "star",
-    seoTitle: "Kalėdų bestselleriai — populiariausios dovanos 2026 | Kalėdų Kampelis",
+    seoTitle: "Kalėdų bestselleriai — populiariausios dovanos 2026",
     description:
       "Populiariausios kalėdinės dovanos, kurias perka dažniausiai. Patikrintos dešimčių pirkėjų — ideali pradžia ieškant dovanos.",
     intro:
@@ -47,7 +47,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos jai",
     shortTitle: "Jai",
     emoji: "heart",
-    seoTitle: "Kalėdinės dovanos jai — moteriai, mamai, draugei | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos jai — moteriai, mamai, draugei",
     description:
       "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 4–6 dienas, nemokamai nuo 80 €.",
     intro:
@@ -59,7 +59,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos jam",
     shortTitle: "Jam",
     emoji: "user",
-    seoTitle: "Kalėdinės dovanos jam — vyrui, tėčiui, draugui | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos jam — vyrui, tėčiui, draugui",
     description:
       "Praktiškos ir stilingos kalėdinės dovanos vyrui: termosai, viskio rinkiniai, pledai, įkroviklis „Natūrali elegancija“. Greitas pristatymas visoje Lietuvoje.",
     intro:
@@ -71,7 +71,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos šeimai",
     shortTitle: "Šeimai",
     emoji: "users",
-    seoTitle: "Kalėdinės dovanos šeimai — bendram laikui | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos šeimai — bendram laikui",
     description:
       "Dovanos, kurios suartina: žaidimų vakarai, „Šventės paslaptis“ vaikams, eglutės detalės. Pristatymas iki Kalėdų garantuotas.",
     intro:
@@ -83,7 +83,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos poroms",
     shortTitle: "Poroms",
     emoji: "hearts",
-    seoTitle: "Kalėdinės dovanos porai — romantiškos ir jaukios | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos porai — romantiškos ir jaukios",
     description:
       "Dovanos porai Kalėdoms: užpildomos akimirkų knygos, jaukumo rinkiniai, vakaro komplektai. Nemokamas pristatymas nuo 80 €.",
     intro:
@@ -95,7 +95,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos iki 20 €",
     shortTitle: "Iki 20 €",
     emoji: "coins",
-    seoTitle: "Kalėdinės dovanos iki 20 € — Slaptam Kalėdų Seneliui | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos iki 20 € — Slaptam Seneliui",
     description:
       "Stilingos kalėdinės dovanos iki 20 eurų: plakiklis „Kreminės putos“, baterija „Visada su savimi“, gua sha. Kokybė be didelio biudžeto.",
     intro:
@@ -107,7 +107,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos iki 30 €",
     shortTitle: "Iki 30 €",
     emoji: "coins",
-    seoTitle: "Kalėdinės dovanos iki 30 € — populiariausias biudžetas | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos iki 30 € — populiariausios",
     description:
       "Kalėdinės dovanos iki 30 eurų — auksinis biudžetas: žvakės, masažuoklis „Akimirka sau“, ausinės „Kasdienė muzika“ ir dar daugiau.",
     intro:
@@ -119,7 +119,7 @@ export const collections: CollectionMeta[] = [
     title: "Dovanos iki 50 €",
     shortTitle: "Iki 50 €",
     emoji: "coins",
-    seoTitle: "Kalėdinės dovanos iki 50 € — įspūdingos ir praktiškos | Kalėdų Kampelis",
+    seoTitle: "Kalėdinės dovanos iki 50 € — įspūdingos",
     description:
       "Įspūdingos kalėdinės dovanos iki 50 eurų: vilnos pledai, termosai, viskio rinkiniai. Pristatymas per 4–6 dienas.",
     intro:
@@ -131,7 +131,7 @@ export const collections: CollectionMeta[] = [
     title: "Premium dovanos",
     shortTitle: "Premium",
     emoji: "sparkles",
-    seoTitle: "Premium kalėdinės dovanos — įspūdžiui, kuris lieka | Kalėdų Kampelis",
+    seoTitle: "Premium kalėdinės dovanos — įspūdžiui, kuris lieka",
     description:
       "Visas Kalėdų Kampelio katalogas — visos prekės yra premium dovanos. Verslo dovanoms — sąskaita su PVN.",
     intro:

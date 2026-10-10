@@ -41,6 +41,7 @@ export function productSchema(product: Product): JsonLd {
     "@type": "Product",
     name: product.name,
     description: product.tagline,
+    image: product.images.map((src) => `${store.brand.url}${src}`),
     sku: product.sku,
     brand: { "@type": "Brand", name: store.brand.name },
     offers: {
@@ -52,6 +53,20 @@ export function productSchema(product: Product): JsonLd {
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       itemCondition: "https://schema.org/NewCondition",
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: (store.shipping.flatRateCents / 100).toFixed(2),
+          currency: "EUR",
+        },
+        shippingDestination: { "@type": "DefinedRegion", addressCountry: "LT" },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
+          transitTime: { "@type": "QuantitativeValue", minValue: 4, maxValue: 5, unitCode: "DAY" },
+        },
+      },
     },
   };
   if (flags.ENABLE_REVIEWS && product.rating && product.reviewCount) {

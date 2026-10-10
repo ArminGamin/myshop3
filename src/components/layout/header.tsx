@@ -123,6 +123,7 @@ export function Header() {
               className="nav-icon relative"
             >
               <Heart className="size-5.5" strokeWidth={1.8} />
+              <span className="sr-only">Išsaugotos dovanos</span>
               {wishlist.items.length > 0 ? (
                 <span className="nav-badge">{wishlist.items.length}</span>
               ) : null}
