@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 import { attachCsrfCookie, createCsrfToken, CSRF_COOKIE, readCookie } from "@/lib/security/csrf";
 import { canViewProduct, getProduct } from "@/lib/data/products";
 import { getCollection } from "@/lib/data/collections";
-import { getArticle } from "@/lib/articles";
 
 function csp(nonce: string): string {
   const isDev = process.env.NODE_ENV !== "production";
@@ -33,14 +32,16 @@ export function proxy(request: NextRequest) {
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set("Content-Security-Policy", csp(nonce));
 
-  const catalogPath = /^\/(produktai|dovanos|straipsniai)\/([^/]+)\/?$/.exec(request.nextUrl.pathname);
+  // Articles are not checked here: their JSON is not bundled with the proxy, and
+  // the article route already 404s unknown slugs (dynamicParams = false).
+  const catalogPath = /^\/(produktai|dovanos)\/([^/]+)\/?$/.exec(request.nextUrl.pathname);
   let missing = false;
   if (catalogPath) {
     try {
       const slug = decodeURIComponent(catalogPath[2]);
       missing = catalogPath[1] === "produktai"
         ? !canViewProduct(getProduct(slug))
-        : catalogPath[1] === "dovanos" ? !getCollection(slug) : !getArticle(slug);
+        : !getCollection(slug);
     } catch {
       missing = true;
     }
