@@ -53,16 +53,26 @@ export default function TermsPage() {
         Įprastai užsakymus pristatome per 3–4 dienas.
       </p>
 
-      <h2>6. {productPhotoDisclaimer.termsTitle}</h2>
+      <h2>6. Grąžinimas</h2>
+      <p>
+        Prekę galite grąžinti per 14 dienų nuo jos gavimo. Pažeistas ar brokuotas prekes
+        pakeičiame arba grąžiname pinigus. Visa informacija –{" "}
+        <Link href="/grazinimas" className="font-semibold text-burgundy-600 underline underline-offset-2">
+          grąžinimo skiltyje
+        </Link>
+        .
+      </p>
+
+      <h2>7. {productPhotoDisclaimer.termsTitle}</h2>
       <p>{productPhotoDisclaimer.terms}</p>
 
-      <h2>7. Pagalba dėl užsakymo</h2>
+      <h2>8. Pagalba dėl užsakymo</h2>
       <p>
         Jei turite klausimų dėl užsakymo ar pristatymo, parašykite mums el. paštu ir
         nurodykite užsakymo numerį. Atsakome per 24 valandas.
       </p>
 
-      <h2>8. Ginčai</h2>
+      <h2>9. Ginčai</h2>
       <p>
         Visi ginčai sprendžiami derybomis; nepavykus — Lietuvos Respublikos įstatymų
         nustatyta tvarka. Vartotojai gali kreiptis į Valstybinę vartotojų teisių

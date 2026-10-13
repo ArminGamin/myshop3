@@ -67,6 +67,14 @@ export function productSchema(product: Product): JsonLd {
           transitTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 3, unitCode: "DAY" },
         },
       },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "LT",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 14,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+      },
     },
   };
   if (flags.ENABLE_REVIEWS && product.rating && product.reviewCount) {

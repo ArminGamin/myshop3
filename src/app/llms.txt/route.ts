@@ -29,6 +29,7 @@ ${products
 
 - [Dovanų paieška pagal gavėją ir biudžetą](${base}/rask-dovana)
 - [Pristatymas](${base}/pristatymas)
+- [Grąžinimas per 14 dienų](${base}/grazinimas)
 - [DUK](${base}/duk)
 - [Pirkimo taisyklės](${base}/pirkimo-taisykles)
 - [Kontaktai](${base}/kontaktai): ${store.contact.email}
