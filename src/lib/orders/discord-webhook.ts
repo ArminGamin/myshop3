@@ -120,7 +120,7 @@ function buildDiscordEmbed(input: {
 
   const name = meta.name || input.customerName?.split(" ")[0] || "—";
   const surname = meta.surname || input.customerName?.split(" ").slice(1).join(" ") || "—";
-  const email = meta.email || "—";
+  const email = meta.customer_email || meta.email || "—";
   const phone = meta.phone || "—";
   const address =
     meta.address ||

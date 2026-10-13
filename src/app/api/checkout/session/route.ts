@@ -55,7 +55,7 @@ export async function GET(req: Request) {
         order: {
           id: intent.id,
           amountTotalCents: intent.amount_received || intent.amount,
-          email: intent.receipt_email ?? intent.metadata.email ?? null,
+          email: intent.receipt_email ?? (intent.metadata.customer_email || intent.metadata.email) ?? null,
           paid: intent.status === "succeeded",
           shippingEstimate: "3–4 d.",
         },

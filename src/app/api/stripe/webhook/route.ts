@@ -21,7 +21,7 @@ async function handlePaidOrder(input: {
     type: "paid",
     orderId: input.orderId,
     amountCents: input.amountCents,
-    email: input.metadata.email,
+    email: input.metadata.customer_email || input.metadata.email,
     metadata: input.metadata,
   });
   await queuePurchaseEmail(input.orderId, input.metadata);
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
       await handlePaidOrder({
         orderId: session.id,
         amountCents: session.amount_total ?? 0,
-        metadata: { ...(session.metadata ?? {}), email: session.customer_details?.email || session.metadata?.email || "" },
+        metadata: { ...(session.metadata ?? {}), customer_email: session.customer_details?.email || session.metadata?.customer_email || session.metadata?.email || "" },
         shipping: session.customer_details?.address ?? null,
         customerName: session.customer_details?.name ?? null,
       });

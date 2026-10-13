@@ -32,7 +32,7 @@ export async function loadCheckoutOrder(input: {
       return {
         id: intent.id,
         amountTotalCents: intent.amount_received || intent.amount,
-        email: intent.receipt_email ?? intent.metadata.email ?? null,
+        email: intent.receipt_email ?? (intent.metadata.customer_email || intent.metadata.email) ?? null,
         paid: intent.status === "succeeded",
         processing: intent.status === "processing",
         shippingEstimate: store.shipping.estimate,

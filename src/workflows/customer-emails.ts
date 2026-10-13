@@ -58,7 +58,7 @@ async function sendCartReminder(cart: CartEmailInput, hour: ReminderHour, runId:
   const stripe = getStripe();
   if (!stripe) throw new FatalError("Stripe is not configured");
   const paid = await stripe.paymentIntents.search({
-    query: `status:'succeeded' AND metadata['email']:'${cart.email}' AND created>=${Math.floor(cart.startedAt / 1000) - 300}`,
+    query: `status:'succeeded' AND metadata['customer_email']:'${cart.email}' AND created>=${Math.floor(cart.startedAt / 1000) - 300}`,
     limit: 1,
   });
   if (paid.data.length > 0) return;
@@ -92,7 +92,7 @@ async function sendPurchaseConfirmation(orderId: string) {
   if (intent ? intent.status !== "succeeded" : session?.payment_status !== "paid") {
     throw new FatalError("Purchase confirmation requires a paid order");
   }
-  const email = intent?.receipt_email || session?.customer_details?.email || metadata.email;
+  const email = intent?.receipt_email || session?.customer_details?.email || metadata.customer_email || metadata.email;
   if (!email) throw new FatalError("Paid order has no customer email");
   let order = readSnapshot(metadata);
   if (!order && session) {

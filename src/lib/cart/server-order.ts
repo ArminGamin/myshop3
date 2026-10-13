@@ -153,7 +153,8 @@ export function orderMetadata(
       r: order.addons.priority ? 1 : 0,
       m: order.mysteryGift ? 1 : 0,
     }),
-    email: (customer?.email ?? "").slice(0, 80),
+    // Ne „email“: kitos parduotuvės webhook'as toje pačioje Stripe paskyroje siunčia laišką kiekvienam metadata.email.
+    customer_email: (customer?.email ?? "").slice(0, 80),
     phone: (customer?.phone ?? "").slice(0, 20),
     address: (customer?.address ?? "").slice(0, 400),
     name: (customer?.name ?? "").slice(0, 40),

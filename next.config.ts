@@ -61,6 +61,9 @@ const nextConfig: NextConfig = {
         destination: "/produktai/galaktikos-projektorius-zvaigzdziu-kelione",
         permanent: true,
       },
+      // Senos svetainės tinklaraščio adresai.
+      { source: "/blog", destination: "/straipsniai", permanent: true },
+      { source: "/blog/:slug", destination: "/straipsniai/:slug", permanent: true },
       {
         source: "/apmokejimas",
         destination: "/checkout",
