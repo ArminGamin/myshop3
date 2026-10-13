@@ -21,11 +21,6 @@ export default function ShippingPage() {
         pristatymo vietos.
       </p>
       <p>
-        Kadangi bendradarbiaujame su tarptautiniais tiekėjais, dalis prekių gali būti
-        siunčiama iš užsienio sandėlių, todėl jų pristatymas į Lietuvą tam tikrais atvejais
-        gali užtrukti ilgiau.
-      </p>
-      <p>
         Dedame visas pastangas, kad prekės klientus pasiektų kuo greičiau. Pateikdamas
         užsakymą klientas patvirtina, kad susipažino su pristatymo informacija ir supranta,
         jog pristatymo terminas gali priklausyti nuo kurjerių bei užsakymų srauto.

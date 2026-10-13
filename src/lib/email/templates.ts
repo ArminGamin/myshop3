@@ -65,11 +65,11 @@ export async function renderReminder(hour: ReminderHour, order: OrderEmailSnapsh
     cart_total: escapeHtml(euro(order.totalCents)),
     checkout_url: escapeHtml(checkoutUrl),
   });
-  return html.replace(/mailto:pagalba@kaledukampelis\.com\?subject=Atsisakau%20naujienlaiskio/g, escapeHtml(unsubscribeUrl))
+  return html.replace(/mailto:kaleddovanos@gmail\.com\?subject=Atsisakau%20naujienlaiskio/g, escapeHtml(unsubscribeUrl))
     .replace(/Atsisakyti naujienlaiškio/g, "Atsisakyti krepšelio priminimų");
 }
 
-export const NEWSLETTER_UNSUBSCRIBE = "mailto:pagalba@kaledukampelis.com?subject=Atsisakau%20naujienlaiskio";
+export const NEWSLETTER_UNSUBSCRIBE = "mailto:kaleddovanos@gmail.com?subject=Atsisakau%20naujienlaiskio";
 
 export async function renderNewsletterWelcome(siteUrl: string) {
   const base = siteUrl.replace(/\/$/, "");

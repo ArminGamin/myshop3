@@ -50,8 +50,7 @@ export default function TermsPage() {
 
       <h2>5. Pristatymas</h2>
       <p>
-        Įprastai užsakymus pristatome per 3–4 dienas. Dalis prekių gali būti siunčiama iš
-        užsienio sandėlių.
+        Įprastai užsakymus pristatome per 3–4 dienas.
       </p>
 
       <h2>6. {productPhotoDisclaimer.termsTitle}</h2>
