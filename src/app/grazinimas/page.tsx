@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { store } from "@/lib/config/store.config";
 import { InfoPage } from "@/components/layout/info-page";
 
 export const metadata: Metadata = {
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function ReturnsPage() {
-  const email = store.contact.email;
+  const email = "grazinimai@kaledukampelis.com";
   return (
     <InfoPage
       title="Grąžinimas ir keitimas"
