@@ -7,7 +7,7 @@ import { FAQAccordion } from "@/components/commerce/faq-accordion";
 export const metadata: Metadata = {
   title: "Apie mus",
   description:
-    "Kalėdų Kampelis — kalėdinių dovanų parduotuvė. Nemokamas pristatymas nuo 80 €. Pristatome per 4–6 dienas.",
+    "Kalėdų Kampelis — kalėdinių dovanų parduotuvė. Nemokamas pristatymas nuo 80 €. Pristatome per 3–4 dienas.",
   alternates: { canonical: "/apie-mus" },
 };
 

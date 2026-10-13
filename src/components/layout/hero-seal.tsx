@@ -8,7 +8,7 @@ import {
   type ChristmasCountdown,
 } from "@/lib/config/deadline";
 
-const RING_TEXT = "Iki Kalėdų ✦ Pristatymas per 4-6 d. ✦ ";
+const RING_TEXT = "Iki Kalėdų ✦ Pristatymas per 3–4 d. ✦ ";
 // Apskritimo ilgis (r = 47), kad tekstas tolygiai apjuostų visą žiedą.
 const RING_LENGTH = 295;
 

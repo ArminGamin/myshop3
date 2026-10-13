@@ -19,7 +19,7 @@ export default function TermsPage() {
     <InfoPage title="Pirkimo taisyklės">
       <h2>1. Paslaugos teikėjas</h2>
       <p>
-        {store.contact.legalName}. El. paštas: {store.contact.email}. Dirbame tik
+        {store.contact.legalName}, įmonės kodas {store.contact.companyCode}. El. paštas: {store.contact.email}. Dirbame tik
         internetu, pristatome visoje Lietuvoje.
       </p>
 
@@ -50,9 +50,8 @@ export default function TermsPage() {
 
       <h2>5. Pristatymas</h2>
       <p>
-        Įprastai užsakymus pristatome per 4–6 dienas. Dalis prekių gali būti siunčiama iš
-        užsienio sandėlių. Didesnio užimtumo laikotarpiais pristatymas gali užtrukti iki
-        16 dienų.
+        Įprastai užsakymus pristatome per 3–4 dienas. Dalis prekių gali būti siunčiama iš
+        užsienio sandėlių.
       </p>
 
       <h2>6. {productPhotoDisclaimer.termsTitle}</h2>

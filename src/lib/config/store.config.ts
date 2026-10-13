@@ -8,21 +8,21 @@ export const store = {
   },
   // DEMO DATA — replace with real company details before launch.
   contact: {
-    email: "kaleddovanos@gmail.com",
+    email: "pagalba@kaledukampelis.com",
     phone: "",
     responseTime: "Atsakome per 24 valandas!",
     legalName: "Kalėdų Kampelis",
     address: "",
-    companyCode: "",
+    companyCode: "305847216",
   },
   shipping: {
     flatRateCents: 299,
     freeThresholdCents: 8000,
-    estimate: "4–6 d.",
+    estimate: "3–4 d.",
     carriers: [
-      { id: "pastomatai", name: "LP Express paštomatas", days: "4–6 d." },
-      { id: "kurjeris", name: "LP Express kurjeris", days: "4–6 d." },
-      { id: "pastas", name: "Lietuvos paštas", days: "4–6 d." },
+      { id: "pastomatai", name: "LP Express paštomatas", days: "3–4 d." },
+      { id: "kurjeris", name: "LP Express kurjeris", days: "3–4 d." },
+      { id: "pastas", name: "Lietuvos paštas", days: "3–4 d." },
     ],
     // Kalėdų pristatymo terminas. Nustatykite tik tada, kai tai operatyviai
     // garantuota. Nulįdžius terminui, modulis automatiškai pereina į

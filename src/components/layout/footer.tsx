@@ -100,7 +100,7 @@ export function Footer() {
 
         <SafeDiv className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-cream-100/15 pt-5 sm:flex-row">
           <p className="text-xs text-cream-100/55">
-            © 2026 {store.brand.name}. Visos teisės saugomos.
+            © 2026 {store.brand.name} · Įmonės kodas {store.contact.companyCode}. Visos teisės saugomos.
           </p>
           <PaymentIcons tone="light" />
         </SafeDiv>

@@ -49,7 +49,7 @@ export const collections: CollectionMeta[] = [
     emoji: "heart",
     seoTitle: "Kalėdinės dovanos jai — moteriai, mamai, draugei",
     description:
-      "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 4–6 dienas, nemokamai nuo 80 €.",
+      "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 3–4 dienas, nemokamai nuo 80 €.",
     intro:
       "Dovanos, kurios rodo dėmesį: kvapai, tekstūros ir detalės, kurias ji pastebės. Nuo „saugių“ iki tikrai įspūdingų.",
     filter: byRecipient("jai"),
@@ -121,7 +121,7 @@ export const collections: CollectionMeta[] = [
     emoji: "coins",
     seoTitle: "Kalėdinės dovanos iki 50 € — įspūdingos",
     description:
-      "Įspūdingos kalėdinės dovanos iki 50 eurų: vilnos pledai, termosai, viskio rinkiniai. Pristatymas per 4–6 dienas.",
+      "Įspūdingos kalėdinės dovanos iki 50 eurų: vilnos pledai, termosai, viskio rinkiniai. Pristatymas per 3–4 dienas.",
     intro:
       "Biudžetas, kuriame jau galima dovanoti tai, kas naudojama kasdien — ir dėl ko tikrai padėkos.",
     filter: byMaxPrice(5000),

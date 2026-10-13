@@ -7,7 +7,7 @@ import { DeadlineBanner } from "@/components/commerce/deadline-banner";
 export const metadata: Metadata = {
   title: "Kalėdinės dovanos iki 30 €",
   description:
-    "Iš TikTok atėjote į teisingą vietą: jaukios kalėdinės dovanos iki 30 eurų su pristatymu per 4–6 dienas.",
+    "Iš TikTok atėjote į teisingą vietą: jaukios kalėdinės dovanos iki 30 eurų su pristatymu per 3–4 dienas.",
   robots: { index: false },
   alternates: { canonical: "/tiktok" },
 };

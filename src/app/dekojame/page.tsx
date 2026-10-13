@@ -109,7 +109,7 @@ export default function ThankYouPage() {
               ) : null}
               <div className="flex justify-between">
                 <dt className="text-ink-400">Pristatymo trukmė</dt>
-                <dd className="font-medium text-ink-900">4–6 d. nuo išsiuntimo</dd>
+                <dd className="font-medium text-ink-900">3–4 d. nuo išsiuntimo</dd>
               </div>
             </dl>
             <p className="mt-4 border-t border-cream-200 pt-3 text-[13px] leading-relaxed text-ink-600">
@@ -194,7 +194,7 @@ export default function ThankYouPage() {
           </li>
           <li className="flex items-start gap-2">
             <Truck className="mt-0.5 size-4 shrink-0 text-burgundy-600" />
-            Pristatymas 4–6 d. nuo išsiuntimo — sekimo numerį atsiųsime el. paštu.
+            Pristatymas 3–4 d. nuo išsiuntimo — sekimo numerį atsiųsime el. paštu.
           </li>
         </ul> : null}
       </div>

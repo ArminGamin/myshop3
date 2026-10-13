@@ -332,7 +332,7 @@ export function CartDrawer() {
             </Button>
             <div className="mt-1 flex items-center justify-between gap-3 sm:mt-2">
               <p className="flex items-center gap-1.5 text-xs font-medium text-ink-400">
-                <Truck className="size-3.5" /> Pristatymas per 4-6 d.
+                <Truck className="size-3.5" /> Pristatymas per 3–4 d.
               </p>
               <button
                 type="button"

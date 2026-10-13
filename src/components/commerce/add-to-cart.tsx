@@ -198,7 +198,7 @@ export function AddToCartForm({ product }: { product: Product }) {
           <ul className="pdp-trust mt-4">
             <li>
               <Truck aria-hidden className="size-4" strokeWidth={1.8} />
-              Pristatymas per 4–6 d.
+              Pristatymas per 3–4 d.
             </li>
             <li>
               <BadgeCheck aria-hidden className="size-4" strokeWidth={1.8} />

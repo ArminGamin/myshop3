@@ -36,6 +36,7 @@ export default function ContactPage() {
           <MapPin className="mx-auto size-6 text-burgundy-600" strokeWidth={1.7} />
           <p className="mt-3 font-display text-lg font-extrabold text-ink-900">Būstinė</p>
           <p className="mt-1 text-[13px] font-bold text-ink-600">Dirbame tik internetu</p>
+          <p className="mt-1 text-[12px] font-medium text-ink-400">Įmonės kodas {store.contact.companyCode}</p>
         </div>
       </div>
 

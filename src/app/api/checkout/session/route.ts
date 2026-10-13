@@ -43,7 +43,7 @@ export async function GET(req: Request) {
           amountTotalCents: session.amount_total ?? 0,
           email: session.customer_details?.email ?? session.customer_email ?? null,
           paid: session.payment_status === "paid",
-          shippingEstimate: "4–6 d.",
+          shippingEstimate: "3–4 d.",
         },
       });
     }
@@ -57,7 +57,7 @@ export async function GET(req: Request) {
           amountTotalCents: intent.amount_received || intent.amount,
           email: intent.receipt_email ?? intent.metadata.email ?? null,
           paid: intent.status === "succeeded",
-          shippingEstimate: "4–6 d.",
+          shippingEstimate: "3–4 d.",
         },
       });
     }

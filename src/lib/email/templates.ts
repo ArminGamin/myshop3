@@ -54,7 +54,7 @@ export async function renderPurchase(input: {
     order_date: escapeHtml(new Intl.DateTimeFormat("lt-LT", { timeZone: "Europe/Vilnius", dateStyle: "long" }).format(new Date(input.paidAt))),
     order_total: escapeHtml(euro(input.order.totalCents)),
     order_items: itemsHtml(items),
-    shipping_method: "Pristatymas į nurodytą adresą · 4–6 darbo dienos",
+    shipping_method: "Pristatymas į nurodytą adresą · 3–4 darbo dienos",
     shipping_address: escapeHtml(input.address).replace(/\n/g, "<br>"),
   });
 }
@@ -65,11 +65,11 @@ export async function renderReminder(hour: ReminderHour, order: OrderEmailSnapsh
     cart_total: escapeHtml(euro(order.totalCents)),
     checkout_url: escapeHtml(checkoutUrl),
   });
-  return html.replace(/mailto:kaleddovanos@gmail\.com\?subject=Atsisakau%20naujienlaiskio/g, escapeHtml(unsubscribeUrl))
+  return html.replace(/mailto:pagalba@kaledukampelis\.com\?subject=Atsisakau%20naujienlaiskio/g, escapeHtml(unsubscribeUrl))
     .replace(/Atsisakyti naujienlaiškio/g, "Atsisakyti krepšelio priminimų");
 }
 
-export const NEWSLETTER_UNSUBSCRIBE = "mailto:kaleddovanos@gmail.com?subject=Atsisakau%20naujienlaiskio";
+export const NEWSLETTER_UNSUBSCRIBE = "mailto:pagalba@kaledukampelis.com?subject=Atsisakau%20naujienlaiskio";
 
 export async function renderNewsletterWelcome(siteUrl: string) {
   const base = siteUrl.replace(/\/$/, "");

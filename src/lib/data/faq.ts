@@ -27,7 +27,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Kiek laiko trunka pristatymas?",
-        a: "Įprastai užsakymus pristatome per 4–6 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\nUžsakymams nuo 80 € – nemokamas pristatymas.",
+        a: "Įprastai užsakymus pristatome per 3–4 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\nUžsakymams nuo 80 € – nemokamas pristatymas.",
       },
       {
         q: "Ar turite fizinę parduotuvę?",
@@ -92,7 +92,7 @@ export const faqCategories: FaqCategory[] = [
 export const homeFaqs: FaqItem[] = [
   {
     q: "Kiek laiko trunka pristatymas?",
-    a: "Įprastai užsakymus pristatome per 4–6 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\n- Siuntą paruošiame ir perduodame kurjeriui kuo greičiau.\n- Užsakymams nuo 80 € nemokamas pristatymas.",
+    a: "Įprastai užsakymus pristatome per 3–4 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\n- Siuntą paruošiame ir perduodame kurjeriui kuo greičiau.\n- Užsakymams nuo 80 € nemokamas pristatymas.",
   },
   {
     q: "Kokie mokėjimo būdai?",

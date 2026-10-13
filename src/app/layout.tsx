@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: `%s | ${store.brand.name}`,
   },
   description:
-    "Kruopščiai parinktos kalėdinės dovanos jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €, pristatymas per 4–6 dienas.",
+    "Kruopščiai parinktos kalėdinės dovanos jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €, pristatymas per 3–4 dienas.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
