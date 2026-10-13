@@ -19,7 +19,7 @@ export default function TermsPage() {
     <InfoPage title="Pirkimo taisyklės">
       <h2>1. Paslaugos teikėjas</h2>
       <p>
-        {store.contact.legalName}, įmonės kodas {store.contact.companyCode}. El. paštas: {store.contact.email}. Dirbame tik
+        {store.contact.legalName}. El. paštas: {store.contact.email}. Dirbame tik
         internetu, pristatome visoje Lietuvoje.
       </p>
 

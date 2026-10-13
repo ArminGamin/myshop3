@@ -17,6 +17,10 @@ export default function PrivacyPage() {
         privatumo politikoje paaiškinama, kokius duomenis renkame, kokiais tikslais juos
         naudojame, kam galime juos perduoti ir kokias teises turite.
       </p>
+      <p>
+        Duomenų valdytojas: {store.contact.legalName}, įmonės kodas {store.contact.companyCode},
+        el. paštas {store.contact.email}.
+      </p>
 
       <h2>Renkama informacija</h2>
       <p>

@@ -797,7 +797,6 @@ function CheckoutInner({
           </nav>
           <p className="text-xs leading-relaxed text-ink-400">
             {store.contact.legalName}
-            {store.contact.companyCode ? ` · Įmonės kodas ${store.contact.companyCode}` : ""}
             {store.contact.address ? ` · ${store.contact.address}` : ""}
             {store.contact.email ? ` · ${store.contact.email}` : ""}
           </p>
