@@ -7,7 +7,6 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { store } from "@/lib/config/store.config";
 import { CartProvider } from "@/lib/cart/context";
-import { ConsentProvider } from "@/lib/consent";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -104,27 +103,25 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             __html: JSON.stringify([organizationSchema(), websiteSchema()]),
           }}
         />
-        <ConsentProvider>
-          <CartProvider>
-            <IntroStatic />
-            <IntroCutscene />
-            <a
-              href="#turinys"
-              className="cta-fill sr-only z-[100] rounded-[12px] px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:left-3 focus:top-3"
-            >
-              Prie turinio
-            </a>
-            <SafeDiv className="sticky top-0 z-50">
-              <AnnouncementBar />
-              <Header />
-            </SafeDiv>
-            <main id="turinys" className="relative z-[2] bg-transparent" suppressHydrationWarning>
-              <SafeDiv>{children}</SafeDiv>
-            </main>
-            <Footer />
-            <DeferredChrome />
-          </CartProvider>
-        </ConsentProvider>
+        <CartProvider>
+          <IntroStatic />
+          <IntroCutscene />
+          <a
+            href="#turinys"
+            className="cta-fill sr-only z-[100] rounded-[12px] px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:left-3 focus:top-3"
+          >
+            Prie turinio
+          </a>
+          <SafeDiv className="sticky top-0 z-50">
+            <AnnouncementBar />
+            <Header />
+          </SafeDiv>
+          <main id="turinys" className="relative z-[2] bg-transparent" suppressHydrationWarning>
+            <SafeDiv>{children}</SafeDiv>
+          </main>
+          <Footer />
+          <DeferredChrome />
+        </CartProvider>
         <Analytics />
         <SpeedInsights />
       </body>

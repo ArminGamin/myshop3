@@ -12,10 +12,10 @@ function key() {
   return createHash("sha256").update(secret).digest();
 }
 
-export function sealToken(payload: object): string {
+export function sealToken(payload: object, ttlMs = TOKEN_TTL): string {
   const iv = randomBytes(12);
   const cipher = createCipheriv("aes-256-gcm", key(), iv);
-  const bytes = deflateRawSync(Buffer.from(JSON.stringify({ ...payload, expiresAt: Date.now() + TOKEN_TTL })));
+  const bytes = deflateRawSync(Buffer.from(JSON.stringify({ ...payload, expiresAt: Date.now() + ttlMs })));
   const encrypted = Buffer.concat([cipher.update(bytes), cipher.final()]);
   return Buffer.concat([iv, cipher.getAuthTag(), encrypted]).toString("base64url");
 }
@@ -36,6 +36,7 @@ export function openToken<T>(token: string): T | null {
 export type CartSession = { purpose: "session"; runId: string; fingerprint: string };
 export type CartRecovery = { purpose: "recover"; runId: string; cart: CartEmailInput };
 export type CartUnsubscribe = { purpose: "unsubscribe"; runId: string; fingerprint: string };
+export type NewsletterUnsubscribe = { purpose: "newsletter-unsubscribe"; runId: string; email: string };
 
 export function cartFingerprint(input: Omit<CartEmailInput, "startedAt" | "order">): string {
   return createHash("sha256").update(JSON.stringify(input)).digest("hex");

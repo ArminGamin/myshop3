@@ -2,7 +2,11 @@ import { formatOrderNumber } from "@/lib/orders/order-number";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { BuiltOrder } from "@/lib/cart/server-order";
-import type { EmailItem, OrderEmailSnapshot, ReminderHour } from "./types";
+import { bundleUnitPriceCents } from "@/lib/commerce/pricing";
+import { bestsellers, products } from "@/lib/data/products";
+import { formatPrice } from "@/lib/format";
+import type { Product } from "@/types";
+import type { EmailItem, NewsletterKind, OrderEmailSnapshot, ReminderHour } from "./types";
 
 const FILES = {
   purchase: "kaledu_kampelis_purchase_confirmation.html",
@@ -11,6 +15,9 @@ const FILES = {
   48: "03_po_48_valandu.html",
   72: "04_po_72_valandu_paskutinis.html",
   welcome: "kaledu_kampelis_newsletter_welcome.html",
+  picks: "kaledu_kampelis_newsletter_2_tau_gali_patikti.html",
+  recipients: "kaledu_kampelis_newsletter_3_kam_ieskai_dovanos.html",
+  bundles: "kaledu_kampelis_newsletter_4_kuo_daugiau_tuo_pigiau.html",
 } as const;
 
 export function escapeHtml(value: string): string {
@@ -69,13 +76,36 @@ export async function renderReminder(hour: ReminderHour, order: OrderEmailSnapsh
     .replace(/Atsisakyti naujienlaiškio/g, "Atsisakyti krepšelio priminimų");
 }
 
-export const NEWSLETTER_UNSUBSCRIBE = "mailto:kaleddovanos@gmail.com?subject=Atsisakau%20naujienlaiskio";
+const byReviews = (a: Product, b: Product) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0);
 
-export async function renderNewsletterWelcome(siteUrl: string) {
+// Picks come from the live catalog at send time, so a sold-out product never shows up.
+export function newsletterPicks(kind: "picks" | "bundles"): Product[] {
+  const top = bestsellers().sort(byReviews).slice(0, 4);
+  if (kind === "picks") return top;
+  // Gifts under 30 € that people buy several of, not repeating the first email.
+  return products.filter((p) => p.inStock && p.priceCents <= 3000 && !top.includes(p)).sort(byReviews).slice(0, 4);
+}
+
+function productCards(base: string, items: Product[], showPairPrice: boolean): string {
+  const cell = (p: Product) => `<td width="50%" valign="top" style="padding:0 7px 24px;"><a href="${escapeHtml(`${base}/produktai/${p.slug}`)}" target="_blank" style="display:block;">`
+    + `<img src="${escapeHtml(base + p.images[0])}" width="260" alt="${escapeHtml(p.name)}" style="display:block;width:100%;max-width:260px;height:auto;border:0;border-radius:14px;background-color:#F7F0E6;">`
+    + `<div style="margin-top:10px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;font-weight:700;color:#401518;">${escapeHtml(p.name)}</div>`
+    + `<div style="margin-top:4px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:#571925;">${formatPrice(p.priceCents)}</div>`
+    + (showPairPrice ? `<div style="margin-top:2px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#6D615B;">2 vnt. po ${formatPrice(bundleUnitPriceCents(p.priceCents, 2))}</div>` : "")
+    + `</a></td>`;
+  const rows: string[] = [];
+  for (let i = 0; i < items.length; i += 2) rows.push(`<tr>${items.slice(i, i + 2).map(cell).join("")}</tr>`);
+  return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">${rows.join("")}</table>`;
+}
+
+export async function renderNewsletter(kind: NewsletterKind, siteUrl: string, unsubscribeUrl: string) {
   const base = siteUrl.replace(/\/$/, "");
-  return render("welcome", {
+  return render(kind, {
+    site_url: escapeHtml(base),
     shop_url: escapeHtml(`${base}/dovanos/visos-dovanos`),
     quiz_url: escapeHtml(`${base}/rask-dovana`),
+    unsubscribe_url: escapeHtml(unsubscribeUrl),
+    products: kind === "picks" || kind === "bundles" ? productCards(base, newsletterPicks(kind), kind === "bundles") : "",
   });
 }
 

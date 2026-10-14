@@ -2,7 +2,6 @@ import Link from "next/link";
 import { store } from "@/lib/config/store.config";
 import { collections } from "@/lib/data/collections";
 import { PaymentIcons } from "@/components/commerce/payment-icons";
-import { CookieSettingsButton } from "@/components/layout/cookie-settings-button";
 import { SafeDiv } from "@/components/layout/safe-div";
 
 const infoLinks = [
@@ -95,7 +94,6 @@ export function Footer() {
               </li>
               <li className="py-2.5 sm:py-0">{store.contact.responseTime}</li>
             </ul>
-            <CookieSettingsButton />
           </SafeDiv>
         </SafeDiv>
 

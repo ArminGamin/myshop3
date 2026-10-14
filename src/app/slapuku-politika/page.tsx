@@ -50,9 +50,8 @@ export default function CookiePolicyPage() {
 
       <h2>Kaip valdyti slapukus</h2>
       <p>
-        Galite bet kada keisti savo slapukų nustatymus per naršyklės parametrus arba
-        naudodami mūsų slapukų sutikimo skydelį, kuris rodomas pirmą kartą apsilankius
-        svetainėje. Atmesti neesminius slapukus gali paveikti kai kurias svetainės
+        Galite bet kada keisti savo slapukų nustatymus per naršyklės parametrus.
+        Atmesti neesminius slapukus gali paveikti kai kurias svetainės
         funkcijas ir personalizaciją.
       </p>
 

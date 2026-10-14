@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { loadTrackers } from "@/lib/analytics";
 
 const Snowfall = dynamic(
   () => import("@/components/layout/snowfall").then((m) => ({ default: m.Snowfall })),
@@ -22,10 +23,6 @@ const SmartPopups = dynamic(
   () => import("@/components/commerce/smart-popups").then((m) => ({ default: m.SmartPopups })),
   { ssr: false }
 );
-const CookieBanner = dynamic(
-  () => import("@/components/layout/cookie-banner").then((m) => ({ default: m.CookieBanner })),
-  { ssr: false }
-);
 const TabTitleFlash = dynamic(
   () => import("@/components/layout/tab-title-flash").then((m) => ({ default: m.TabTitleFlash })),
   { ssr: false }
@@ -37,7 +34,10 @@ export function DeferredChrome() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const go = () => setReady(true);
+    const go = () => {
+      setReady(true);
+      loadTrackers();
+    };
     if ("requestIdleCallback" in window) {
       const id = window.requestIdleCallback(go, { timeout: 1500 });
       return () => window.cancelIdleCallback(id);
@@ -54,7 +54,6 @@ export function DeferredChrome() {
       <CartDrawer />
       <SocialProofToast />
       <SmartPopups />
-      <CookieBanner />
       <TabTitleFlash />
     </>
   );

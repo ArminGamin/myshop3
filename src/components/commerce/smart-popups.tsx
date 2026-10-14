@@ -8,7 +8,6 @@ import { store, flags } from "@/lib/config/store.config";
 import { countOf, useCart } from "@/lib/cart/context";
 import { useExitIntent } from "@/lib/behavior/use-exit-intent";
 import { track } from "@/lib/analytics";
-import { useConsent } from "@/lib/consent";
 import { usePresence } from "@/lib/motion";
 import { apiHeaders } from "@/lib/security/csrf-client";
 import { isAllowedEmail } from "@/lib/security/email";
@@ -40,7 +39,6 @@ function writeDismissed() {
 // Vienas didelis pertraukimas per sesiją, vėsinimo laikotarpis tarp sesijų.
 export function SmartPopups() {
   const cart = useCart();
-  const { consent, hydrated } = useConsent();
   const [kind, setKind] = useState<PopupKind>(null);
   const [lastKind, setLastKind] = useState<PopupKind>(null);
   const shownRef = useRef(false);
@@ -52,7 +50,6 @@ export function SmartPopups() {
 
   const eligible = useCallback((): PopupKind => {
     if (!flags.ENABLE_POPUP) return null;
-    if (!hydrated || !consent) return null;
     if (
       cart.drawerOpen ||
       document.documentElement.matches('[data-checkout="on"], [data-menu-open="on"]') ||
@@ -63,7 +60,7 @@ export function SmartPopups() {
     if (dismissedAt && Date.now() - dismissedAt < store.popups.cooldownHours * 3_600_000)
       return null;
     return "pending" as unknown as PopupKind;
-  }, [hydrated, consent, cart.drawerOpen]);
+  }, [cart.drawerOpen]);
 
   const show = useCallback((candidate: Exclude<PopupKind, null>) => {
     if (shownRef.current || !eligible()) return;

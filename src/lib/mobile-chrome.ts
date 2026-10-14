@@ -4,7 +4,6 @@ import { useEffect, useSyncExternalStore } from "react";
 
 const ATTR = {
   stickyBuy: "data-sticky-buy",
-  cookieBanner: "data-cookie-banner",
   cartOpen: "data-cart-open",
   checkoutOpen: "data-checkout",
 } as const;

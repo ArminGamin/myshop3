@@ -20,6 +20,7 @@ let discordReports = [];
 let paidMatches = [];
 let workflowRunId = "wrun_cart";
 let orderNotifications = [];
+let claimedHooks = new Set();
 const stripeWebhooks = new (require("stripe"))("sk_test_local_fixture").webhooks;
 class FatalError extends Error {}
 class RetryableError extends Error {}
@@ -48,7 +49,10 @@ Module._resolveFilename = function(specifier, ...args) {
   return resolve.call(this, specifier, ...args);
 };
 Module._load = function(specifier, ...args) {
-  if (specifier === "workflow") return { FatalError, RetryableError, getWorkflowMetadata: () => ({ workflowRunId }), sleep: async (date) => { clock.push(date.getTime()); } };
+  if (specifier === "workflow") return {
+    FatalError, RetryableError, getWorkflowMetadata: () => ({ workflowRunId }), sleep: async (date) => { clock.push(date.getTime()); },
+    createHook: ({ token }) => ({ getConflict: async () => (claimedHooks.has(token) ? { runId: "wrun_other" } : (claimedHooks.add(token), null)) }),
+  };
   if (specifier === "workflow/api") return workflowApi;
   if (specifier === "@/lib/stripe") return { getStripe: () => stripe };
   if (specifier === "@/lib/orders/discord-webhook") return { notifyDiscordOrder: async (input) => { orderNotifications.push(input); } };
@@ -89,6 +93,8 @@ const reminderNotifications = require("../src/workflows/reminder-notification.ts
 const prepurchaseDiscord = require("../src/lib/email/prepurchase-discord.ts");
 const prepurchaseNotifications = require("../src/workflows/prepurchase-notification.ts");
 const capture = require("../src/app/api/checkout/reminders/route.ts");
+const newsletterEmails = require("../src/workflows/newsletter-emails.ts");
+const newsletterSignup = require("../src/app/api/newsletter/route.ts");
 const unsubscribe = require("../src/app/api/email/unsubscribe/route.ts");
 const recover = require("../src/app/api/checkout/recover/route.ts");
 const stripeWebhook = require("../src/app/api/stripe/webhook/route.ts");
@@ -351,5 +357,67 @@ test("pre-purchase test reports clearly identify saved contacts and suppress men
   assert.match(payload.embeds[0].description, /Priminimai suplanuoti/);
   assert.equal(payload.embeds[0].timestamp, new Date(cart.startedAt).toISOString());
   assert.deepEqual(payload.allowed_mentions.parse, []);
+});
+test("newsletter signup starts the subscriber email series", async () => {
+  process.env.NEWSLETTER_WEBHOOK_URL = "https://discord.test/newsletter";
+  try {
+    started = []; discordReports = [];
+    const response = await newsletterSignup.POST(new Request("https://www.kaledukampelis.com/api/newsletter", {
+      method: "POST", headers: { host: "www.kaledukampelis.com", origin: "https://www.kaledukampelis.com", [CSRF_HEADER]: "test-csrf", cookie: `${CSRF_COOKIE}=test-csrf`, "content-type": "application/json" },
+      body: JSON.stringify({ email: "Agne@Gmail.com", consent: true, source: "popup-welcome" }),
+    }));
+    assert.equal(response.status, 200);
+    assert.equal(started.length, 1);
+    assert.equal(started[0].workflow, newsletterEmails.newsletterSeriesWorkflow);
+    assert.equal(started[0].args[0], "agne@gmail.com");
+    assert.match(discordReports[0].embeds[0].title, /Naujas naujienlaiškio prašymas/);
+  } finally {
+    delete process.env.NEWSLETTER_WEBHOOK_URL;
+  }
+});
+test("newsletter series sends the welcome and three follow-ups on days 0, 2, 5 and 9", async () => {
+  const day = 24 * 60 * 60_000;
+  sent = []; clock = []; paidMatches = []; workflowRunId = "wrun_news"; claimedHooks = new Set();
+  assert.deepEqual(await newsletterEmails.newsletterSeriesWorkflow("agne@gmail.com", cart.startedAt), { status: "complete" });
+  assert.deepEqual(clock, [2, 5, 9].map((n) => cart.startedAt + n * day));
+  assert.deepEqual(sent.map((s) => s.key), ["welcome", "picks", "recipients", "bundles"].map((kind) => `newsletter/wrun_news/${kind}`));
+  for (const { body } of sent) {
+    assert.deepEqual(body.to, ["agne@gmail.com"]);
+    assert.ok(!body.html.includes("{{"));
+    const link = body.html.match(/href="(https:\/\/www\.kaledukampelis\.com\/api\/email\/unsubscribe\?token=[^"]+)"/)[1];
+    assert.equal(body.headers["List-Unsubscribe"], `<${link.replace(/&amp;/g, "&")}>`);
+  }
+  for (const kind of ["picks", "bundles"]) {
+    const html = sent[["welcome", "picks", "recipients", "bundles"].indexOf(kind)].body.html;
+    for (const product of templates.newsletterPicks(kind)) {
+      assert.ok(product.inStock);
+      assert.ok(html.includes(`https://www.kaledukampelis.com/produktai/${product.slug}`));
+    }
+  }
+  assert.match(sent[3].body.html, /2 vnt\. po/);
+  // Signing up again while the series runs sends nothing new.
+  assert.deepEqual(await newsletterEmails.newsletterSeriesWorkflow("agne@gmail.com", cart.startedAt), { status: "duplicate" });
+  assert.equal(sent.length, 4);
+});
+test("a purchase after signup stops the newsletter series", async () => {
+  sent = []; paidMatches = [{ id: "pi_paid" }]; claimedHooks = new Set();
+  assert.deepEqual(await newsletterEmails.newsletterSeriesWorkflow("agne@gmail.com", cart.startedAt), { status: "purchased" });
+  assert.equal(sent.length, 0);
+  paidMatches = [];
+});
+test("newsletter unsubscribe cancels the series and reports it to Discord", async () => {
+  process.env.NEWSLETTER_WEBHOOK_URL = "https://discord.test/newsletter";
+  try {
+    runs.set("wrun_news", "running"); discordReports = [];
+    const token = tokens.sealToken({ purpose: "newsletter-unsubscribe", runId: "wrun_news", email: "agne@gmail.com" }, 365 * 24 * 60 * 60_000);
+    const response = await unsubscribe.POST(new Request(`https://www.kaledukampelis.com/api/email/unsubscribe?token=${token}`, { method: "POST" }));
+    assert.equal(response.status, 200);
+    assert.match(await response.text(), /Naujienlaiškio atsisakyta/);
+    assert.equal(runs.get("wrun_news"), "cancelled");
+    assert.match(discordReports[0].embeds[0].title, /Atsisakė naujienlaiškio/);
+    assert.equal(discordReports[0].embeds[0].fields[0].value, "agne@gmail.com");
+  } finally {
+    delete process.env.NEWSLETTER_WEBHOOK_URL;
+  }
 });
 test.after(() => { global.fetch = realFetch; });

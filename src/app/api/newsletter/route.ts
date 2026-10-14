@@ -2,24 +2,17 @@ import { NextResponse } from "next/server";
 import { notifyDiscordNewsletter } from "@/lib/newsletter/discord-webhook";
 import { denyPost } from "@/lib/security/guard";
 import { isAllowedEmail, normalizeEmail } from "@/lib/security/email";
-import { sendEmail } from "@/lib/email/resend";
-import { NEWSLETTER_UNSUBSCRIBE, renderNewsletterWelcome } from "@/lib/email/templates";
-import { store } from "@/lib/config/store.config";
+import { start } from "workflow/api";
+import { emailConfigured } from "@/lib/email/resend";
+import { newsletterSeriesWorkflow } from "@/workflows/newsletter-emails";
 
-// Pasisveikinimo laiškas naujam prenumeratoriui. Klaida nesugadina prenumeratos.
+// Pasisveikinimo laiškas ir trys tolesni laiškai naujam prenumeratoriui. Klaida nesugadina prenumeratos.
 async function sendWelcome(email: string) {
-  if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM) return;
+  if (!emailConfigured()) return;
   try {
-    const html = await renderNewsletterWelcome(store.brand.url);
-    await sendEmail({
-      to: email,
-      subject: "🎄 Sveiki atvykę į Kalėdų Kampelį!",
-      html,
-      idempotencyKey: `newsletter-welcome/${email}`,
-      unsubscribeUrl: NEWSLETTER_UNSUBSCRIBE,
-    });
+    await start(newsletterSeriesWorkflow, [email, Date.now()]);
   } catch (e) {
-    console.error("Naujienlaiškio pasisveikinimo laiško klaida:", e);
+    console.error("Naujienlaiškio laiškų serijos klaida:", e);
   }
 }
 

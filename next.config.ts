@@ -6,13 +6,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   outputFileTracingIncludes: {
-    "/*": [
-      "./emails/kaledu_kampelis_purchase_confirmation.html",
-      "./emails/01_po_1_valandos.html",
-      "./emails/02_po_24_valandu.html",
-      "./emails/03_po_48_valandu.html",
-      "./emails/04_po_72_valandu_paskutinis.html",
-    ],
+    // Templates are read by name at runtime, so tracing cannot find them on its own.
+    "/*": ["./emails/*.html"],
   },
   allowedDevOrigins: ["127.0.0.1", "localhost"],
   experimental: {

@@ -11,5 +11,6 @@ export type CartEmailInput = {
   order: OrderEmailSnapshot;
   startedAt: number;
 };
+export type NewsletterKind = "welcome" | "picks" | "recipients" | "bundles";
 export const REMINDER_HOURS = [1, 24, 48, 72] as const;
 export type ReminderHour = (typeof REMINDER_HOURS)[number];

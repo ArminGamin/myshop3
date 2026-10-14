@@ -13,7 +13,7 @@ export function TrustStrip({ tone = "light" }: { tone?: "light" | "cream" }) {
   const freeFrom = store.shipping.freeThresholdCents / 100;
   const items: TrustItem[] = [
     { icon: <Star className="size-4.5" strokeWidth={1.8} />, label: "Kruopščiai parinktos dovanos", shortLabel: "Kruopšti atranka" },
-    { icon: <ShieldIcon />, label: "Saugus atsiskaitymas per Stripe", shortLabel: "Saugus Stripe" },
+    { icon: <ShieldIcon />, label: "Saugus atsiskaitymas per Stripe", shortLabel: "Saugus atsiskaitymas" },
     {
       icon: <TruckIcon />,
       label: `Nemokamas pristatymas nuo ${freeFrom} €`,
