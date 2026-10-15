@@ -2,6 +2,7 @@ import { FatalError, getWorkflowMetadata, sleep } from "workflow";
 import { getRun, start } from "workflow/api";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
+import { STRIPE_STORE } from "@/lib/stripe-store";
 import { buildOrder, parseLines } from "@/lib/cart/server-order";
 import { store } from "@/lib/config/store.config";
 import { sendEmail } from "@/lib/email/resend";
@@ -88,6 +89,7 @@ async function sendPurchaseConfirmation(orderId: string) {
   const intent = orderId.startsWith("pi_") ? await stripe.paymentIntents.retrieve(orderId) : null;
   const session = intent ? null : await stripe.checkout.sessions.retrieve(orderId);
   const metadata = intent?.metadata ?? session?.metadata ?? {};
+  if (metadata.store && metadata.store !== STRIPE_STORE) throw new FatalError("Not a Kalėdų Kampelis order");
   if (metadata.email_confirmation_sent) return { status: "already_sent" };
   if (intent ? intent.status !== "succeeded" : session?.payment_status !== "paid") {
     throw new FatalError("Purchase confirmation requires a paid order");

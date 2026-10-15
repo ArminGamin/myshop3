@@ -5,6 +5,7 @@ import { store } from "@/lib/config/store.config";
 import { addonAmounts, parseCheckoutAddons, type CartAddonSelection } from "@/lib/cart/addons";
 import { MYSTERY_GIFT, parseMysteryGift } from "@/lib/cart/mystery-gift";
 import { MAX_ORDER_LINES, normalizeQuantity } from "@/lib/cart/limits";
+import { STRIPE_STORE } from "@/lib/stripe-store";
 
 export type CheckoutLineIn = { slug: string; variantId: string; qty: number };
 
@@ -146,6 +147,7 @@ export function orderMetadata(
   customer?: { email?: string; phone?: string; address?: string; name?: string; surname?: string }
 ) {
   return {
+    store: STRIPE_STORE,
     cart: JSON.stringify(order.rawLines.map((l) => ({ s: l.slug, v: l.variantId, q: l.qty }))).slice(0, 400),
     addons: JSON.stringify({
       p: order.addons.protection ? 1 : 0,

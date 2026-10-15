@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { notifyDiscordOrder } from "@/lib/orders/discord-webhook";
 import { getStripe } from "@/lib/stripe";
+import { isOurPayment } from "@/lib/stripe-store";
 import { queuePurchaseEmail } from "@/lib/email/automation";
 
 export const runtime = "nodejs";
@@ -53,7 +54,7 @@ export async function POST(req: Request) {
     case "checkout.session.completed":
     case "checkout.session.async_payment_succeeded": {
       const session = event.data.object as Stripe.Checkout.Session;
-      if (session.payment_status !== "paid") break;
+      if (session.payment_status !== "paid" || !isOurPayment(session.metadata)) break;
       await handlePaidOrder({
         orderId: session.id,
         amountCents: session.amount_total ?? 0,
@@ -65,7 +66,7 @@ export async function POST(req: Request) {
     }
     case "payment_intent.succeeded": {
       const intent = event.data.object as Stripe.PaymentIntent;
-      if (!intent.metadata?.cart) break;
+      if (!isOurPayment(intent.metadata)) break;
       await handlePaidOrder({
         orderId: intent.id,
         amountCents: intent.amount_received || intent.amount,
