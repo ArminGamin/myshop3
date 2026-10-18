@@ -66,9 +66,9 @@ const RECIPIENT_FIT: Record<RecipientId, { text: string; href?: string }> = {
   jam: { text: "Jam – tėčiui, vyrui ar draugui", href: "/dovanos/dovanos-jam" },
   porai: { text: "Porai – bendram laikui dviese", href: "/dovanos/dovanos-poroms" },
   seimai: { text: "Visai šeimai", href: "/dovanos/dovanos-seimai" },
-  draugui: { text: "Draugui ar draugei" },
-  tevams: { text: "Tėvams ar seneliams" },
-  kolegai: { text: "Kolegai ar komandos nariui" },
+  draugui: { text: "Draugui ar draugei", href: "/rask-dovana" },
+  tevams: { text: "Tėvams ar seneliams", href: "/rask-dovana" },
+  kolegai: { text: "Kolegai ar komandos nariui", href: "/rask-dovana" },
 };
 
 function budgetFit(product: Product) {
