@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
+import { getCollectionProducts } from "@/lib/data/collections";
 
 export type Article = {
   brand: "kaledukampelis";
@@ -120,4 +121,29 @@ export function formatArticleDate(iso: string) {
     month: "long",
     day: "numeric",
   });
+}
+
+// Kolekcija, į kurią straipsnis nukreipia (ir kurioje rodomas): pagal adresą, o nepavykus – pagal minimas prekes.
+const COLLECTION_RULES: [RegExp, string][] = [
+  [/iki-20/, "dovanos-iki-20-euru"],
+  [/iki-30/, "dovanos-iki-30-euru"],
+  [/iki-50/, "dovanos-iki-50-euru"],
+  [/mamai|moteriai|draugei|sesei|kolegei|zmonai|merginai|mociutei|-jai\b/, "dovanos-jai"],
+  [/teciui|vyrui|vaikinui|draugui|broliui|seneliui|-jam\b/, "dovanos-jam"],
+  [/porai|poroms|dviese|romantisk/, "dovanos-poroms"],
+  [/seimai|seimos|vaikams|vaikui/, "dovanos-seimai"],
+];
+const RECIPIENT_COLLECTIONS = ["dovanos-jai", "dovanos-jam", "dovanos-poroms", "dovanos-seimai"];
+
+export function articleCollection(post: Article): string {
+  const rule = COLLECTION_RULES.find(([pattern]) => pattern.test(post.slug));
+  if (rule) return rule[1];
+  const linked = new Set(linkedProductSlugs(post));
+  let best = "visos-dovanos";
+  let bestScore = 0;
+  for (const slug of RECIPIENT_COLLECTIONS) {
+    const score = getCollectionProducts(slug).filter((p) => linked.has(p.slug)).length;
+    if (score > bestScore) [best, bestScore] = [slug, score];
+  }
+  return best;
 }

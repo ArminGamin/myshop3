@@ -7,7 +7,7 @@ import { store } from "@/lib/config/store.config";
 import { discountPercent, formatPrice } from "@/lib/format";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
 import { JsonLd } from "@/components/seo/json-ld";
-import { RECIPIENT_LABELS } from "@/types";
+import { RECIPIENT_LABELS, type Product, type RecipientId } from "@/types";
 import { Gallery } from "@/components/commerce/gallery";
 import { AddToCartForm, StickyBuyBar } from "@/components/commerce/add-to-cart";
 import { ProductVariantProvider } from "@/components/commerce/product-variant";
@@ -58,6 +58,52 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...(product.images[0] ? { images: [product.images[0]] } : {}),
     },
   };
+}
+
+// „Kam tinka ši dovana“: gavėjai ir biudžetas su nuorodomis į atitinkamas kolekcijas.
+const RECIPIENT_FIT: Record<RecipientId, { text: string; href?: string }> = {
+  jai: { text: "Jai – mamai, draugei ar mylimai moteriai", href: "/dovanos/dovanos-jai" },
+  jam: { text: "Jam – tėčiui, vyrui ar draugui", href: "/dovanos/dovanos-jam" },
+  porai: { text: "Porai – bendram laikui dviese", href: "/dovanos/dovanos-poroms" },
+  seimai: { text: "Visai šeimai", href: "/dovanos/dovanos-seimai" },
+  draugui: { text: "Draugui ar draugei" },
+  tevams: { text: "Tėvams ar seneliams" },
+  kolegai: { text: "Kolegai ar komandos nariui" },
+};
+
+function budgetFit(product: Product) {
+  const price = product.priceCents;
+  if (price <= 2000) return { text: "Dovanos iki 20 €", href: "/dovanos/dovanos-iki-20-euru" };
+  if (price <= 3000) return { text: "Dovanos iki 30 €", href: "/dovanos/dovanos-iki-30-euru" };
+  if (price <= 5000) return { text: "Dovanos iki 50 €", href: "/dovanos/dovanos-iki-50-euru" };
+  return { text: "Premium dovanos", href: "/dovanos/premium-dovanos" };
+}
+
+function GiftFit({ product }: { product: Product }) {
+  const fits = [
+    ...product.recipients.map((r) => RECIPIENT_FIT[r]),
+    ...(product.occasions.includes("slaptas-senelis") ? [{ text: "Slaptajam Kalėdų Seneliui", href: "/dovanos/dovanos-iki-20-euru" }] : []),
+    budgetFit(product),
+  ].filter((fit, i, list) => list.findIndex((x) => x.text === fit.text) === i);
+  return (
+    <div className="mt-9">
+      <h3 className="font-display text-[1.35rem] font-bold text-ink-900">Kam tinka ši dovana</h3>
+      <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-ink-600">
+        {fits.map((fit) => (
+          <li key={fit.text} className="flex items-start gap-2">
+            <Heart aria-hidden className="mt-1.5 size-3 shrink-0 text-burgundy-600" strokeWidth={2.4} fill="currentColor" />
+            {fit.href ? (
+              <Link href={fit.href} className="font-semibold text-burgundy-600 underline-offset-4 hover:underline">
+                {fit.text}
+              </Link>
+            ) : (
+              <span>{fit.text}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 function reviewWord(count: number): string {
@@ -186,6 +232,7 @@ export default async function ProductPage({ params }: Props) {
               ))}
             </ul>
           ) : null}
+          {!draftPreview ? <GiftFit product={product} /> : null}
         </div>
 
         <aside aria-labelledby="specs-heading" className="pdp-specs h-fit">

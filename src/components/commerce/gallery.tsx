@@ -6,6 +6,14 @@ import type { Product } from "@/types";
 import { ProductImage, ProductArt } from "./product-art";
 import { useProductVariant } from "./product-variant";
 
+// Aprašomasis alt tekstas pagal nuotraukos kampą (failo pavadinime: -sonas, -virsus, -nugara).
+function imageAlt(name: string, src: string, index: number) {
+  if (src.includes("-sonas")) return `${name} – vaizdas iš šono`;
+  if (src.includes("-virsus")) return `${name} – vaizdas iš viršaus`;
+  if (src.includes("-nugara")) return `${name} – vaizdas iš nugaros`;
+  return index === 0 ? name : `${name} – nuotrauka ${index + 1}`;
+}
+
 export function Gallery({ product }: { product: Product }) {
   const { variantId } = useProductVariant(product.defaultVariantId);
   const images = useMemo(() => {
@@ -40,7 +48,7 @@ export function Gallery({ product }: { product: Product }) {
             <ProductImage
               images={[current]}
               seed={product.artSeed}
-              alt={product.name}
+              alt={imageAlt(product.name, current, active)}
               size="hero"
               priority={active === 0}
               className={`h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${zoom ? "scale-125" : "scale-100"}`}
@@ -74,7 +82,7 @@ export function Gallery({ product }: { product: Product }) {
               className="pdp-thumb"
               data-active={i === active || undefined}
             >
-              <ProductImage images={[src]} seed={`${product.artSeed}-${i}`} alt="" size="thumb" className="h-full w-full object-cover" />
+              <ProductImage images={[src]} seed={`${product.artSeed}-${i}`} alt={imageAlt(product.name, src, i)} size="thumb" className="h-full w-full object-cover" />
             </button>
           ))}
         </div>

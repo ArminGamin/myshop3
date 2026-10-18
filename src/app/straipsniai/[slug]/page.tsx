@@ -13,9 +13,12 @@ import {
   getArticles,
   headingId,
   linkedProductSlugs,
+  articleCollection,
   type Article,
 } from "@/lib/articles";
 import { getProducts, products } from "@/lib/data/products";
+import { getCollection } from "@/lib/data/collections";
+import { collectionContent } from "@/lib/data/collection-content";
 import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import { store } from "@/lib/config/store.config";
 
@@ -99,6 +102,7 @@ export default async function ArticlePage({ params }: Props) {
   const related = relatedFor(post);
   const url = `${base}${ARTICLES_PATH}/${post.slug}`;
   const category = articleCategory(post);
+  const collection = getCollection(articleCollection(post));
 
   return (
     <div className="blog-shell">
@@ -219,9 +223,19 @@ export default async function ArticlePage({ params }: Props) {
 
         {picks.length > 0 ? (
           <section aria-labelledby="gido-dovanos" className="mx-auto mt-16 max-w-5xl sm:mt-20">
-            <h2 id="gido-dovanos" className="font-display text-[1.9rem] font-bold text-ink-900 sm:text-[2.3rem]">
-              Šiame gide <em>minimos dovanos</em>
-            </h2>
+            <div className="flex items-end justify-between gap-4">
+              <h2 id="gido-dovanos" className="font-display text-[1.9rem] font-bold text-ink-900 sm:text-[2.3rem]">
+                Šiame gide <em>minimos dovanos</em>
+              </h2>
+              {collection ? (
+                <Link href={`/dovanos/${collection.slug}`} className="home-more group hidden sm:inline-flex">
+                  {collectionContent[collection.slug]?.h1 ?? collection.title}
+                  <span className="home-more-icon">
+                    <ArrowRight className="size-4" strokeWidth={2} />
+                  </span>
+                </Link>
+              ) : null}
+            </div>
             <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
               {picks.map((product) => (
                 <ProductCard key={product.slug} product={product} />
@@ -242,8 +256,8 @@ export default async function ArticlePage({ params }: Props) {
               Rasti dovaną
               <ArrowRight className="size-4" strokeWidth={2} aria-hidden />
             </Link>
-            <Link href="/dovanos/visos-dovanos" className="blog-ghost-btn">
-              Visos dovanos
+            <Link href={`/dovanos/${collection?.slug ?? "visos-dovanos"}`} className="blog-ghost-btn">
+              {collection ? (collectionContent[collection.slug]?.h1 ?? collection.title) : "Visos dovanos"}
             </Link>
           </div>
         </section>
