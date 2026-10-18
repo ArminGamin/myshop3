@@ -97,7 +97,7 @@ function GiftFit({ product }: { product: Product }) {
                 {fit.text}
               </Link>
             ) : (
-              <span>{fit.text}</span>
+              <span className="font-semibold text-burgundy-600">{fit.text}</span>
             )}
           </li>
         ))}
