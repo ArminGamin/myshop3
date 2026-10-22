@@ -11,317 +11,317 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
   "JK-001": [
     {
       "name": "Mantas",
-      "text": "cinamonas jaučiasi bet man labiau medis užkabino. prie arbatos tinka"
+      "text": "cinamonas jauciasi bet man labiau medis uzkabino. prie arbatos gerai"
     },
     {
       "name": "Austėja",
-      "text": "Imu žvaakes dėl vaizdo daugiausia, o šitą tai ir uždegt norisi 😍😍"
+      "text": "Imu žvakes daugiausia del vaizdo, sita tai dar ir uzdegt norisi 😍"
     },
     {
       "name": "Rokas",
-      "text": "saldus kvapai greit nusibosta man. cia medis viska atsveria, gan vykes derinys"
+      "text": "saldus kvapai greit atsibosta man. cia medis viska atsveria, visai vykes"
     },
     {
       "name": "Lina",
-      "text": "Vanilės daugiiau tikėjausi.. bet ok. Skaitau vakare ir uždegu"
+      "text": "Vaniles daugiau tikejausi.. bet nieko, skaitau vakare ir uzdegu"
     },
     {
       "name": "Ieva",
-      "text": "Kallėdom kveepia!! apelsinas su medžiu geriausia, cinamonas neužgožia 🎄"
+      "text": "Kaledom kvepia kazkaip 😄 apelsinas su medziu geriausia, cinamonas neuzgozia"
     },
     {
       "name": "Tomas",
-      "text": "Stovi ant žurnalinio staliuko. anksčiau žvakių nenaudojau beveik, o dabar vis prisimenu uždegt, nežinau kas pasidarė"
+      "text": "Stovi ant zurnalinio staliuko. anksciau zvakiu beveik nenaudojau o dabar vis prisimenu uzdegt"
     },
     {
       "name": "Rūta",
-      "text": "Gražiai kvepia"
+      "text": "Gražiai kvepia, ne per stipriai"
     }
   ],
   "JK-002": [
     {
       "name": "Gabija",
-      "text": "Pledas dabar amžinai ant sofos 😅 kutai gražūs bet katinas juos pastebėjo irgi"
+      "text": "Pledas dabar amzinai ant sofos 😅 kutai grazus bet katinas juos irgi atrado"
     },
     {
       "name": "Darius",
-      "text": "Labai gražus 👍"
+      "text": "Labai grazus, spalva gyvai patiko"
     },
     {
       "name": "Monika",
-      "text": "žiūrim serrialus po juo, vyras tik vis į savo pusę tempia, kaip taip"
+      "text": "ziurim serialus po juo, vyras tik vis i savo puse tempia. nezinau kaip taip"
     },
     {
       "name": "Vytautas",
-      "text": "Storesnis nei buvo senas. Ant fotelio atrodo normaliai net nesulankstytas. Pirkau po to, kai senasis pledas po penkerių metų pradėjo byrėti. Šitas sunkesnis, bet nekarštas, ir vilna nekutena kaklo, ko bijojau. Skalbiau kartą 30 laipsnių vilnos programa, nesumažėjo. Vienintelis minusas, kad katino plaukai prilimpa, bet tai jau ne pledo kaltė."
+      "text": "Storesnis nei mano senas buvo. ant fotelio atrodo gerai net nesulankstytas. sunkesnis bet ne per karstas, vilna kaklo nekutena kaip bijojau. skalbiau viena karta 30 laipsniu vilnos programa, nesusitrauke. katino plaukai limpa, bet cia jau katinas"
     },
     {
       "name": "Agnė",
-      "text": "spalva tiko prie sofos nieko nereikėjo derint ❤️ su knyga vakare ir jau"
+      "text": "spalva tiko prie sofos, nieko papildomai derint nereikejo. su knyga vakare gerai"
     },
     {
       "name": "Simas",
-      "text": "Kutai nepatiko iš pradžių, dabar jau nebeprimenu kodėl. Laikau prie darbo stalo ant kėdės"
+      "text": "Kutai nepatiko is pradziu, dabar jau nebezinau ko nervinausi del ju. laikau prie darbo stalo ant kedes"
     }
   ],
   "JK-005": [
     {
       "name": "Eglė",
-      "text": "Dėl kaukės imiau, audinys švelnus. Gumytės net nesvarsčiau o ji tai pravertė"
+      "text": "Del kaukes emiau, audinys svelnus. gumytes net negalvojau naudot bet pravercia"
     },
     {
       "name": "Simona",
-      "text": "vienodos spalvos kaukė ir gumytė, smulkmena bet man patinka ✨"
+      "text": "vienodos spalvos kauke ir gumyte, maza smulkmena bet patinka"
     },
     {
       "name": "Karolina",
-      "text": "kaukės dar nepripratau, niekada neturejau. Gumyte jau nesioju kasdien nors"
+      "text": "kaukes dar nepripratau, niekada neturejau. gumyte jau nesioju beveik kasdien"
     },
     {
       "name": "Diana",
-      "text": "Gumytė visur su manim, ir ant riešo, kauke nesinaudoju nei"
+      "text": "Gumyte visur su manim, ant rieso buna. kaukes beveik nenaudoju"
     },
     {
       "name": "Paulina",
-      "text": "Labai minkšta"
+      "text": "Labai minkšta, maloni medziaga"
     }
   ],
   "JK-006": [
     {
       "name": "Tadas",
-      "text": "Stiklinės sunkios, man jos patiiko labiausiai. Akmenukai dar nenaudoti"
+      "text": "Stiklines sunkios, man jos labiausiai patiko. akmenuku dar nenaudojau"
     },
     {
       "name": "Saulius",
-      "text": "tėtis susižavėjo žnyplėm, sakė dabar visas baras namie 😄"
+      "text": "tetis labiausiai susizavejo znyplem, dabar sako visas baras namie 😄"
     },
     {
       "name": "Justas",
-      "text": "Reikėjo poros vienodų stiklų su draugu pasėdėt. Dugnas storas, solidžiai"
+      "text": "Reikejo poros vienodu stiklu su draugu. dugnas storas, rankoj jauciasi"
     },
     {
       "name": "Marius",
-      "text": "geri stiklai"
+      "text": "geri stiklai, nieko daugiau ir nereikia"
     },
     {
       "name": "Giedrius",
-      "text": "Pastatėm ant baro lentynos abu. Anksčiau ten visokie skirtingi buvo, dabar pagaliau tvarka"
+      "text": "Pastatem ant baro lentynos abu. anksciau ten visokiu skirtingu buvo, dabar bent tvarka"
     }
   ],
   "JK-007": [
     {
       "name": "Giedrė",
-      "text": "tilpo ant mano siauros palanges!! bazilikas bus 🌿"
+      "text": "tilpo ant mano siauros palanges, sitas svarbiausia. bazilikas jau laukia"
     },
     {
       "name": "Dominykas",
-      "text": "rozmariną seniai norėjau auginti, vis neprisiruošdavau. kai viskas jau vienam rinkiny tai lengviau pradėt"
+      "text": "rozmarina seniai norejau augint bet vis neprisiruosdavau. kai viskas vienam rinkiny lengviau pradet"
     },
     {
       "name": "Viktorija",
-      "text": "Gražūs vazonėliai 🌿"
+      "text": "Gražūs vazonėliai, mazi bet kaip tik vietai"
     }
   ],
   "JK-008": [
     {
       "name": "Greta",
-      "text": "Po kelis klausimus pildom, kai kurie užstrigdo ilgam. apie pirmą pasimatymą visiškai skirtingai prisimenam 😂"
+      "text": "Po kelis klausimus pildom, kai kurie uzstrigdo ilgam. apie pirma pasimatyma visiskai skirtingai prisimenam 😂"
     },
     {
       "name": "Arnas",
-      "text": "maniau bus saldžių frazių krūva, o klausimai paprašo konkrečių dalykų. kai kurie mūsų atsakymai juokingi tikrai"
+      "text": "maniau bus saldziu fraziu kruva, bet klausimai visai konkretus. kai kurie atsakymai juokingi gavosi"
     },
     {
       "name": "Indrė",
-      "text": "Rasom piestuku su pataisymais, raides kreivos. kaip tik man graziau kad musu"
+      "text": "Rasom piestuku su pataisymais, raides kreivos. kaip tik del to man graziau"
     },
     {
       "name": "Lukas",
-      "text": "Apie ateities planus prirasem daugiau nei galvojom, idomu bus paskaityt po kelių metų"
+      "text": "Apie ateities planus prirasem daugiau nei galvojom. bus idomu paskaityt po keliu metu"
     },
     {
       "name": "Viltė",
-      "text": "Užpildėm tik kelis puslapius kitiem vakarams paliekam. Jau radom dalykų apie ką seniai nekalbėjom ❤️"
+      "text": "Uzpildem tik kelis puslapius, kitus vakarams palikom. jau radom apie ka seniai nekalbejom ❤️"
     },
     {
       "name": "Dovydas",
-      "text": "mano raštas baisus, jos gražesnis. nesvarbu, mūsų istorija vistiek"
+      "text": "mano rastas baisus, jos grazesnis. nieko tokio, musu istorija vistiek"
     }
   ],
   "JK-009": [
     {
       "name": "Rasa",
-      "text": "Prieskambary pastaciau. Lazdeles is pradžių maziau idejau nes kitaip per stipru"
+      "text": "Prieskambary pastaciau. lazdelu is pradziu maziau idejau nes kitaip per stipru"
     },
     {
       "name": "Mindaugas",
-      "text": "žvakes pamirštu uždegt todėl lazdelės geriau. ant komodos tvarkingai"
+      "text": "zvakes uzdegt vis pamirstu tai sitas geriau. ant komodos tvarkingai stovi"
     },
     {
       "name": "Ugnė",
-      "text": "Stiklinis buteliukas patiko, neperrkauna. Vietos dar ieškau, kilnnoju 🙃"
+      "text": "Stiklinis buteliukas patiko, neperkrautas. vietos dar ieskau, kilnoju is vienos vietos i kita 🙃"
     },
     {
       "name": "Laura",
-      "text": "svetainėj per silpnas atrodė, perkėliau į mažą prieškambarį ir ten gerai"
+      "text": "svetainej per silpnas atrode, perkeliau i maza prieskambari ir ten pats tas"
     },
     {
       "name": "Aivaras",
-      "text": "Kvapas malonus"
+      "text": "Kvapas malonus, neuzknisa po keliu valandu"
     }
   ],
   "JK-010": [
     {
       "name": "Neringa",
-      "text": "Namuose visada storom kojinėm vaikštau. viena spalva jau favoritė tapo 🧦"
+      "text": "namuose visada storom kojinem vaikstau. viena spalva jau favoritė"
     },
     {
       "name": "Lukas",
-      "text": "dezute grazi su juostele, bet issitraukiau kojines iskart aisku"
+      "text": "dezute grazi su juostele, bet kojines issitraukiau iskart aisku 😄"
     },
     {
       "name": "Vaida",
-      "text": "Minkštos, patinka"
+      "text": "Minkstos, patinka"
     },
     {
       "name": "Paulius",
-      "text": "storesnes nei maniau, i batus nelabai. Po namus tai labai gerai"
+      "text": "storesnes nei maniau, i batus nelabai lenda. po namus labai gerai"
     },
     {
       "name": "Justina",
-      "text": "Sau vieną porą, likusias dvi pasidalinom. dėžutę pasiliekau smulkmenoms"
+      "text": "Sau viena pora, kitas dvi pasidalinom. dezute pasilikau smulkmenom"
     },
     {
       "name": "Arūnas",
-      "text": "su šlepetėm dedu, kojinės storos tai šlepetes derniu pagal jas"
+      "text": "su slepetem dedu, kojines storos tai slepetes prie ju jau derinu"
     },
     {
       "name": "Evelina",
-      "text": "Trys poros!!! Labiausiai tuo apsidžiaugiau haha. viena visada prie sofos lieka ir pamirštu"
+      "text": "Trys poros!!! sito nesitikejau labiausiai. viena prie sofos visada lieka ir aisku pamirstu"
     }
   ],
   "JK-011": [
     {
       "name": "Kamilė",
-      "text": "Dydis geras, didesnio tampytis nenorėjau. arbatai į darbą užtenka"
+      "text": "dydis geras, didesnio tampytis nenorejau. arbatai i darba uztenka"
     },
     {
       "name": "Martynas",
-      "text": "Patogus termosas ☕"
+      "text": "Patogus termosas, kolkas nieko blogo"
     },
     {
       "name": "Agnė",
-      "text": "telpa i kuprine be problemu, nereikia viso turinio perdeliot"
+      "text": "telpa i kuprine be problemu, nereikia visko is jos isimt"
     },
     {
       "name": "Rimantas",
-      "text": "Savaitgaliais su arbata pasivaikščioti. Didelis namie likdavo visada, šitas ne"
+      "text": "Savaitgaliais su arbata einu pasivaiksciot. didelis namie visada likdavo"
     },
     {
       "name": "Aušra",
-      "text": "mažiau vienkartinių puodelių ant darbo stalo. kavą namie pripildau, pati pasienku kokio skonio"
+      "text": "maziau vienkartiniu puodeliu ant darbo stalo. namie prisipilu ir pasiimu"
     },
     {
       "name": "Nedas",
-      "text": "planavau kavai o naudoju daugiausia arbaai. neatrodo kaip sportinis inventorius, man tas patinka"
+      "text": "planavau kavai bet daugiausia arbatai naudoju. neatrodo kaip sportinis inventorius, tas patinka"
     }
   ],
   "JK-012": [
     {
       "name": "Deividas",
-      "text": "kortom pradejom, baigėm klausimais. vienas atsakymas visa vakara uzsitese 😅"
+      "text": "kortom pradejom, baigem klausimais. vienas atsakymas visa vakara uzsitese 😅"
     },
     {
       "name": "Jolanta",
-      "text": "Smagu visiems"
+      "text": "Smagu visiems, ne tik vaikams"
     },
     {
       "name": "Vilius",
-      "text": "greito mąstymo klausimai daugiausia juoko. žinai atsakymą ir staiga nieko!!"
+      "text": "greito mastymo klausimai daugiausia juoko. zinai atsakyma ir staiga nieko galvoj"
     },
     {
       "name": "Laimonas",
-      "text": "kompanija iššūkius pasirinko, aš būčiau klausimus bet nubalsavo prieš mane"
+      "text": "kompanija issukimus pasirinko, as buciau klausimus bet nubalsavo pries mane"
     },
     {
       "name": "Kotryna",
-      "text": "Po vakarienės išsitraukėm ir užsikalbėjom. Visi turi ką atsakyt, tuo ir geras"
+      "text": "Po vakarienes issitraukem ir uzsikalbejom. visi turi ka atsakyt, tuo ir geras"
     }
   ],
   "JK-013": [
     {
       "name": "Aistė",
-      "text": "Pirmą vakarą pusę laiko filmą rinkomės 😂 ant sienos žiūrėt smagu, kambarys kitoks"
+      "text": "Pirma vakara puse laiko filma rinkomes 😂 ant sienos ziuret visai kitas jausmas"
     },
     {
       "name": "Gytis",
-      "text": "Užtraukiam užuolaidas, užkandžiai, visi ant sofos. Man patinka pats sumanymas"
+      "text": "uztraukiam uzuolaidas, uzkandziai, visi ant sofos. man patinka pats sumanymas"
     },
     {
       "name": "Emilija",
-      "text": "Norėjau kad filmas būtų atskiras planas, ir su vaizdu ant sienos atsirado tas jausmas"
+      "text": "norejau kad filmas butu atskiras planas, su vaizdu ant sienos tas ir gavosi"
     },
     {
       "name": "Edvinas",
-      "text": "mazesnis nei nuotraukoj atrode. man plisuas, turiu kur padet po filmo"
+      "text": "mazesnis nei nuotraukoj atrode. man net geriau, turiu kur pasidet po filmo"
     },
     {
       "name": "Kęstutis",
-      "text": "Paveikslą nuo sienos nukabint reikėjo. Radom jam kitą vietą 🎬"
+      "text": "paveiksla nuo sienos teko nukabint. radom jam kita vieta"
     },
     {
       "name": "Goda",
-      "text": "vaikams patiko 🎬"
+      "text": "vaikams patiko, mums irgi visai"
     },
     {
       "name": "Aurimas",
-      "text": "savaitgaliais naudoju kai laiko turiu visą filmą. Po to sudedu, nestovi išstatytas"
+      "text": "savaitgaliais naudoju kai yra laiko visam filmui. po to sudedu, nestovi isstatytas"
     }
   ],
   "JK-014": [
     {
       "name": "Daiva",
-      "text": "Matinė keramika mano skonio. Arbatinukas ant stalo lieka ir po arbatos 🫖"
+      "text": "Matine keramika mano skonio. arbatinukas ant stalo lieka ir po arbatos"
     },
     {
       "name": "Jurgis",
-      "text": "Gražus rinkinys"
+      "text": "Gražus rinkinys, paprastas"
     },
     {
       "name": "Sandra",
-      "text": "Paviršius ne visur vienodas, man graži tokia. bambukinė pagalvėlė dera"
+      "text": "pavirsius ne visur vienodas, man kaip tik grazu. bambukine pagalvele dera"
     },
     {
       "name": "Raimonda",
-      "text": "Birią arbatą geriu, filtras todėl svarbus buvo. puodelio spalva su arbatinuku dera"
+      "text": "biri arbata geriama pas mane tai filtras buvo svarbus. puodelio spalva su arbatinuku sueina"
     }
   ],
   "JK-015": [
     {
       "name": "Dovilė",
-      "text": "Aliejų labiausiai norėjau isbandyt, muilo kvapas irgi geras. vanilė maloni 🥰"
+      "text": "Alieju labiausiai norejau isbandyt, muilo kvapas irgi geras. vanile maloni 🥰"
     },
     {
       "name": "Renata",
-      "text": "Dovanai tiko puikiai 🎁"
+      "text": "Dovanai tiko, dezute jau pati graziai atrodo"
     },
     {
       "name": "Julija",
-      "text": "Voniai viska atskirai pirkdavau paprastai. cia kvapai tarpusavy dera, dezute sudeta tvarkingai"
+      "text": "Voniai viska atskirai pirkdavau. cia kvapai tarpusavy normaliai dera"
     },
     {
       "name": "Gintarė",
-      "text": "Kedras man įdomesnis uz vanilę. Dezutes neismeciau, vonioj laikau ir naudoju po truputį"
+      "text": "kedras man idomesnis uz vanile. dezutes neismeciau, vonioj laikau daiktus"
     }
   ],
   "JK-016": [
     {
       "name": "Birutė",
-      "text": "Vysnine graziai tarp senų auksiniu. kreminiai nuramina eglutę 🎄"
+      "text": "vysnine graziai tarp senu auksiniu atrodo. kreminiai kazkaip nuramina visa eglute"
     },
     {
       "name": "Gintarė",
-      "text": "Norėjau kelių stiklinių nes plastikinių pilna. kabinsiu aukštai kad vaikai nepasiektų"
+      "text": "norejau keliu stikliniu nes plastikiniu jau pilna. kabinsiu auksciau del vaiku"
     },
     {
       "name": "Algirdas",
@@ -329,135 +329,135 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Danutė",
-      "text": "šiemet mažiau spalvų noriu eglutėj, tiko tas derinys. kreminių neturėjau anksčiau"
+      "text": "siemet maziau spalvu noriu. tas derinys tiko, kreminiu anksciau neturejau"
     },
     {
       "name": "Mantas",
-      "text": "Dėžutę pasiliksiu kitom Kalėdom. Stiklinius dedu atsargiau nei visa kita"
+      "text": "Dezute pasiliksiu kitom Kaledom. stiklinius dedu atsargiau nei kitus"
     }
   ],
   "JK-017": [
     {
       "name": "Beata",
-      "text": "Aukinis kratšelis plonas, labai gražus. Prie baltų lėkštelių tinka"
+      "text": "Auksinis krastelis plonas, gyvai labai grazus. prie baltu leksteliu tinka"
     },
     {
       "name": "Andrius",
-      "text": "Mano mėgstamiausias puodelis"
+      "text": "Mano megstamiausias puodelis dabar"
     },
     {
       "name": "Milda",
-      "text": "kreminė spalva geriau už baltą, ir arbatai naudooju nebūtinai kakavai"
+      "text": "kremine spalva geriau uz balta man. arbatai naudoju irgi, ne tik kakavai"
     },
     {
       "name": "Rugilė",
-      "text": "Kraštelį tik geriau pažiūrėjus pastebėjau.. Patinka kai puodelis ne išmargintas"
+      "text": "Krasteli tik geriau paziurejus pastebejau. patinka kad visas neismargintas"
     },
     {
       "name": "Donatas",
-      "text": "didelių puodelių nemėgstu, šito dydis geras. su arbata prie kompo sėdžiu"
+      "text": "dideliu puodeliu nemegstu, sito dydis geras. su arbata prie kompo sedziu"
     },
     {
       "name": "Živilė",
-      "text": "laikau priekyje kad rytais neieskot. kakava savaitgaliais jau iprotis ☕"
+      "text": "laikau priekyje kad rytais neieskot. kakava savaitgaliais jau tapo iprociu"
     }
   ],
   "JK-018": [
     {
       "name": "Mantas",
-      "text": "Kasdiienes korteles susidejau, senaja pinigine stalciuj palikau. Kisene nestinus"
+      "text": "Kasdienes korteles susidejau, sena pinigine stalciuj dabar. kisenej nestinus"
     },
     {
       "name": "Lukas",
-      "text": "Tvarkingas, patinka 👍"
+      "text": "Tvarkingas, patinka"
     },
     {
       "name": "Darius",
-      "text": "kortelėms gerai, keli grynieji irgi telpa. monetų nešiotis dar neatsisakau nors"
+      "text": "kortelem gerai, keli grynieji irgi telpa. monetu dar nesu atsisakes"
     },
     {
       "name": "Tadas",
-      "text": "Pradzioj kišau visas korteles, dabar tik reikalingas ir kasoj nebeknisu ilgai"
+      "text": "pradzioj kisau visas korteles, dabar tik reikalingas. kasoj nebekrapstaus taip ilgai"
     }
   ],
   "JK-019": [
     {
       "name": "Eglė",
-      "text": "Šilta šviesa, gražu ✨"
+      "text": "Silta sviesa, grazu"
     },
     {
       "name": "Monika",
-      "text": "su baterijom tai ir ėmiau. prie lango rozetės nėra, laido per kambarį netampysiu"
+      "text": "su baterijom del to ir emiau. prie lango rozetes nera, laido per kambari netampysiu"
     },
     {
       "name": "Rūta",
-      "text": "Apie veidrodį apsukau, gražu. Makiažui nelabai užtenka šviesos bet vakarais man gerai"
+      "text": "aplink veidrodi apsukau, vakarais graziai atrodo. makiažui sviesos neuztenka"
     },
     {
       "name": "Dovilė",
-      "text": "Maniau ant eglutės kabinsiu, liko virtuvės lange. vyras net pastebėjo kad kažkas pasikeitė 😊"
+      "text": "maniau ant eglutes kabinsiu, liko virtuves lange. vyras net pastebejo kad kazkas pasikeite 😊"
     },
     {
       "name": "Austėja",
-      "text": "Aplink mažą eglutę, ilgio užteko. lemputės mažos, tarp šakų nesiamto kol neįjungi"
+      "text": "aplink maza eglute, ilgio uzteko. lemputes tarp saku beveik nesimato kol neijungi"
     },
     {
       "name": "Raimonda",
-      "text": "Baterijų dėžžutę už vazono paslėpiau ir matosi tik šviesleės, kaip norėjau"
+      "text": "bateriju dezute uz vazono paslepiau, matosi tik svieseles. taip ir norejau"
     },
     {
       "name": "Saulius",
-      "text": "po Kalėdų nenukabinom, prie lovos pasiliko 😅 žmona sako be jos per tamsu"
+      "text": "po Kaledu nenukabinom, prie lovos pasiliko. dabar zmona sako kad be jos per tamsu"
     }
   ],
   "JK-020": [
     {
       "name": "Ieva",
-      "text": "Darbo reikalus ranka rassau, telefone vis pamirstu. viršelis malonus, aukso krastai gyvai gražiau"
+      "text": "darbo reikalus ranka rasau, telefone vis pamirstu. virselis malonus, auksiniai krastai gyvai geriau"
     },
     {
       "name": "Aistė",
-      "text": "receptus pagaliau perrašau iš lapelių. per graži kad tuščią palikčiau 📖"
+      "text": "receptus pagaliau persirasau is lapeliu. per grazi kad tuscia stovetu"
     },
     {
       "name": "Giedrė",
-      "text": "Graži užrašinė"
+      "text": "Graži uzrašinė, lapai normalus"
     },
     {
       "name": "Renata",
-      "text": "Pirmo puslapio bijojau, ilgai. dabar pirkiniu sąrašai ir mintys visokios, bent ne tuscia"
+      "text": "Pirmo puslapio bijojau kazkaip 😂 dabar pirkiniu sarasai ir mintys visokios"
     }
   ],
   "JK-021": [
     {
       "name": "Tomas",
-      "text": "Ant darbo stalo, telefonas dabar viasda toj pačioj vietoj. Mediena prie stalo dera"
+      "text": "Ant darbo stalo, telefonas dabar visada toj pacioj vietoj. mediena prie stalo dera"
     },
     {
       "name": "Paulius",
-      "text": "Telefonas stovi tai matau ekrana nekeldamas. dirbu prie kompo, kol kas ok"
+      "text": "Telefonas stovi tai matau ekrana nepakeldamas. dirbu prie kompo, kolkas patogu"
     },
     {
       "name": "Rokas",
-      "text": "Išvaizda svarbiausia buvo, nenorėjau dar vieno juodo daikto ant spintelės. kraunu kasdien"
+      "text": "isvaizda svarbiausia buvo, nenorejau dar vieno juodo daikto ant spintele. kraunu kasdien"
     },
     {
       "name": "Gediminas",
-      "text": "Geriau tinka prie medinės spintelės nei senas plastikinis. vakarais kraunu ir viskas"
+      "text": "geriau tinka prie medines spintele nei senas plastikinis. vakare padedu ir tiek"
     },
     {
       "name": "Agnė",
-      "text": "Grįžus paddedu telefoną, kitaip pamirštu įkrauti. stovi matomoj vietoj tai primena 😄"
+      "text": "Grizus padedu telefona iskart, kitaip pamirstu pakraut. dabar stovi matomoj vietoj tai primena"
     }
   ],
   "JK-023": [
     {
       "name": "Rasa",
-      "text": "dukra eglutes pirma issideliojo atskirai. vakarais kartu pazaidziam 🎄"
+      "text": "dukra eglutes pirma issideliojo atskirai. vakarais kartu pazaidziam"
     },
     {
       "name": "Evelina",
-      "text": "Medinės kortelės smagios, ne kaip popierinės. sūnus dar eilute jas skaičiuoja susidėjęs"
+      "text": "Medines korteles smagios, ne kaip popierines. sunus dar eilute jas susideda"
     },
     {
       "name": "Jonas",
@@ -465,73 +465,73 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Dovilė",
-      "text": "maniškis tik korteles su dovanom renkasi, eglutes man palieka. paprasti paveiksliukai bet jam istorija"
+      "text": "maniskis tik korteles su dovanom renkasi, eglutes man palieka. paprasti paveiksliukai bet jam jau istorija gaunasi"
     }
   ],
   "JK-024": [
     {
       "name": "Greta",
-      "text": "Žvakes stikle jau turėjau, dabar su lempa naudoju. aukštį pagal didesnį indelį pasireguliavau"
+      "text": "Zvake stikle jau turejau, dabar po lempa naudoju. auksti pagal didesni indeli pasireguliavau"
     },
     {
       "name": "Viktorija",
-      "text": "krmeinė ant komodos gražu ir išjungta. pilna šviesa per ryški man, pritemdau"
+      "text": "kremine ant komodos grazu ir isjungta. pilna sviesa per ryski man tai pritemdau"
     },
     {
       "name": "Aušra",
-      "text": "Laikmatis patogus kai skaitau. kvapas yra o žiebtuvėlio nebereikia, aš jį visada pametu 🕯️"
+      "text": "Laikmatis patogus kai skaitau. kvapas yra o ziebtuvelio nereikia, as ji vis pametu"
     },
     {
       "name": "Justė",
-      "text": "Juoda gaubtą emiau. svetainėj sviesu viskas, norėjau bent vieno tamsaus daikto"
+      "text": "juoda gaubta emiau. svetainej daug sviesiu daiktu tai norejau bent vieno tamsaus"
     },
     {
       "name": "Indrė",
-      "text": "Žvakes laikydavau dėl gražių indelių, o su lempa pradėjau naudot tikrai. viena vis po ja. Pradžioj abejojau, ar lempa tikrai pakeis tikrą liepsną, bet šilta šviesa ir kvapas iš tirpstančio vaško labai panašūs. Plius saugu, nes vaikai ir katė laksto po namus ir man nebereikia nerimauti dėl atviros ugnies. Naudoju beveik kiekvieną vakarą, jau antra žvakė pasibaigė."
+      "text": "Zvakes anksciau laikydavau del graziu indeliu, su lempa pradejau naudot is tikro. viena vis po ja. pradzioj abejojau ar vaškas taip tirps be liepsnos, bet pripratau. silta sviesa ir kvapas nuo tirpstancio vaško labai panasus. dar gerai kad saugiau, nes vaikai ir katė po namus laksto. naudoju beveik kas vakara, jau antra zvake baigesi"
     },
     {
       "name": "Lina",
-      "text": "iš pradžių vis tikrinau ar vaškas tirpsta.. keista žiūrėt į žvakę be liepsnos, pripratau"
+      "text": "is pradziu vis tikrinau ar vaskas tirpsta.. keista ziuret i zvake be liepsnos bet pripratau"
     }
   ],
   "JK-025": [
     {
       "name": "Neringa",
-      "text": "kreeminę ėmiau miegamajam ant komodos. vakare įjungus gražiau nei dieną, man bent 🌹"
+      "text": "kremine emiau miegamajam ant komodos. vakare ijungus graziau nei diena man"
     },
     {
       "name": "Arnas",
-      "text": "Gražiai atrodo"
+      "text": "Gražiai atrodo, nedaug vietos uzima"
     },
     {
       "name": "Miglė",
-      "text": "Man gėlės numiršta visada, su šita paprasta. nuvalau gaubtą ir tiek, nereikia laistyt"
+      "text": "man gėlės numirsta visada tai sita pats tas. nuvalau gaubta ir viskas"
     },
     {
       "name": "Tomas",
-      "text": "vysnine paėmiau, draugei raudona nelabai. ant jos stalo tarp knygu gerai"
+      "text": "vysnine paemiau, draugei raudona nelabai. ant jos stalo tarp knygu gerai atrodo"
     },
     {
       "name": "Rūta",
-      "text": "Savaitę kilnojau iš vienos vietos į kitą 😅 prie rėmelio su nuotrauka labiausiai tiko"
+      "text": "savaite kilnojau is vienos vietos i kita 😅 prie remelio su nuotrauka galiausiai tiko geriausiai"
     }
   ],
   "JK-026": [
     {
       "name": "Gabija",
-      "text": "Dukra vis rodo duobutes mėnulyje, pastatėm ant lentynos. reljefas kai įjungta labai matosi 🌙"
+      "text": "dukra vis rodo duobutes menulyje. pastatem ant lentynos, ijungus reljefas gerai matosi"
     },
     {
       "name": "Vilius",
-      "text": "palietimu valdosi, jungiklio ieškot nereikia. ant naktinio staliuko tinka"
+      "text": "palietimu valdosi, nereikia jungiklio ieskot tamsoj. ant naktinio staliuko tinka"
     },
     {
       "name": "Karolina",
-      "text": "Silta sviesa turiu. pakrauti nunesu prie kompo, patogu kad ne visada prijungta"
+      "text": "silta sviesa turiu. pakraut nunesu prie kompo, patogu kad ne visada laidas"
     },
     {
       "name": "Ema",
-      "text": "Medinis laikiklis paprastas ir gerai, mėnulis traukia akį. buvo tuščia vieta lentynoj, dabar ne"
+      "text": "medinis laikiklis paprastas ir gerai. menulis traukia aki, anksciau ta vieta lentynoj buvo tuscia"
     },
     {
       "name": "Nedas",
@@ -539,65 +539,65 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Justina",
-      "text": "su pulteliu spalvota. as dazniausiai viena spalva laikau o dukra keičia kas sekundę 😂"
+      "text": "su pulteliu spalvota. as viena spalva laikau, dukra pakeicia kas sekunde 😂"
     }
   ],
   "JK-027": [
     {
       "name": "Simona",
-      "text": "Filmuoju namie, fonas ant tuščios sienos iškart ne toks nuobodus. tik kampą reikėjo rast 📸"
+      "text": "filmuojant namie fonas ant tuscios sienos iskart idomesnis. tik kampo reikejo paieskot"
     },
     {
       "name": "Laura",
-      "text": "Pradžiioj šviesos ratas mažas, patraukiau lempą toliau nuo sienos ir ok"
+      "text": "pradzioj sviesos ratas mazas, patraukiau lempa toliau nuo sienos ir gerai"
     },
     {
       "name": "Domas",
-      "text": "už sofos pastačiau į sieną. išjungus pagrindinę šviesą gražu, dieną mažiau"
+      "text": "uz sofos pastačiau i siena. isjungus pagrindine sviesa labai jauku"
     },
     {
       "name": "Kotryna",
-      "text": "kampas virš komodos. ant baltos sienos gerai, paveikslą teko nukelt"
+      "text": "kampas virs komodos. ant baltos sienos geriausiai, paveiksla teko nukelt"
     },
     {
       "name": "Ignas",
-      "text": "Kartais į kitą kambarį nusinešu, per USB paprastai. nieko į telefoną siųstis nereikėjo"
+      "text": "kartais i kita kambari nusinesu, per usb paprastai. nieko i telefona siust nereikejo"
     }
   ],
   "JK-028": [
     {
       "name": "Justina",
-      "text": "Laseliai uzkabino labiausiai. prie stalo ijungiu ir kartais uzsiziuriu i ta debesi ☁️"
+      "text": "Laseliai labiausiai uzkabino. prie stalo ijungiu ir kartais tiesiog ziuriu i ta debesi"
     },
     {
       "name": "Birutė",
-      "text": "juodas variantas tinka svetainei. rūkas ir lašeliai, įdomiau už senąjį paprastą"
+      "text": "juodas variantas svetainei gerai. rūkas ir laseliai idomiau uz mano sena paprasta drekintuva"
     },
     {
       "name": "Martynas",
-      "text": "Šalia darbo vietos laikau, vandens papildau. USB laidas ok, vietos ant stalo teko padaryt"
+      "text": "salia darbo vietos laikau. vandens papildyt reikia gan daznai, bet cia turbut normalu"
     },
     {
       "name": "Rasa",
-      "text": "balttas debesis juokingai mielas 😄 sveciai klausia kas cia ir po to visi ziuri kaip lasa"
+      "text": "baltas debesis juokingai mielas 😄 sveciai vis klausia kas cia"
     },
     {
       "name": "Dovydas",
-      "text": "Mielas debesis ☁️"
+      "text": "Mielas debesis, daugiau kaip dekoracija pas mane"
     },
     {
       "name": "Gabrielė",
-      "text": "Su savo eteriniu aliejum bandžiau. kvapas ok, bet lietus labiau patinka"
+      "text": "su savo eteriniu aliejum bandziau. kvapas ok, bet man paciam lietus labiau patinka"
     },
     {
       "name": "Tomas",
-      "text": "galvojau bus keista ant darbo stalo.. stovi prie augalo ir normaliai"
+      "text": "galvojau bus keista ant darbo stalo, bet prie augalo visai normaliai atrodo"
     }
   ],
   "JK-029": [
     {
       "name": "Lina",
-      "text": "Kojos šąla visada, vakare lovoj pasidedu. užvalkalas minkštas, geirau nei plika guminė 🥰"
+      "text": "kojos salta visada, vakare lovoj pasidedu. uzvalkalas minkstas, geriau nei plika gumine"
     },
     {
       "name": "Vytautas",
@@ -605,273 +605,273 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Daiva",
-      "text": "bordo ėmiau prie pledo tinka. užpildau ir nešu ant sofos, jokio laido"
+      "text": "bordo emiau prie pledo. uzpildau ir nesuosi ant sofos, jokio laido nereikia"
     },
     {
       "name": "Rima",
-      "text": "močiutė panašią turėjo be užvalkalo. sau kreminę paėmiau, vakare prie pledo"
+      "text": "mociute panasiai turejo tik be uzvalkalo. sau kremine paemiau, prie pledo gerai"
     }
   ],
   "JK-030": [
     {
       "name": "Vaida",
-      "text": "Sūnus pirmą vakarą žvaigždes skaičiavo gulėdamas. dabar pats prašo įjungt ⭐"
+      "text": "sunus pirma vakara zvaigzdes skaiciavo gulėdamas. dabar pats primena ijungt"
     },
     {
       "name": "Marius",
-      "text": "pultelis geras nereikia nuo sofos keltis. tamsiam kambary ryškiau, su lempom nelabai matosi"
+      "text": "pultelis geras, nereikia nuo sofos keltis. tamsiam kambary daug geriau matosi"
     },
     {
       "name": "Deimantė",
-      "text": "Prieš filmą įjungiam, filmo metu išjungiam. vaikai ūko spalvas keičia visą laiką"
+      "text": "Pries filma ijungiam, filmo metu isjungiam. vaikai spalvas pakeicia visas"
     },
     {
       "name": "Kamilė",
-      "text": "Vaiku kambariui pirkau bet i svetaine parsinesiau 😅 mums su vyru irgi idomu"
+      "text": "vaikų kambariui pirkau bet i svetaine parsinesem 😅 mums su vyru irgi idomu"
     },
     {
       "name": "Rokas",
-      "text": "Geras! ⭐"
+      "text": "Geras daiktas, ypac tamsoj"
     },
     {
       "name": "Ieva",
-      "text": "Pultelį ant lenynos laikom nes vaikai nusineša kažkur. projektorius ant komodos"
+      "text": "pulteli laikom ant lentynos nes vaikai vis nusinesa kazkur. pats projektorius ant komodos"
     },
     {
       "name": "Tadas",
-      "text": "draugai pamatę klausė ar tikrai kosmosas ant lubų.. ilgai užsižaidėm su spalvom 😄"
+      "text": "draugai pamate klause ar tikrai kosmosas ant lubu. su spalvom ilgai zaidem 😄"
     }
   ],
   "JK-031": [
     {
       "name": "Ernesta",
-      "text": "rytais kavai pieną plakuosi. pirmą kartą mažam puodely aptaškiau visą stalą 😬 su aukštesniu gerai"
+      "text": "rytais kavai piena plakuosi. pirma karta mazam puodely aptaskiau visa stala 😬 su aukstesniu daug geriau"
     },
     {
       "name": "Karolis",
-      "text": "patogus plakiklis"
+      "text": "patogus plakiklis, greitai padaro"
     },
     {
       "name": "Inga",
-      "text": "stovelis geras, kiti tokie irankiai stalciuj guledavo. sitas salia puoodeliu visada po ranka"
+      "text": "stovelis geras, kiti tokie irankiai stalciuj guledavo. sitas salia puodeliu visada po ranka"
     },
     {
       "name": "Milda",
-      "text": "daugiuasia matchai, kavai reciiau. nedidelis, ant stovelio palieku"
+      "text": "daugiausia matchai, kavai reciau. nedidelis tai vietos neuzima"
     },
     {
       "name": "Darius",
-      "text": "plieninis dera prie virtuvės. žmona juokiasi kad dabar kakavą rimtai darau 😂"
+      "text": "plieninis dera prie virtuves. zmona juokiasi kad dabar kakava rimtai darau"
     }
   ],
   "JK-032": [
     {
       "name": "Andrius",
-      "text": "telpa į sporto kreppšį ir nepasimeta. rankoj patogus"
+      "text": "telpa i sporto krepsi ir nepasimeta. rankoj patogus"
     },
     {
       "name": "Laurynas",
-      "text": "gerai"
+      "text": "gerai, veikia kaip reikia"
     },
     {
       "name": "Vilma",
-      "text": "galvutes keičiu lengvai, dažniausiai apvalia. kraunasi USB-C kaip ir kiti daiktai tai gerai"
+      "text": "galvutes keiciasi lengvai, dazniausiai apvalia naudoju. usb-c tai nereikia dar vieno keisto laido"
     },
     {
       "name": "Mantas",
-      "text": "stalčiuj prie kompo laikau. didelis ten netilptų, šito dydis geras"
+      "text": "stalciuj prie kompo laikau. didelis ten netilptu, sito dydis kaip tik"
     },
     {
       "name": "Aistė",
-      "text": "bijojau kad viena ranka nepatogu bus, bet rankena tiko mano delnui. paprasciau nei maniau"
+      "text": "bijojau kad viena ranka nepatogu bus, bet rankena tiko mano delnui. paprasciau nei galvojau"
     },
     {
       "name": "Domas",
-      "text": "greiių pabandžiau kelis, stipriausio beveik nenaudoju. gerai kad galima rinktis"
+      "text": "greicius pabandziau kelis, stipriausio beveik nenaudoju. gerai kad galima pasirinkti"
     }
   ],
   "JK-033": [
     {
       "name": "Gintarė",
-      "text": "audinys prie veido labai malnus, pirmą vakkarą pagalvę vis taisiausi. kitoks jausmas nei medvilnės ✨"
+      "text": "audinys prie veido labai malonus. pirma vakara pagalve vis taisiausi nes kitaip jauciasi"
     },
     {
       "name": "Aurelija",
-      "text": "Švelnus audinys"
+      "text": "Svelnus audinys, daugiau nieko ir nereikia"
     },
     {
       "name": "Daina",
-      "text": "50x70 pagalvei tiko. slidesnis nei buvau pratus, pora vakaru priprasti reikejo"
+      "text": "50x70 pagalvei tiko. slidesnis nei iprasta, pora vakaru priprast reikejo"
     },
     {
       "name": "Lina",
-      "text": "šilkinę kaukę jau turėjau tai ir užvalkalo užsimaniau. abu dabar prie lovos 😊"
+      "text": "silkinę kauke jau turejau tai ir uzvalkalo uzsimaniau. abu dabar prie lovos"
     },
     {
       "name": "Rūta",
-      "text": "bordo prie pilkos patalynės. iš pradžių keista viena pagalvė kitokia, dabar norisi antros tokios"
+      "text": "bordo prie pilkos patalynes gerai. is pradziu keista buvo viena pagalve kitokia, dabar antros tokios norisi"
     }
   ],
   "JK-034": [
     {
       "name": "Eglė",
-      "text": "volą naudoju po serumo vakare. šaltas akmuo ant veido malonu, gua sha dar mokausi 🌸"
+      "text": "volą naudoju po serumo vakare. saltas akmuo ant veido malonus, gua sha dar mokausi"
     },
     {
       "name": "Simona",
-      "text": "Gražus rinkinys 🌸"
+      "text": "Gražus rinkinys, dezute irgi nebloga"
     },
     {
       "name": "Lina",
-      "text": "Pradžioj tik volą imdavau, dabar jau ir antrą akmenį. toks mažas ritualas prieš miegą"
+      "text": "pradzioj tik vola imdavau, dabar jau ir antra akmeni. toks mazas ritualas pries miega"
     },
     {
       "name": "Miglė",
-      "text": "nefrito paėmiau. laikau dėžutėj nes lentynėlė maža ir nukristų"
+      "text": "nefrito paemiau. laikau dezutej nes lentynele maza ir bijau numest"
     }
   ],
   "JK-035": [
     {
       "name": "Rasa",
-      "text": "prie sofos patiesiau, bordo detalės tiko prie pagalvėlių. raštas kalėdinis bet ne labai margas 🎄"
+      "text": "prie sofos patiesiau, bordo detales tiko prie pagalveliu. kaledinis bet ne per margas"
     },
     {
       "name": "Darius",
-      "text": "Tinka svetainei"
+      "text": "Tinka svetainei, dydis pas mane geras"
     },
     {
       "name": "Jurgita",
-      "text": "kreminį po eglute. net nesinori jos nukraustyt, kampas gražiai susidėjo"
+      "text": "kremini po eglute dejau. net nesinori jos nukraustyt dabar"
     },
     {
       "name": "Monika",
-      "text": "Mažai svetainei dydis tinka. bet pasimatuokit prieš perrkant!! nuotaukoj didesnis atrodė"
+      "text": "mazai svetainei dydis tiko. bet pasimatuokit pries perkant!! nuotraukoj man irgi didesnis atrode"
     },
     {
       "name": "Simona",
-      "text": "bordo prie uzuolaidu derinau. eglutes raste matai is arti, is toliau tik spalvos"
+      "text": "bordo prie uzuolaidu derinau. eglutes raste is arti matosi, is toliau tik spalvos"
     },
     {
       "name": "Algis",
-      "text": "pries foteli kur skaitau. pūkas zemas, trupinius susiurbiu paprastai"
+      "text": "pries foteli kur skaitau. puko nedaug, trupinius lengvai susiurbiu"
     }
   ],
   "JK-036": [
     {
       "name": "Mantas",
-      "text": "buto raktus pažymėjau. eglute maza kišenėj netrukdo, nuo darbiniu atskirt lengviau"
+      "text": "buto raktus pazimejau. eglute maza, kisenej netrukdo. nuo darbiniu atskirt lengviau"
     },
     {
       "name": "Karolina",
-      "text": "Ruda oda emiau. su auksine eglute grazu, toks paprastas labiau man 🎄"
+      "text": "ruda oda emiau. su auksine eglute graziai, paprastas toks"
     },
     {
       "name": "Tadas",
-      "text": "Gera kokybė"
+      "text": "gera kokybe, atrodo kad laikys"
     },
     {
       "name": "Austėja",
-      "text": "kolegei prie didesnės dovanos įdėjau, matau kad ant raktų nešioja 😊"
+      "text": "kolegei prie didesnes dovanos idejau. matau kad ant raktu vis dar nesioja"
     }
   ],
   "JK-037": [
     {
       "name": "Paulius",
-      "text": "kuprinėj su laidu. kai po darbo dar kažkur einu o telefonas raudonas"
+      "text": "kuprinej su laidu. kai po darbo dar kazkur einu ir telefonas raudonas praverčia"
     },
     {
       "name": "Gabija",
-      "text": "Autobusu važiavau į kitą miestą, pasikroviau vietoj nereikėjo rozetės ieškot"
+      "text": "autobusu vaziavau i kita miesta, pasikroviau vietoj. nereikejo rozetes ieskot"
     },
     {
       "name": "Lukas",
-      "text": "man tinka"
+      "text": "man tinka, dydis normalus"
     },
     {
       "name": "Justė",
-      "text": "nešiojuosi beveik visada tik pati kartais jos neįkraunu :D tada nei kam"
+      "text": "nesiojuos beveik visada tik pati kartais pamirstu ja ikraut :D tada nei kam"
     },
     {
       "name": "Edvinas",
-      "text": "į striukės kišenę eidamas fotografuot mietso. prireikė, gerai kad ir laidą turėjau"
+      "text": "i striukes kisene eidamas fotografuot miesto isidejau. prireike, gerai kad laida turejau"
     },
     {
       "name": "Laimutė",
-      "text": "sode naudoju, rozetė namuke o aš kieme. telefonas ant stalo šalia 🌱"
+      "text": "sode naudoju, rozetė namuke o as kieme. telefonas salia ant stalo"
     },
     {
       "name": "Marius",
-      "text": "vieną laidą namie, kitą su baterija laikau. prieš kelionę abu sumetu, mažiau netvarkos"
+      "text": "viena laida namie, kita su baterija laikau. pries kelione abu sumetu ir maziau galvoju"
     }
   ],
   "JK-038": [
     {
       "name": "Emilija",
-      "text": "tinklalaides einu klausydama i darba. deklas mazas, telpa net i mano maziausia rankine 🎧"
+      "text": "tinklalaides einu klausydama i darba. deklas mazas, telpa net i maziausia rankine"
     },
     {
       "name": "Rokas",
-      "text": "Geras garsas 🎧"
+      "text": "Geras garsas, uz tokias visai"
     },
     {
       "name": "Greta",
-      "text": "Kreminės dėl spalvos ėmiau. dėklą prie raktų laikau kad nepamirščiau"
+      "text": "kremine del spalvos emiau. deklą prie raktu laikau kad nepamirsciau"
     },
     {
       "name": "Domantas",
-      "text": "prie kompiuterio kasdien. tik reikia priprast po to abi į dėklą sudėt"
+      "text": "prie kompiuterio kasdien. tik reikia priprast abi po to i deklą sudet"
     },
     {
       "name": "Rugilė",
-      "text": "audioknygas vakare, vyras televizorių žiūri. geriau nei dėl garso ginčytis 😄"
+      "text": "audioknygas vakare, vyras televizoriu ziuri. maziau ginču del garso 😄"
     },
     {
       "name": "Dainius",
-      "text": "Grafitines paėmiau. dėklas sportiniam krepsy, vaziuodamas į salę išsitrauukiu ir po to atgal"
+      "text": "grafitines paemiau. deklas sportiniam krepsy, vaziuojant i sale issitraukiu"
     }
   ],
   "JK-039": [
     {
       "name": "Viktorija",
-      "text": "grįžus iš darbo pirmiausia persiaunu. padas minkštas, atviras kulnas tai greit ☁️"
+      "text": "grizus is darbo pirmiausia persiaunu. padas minkstas, atviras kulnas tai greit uzsideda"
     },
     {
       "name": "Mindaugas",
-      "text": "didesnį dydį ėmiau, koja 42 ir tiko. rytais virtuvėj geriau nei su kojinėm"
+      "text": "didesni dydi emiau, koja 42 ir tiko. rytais virtuvej geriau nei su kojinem"
     },
     {
       "name": "Laima",
-      "text": "Šiltos ir minkštos"
+      "text": "Siltos ir minkstos"
     },
     {
       "name": "Neringa",
-      "text": "kremines grazios bet katinas, plauku pilna 😅 slepetes patogios aviu kasdien"
+      "text": "kremines grazios bet katinas, plauku pilna 😅 pacios slepetes patogios, aviu kasdien"
     },
     {
       "name": "Rasa",
-      "text": "Patogios"
+      "text": "Patogios, namams kaip tik"
     },
     {
       "name": "Giedrius",
-      "text": "senas gumines visada avėjau. šitos su pamušalu daug maloniau sėdint prie kompo"
+      "text": "senas gumines visada avėjau. sitos su pamušalu daug maloniau sedint prie kompo"
     },
     {
       "name": "Milda",
-      "text": "kremines nes šviesių norėjau. padas minkštas, į lauką neinu, namams pasilikau"
+      "text": "kremines nes sviesiu norejau. i lauka neinu su jom, tik namams"
     }
   ],
   "JK-040": [
     {
       "name": "Ieva",
-      "text": "Recepta virtuvėj telefone laikkau. nebereikia ramstyt į cukraus inda 😊"
+      "text": "Recepta virtuvej telefone laikau. nebereikia ramstyt i cukraus inda 😊"
     },
     {
       "name": "Tomas",
-      "text": "Gulsčiai pastatau ir video žiūriu. paprastas daiktas bet dažniau naudoju nei galvojau"
+      "text": "gulsčiai pastatau ir video ziuriu. paprastas daiktas bet naudoju daugiau nei galvojau"
     },
     {
       "name": "Agnė",
-      "text": "mamai skambinu su vaizdu ir rankos laisvos. ji irgi užsimanė tokio"
+      "text": "mamai skambinu su vaizdu ir rankos laisvos. ji irgi uzsimane tokio"
     },
     {
       "name": "Vytautas",
@@ -879,165 +879,165 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Aurelija",
-      "text": "mokausi megzti iš video, telefoną į stovą. dabar abiem rankom virbalus laikau 🧶"
+      "text": "mokausi megzti is video, telefona i stova ir abi rankos laisvos"
     }
   ],
   "JK-041": [
     {
       "name": "Dovilė",
-      "text": "senos kelionės nuotrauka įdėta. šalia knygų gražiau nei tikėjausi, medis šiltas 🥰"
+      "text": "sena keliones nuotrauka idejau. salia knygu graziau nei tikejausi, medis silta toki vaizda duoda"
     },
     {
       "name": "Andrius",
-      "text": "tamsesni paemiau tevams su anukes nuotrauka. asmeniska dovana ir negalvojau ilgai"
+      "text": "tamsesni paemiau tevams su anukes nuotrauka. asmeniska dovana, nereikejo daug galvot"
     },
     {
       "name": "Kamilė",
-      "text": "10x15 nuotrauka tiko. pastačiau, paskui ant sienos pakabinau, gerai kad abu galima"
+      "text": "10x15 tiko. pirma pastačiau paskui ant sienos pakabinau, gerai kad abu galima"
     },
     {
       "name": "Eimantas",
-      "text": "Gražus rėmelis"
+      "text": "Gražus rėmelis, paprastas"
     }
   ],
   "JK-042": [
     {
       "name": "Sandra",
-      "text": "ant stalo viską išsidėliojau ir šeimos dovanas supakavau. juostelės su kortelėm kartu, derint nereikėjo 🎁"
+      "text": "ant stalo viska issideliojau ir seimos dovanas supakavau. juosteles su kortelem kartu, derint nereikejo"
     },
     {
       "name": "Giedrė",
-      "text": "kraft popierius su aukso lipdukais labai gražus. mano kreivi kampai kažkaip nesimato 😅"
+      "text": "kraft popierius su aukso lipdukais labai gerai atrodo. mano kreivi kampai kazkaip maziau matosi 😅"
     },
     {
       "name": "Martynas",
-      "text": "Labai gražu 🎁"
+      "text": "Labai gražu, ypac kai viskas vienoj dezutej"
     }
   ],
   "JK-043": [
     {
       "name": "Jolanta",
-      "text": "suris, vynuoges, duona. dviem uztenka vietos ir stalas grazesnis 🧀"
+      "text": "suris, vynuoges, duona. dviem uztenka vietos ir stalas iskart graziau atrodo"
     },
     {
       "name": "Arnas",
-      "text": "grazi lenta"
+      "text": "grazi lenta, spalva gera"
     },
     {
       "name": "Rūta",
-      "text": "ir sekmadienio pusryčiams naudoju. rankom plauti reikia, daugiau priežiūros, bet medis mielesnis"
+      "text": "ir sekmadienio pusryciam naudoju. rankom plauti reikia, daugiau prieziuros bet medis man mielesnis"
     },
     {
       "name": "Aušra",
-      "text": "duoną ant lentos dedu, ne i krepšelį. prie sriubos taip patogiau"
+      "text": "duona ant lentos dedu, ne i krepseli. prie sriubos irgi kazkaip patogiau"
     },
     {
       "name": "Gediminas",
-      "text": "kai nenaudoju atremta virtuvėj stovi. savaitgalį alyvuogėm ir sūriui išsitraukiu"
+      "text": "kai nenaudoju atremta virtuvej stovi. savaitgali alyvuogem ir suriui issitraukiu"
     }
   ],
   "JK-044": [
     {
       "name": "Indrė",
-      "text": "Vanilė jaučiasi bet kepinių neprimena. medis patiko labiau nei maniau"
+      "text": "vanile jauciasi bet kepiniu tikrai neprimena. medis patiko labiau nei galvojau"
     },
     {
       "name": "Lina",
-      "text": "koridoriuj laikau, prieš svečius papurškiu. žvakės uždegt nereikia 👍"
+      "text": "koridoriuj laikau, pries svecius papurskiu. zvakes uzdegt nereikia"
     },
     {
       "name": "Gintarė",
-      "text": "Malonus kvapas"
+      "text": "Malonus kvapas, ne per saldus"
     }
   ],
   "JK-045": [
     {
       "name": "Aurelija",
-      "text": "ant virtuves palangės stovejo. ryte prie kavos po langelį, vyras net primindavo jei pamirsdavau"
+      "text": "ant virtuves palanges stovejo. ryte prie kavos po langeli, vyras net primindavo jei pamirsdavau"
     },
     {
       "name": "Raimondas",
-      "text": "mamai paėmiau, ji tokius rituauls mėgsta. paskui vis paaskodavo ką rado 🎄"
+      "text": "mamai paemiau, ji tokius ritualus megsta. paskui vis pasakodavo ka rado"
     },
     {
       "name": "Vilma",
-      "text": "Gražus kalendorius 🎄"
+      "text": "Gražus kalendorius"
     },
     {
       "name": "Inga",
-      "text": "su dukra pakaiom atidarom. mano diena ji vis tiek salia stovi ir laukkia ❤️"
+      "text": "su dukra pakaitom atidarom. mano diena ji vis tiek salia stovi ir laukia ❤️"
     },
     {
       "name": "Dovydas",
-      "text": "sau pirkau nors kalendoriaus nebuvo nuo mokyklos. ryte arbatos rast smagu, proga papusryciaut ramiai"
+      "text": "sau pirkau nors kalendoriaus neturejau nuo mokyklos. ryte arbatos rast smagu"
     },
     {
       "name": "Eglė",
-      "text": "prie lango pastaciau, vakare su girlanda graziai. susilaikyti neatidarius visko pirma dieną sunkiausia 😂"
+      "text": "prie lango pastaciau, vakare su girlianda graziai. sunkiausia pirma diena visko neatidaryt iskart 😂"
     }
   ],
   "JK-046": [
     {
       "name": "Kristina",
-      "text": "vaikui saldainių ir laiškelį įdėjau. megzta, ne tokia plona kaip sena"
+      "text": "vaikui saldainiu ir laiskeli idejau. megzta, ne tokia plona kaip sena"
     },
     {
       "name": "Simas",
-      "text": "Židinio neturim, prie eglutės pakabinom. kreminė su bordo prie žaisliukų tinka 🎅"
+      "text": "zidinio neturim tai prie eglutes pakabinom. kremine su bordo prie zaisliuku tinka"
     },
     {
       "name": "Aistė",
-      "text": "mažesnė maniau bus, o vietos smulkmenom daug. kasmet išsitrauksim su dekoracijom"
+      "text": "mazesne maniau bus, bet smulkmenom vietos tikrai daug. kasmet su dekoracijom issitrauksim"
     },
     {
       "name": "Dalia",
-      "text": "Mieli kutai"
+      "text": "Mieli kutai, vaikui labiausiai patiko jie"
     }
   ],
   "JK-047": [
     {
       "name": "Miglė",
-      "text": "ant darbo stalo. kol kompas uzsikrauna pakratau, namelis labai mielas ❄️"
+      "text": "ant darbo stalo. kol kompas uzsikrauna pakratau, namelis labai mielas"
     },
     {
       "name": "Gintaras",
-      "text": "Mielas gaublys ❄️"
+      "text": "Mielas gaublys, nedidelis"
     },
     {
       "name": "Daiva",
-      "text": "primena vaikystėj pas močiutę gaublį. vis pagaunu save kratant nors seniai ne vaikas 😊"
+      "text": "primena vaikystej pas mociute buvusi gaubli. vis pagaunu save kratant nors seniai ne vaikas 😊"
     },
     {
       "name": "Nojus",
-      "text": "Pakratau ir žiūrriu kol sniegas nusileidžia. maža detalė, nuo telefono kartais atitraukia"
+      "text": "pakratau ir ziuriu kol sniegas nusileidzia. maza detale, nuo telefono kartais atitraukia"
     },
     {
       "name": "Kotryna",
-      "text": "vietos tarp knygų buvo, ten ir stovi. mediena man labiau nei blizgios dekoracijos"
+      "text": "vietos tarp knygu buvo tai ten ir stovi. mediena labiau patinka nei blizgios dekoracijos"
     }
   ],
   "JK-048": [
     {
       "name": "Alma",
-      "text": "be staltiesės ant medinio stalo gražu. per vidurį žvakės ir daugiau nereikia"
+      "text": "be staltieses ant medinio stalo grazu. per viduri zvakes ir daugiau nieko nereikia"
     },
     {
       "name": "Renata",
-      "text": "raštas ryškus tai indus paprastus baltus dėjau. gražiai, mano stalui ilgesnis tiktų"
+      "text": "rastas gana ryskus tai indus paprastus baltus dejau. graziai gavosi, mano stalui galetu but ilgesnis"
     },
     {
       "name": "Saulius",
-      "text": "Gražus takelis"
+      "text": "Gražus takelis, lengvai derinasi"
     }
   ],
   "JK-049": [
     {
       "name": "Dovilė",
-      "text": "ant komodos prie eglutės. maniau per daug visko bus, bet isipaise"
+      "text": "ant komodos prie eglutes. maniau bus per daug visko bet kazkaip isipaise"
     },
     {
       "name": "Arūnas",
-      "text": "prislopintos spalvos patiko. su senais žaisliukais geriau nei ryškiai raudnoas 👌"
+      "text": "prislopintos spalvos patiko. su senais zaisliukais geriau nei ryskiai raudonas"
     },
     {
       "name": "Rita",
@@ -1047,77 +1047,77 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
   "JK-050": [
     {
       "name": "Aistė",
-      "text": "pagaliau nesimato to bjauraus stovo!! reikėjo pernai pirkt"
+      "text": "pagaliau nesimato to bjauraus stovo. reikejo pernai pirkt"
     },
     {
       "name": "Giedrė",
-      "text": "kreminė prie eglutės tinka. katinas kai įsitaiso tai dovanoms vietos mažiau 😅"
+      "text": "kremine prie eglutes tinka. katinas kai isitaiso tai dovanom vietos maziau 😅"
     },
     {
       "name": "Mindaugas",
-      "text": "Praktiška"
+      "text": "Praktiška, savo darba daro"
     },
     {
       "name": "Violeta",
-      "text": "stova anksciau maiseliais dengdvau. dabar nebereikia. krasta islygint reikejo nes krievai buvau uzdejus"
+      "text": "stova anksciau maiseliais dengdavau. dabar nebereikia. krasta tik islygint reikejo nes kreivai buvau uzdejus"
     }
   ],
   "JK-051": [
     {
       "name": "Lina",
-      "text": "vakare tik namelį su girlianda įjungiu. ant palangės šviečiantys langeliai gražūs ✨"
+      "text": "vakare tik nameli su girlianda ijungiu. ant palanges svieciantys langeliai gerai atrodo"
     },
     {
       "name": "Saulius",
-      "text": "nedidelis, vietos neužima. dėl apsnigto stogo ėmiau, gyvai dar mielesnis"
+      "text": "nedidelis, vietos neuzima. del apsnigto stogo emiau, gyvai dar mielesnis"
     },
     {
       "name": "Eglė",
-      "text": "prie eglutės statyt galvoojau, liko virtuvėj. ryte su kava smagu įjungt"
+      "text": "prie eglutes statyt galvojau, liko virtuvej. ryte su kava smagu ijungt"
     },
     {
       "name": "Rimantė",
-      "text": "ant siauro prieškambario staliuko padėjau. maniau didesnės dekoracijos reikės, užteko šito 😊"
+      "text": "ant siauro prieskambario staliuko padejau. maniau didesnes dekoracijos reikes bet uzteko sito"
     },
     {
       "name": "Aidas",
-      "text": "Gražus žibintas ✨"
+      "text": "Gražus žibintas"
     }
   ],
   "JK-052": [
     {
       "name": "Monika",
-      "text": "laisvas tikrai, rankoves atsiraitau. kritimas patinka, su džinsais dažnai"
+      "text": "laisvas tikrai, rankoves atsiraitau. kritimas patinka, su dzinsais daznai"
     },
     {
       "name": "Greta",
-      "text": "Patogus"
+      "text": "Patogus, nespaudzia"
     },
     {
       "name": "Jurgita",
-      "text": "storokas, biure per silta. savaitgaliais namie tiesiog gerai"
+      "text": "storokas, biure per silta. savaitgaliais namie kaip tik"
     },
     {
       "name": "Simona",
-      "text": "platus rankogaliai patiko. nuotraukoj ju nepastebejau, gyvai grazu"
+      "text": "platūs rankogaliai patiko. nuotraukoj ju net nepastebejau, gyvai graziau"
     },
     {
       "name": "Rugilė",
-      "text": "su siaurom kelnem gerai. su plaetm per daug, megztinis ir taip laisvas"
+      "text": "su siaurom kelnem gerai. su placiom jau per daug, megztinis ir taip laisvas"
     },
     {
       "name": "Edita",
-      "text": "rytais į darželį vežu vaiką ir dažnai griebiu šitą. galvot nereikia ką rengtis 😅"
+      "text": "rytais i darzeli vezu vaika ir daznai griebiu sita. galvot ka rengtis nereikia 😅"
     },
     {
       "name": "Dalia",
-      "text": "i kelnes nekemsu, laisvai paliekam. peciai graziai krenta, del to pasilikau"
+      "text": "i kelnes nekemsu, laisvai palieku. peciai graziai krenta, del to ir pasilikau"
     }
   ],
   "JK-053": [
     {
       "name": "Tomas",
-      "text": "namie nešioju. užtrauktukas patogus kai šilta, anksčiau megztinį per galvą tampydavau 😄"
+      "text": "namie nesioju. uztrauktukas patogus kai silta, anksciau megztini per galva tampydavau 😄"
     },
     {
       "name": "Rūta",
@@ -1125,11 +1125,11 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Karolina",
-      "text": "kisenej telpa telefonas tik viena puse nusvyra. rytais uzsimetu daznai"
+      "text": "kisenej telpa telefonas bet viena puse tada nusvyra. rytais uzsimetu daznai"
     },
     {
       "name": "Justė",
-      "text": "užtrauktuko dėlei ėmiau, gobtuvo beveik nenaudoju. balkone vakare malonu 🥰"
+      "text": "uztrauktuko del emiau, gobtuvo beveik nenaudoju. balkone vakare malonu"
     },
     {
       "name": "Deividas",
@@ -1137,7 +1137,7 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Gintarė",
-      "text": "gobtuvas didokas, nenaudoju. džemperis patinka, ypač vidus minkštas"
+      "text": "gobtuvas didokas, nenaudoju. pats dzemperis patinka, ypac vidus minkstas"
     }
   ],
   "JK-054": [
@@ -1147,29 +1147,29 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Vilma",
-      "text": "ant darbo kėdės laikau, atvėsus užsimetu. ilgis geras, nugara neatsidengia 👍"
+      "text": "ant darbo kedes laikau, atvesus uzsimetu. ilgis geras, nugara neatsidengia"
     },
     {
       "name": "Gabija",
-      "text": "kišenės maloniai nustebino, nuotraukose jų nepastebėjau. plaukų gumytes ten metu"
+      "text": "kisenes maloniai nustebino, nuotraukose ju nepastebejau. plauku gumytes ten metu"
     },
     {
       "name": "Diana",
-      "text": "mamai pirkau. ji susagstomus labiau meggsta tai bent neioja o ne spintoj laiko 😊"
+      "text": "mamai pirkau. ji susagstomus labiau megsta tai bent nesimeto spintoj"
     },
     {
       "name": "Virginija",
-      "text": "ilgio ieškojau, trumpo nenorėjau. su paprastais marškinėliais ir tvakingai"
+      "text": "ilgio ieskojau, trumpo nenorejau. su paprastais marskineliais tvarkingai atrodo"
     }
   ],
   "JK-055": [
     {
       "name": "Agnė",
-      "text": "bordo apvadas labai patiko. paprasta, bet nesijaučiu kaip su senais išsitampiusiais marškinėliais 😄"
+      "text": "bordo apvadas labai patiko. paprasta bet nesijauciu kaip su senais issitampiusiais marskineliais 😄"
     },
     {
       "name": "Laura",
-      "text": "kelnės ilgokos, aš žema. pasilikau, namie netrukdo"
+      "text": "kelnes ilgokos, as zema. pasilikau, namie netrukdo"
     },
     {
       "name": "Viktorija",
@@ -1177,33 +1177,33 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Renata",
-      "text": "ilgų kelnių norėjau nes naktį antklodę nusispardau. šitas tiko"
+      "text": "ilgu kelniu norejau nes nakti antklode nusispardau. sita tiko"
     },
     {
       "name": "Alina",
-      "text": "miegu su marškinėliais paprastai, šitą vakarais namie. apykaklė gražiai kai viršų susisegu ✨"
+      "text": "miegu su marskineliais paprastai, sita vakarais namie. apykakle graziai atrodo kai virsu susisegu"
     },
     {
       "name": "Ernesta",
-      "text": "bordo kraštai pagyvina. marškinius kartais su kitom kelnėm vilkiu"
+      "text": "bordo krastai pagyvina. marskinius kartais su kitom kelnem nesioju"
     },
     {
       "name": "Skaistė",
-      "text": "viršų prie chalato pakabinau, kelnes į stalčių. pagaliau namie derantis komplektas turiu"
+      "text": "virsu prie chalato pakabinau, kelnes i stalciu. pagaliau namie deranti komplekta turiu"
     }
   ],
   "JK-056": [
     {
       "name": "Ieva",
-      "text": "Plonas, po svarku audinio kruvos nėra. i darbą geriau uz stora megztinį"
+      "text": "Plonas, po svarku audinio kruvos nera. i darba geriau nei stora megztini"
     },
     {
       "name": "Daiva",
-      "text": "kaklą kartais atlenkiu, kartais aukštai. spalva prie tamsuas palto 👌"
+      "text": "kakla kartais atlenkiu, kartais aukstai. spalva prie tamsaus palto gerai"
     },
     {
       "name": "Neringa",
-      "text": "golfo be raštų ieskkojau. sitas paprastas ir su visskuo derinasi kas yra"
+      "text": "golfo be rastu ieskojau. sitas paprastas ir su daug kuo derinasi"
     },
     {
       "name": "Aušra",
@@ -1211,91 +1211,91 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Paulina",
-      "text": "atlenkta apykaklė patogiau. su sijonu į darbą ir daugiau nieko viršuj nereikia jei kabinetas šiltas"
+      "text": "atlenkta apykakle patogiau. su sijonu i darba ir daugiau nieko virsuj nereikia jei kabinete silta"
     }
   ],
   "JK-057": [
     {
       "name": "Ugnė",
-      "text": "darbovietės kalėdiniam vakarui paėmiau. elniai ir eglutės iškart į temą, aksesuarų nereikėjo 🎄"
+      "text": "darbovietes kalediniam vakarui paemiau. elniai ir eglutes iskart i tema, aksesuaru nereikejo"
     },
     {
       "name": "Milda",
-      "text": "Gražus, šventėms tinka"
+      "text": "Gražus, sventem tinka"
     },
     {
       "name": "Vesta",
-      "text": "tarp keliu rinkausi, sito zalios detales labiausiai. su juodom kelnem grazu"
+      "text": "tarp keliu rinkausi, sito zalios detales labiausiai patiko. su juodom kelnem gerai"
     },
     {
       "name": "Julija",
-      "text": "eglutes ant rašto man graziausios. rengiausi su paprastu sijonu, megztinis ir taip ryškus 😊"
+      "text": "eglutes ant rasto man graziausios. rengiausi su paprastu sijonu, megztinis ir taip ryskus"
     }
   ],
   "JK-058": [
     {
       "name": "Kristina",
-      "text": "sau ir vaikui derinom. mažajam Kalėdų Senelis svarbiausia, mums kad vienodai 🎅 Dydžių lentelė pasirodė tiksli, vaikui ėmėm viena pusė didesnį, kad užtektų visai žiemai. Po pirmo skalbimo raštas nesusivėlė ir spalvos išliko. Nuotraukai prie eglutės pastatėm telefoną ant knygų krūvos ir ilgai juokėmės bandydami visus sustatyti. Kitais metais greičiausiai vėl vilkėsim, tik gal su kitu raštu."
+      "text": "sau ir vaikui derinom. mazajam Kaledu Senelis svarbiausia, mums kad vienodai 🎅 dydziu lentele pasirode tiksli, vaikui emem viena puse didesni kad uztektu visai ziemai. po pirmo skalbimo rastas nesusivėle ir spalvos liko. nuotraukai prie eglutes telefona ant knygu krūvos pastatem ir ilgai juokemes kol visus sustatem. kitais metais turbut vel vilkesim, tik gal kita rasta"
     },
     {
       "name": "Paulius",
-      "text": "žmona šeimos nuotraukai išrinko. nelabai norėjau vienodai rengtis, bet rezultatas patiko"
+      "text": "zmona seimos nuotraukai isrinko. nelabai norejau vienodai rengtis bet rezultatas visai patiko"
     },
     {
       "name": "Indrė",
-      "text": "raudona su snaigėm prie eglutės gražu. vaikas savo megztinį dar prieš fotosesiją norėjo vilkėt"
+      "text": "raudona su snaigem prie eglutes gerai atrodo. vaikas savo megztini dar pries fotosesija norejo vilket"
     },
     {
       "name": "Evelina",
-      "text": "sunus del Kaledu Senelio pasirinko. man ir kitas butu tikes, sikart jis nusprende"
+      "text": "sunus del Kaledu Senelio pasirinko. man ir kitas butu tikes, si karta jis nusprende"
     },
     {
       "name": "Martynas",
-      "text": "vienodai rengtis pas mus naujiena. nuotrauką seneliams padarėm, galvojam įrėmint 😂"
+      "text": "vienodai rengtis pas mus naujiena. nuotrauka seneliams padarem, galvojam iremint 😂"
     },
     {
       "name": "Aurelija",
-      "text": "raštas nuotraukose nesusilieja, snaigės matosi. tamsias paprastas kelnes derinom kad ne per daug"
+      "text": "rastas nuotraukose nesusilieja, snaiges matosi. tamsias paprastas kelnes derinom kad nebutu per daug"
     }
   ],
   "JK-059": [
     {
       "name": "Mantas",
-      "text": "su drauge po megztinį. sniego senis toks juokingas, abu pamatėm ir ėmėm ⛄"
+      "text": "su drauge po megztini. sniego senis toks juokingas, abu pamatem ir emem"
     },
     {
       "name": "Emilija",
-      "text": "derančių ieškojom bet ne su širdelėm ar užraašis. sniego senis tiko, spalvos kalėdinės"
+      "text": "deranciu ieskojom bet ne su sirdutem ar uzrasais. sniego senis tiko, spalvos kaledines"
     },
     {
       "name": "Lukas",
-      "text": "Labai juokingi ⛄"
+      "text": "Labai juokingi 😄"
     },
     {
       "name": "Roberta",
-      "text": "draugas pats pasiūlė, netikėta man buvo. dydžius sau išsirinkom, šeimos vakarienėj vilkėsim"
+      "text": "draugas pats pasiule, netiketa buvo. dydzius sau issirinkom, per seimos vakariene vilkesim"
     },
     {
       "name": "Domantas",
-      "text": "sniego senis dideis ir matosi iškart. smulkūs raštai ne mano, čia aiškus piešinys"
+      "text": "sniego senis didelis ir matosi iskart. smulkus rastai ne mano, cia aiskus piesinys"
     }
   ],
   "JK-060": [
     {
       "name": "Jolanta",
-      "text": "bendro rašto šeimai norėjom, šitas ramesnis už didelius paveikslėlius. raudona su balta dera ❤️"
+      "text": "bendro rasto seimai norejom, sitas ramesnis uz didelius paveiksliukus. raudona su balta gerai dera"
     },
     {
       "name": "Andrius",
-      "text": "elniu del, vaikui jie labiausiai. namie fotografavomes, kitu sventiniu drabuziu nereikejo"
+      "text": "del elniu emem, vaikui jie labiausiai patiko. namie fotografavomes, kitu svenciu drabuziu net nereikejo"
     },
     {
       "name": "Dainora",
-      "text": "snaigės ir elniai per visą megztinį kartojasi. gražiau nei vienas didelis piešinys priekyje"
+      "text": "snaiges ir elniai per visa megztini kartojasi. man graziau nei vienas didelis piesinys prieky"
     },
     {
       "name": "Jūratė",
-      "text": "tarp šito ir su Kaledu Seneliu svarstem. elniai laimėjo, tinka visą žiemą 😊"
+      "text": "tarp sito ir su Kaledu Seneliu svarstem. elniai laimejo, tinka visa ziema"
     },
     {
       "name": "Domas",
@@ -1303,7 +1303,7 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     },
     {
       "name": "Kamilė",
-      "text": "balti raštai ant raudono labai gražu. prie mūsų egutės su baltais žaisliukais gerai 🎄"
+      "text": "balti rastai ant raudono labai graziai. prie musu eglutes su baltais zaisliukais sueina"
     }
   ]
 };
