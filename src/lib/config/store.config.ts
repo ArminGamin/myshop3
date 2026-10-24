@@ -13,7 +13,7 @@ export const store = {
     responseTime: "Atsakome per 24 valandas!",
     legalName: "Kalėdų Kampelis",
     address: "",
-    companyCode: "306914521",
+    companyCode: "",
   },
   shipping: {
     flatRateCents: 299,

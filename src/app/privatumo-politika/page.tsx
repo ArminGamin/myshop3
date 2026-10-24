@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         naudojame, kam galime juos perduoti ir kokias teises turite.
       </p>
       <p>
-        Duomenų valdytojas: {store.contact.legalName}, įmonės kodas {store.contact.companyCode},
+        Duomenų valdytojas: {store.contact.legalName},
         el. paštas {store.contact.email}.
       </p>
 
