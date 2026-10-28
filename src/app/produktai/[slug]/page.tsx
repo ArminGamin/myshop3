@@ -18,7 +18,7 @@ import { ProductCard } from "@/components/commerce/product-card";
 import { ProductTitle } from "@/components/commerce/product-title";
 import { ProductReviews } from "@/components/commerce/product-reviews";
 import { getProductReviews } from "@/lib/data/product-reviews";
-import { Badge } from "@/components/ui/primitives";
+import { Badge, Stars } from "@/components/ui/primitives";
 import { ArticleCard } from "@/components/blog/article-card";
 import { getArticles, linkedProductSlugs } from "@/lib/articles";
 
@@ -159,7 +159,7 @@ export default async function ProductPage({ params }: Props) {
               {product.bestseller ? <Badge>Bestselleris</Badge> : product.isNew ? <Badge>Naujiena</Badge> : null}
               {product.rating && product.reviewCount ? (
                 <span className="pdp-rating">
-                  <span aria-hidden className="text-gold-500">★★★★★</span>
+                  <Stars value={product.rating} size={15} />
                   <strong className="num text-ink-900">{String(product.rating).replace(".", ",")}</strong>
                   <span>
                     ({product.reviewCount} {reviewWord(product.reviewCount)})

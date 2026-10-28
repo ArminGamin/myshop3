@@ -22,6 +22,7 @@ export function Badge({
   );
 }
 
+// Žvaigždutės žaliuose kvadratėliuose; neužpildytos – pilkos.
 export function Stars({
   value,
   size = 14,
@@ -30,23 +31,11 @@ export function Stars({
   size?: number;
 }) {
   return (
-    <span
-      role="img"
-      aria-label={`Įvertinimas ${value} iš 5`}
-      className="inline-flex items-center gap-0.5 text-gold-500"
-    >
+    <span role="img" aria-label={`Įvertinimas ${value} iš 5`} className="inline-flex items-center gap-[2px] align-middle">
       {[1, 2, 3, 4, 5].map((i) => (
-        <svg
-          key={i}
-          width={size}
-          height={size}
-          viewBox="0 0 20 20"
-          fill={i <= Math.round(value) ? "currentColor" : "none"}
-          stroke="currentColor"
-          strokeWidth="1.5"
-          aria-hidden
-        >
-          <path d="M10 1.8l2.5 5.1 5.6.8-4 4 .9 5.6L10 14.6l-5 2.7.9-5.6-4-4 5.6-.8z" />
+        <svg key={i} width={size} height={size} viewBox="0 0 20 20" aria-hidden>
+          <rect width="20" height="20" fill={i <= Math.round(value) ? "#00b67a" : "#dcdce6"} />
+          <path d="M10 3.4l1.9 4.6 4.9.4-3.7 3.2 1.1 4.8L10 13.9l-4.2 2.5 1.1-4.8-3.7-3.2 4.9-.4z" fill="#fff" />
         </svg>
       ))}
     </span>

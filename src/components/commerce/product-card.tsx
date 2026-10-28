@@ -7,7 +7,7 @@ import { discountPercent, formatPrice } from "@/lib/format";
 import { useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
 import { flags } from "@/lib/config/store.config";
-import { Badge } from "@/components/ui/primitives";
+import { Badge, Stars } from "@/components/ui/primitives";
 import { ProductImage } from "./product-art";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -81,7 +81,7 @@ export function ProductCard({ product }: { product: Product }) {
         </Link>
         {flags.ENABLE_REVIEWS && product.rating && product.reviewCount ? (
           <p className="mt-1 flex items-center gap-1.5 text-xs leading-none text-ink-600">
-            <span aria-hidden className="text-gold-500">★★★★★</span>
+            <Stars value={product.rating} size={12} />
             {String(product.rating).replace(".", ",")} ({product.reviewCount})
           </p>
         ) : null}

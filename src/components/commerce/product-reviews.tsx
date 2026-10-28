@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Stars } from "@/components/ui/primitives";
 import { ChevronDown } from "lucide-react";
 import type { ProductReview } from "@/lib/data/product-reviews";
 
@@ -28,7 +29,7 @@ export function ProductReviews({
             <div className="reviews-score mt-6">
               <p className="num reviews-score-value">{String(rating).replace(".", ",")}</p>
               <div>
-                <p aria-hidden className="text-[15px] tracking-[0.12em] text-gold-500">★★★★★</p>
+                <Stars value={rating} size={18} />
                 <p className="mt-0.5 text-[13px] font-semibold text-ink-600">vidutinis įvertinimas iš 5</p>
               </div>
             </div>
@@ -42,9 +43,9 @@ export function ProductReviews({
               <li key={`${review.name}-${i}`} className="review-card">
                 <span aria-hidden className="review-quote">“</span>
                 {review.rating ? (
-                  <p aria-label={`Įvertinimas ${review.rating} iš 5`} className="mb-1.5 text-[12px] tracking-[0.1em] text-gold-500">
-                    {"★".repeat(review.rating)}
-                  </p>
+                  <div className="mb-1.5">
+                    <Stars value={review.rating} size={14} />
+                  </div>
                 ) : null}
                 <p className="review-text">{review.text}</p>
                 <p className="review-name">
