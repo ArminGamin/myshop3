@@ -117,7 +117,7 @@ async function sendPurchaseConfirmation(orderId: string) {
   const shipping = intent?.shipping?.address ?? session?.customer_details?.address;
   const name = intent?.shipping?.name ?? session?.customer_details?.name;
   const address = shipping ? [name, shipping.line1, shipping.line2, [shipping.postal_code, shipping.city].filter(Boolean).join(" "), shipping.country].filter(Boolean).join("\n") : metadata.address || "Pristatymo adresas nurodytas užsakyme";
-  const html = await renderPurchase({ orderId, paidAt: (intent?.created ?? session!.created) * 1000, order, address });
+  const html = await renderPurchase({ orderId, paidAt: (intent?.created ?? session!.created) * 1000, order, address, shippingMethod: metadata.delivery });
   const emailId = await sendEmail({ to: email, subject: `🎁 Užsakymas patvirtintas! · ${store.brand.name}`, html, idempotencyKey: `purchase/${orderId}` });
   const update: Stripe.MetadataParam = { email_confirmation_sent: emailId };
   if (intent) await stripe.paymentIntents.update(orderId, { metadata: update });

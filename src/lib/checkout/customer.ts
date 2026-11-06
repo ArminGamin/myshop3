@@ -1,4 +1,5 @@
 import { emailError, normalizeEmail } from "@/lib/security/email";
+import { deliveryMethod, isPickup } from "@/lib/checkout/delivery";
 
 export type CheckoutCustomer = {
   email: string;
@@ -9,6 +10,8 @@ export type CheckoutCustomer = {
   region: string;
   postalCode: string;
   phone: string;
+  delivery: string;
+  locker: string;
 };
 
 export const EMPTY_CUSTOMER: CheckoutCustomer = {
@@ -20,6 +23,8 @@ export const EMPTY_CUSTOMER: CheckoutCustomer = {
   region: "",
   postalCode: "",
   phone: "",
+  delivery: "home",
+  locker: "",
 };
 
 const DRAFT_KEY = "jaukumas.checkout-customer.v1";
@@ -41,6 +46,8 @@ export function readCustomerDraft(): CheckoutCustomer {
       region: typeof source.region === "string" ? source.region : "",
       postalCode: typeof source.postalCode === "string" ? source.postalCode : "",
       phone: typeof source.phone === "string" ? source.phone : "",
+      delivery: deliveryMethod(source.delivery),
+      locker: typeof source.locker === "string" ? source.locker : "",
     };
   } catch {
     return { ...EMPTY_CUSTOMER };
@@ -101,6 +108,8 @@ export function validateCustomer(input: Partial<CheckoutCustomer>): {
     region: sanitizeText(input.region ?? "", 60),
     postalCode: digitsOnly(input.postalCode ?? "", 5),
     phone: formatPhone(input.phone ?? ""),
+    delivery: deliveryMethod(input.delivery),
+    locker: sanitizeText(input.locker ?? "", 160),
   };
 
   const errors: Partial<Record<keyof CheckoutCustomer, string>> = {};
@@ -108,9 +117,13 @@ export function validateCustomer(input: Partial<CheckoutCustomer>): {
   if (mail) errors.email = mail;
   if (!LT_NAME.test(value.name)) errors.name = "Įveskite vardą raidėmis.";
   if (!LT_NAME.test(value.surname)) errors.surname = "Įveskite pavardę raidėmis.";
-  if (value.address.length < 5 || value.address.length > 120) errors.address = "Įveskite gatvę ir namo numerį.";
-  if (!LT_NAME.test(value.city)) errors.city = "Įveskite miestą raidėmis.";
-  if (!/^\d{5}$/.test(value.postalCode)) errors.postalCode = "Pašto kodas — 5 skaitmenys.";
+  if (isPickup(deliveryMethod(value.delivery))) {
+    if (value.locker.length < 5) errors.locker = "Pasirinkite paštomatą.";
+  } else {
+    if (value.address.length < 5 || value.address.length > 120) errors.address = "Įveskite gatvę ir namo numerį.";
+    if (!LT_NAME.test(value.city)) errors.city = "Įveskite miestą raidėmis.";
+    if (!/^\d{5}$/.test(value.postalCode)) errors.postalCode = "Pašto kodas — 5 skaitmenys.";
+  }
   if (!/^\+?\d{8,15}$/.test(value.phone)) errors.phone = "Įveskite telefono numerį, pvz. +37060000000.";
 
   return { errors, value };

@@ -27,7 +27,9 @@ function sameCustomer(a: CheckoutCustomer, b: CheckoutCustomer) {
     a.city === b.city &&
     a.region === b.region &&
     a.postalCode === b.postalCode &&
-    a.phone === b.phone
+    a.phone === b.phone &&
+    a.delivery === b.delivery &&
+    a.locker === b.locker
   );
 }
 

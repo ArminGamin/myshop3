@@ -23,7 +23,7 @@ export const faqCategories: FaqCategory[] = [
     items: [
       {
         q: "Ar pristatote į visą Lietuvą?",
-        a: "Taip, užsakymus pristatome į visus Lietuvos miestus. Užsakymams nuo 24,99 € pristatymas yra nemokamas.",
+        a: "Taip, užsakymus pristatome į visus Lietuvos miestus. Siuntą galite atsiimti Omniva, LP Express ar DPD paštomate (1,99 €) arba gauti kurjeriu į namus (2,99 €). Užsakymams nuo 24,99 € pristatymas yra nemokamas.",
       },
       {
         q: "Kiek laiko trunka pristatymas?",

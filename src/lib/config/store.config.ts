@@ -17,6 +17,7 @@ export const store = {
   },
   shipping: {
     flatRateCents: 299,
+    pickupRateCents: 199,
     freeThresholdCents: 2499,
     estimate: "3–4 d.",
     carriers: [

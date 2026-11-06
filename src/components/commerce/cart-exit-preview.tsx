@@ -20,7 +20,7 @@ export function CartExitPreview() {
   const subtotal = subtotalOf(items);
   const giftCents = mysteryGift ? MYSTERY_GIFT.priceCents : 0;
   const extras = addonAmounts(subtotal + giftCents, addons);
-  const shipping = mysteryGift || subtotal >= store.shipping.freeThresholdCents ? 0 : store.shipping.flatRateCents;
+  const shipping = mysteryGift || subtotal >= store.shipping.freeThresholdCents ? 0 : store.shipping.pickupRateCents;
   const [email, setEmail] = useState(customer.email);
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -69,7 +69,7 @@ export function CartExitPreview() {
       <div className="mt-3 space-y-1.5 border-t border-cream-200 pt-3 text-xs text-ink-600">
         {mysteryGift && <div className="flex justify-between gap-3"><span>{MYSTERY_GIFT.name}</span><span>{formatPrice(giftCents)}</span></div>}
         {extras.total > 0 && <div className="flex justify-between gap-3"><span>Pasirinkti priedai</span><span>{formatPrice(extras.total)}</span></div>}
-        <div className="flex justify-between gap-3"><span>Pristatymas</span><span>{shipping === 0 ? "Nemokamas" : formatPrice(shipping)}</span></div>
+        <div className="flex justify-between gap-3"><span>Pristatymas</span><span>{shipping === 0 ? "Nemokamas" : `nuo ${formatPrice(shipping)}`}</span></div>
         <div className="flex justify-between gap-3 pt-1 text-base font-bold text-ink-900"><span>Iš viso</span><span className="num">{formatPrice(subtotal + giftCents + extras.total + shipping)}</span></div>
       </div>
       {saved ? <p role="status" className="mt-4 text-sm font-medium text-forest-600">Krepšelis išsaugotas. Jei neužbaigsite užsakymo, atsiųsime priminimą.</p> : !isAllowedEmail(customer.email) ? (

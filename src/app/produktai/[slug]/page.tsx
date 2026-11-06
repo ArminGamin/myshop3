@@ -209,7 +209,7 @@ export default async function ProductPage({ params }: Props) {
                 {
                   icon: <Truck className="size-5" strokeWidth={1.7} />,
                   t: "Pristatymas",
-                  d: `Per 3–4 d. · nuo ${formatPrice(store.shipping.flatRateCents)} arba nemokamai`,
+                  d: `Per 3–4 d. · nuo ${formatPrice(store.shipping.pickupRateCents)} arba nemokamai`,
                 },
                 {
                   icon: <ShieldCheck className="size-5" strokeWidth={1.7} />,

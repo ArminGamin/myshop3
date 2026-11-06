@@ -12,7 +12,7 @@ export function GET() {
 
   const body = `# ${store.brand.name}
 
-> Lietuviška internetinė kalėdinių dovanų parduotuvė: kruopščiai parinktos dovanos jai, jam, šeimai ir porai. Pristatymas visoje Lietuvoje per ${store.shipping.estimate}, ${formatPrice(store.shipping.flatRateCents)} arba nemokamai nuo ${freeFrom}. Atsiskaitymas kortele, Apple Pay ir Google Pay.
+> Lietuviška internetinė kalėdinių dovanų parduotuvė: kruopščiai parinktos dovanos jai, jam, šeimai ir porai. Pristatymas visoje Lietuvoje per ${store.shipping.estimate}, į Omniva, LP Express ar DPD paštomatą ${formatPrice(store.shipping.pickupRateCents)}, kurjeriu į namus ${formatPrice(store.shipping.flatRateCents)}, nemokamai nuo ${freeFrom}. Atsiskaitymas kortele, Apple Pay ir Google Pay.
 
 ## Kolekcijos
 

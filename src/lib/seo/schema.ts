@@ -57,7 +57,7 @@ export function productSchema(product: Product): JsonLd {
         "@type": "OfferShippingDetails",
         shippingRate: {
           "@type": "MonetaryAmount",
-          value: (store.shipping.flatRateCents / 100).toFixed(2),
+          value: (store.shipping.pickupRateCents / 100).toFixed(2),
           currency: "EUR",
         },
         shippingDestination: { "@type": "DefinedRegion", addressCountry: "LT" },
