@@ -1035,12 +1035,6 @@ function PayLabel({ busy, cents }: { busy: boolean; cents: number }) {
   );
 }
 
-const LOCKER_HINTS: Record<Exclude<DeliveryMethod, "home">, string> = {
-  omniva: "",
-  lpexpress: "Įrašykite LP Express paštomato vietą, pvz. „Maxima, Savanorių pr. 247, Vilnius“.",
-  dpd: "Įrašykite DPD Pickup paštomato vietą, pvz. „Rimi, Ozo g. 25, Vilnius“.",
-};
-
 function DeliveryOptions() {
   const model = useModel();
   const free = model.shippingCents === 0;
@@ -1080,24 +1074,15 @@ function DeliveryOptions() {
   );
 }
 
-function LockerField() {
-  const model = useModel();
-  if (model.delivery === "omniva") return <OmnivaPicker />;
-  return (
-    <div>
-      <Field
-        id="checkout-locker"
-        label="Paštomato vieta ir adresas"
-        required
-        placeholder=""
-        value={model.form.locker}
-        error={model.errors.locker}
-        onBlur={() => model.blurField("locker")}
-        onChange={(value) => model.patch("locker", value)}
-      />
-      <p className="mt-1.5 text-[13px] text-ink-600">{LOCKER_HINTS[model.delivery as Exclude<DeliveryMethod, "home">]}</p>
-    </div>
-  );
+type LockerLists = Record<Exclude<DeliveryMethod, "home">, string[]>;
+
+let lockersRequest: Promise<LockerLists | null> | null = null;
+
+function loadLockers() {
+  lockersRequest ??= fetch("/api/lockers")
+    .then((res) => (res.ok ? res.json() : null))
+    .catch(() => null);
+  return lockersRequest;
 }
 
 function searchKey(value: string) {
@@ -1112,16 +1097,13 @@ function stems(query: string) {
     .map((word) => (word.length > 4 ? word.slice(0, -2) : word));
 }
 
-function OmnivaPicker() {
+function LockerField() {
   const model = useModel();
-  const [lockers, setLockers] = useState<string[] | null>(null);
+  const [lists, setLists] = useState<LockerLists | null | undefined>(undefined);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetch("/api/lockers")
-      .then((res) => (res.ok ? res.json() : []))
-      .then((list: string[]) => setLockers(list))
-      .catch(() => setLockers([]));
+    void loadLockers().then(setLists);
   }, []);
 
   if (model.form.locker) {
@@ -1139,16 +1121,22 @@ function OmnivaPicker() {
     );
   }
 
+  const lockers = lists ? lists[model.delivery as Exclude<DeliveryMethod, "home">] ?? [] : [];
+  const searching = query.trim().length >= 2;
   const words = stems(query);
-  const matches =
-    lockers && query.trim().length >= 2
-      ? lockers
-          .filter((locker) => {
-            const key = searchKey(locker);
-            return words.every((word) => key.includes(word));
-          })
-          .slice(0, 8)
-      : [];
+  const matches = searching
+    ? lockers
+        .filter((locker) => {
+          const key = searchKey(locker);
+          return words.every((word) => key.includes(word));
+        })
+        .slice(0, 8)
+    : [];
+
+  function choose(locker: string) {
+    model.patch("locker", locker);
+    setQuery("");
+  }
 
   return (
     <div>
@@ -1161,26 +1149,34 @@ function OmnivaPicker() {
         error={model.errors.locker}
         onChange={setQuery}
       />
-      {query.trim().length >= 2 ? (
+      {searching ? (
         <div className="mt-2 overflow-hidden rounded-[12px] border border-cream-300 bg-white">
-          {lockers === null ? (
+          {lists === undefined ? (
             <p className="px-4 py-3 text-sm text-ink-600">Kraunami paštomatai…</p>
-          ) : matches.length === 0 ? (
-            <p className="px-4 py-3 text-sm text-ink-600">Paštomatų nerasta. Pabandykite kitą miestą ar gatvę.</p>
           ) : (
-            matches.map((locker) => (
-              <button
-                key={locker}
-                type="button"
-                onClick={() => {
-                  model.patch("locker", locker);
-                  setQuery("");
-                }}
-                className="block min-h-11 w-full border-b border-cream-300 px-4 py-2.5 text-left text-sm text-ink-900 last:border-b-0 hover:bg-cream-100"
-              >
-                {locker}
-              </button>
-            ))
+            <>
+              {matches.map((locker) => (
+                <button
+                  key={locker}
+                  type="button"
+                  onClick={() => choose(locker)}
+                  className="block min-h-11 w-full border-b border-cream-300 px-4 py-2.5 text-left text-sm text-ink-900 hover:bg-cream-100"
+                >
+                  {locker}
+                </button>
+              ))}
+              {query.trim().length >= 5 ? (
+                <button
+                  type="button"
+                  onClick={() => choose(query.trim())}
+                  className="block min-h-11 w-full px-4 py-2.5 text-left text-sm text-ink-600 hover:bg-cream-100"
+                >
+                  Nerandate sąraše? Naudoti „{query.trim()}“
+                </button>
+              ) : matches.length === 0 ? (
+                <p className="px-4 py-3 text-sm text-ink-600">Paštomatų nerasta. Pabandykite kitą miestą ar gatvę.</p>
+              ) : null}
+            </>
           )}
         </div>
       ) : null}
