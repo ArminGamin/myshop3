@@ -61,7 +61,7 @@ export async function POST(req: Request) {
           order.shippingCents === 0
             ? order.mysteryGift
               ? "Nemokamas pristatymas (su siurprizu)"
-              : "Nemokamas pristatymas (nuo 80 €)"
+              : "Nemokamas pristatymas (nuo 24,99 €)"
             : "Pristatymas Lietuvoje",
         delivery_estimate: {
           minimum: { unit: "business_day", value: 4 },

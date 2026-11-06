@@ -214,7 +214,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           </ul>
         </div>
         <div className="menu-foot pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-          <p><Truck aria-hidden className="size-4" strokeWidth={1.8} /> Nemokamas pristatymas nuo 80 €</p>
+          <p><Truck aria-hidden className="size-4" strokeWidth={1.8} /> Nemokamas pristatymas nuo 24,99 €</p>
           <p><ShieldCheck aria-hidden className="size-4" strokeWidth={1.8} /> Saugus atsiskaitymas</p>
         </div>
       </nav>

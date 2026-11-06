@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
-  const free = store.shipping.freeThresholdCents / 100;
+  const free = (store.shipping.freeThresholdCents / 100).toFixed(2).replace(".", ",");
   const rate = (store.shipping.flatRateCents / 100).toFixed(2).replace(".", ",");
 
   return (
@@ -37,7 +37,7 @@ export default function TermsPage() {
       <h2>3. Kainos</h2>
       <p>
         Visos kainos eurais, su PVM. Pristatymo kaina matoma prieš atsiskaitymą.
-        Užsakymams virš {free} € taikomas nemokamas pristatymas. Užsakymams iki {free} €
+        Užsakymams nuo {free} € taikomas nemokamas pristatymas. Užsakymams iki {free} €
         pristatymo kaina — {rate} €.
       </p>
 

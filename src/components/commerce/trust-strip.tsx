@@ -10,7 +10,7 @@ type TrustItem = {
 
 // Pasitikėjimo juosta — tik teiginiai, atitinkantys realią veiklą.
 export function TrustStrip({ tone = "light" }: { tone?: "light" | "cream" }) {
-  const freeFrom = store.shipping.freeThresholdCents / 100;
+  const freeFrom = (store.shipping.freeThresholdCents / 100).toFixed(2).replace(".", ",");
   const items: TrustItem[] = [
     { icon: <Star className="size-4.5" strokeWidth={1.8} />, label: "Kruopščiai parinktos dovanos", shortLabel: "Kruopšti atranka" },
     { icon: <ShieldIcon />, label: "Saugus atsiskaitymas per Stripe", shortLabel: "Saugus atsiskaitymas" },

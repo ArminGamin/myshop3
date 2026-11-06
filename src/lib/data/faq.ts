@@ -23,11 +23,11 @@ export const faqCategories: FaqCategory[] = [
     items: [
       {
         q: "Ar pristatote į visą Lietuvą?",
-        a: "Taip, užsakymus pristatome į visus Lietuvos miestus. Užsakymams virš 80 € pristatymas yra nemokamas.",
+        a: "Taip, užsakymus pristatome į visus Lietuvos miestus. Užsakymams nuo 24,99 € pristatymas yra nemokamas.",
       },
       {
         q: "Kiek laiko trunka pristatymas?",
-        a: "Įprastai užsakymus pristatome per 3–4 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\nUžsakymams nuo 80 € – nemokamas pristatymas.",
+        a: "Įprastai užsakymus pristatome per 3–4 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\nUžsakymams nuo 24,99 € – nemokamas pristatymas.",
       },
       {
         q: "Ar turite fizinę parduotuvę?",
@@ -92,7 +92,7 @@ export const faqCategories: FaqCategory[] = [
 export const homeFaqs: FaqItem[] = [
   {
     q: "Kiek laiko trunka pristatymas?",
-    a: "Įprastai užsakymus pristatome per 3–4 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\n- Siuntą paruošiame ir perduodame kurjeriui kuo greičiau.\n- Užsakymams nuo 80 € nemokamas pristatymas.",
+    a: "Įprastai užsakymus pristatome per 3–4 dienas, priklausomai nuo užsakymo kiekio ir pristatymo vietos.\n\n- Siuntą paruošiame ir perduodame kurjeriui kuo greičiau.\n- Užsakymams nuo 24,99 € nemokamas pristatymas.",
   },
   {
     q: "Kokie mokėjimo būdai?",

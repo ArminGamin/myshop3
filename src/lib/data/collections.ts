@@ -25,7 +25,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "Visos kalėdinės dovanos — pristatymas Lietuvoje",
     description:
-      "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 80 €.",
+      "Atidžiai parinktos kalėdinės dovanos kiekvienam: jai, jam, šeimai ir porai. Nemokamas pristatymas nuo 24,99 €.",
     intro:
       "Visas mūsų kalėdinių dovanų pasirinkimas — nuo mažų malonumų iki premium rinkinių. Kiekviena prekė parinkta pagal tą patį principą: kad dovana būtų tokia, kurią iš tikrųjų norisi dovanoti.",
     filter: () => true,
@@ -49,7 +49,7 @@ export const collections: CollectionMeta[] = [
     emoji: "heart",
     seoTitle: "Kalėdinės dovanos jai — moteriai, mamai, draugei",
     description:
-      "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 3–4 dienas, nemokamai nuo 80 €.",
+      "Kalėdinės dovanos moteriai: aromaterapija, šilkas, keramika, gua sha „Rožinė ramybė“. Pristatome per 3–4 dienas, nemokamai nuo 24,99 €.",
     intro:
       "Dovanos, kurios rodo dėmesį: kvapai, tekstūros ir detalės, kurias ji pastebės. Nuo „saugių“ iki tikrai įspūdingų.",
     filter: byRecipient("jai"),
@@ -85,7 +85,7 @@ export const collections: CollectionMeta[] = [
     emoji: "hearts",
     seoTitle: "Kalėdinės dovanos porai — romantiškos ir jaukios",
     description:
-      "Dovanos porai Kalėdoms: užpildomos akimirkų knygos, jaukumo rinkiniai, vakaro komplektai. Nemokamas pristatymas nuo 80 €.",
+      "Dovanos porai Kalėdoms: užpildomos akimirkų knygos, jaukumo rinkiniai, vakaro komplektai. Nemokamas pristatymas nuo 24,99 €.",
     intro:
       "Kai dovana skirta „jums dviem“ — apie bendrus vakarus, prisiminimus ir planus kartu.",
     filter: byRecipient("porai"),

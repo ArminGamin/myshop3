@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const priced = `${product.name} — ${formatPrice(product.priceCents)}`;
   return {
     title: draftPreview ? `${product.name} — peržiūros juodraštis` : priced.length + store.brand.name.length + 3 > 70 ? product.name : priced,
-    description: draftPreview ? product.tagline : `${product.tagline} Nemokamas pristatymas nuo ${store.shipping.freeThresholdCents / 100} €. Pristatome per 3–4 dienas.`,
+    description: draftPreview ? product.tagline : `${product.tagline} Nemokamas pristatymas nuo ${formatPrice(store.shipping.freeThresholdCents)}. Pristatome per 3–4 dienas.`,
     robots: draftPreview || product.slug === TEST_PRODUCT.slug ? { index: false, follow: false } : undefined,
     alternates: { canonical: `/produktai/${product.slug}` },
     openGraph: {

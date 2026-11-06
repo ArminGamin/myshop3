@@ -17,7 +17,7 @@ export const store = {
   },
   shipping: {
     flatRateCents: 299,
-    freeThresholdCents: 8000,
+    freeThresholdCents: 2499,
     estimate: "3–4 d.",
     carriers: [
       { id: "pastomatai", name: "LP Express paštomatas", days: "3–4 d." },
@@ -139,7 +139,7 @@ export const campaign: CampaignTheme = {
     "Raskite išskirtinę dovaną šeimai, draugams ir artimiausiems!",
   primaryCTA: "Rasti dovaną →",
   secondaryCTA: "Peržiūrėti bestsellerius",
-  bannerText: "Nemokamas pristatymas nuo 80 € · Saugus atsiskaitymas",
+  bannerText: "Nemokamas pristatymas nuo 24,99 € · Saugus atsiskaitymas",
   announcementText: "Kalėdinis pristatymas visoje Lietuvoje! 🎄",
   discountCode: null,
   theme: "christmas",

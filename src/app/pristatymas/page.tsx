@@ -6,12 +6,12 @@ import { InfoPage } from "@/components/layout/info-page";
 export const metadata: Metadata = {
   title: "Pristatymo informacija",
   description:
-    "Pristatymas į visą Lietuvą per 3–4 dienas. Nemokamas pristatymas nuo 80 €. Užsakymams iki 80 € – 2,99 €.",
+    "Pristatymas į visą Lietuvą per 3–4 dienas. Nemokamas pristatymas nuo 24,99 €. Užsakymams iki 24,99 € – 2,99 €.",
   alternates: { canonical: "/pristatymas" },
 };
 
 export default function ShippingPage() {
-  const free = store.shipping.freeThresholdCents / 100;
+  const free = (store.shipping.freeThresholdCents / 100).toFixed(2).replace(".", ",");
   const rate = (store.shipping.flatRateCents / 100).toFixed(2).replace(".", ",");
 
   return (
@@ -27,7 +27,7 @@ export default function ShippingPage() {
       </p>
       <p>{productPhotoDisclaimer.shipping}</p>
       <p>
-        Užsakymams virš {free} € taikomas nemokamas pristatymas. Užsakymams iki {free} €
+        Užsakymams nuo {free} € taikomas nemokamas pristatymas. Užsakymams iki {free} €
         pristatymo kaina — {rate} €.
       </p>
     </InfoPage>

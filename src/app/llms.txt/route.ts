@@ -8,7 +8,7 @@ export const dynamic = "force-static";
 // llms.txt (https://llmstxt.org): trumpas parduotuvės aprašas AI paieškos sistemoms.
 export function GET() {
   const base = store.brand.url.replace(/\/$/, "");
-  const freeFrom = `${store.shipping.freeThresholdCents / 100} €`;
+  const freeFrom = formatPrice(store.shipping.freeThresholdCents);
 
   const body = `# ${store.brand.name}
 
