@@ -362,24 +362,6 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
       "text": "laikau priekyje kad rytais neieskot. kakava savaitgaliais jau iprotis ☕"
     }
   ],
-  "JK-018": [
-    {
-      "name": "Mantas",
-      "text": "Kasdiienes korteles susidejau, senaja pinigine stalciuj palikau. Kisene nestinus"
-    },
-    {
-      "name": "Lukas",
-      "text": "Tvarkingas, patinka 👍"
-    },
-    {
-      "name": "Darius",
-      "text": "kortelėms gerai, keli grynieji irgi telpa. monetų nešiotis dar neatsisakau nors"
-    },
-    {
-      "name": "Tadas",
-      "text": "Pradzioj kišau visas korteles, dabar tik reikalingas ir kasoj nebeknisu ilgai"
-    }
-  ],
   "JK-019": [
     {
       "name": "Eglė",

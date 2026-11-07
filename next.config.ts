@@ -68,6 +68,7 @@ const nextConfig: NextConfig = {
       { source: "/produktai/mini-masazo-pistoletas", destination: "/dovanos/dovanos-jam", permanent: true },
       { source: "/produktai/belaidis-ikroviklis-medis", destination: "/dovanos/dovanos-jam", permanent: true },
       { source: "/produktai/keramikinis-zibintas-ziemos-namelis", destination: "/dovanos/dovanos-jai", permanent: true },
+      { source: "/produktai/odinis-korteliu-deklas", destination: "/dovanos/dovanos-jam", permanent: true },
       {
         source: "/apmokejimas",
         destination: "/checkout",

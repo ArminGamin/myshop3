@@ -25,7 +25,6 @@
     {
       "heading": "Kada tėčiui tinka praktiška smulkmena?",
       "paragraphs": [
-        "Praktiška dovana geriausiai pasiteisina tada, kai pakeičia nusidėvėjusį ar nepatogų daiktą, kurį tėtis ir taip naudoja. Pavyzdžiui, jei jo turimas kortelių dėklas susidėvėjęs arba per storas, Kalėdoms galima dovanoti [Odinį kortelių dėklą „Elegancija“](/produktai/odinis-korteliu-deklas). Dėkle telpa šešios kortelės, o pagamintas jis iš odos. Jeigu tėtis piniginėje nešiojasi daug kortelių ir grynųjų, tokio dydžio dėklas gali būti per mažas.",
         "Tėčiui, kuris mėgsta ramius vakarus ir geria viskį, gali tikti [Viskio rinkinys „Vakaro ritualas“](/produktai/viskio-akmenu-ir-stiklo-rinkinys). Jame yra aštuoni granito akmenys, dvi 300 ml talpos stiklinės ir žnyplės. Ši dovana prasminga tik jei tėtis iš tiesų mėgsta tokį gėrimą; jei ne, rinkinys gali likti nenaudojamas. Vietoj jo rinkitės jo mėgstamą nealkoholinį gėrimą ar kitą sunaudojamą skanėstą."
       ]
     },
@@ -67,7 +66,6 @@
   ],
   "format": "full",
   "productSlugs": [
-    "odinis-korteliu-deklas",
     "viskio-akmenu-ir-stiklo-rinkinys",
     "kvapo-difuzorius-lazdelemis",
     "egluciu-zaisliukai-stiklas",
@@ -114,7 +112,7 @@
       },
       "links": {
         "status": "pass",
-        "evidence": "[Odinį kortelių dėklą „Elegancija“](/produktai/odinis-korteliu-deklas)",
+        "evidence": "[Viskio rinkinys „Vakaro ritualas“](/produktai/viskio-akmenu-ir-stiklo-rinkinys)",
         "correction": ""
       }
     }

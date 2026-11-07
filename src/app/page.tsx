@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { campaign, store } from "@/lib/config/store.config";
 import { getProduct, premiumProducts } from "@/lib/data/products";
+import { productRank } from "@/lib/data/product-order";
 import { homeFaqs } from "@/lib/data/faq";
 import { formatPrice } from "@/lib/format";
 import { faqSchema } from "@/lib/seo/schema";
@@ -54,6 +55,7 @@ export default function HomePage() {
   const shown = new Set([featured?.slug, ...HERO_SLIDES.map((slide) => slide.slug)]);
   const premium = premiumProducts()
     .filter((p) => !shown.has(p.slug))
+    .sort((a, b) => productRank(a.slug) - productRank(b.slug))
     .slice(0, 4);
   const heroSlides: HeroSlide[] = HERO_SLIDES.flatMap((slide) => {
     const product = getProduct(slide.slug);
