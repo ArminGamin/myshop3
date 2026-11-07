@@ -315,7 +315,7 @@ export function CartDrawer() {
                 <p className={`mt-0.5 text-[12.5px] ${freeShipping ? "font-semibold text-forest-500" : "font-medium text-ink-600"}`}>
                   {freeShipping
                     ? "Nemokamas pristatymas įskaičiuotas"
-                    : `Pristatymas į paštomatą ${formatPrice(store.shipping.pickupRateCents)}, į namus ${formatPrice(store.shipping.flatRateCents)}.`}
+                    : `Pristatymas: +${formatPrice(store.shipping.flatRateCents)}. Galutinė suma: ${formatPrice(payable + store.shipping.flatRateCents)}.`}
                 </p>
               </div>
               <span className="num shrink-0 text-[1.85rem] font-extrabold leading-none tracking-tight text-burgundy-600 sm:text-[2.1rem]">

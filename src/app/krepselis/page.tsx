@@ -33,7 +33,7 @@ function CartView() {
   const mysteryCents = mystery ? MYSTERY_GIFT.priceCents : 0;
   const remaining = mystery ? 0 : store.shipping.freeThresholdCents - subtotal;
   const extras = addonAmounts(subtotal + mysteryCents, addons);
-  const shipping = remaining <= 0 ? 0 : store.shipping.pickupRateCents;
+  const shipping = remaining <= 0 ? 0 : store.shipping.flatRateCents;
   const payable = subtotal + mysteryCents + extras.total + shipping;
 
   return (
@@ -121,7 +121,7 @@ function CartView() {
               </div>
             ) : null)}
             <div className="mt-1 flex justify-between text-sm text-ink-600">
-              <span>Pristatymas</span><span>{shipping ? `nuo ${formatPrice(shipping)}` : "Nemokamas"}</span>
+              <span>Pristatymas</span><span>{shipping ? formatPrice(shipping) : "Nemokamas"}</span>
             </div>
             <div className="mt-3 flex items-baseline justify-between">
               <span className="text-sm font-medium text-ink-600">Iš viso su pristatymu</span>

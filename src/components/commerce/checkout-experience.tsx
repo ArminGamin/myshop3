@@ -35,7 +35,6 @@ import {
   useCustomerDraft,
   useMysterySelection,
 } from "@/lib/checkout/draft-store";
-import { DELIVERY_METHODS, deliveryMethod, deliveryRateCents, isPickup, type DeliveryMethod } from "@/lib/checkout/delivery";
 import type { CartAddonSelection } from "@/lib/cart/addons";
 import { CHECKOUT_BEGIN_KEY, CHECKOUT_ENTRY_KEY, CHECKOUT_PAYINFO_KEY } from "@/lib/checkout/analytics-keys";
 import { formatMmSs, useCheckoutReserve } from "@/lib/checkout/reserve";
@@ -108,7 +107,6 @@ const FIELD_ORDER: (keyof CheckoutCustomer)[] = [
   "email",
   "name",
   "surname",
-  "locker",
   "address",
   "city",
   "postalCode",
@@ -125,7 +123,6 @@ type Model = {
   subtotal: number;
   mysteryCents: number;
   extras: ReturnType<typeof addonAmounts>;
-  delivery: DeliveryMethod;
   shippingCents: number;
   totalCents: number;
   stripeEnabled: boolean;
@@ -214,10 +211,10 @@ export function CheckoutExperience() {
   const subtotal = subtotalOf(items);
   const mysteryCents = mystery ? MYSTERY_GIFT.priceCents : 0;
   const extras = addonAmounts(subtotal + mysteryCents, addons);
-  const delivery = deliveryMethod(form.delivery);
-  const freeShipping =
-    mystery || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(items.map((i) => i.slug));
-  const shippingCents = deliveryRateCents(delivery, freeShipping);
+  const shippingCents =
+    mystery || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(items.map((i) => i.slug))
+      ? 0
+      : store.shipping.flatRateCents;
   const totalCents = subtotal + mysteryCents + extras.total + shippingCents;
   const stripeEnabled = Boolean(STRIPE_PK);
   const formValid = Object.keys(validateCustomer(form).errors).length === 0;
@@ -309,7 +306,6 @@ export function CheckoutExperience() {
     subtotal,
     mysteryCents,
     extras,
-    delivery,
     shippingCents,
     totalCents,
     stripeEnabled,
@@ -606,7 +602,7 @@ function CheckoutInner({
                 onChange={(value) => model.patch("email", value)}
               />
               <OrnamentDivider />
-              <h2 className="font-display text-[1.375rem] font-semibold text-ink-900">Pristatymas</h2>
+              <h2 className="font-display text-[1.375rem] font-semibold text-ink-900">Pristatymo adresas</h2>
               <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2">
                 <Field
                   id="checkout-name"
@@ -631,60 +627,51 @@ function CheckoutInner({
                   onChange={(value) => model.patch("surname", lettersOnly(value))}
                 />
               </div>
-              <DeliveryOptions />
-              {isPickup(model.delivery) ? (
-                <LockerField />
-              ) : (
-                <>
-                  <Field
-                    id="checkout-address"
-                    label="Adresas (gatvė, namo nr., buto nr.)"
-                    required
-                    autoComplete="street-address"
-                    placeholder=""
-                    value={model.form.address}
-                    error={model.errors.address}
-                    onBlur={() => model.blurField("address")}
-                    onChange={(value) => model.patch("address", value)}
-                  />
-                  <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2">
-                    <Field
-                      id="checkout-city"
-                      label="Miestas"
-                      required
-                      autoComplete="address-level2"
-                      placeholder=""
-                      value={model.form.city}
-                      error={model.errors.city}
-                      onBlur={() => model.blurField("city")}
-                      onChange={(value) => model.patch("city", lettersOnly(value))}
-                    />
-                    <Field
-                      id="checkout-region"
-                      label="Rajonas (neprivaloma)"
-                      autoComplete="address-level1"
-                      placeholder=""
-                      value={model.form.region}
-                      onChange={(value) => model.patch("region", value)}
-                    />
-                  </div>
-                </>
-              )}
+              <Field
+                id="checkout-address"
+                label="Adresas (gatvė, namo nr., buto nr.)"
+                required
+                autoComplete="street-address"
+                placeholder=""
+                value={model.form.address}
+                error={model.errors.address}
+                onBlur={() => model.blurField("address")}
+                onChange={(value) => model.patch("address", value)}
+              />
               <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2">
-                {isPickup(model.delivery) ? null : (
-                  <Field
-                    id="checkout-postalCode"
-                    label="Pašto kodas"
-                    required
-                    inputMode="numeric"
-                    autoComplete="postal-code"
-                    placeholder="5 skaitmenys"
-                    value={model.form.postalCode}
-                    error={model.errors.postalCode}
-                    onBlur={() => model.blurField("postalCode")}
-                    onChange={(value) => model.patch("postalCode", digitsOnly(value, 5))}
-                  />
-                )}
+                <Field
+                  id="checkout-city"
+                  label="Miestas"
+                  required
+                  autoComplete="address-level2"
+                  placeholder=""
+                  value={model.form.city}
+                  error={model.errors.city}
+                  onBlur={() => model.blurField("city")}
+                  onChange={(value) => model.patch("city", lettersOnly(value))}
+                />
+                <Field
+                  id="checkout-region"
+                  label="Rajonas (neprivaloma)"
+                  autoComplete="address-level1"
+                  placeholder=""
+                  value={model.form.region}
+                  onChange={(value) => model.patch("region", value)}
+                />
+              </div>
+              <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2">
+                <Field
+                  id="checkout-postalCode"
+                  label="Pašto kodas"
+                  required
+                  inputMode="numeric"
+                  autoComplete="postal-code"
+                  placeholder="5 skaitmenys"
+                  value={model.form.postalCode}
+                  error={model.errors.postalCode}
+                  onBlur={() => model.blurField("postalCode")}
+                  onChange={(value) => model.patch("postalCode", digitsOnly(value, 5))}
+                />
                 <Field
                   id="checkout-phone"
                   label="Telefonas"
@@ -930,7 +917,7 @@ function OrderSummary({
           <span>Pristatymas</span>
           {model.shippingCents === 0 ? (
             <span className="inline-flex items-baseline gap-2">
-              <s className="num font-semibold text-ink-400">{formatPrice(DELIVERY_METHODS[model.delivery].rateCents)}</s>
+              <s className="num font-semibold text-ink-400">{formatPrice(store.shipping.flatRateCents)}</s>
               <span className="font-bold text-forest-500">Nemokamai</span>
             </span>
           ) : (
@@ -1032,155 +1019,6 @@ function PayLabel({ busy, cents }: { busy: boolean; cents: number }) {
       <Lock className="size-4" strokeWidth={2.2} />
       Pateikti užsakymą · <span className="num">{formatPrice(cents)}</span>
     </span>
-  );
-}
-
-function DeliveryOptions() {
-  const model = useModel();
-  const free = model.shippingCents === 0;
-  function choose(method: DeliveryMethod) {
-    if (method === model.delivery) return;
-    model.patch("delivery", method);
-    model.patch("locker", "");
-  }
-  return (
-    <fieldset className="space-y-2">
-      <legend className="mb-2 text-sm font-semibold text-ink-900">Pristatymo būdas</legend>
-      {(Object.keys(DELIVERY_METHODS) as DeliveryMethod[]).map((method) => {
-        const selected = method === model.delivery;
-        return (
-          <label
-            key={method}
-            className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-[12px] border bg-white px-4 py-3 ${
-              selected ? "border-2 border-burgundy-600" : "border-cream-300"
-            }`}
-          >
-            <input
-              type="radio"
-              name="checkout-delivery"
-              value={method}
-              checked={selected}
-              onChange={() => choose(method)}
-              className="size-4 accent-burgundy-600"
-            />
-            <span className="flex-1 text-sm font-semibold text-ink-900">{DELIVERY_METHODS[method].label}</span>
-            <span className={`num text-sm font-bold ${free ? "text-forest-500" : "text-ink-900"}`}>
-              {free ? "Nemokamai" : formatPrice(DELIVERY_METHODS[method].rateCents)}
-            </span>
-          </label>
-        );
-      })}
-    </fieldset>
-  );
-}
-
-type LockerLists = Record<Exclude<DeliveryMethod, "home">, string[]>;
-
-let lockersRequest: Promise<LockerLists | null> | null = null;
-
-function loadLockers() {
-  lockersRequest ??= fetch("/api/lockers")
-    .then((res) => (res.ok ? res.json() : null))
-    .catch(() => null);
-  return lockersRequest;
-}
-
-function searchKey(value: string) {
-  return value.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
-}
-
-// Žodžio šaknis be galūnės, kad „Vilnius“ rastų „Vilniaus“, o „Kaunas“ – „Kauno“.
-function stems(query: string) {
-  return searchKey(query)
-    .split(/[\s,.–-]+/)
-    .filter(Boolean)
-    .map((word) => (word.length > 4 ? word.slice(0, -2) : word));
-}
-
-function LockerField() {
-  const model = useModel();
-  const [lists, setLists] = useState<LockerLists | null | undefined>(undefined);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    void loadLockers().then(setLists);
-  }, []);
-
-  if (model.form.locker) {
-    return (
-      <div className="flex items-start justify-between gap-3 rounded-[12px] border border-gold-600 bg-white px-4 py-3">
-        <p className="text-sm font-semibold text-ink-900">{model.form.locker}</p>
-        <button
-          type="button"
-          onClick={() => model.patch("locker", "")}
-          className="min-h-11 shrink-0 text-sm font-semibold text-burgundy-600 underline underline-offset-2"
-        >
-          Keisti
-        </button>
-      </div>
-    );
-  }
-
-  const lockers = lists ? lists[model.delivery as Exclude<DeliveryMethod, "home">] ?? [] : [];
-  const searching = query.trim().length >= 2;
-  const words = stems(query);
-  const matches = searching
-    ? lockers
-        .filter((locker) => {
-          const key = searchKey(locker);
-          return words.every((word) => key.includes(word));
-        })
-        .slice(0, 8)
-    : [];
-
-  function choose(locker: string) {
-    model.patch("locker", locker);
-    setQuery("");
-  }
-
-  return (
-    <div>
-      <Field
-        id="checkout-locker"
-        label="Ieškokite paštomato pagal miestą ar adresą"
-        required
-        placeholder=""
-        value={query}
-        error={model.errors.locker}
-        onChange={setQuery}
-      />
-      {searching ? (
-        <div className="mt-2 overflow-hidden rounded-[12px] border border-cream-300 bg-white">
-          {lists === undefined ? (
-            <p className="px-4 py-3 text-sm text-ink-600">Kraunami paštomatai…</p>
-          ) : (
-            <>
-              {matches.map((locker) => (
-                <button
-                  key={locker}
-                  type="button"
-                  onClick={() => choose(locker)}
-                  className="block min-h-11 w-full border-b border-cream-300 px-4 py-2.5 text-left text-sm text-ink-900 hover:bg-cream-100"
-                >
-                  {locker}
-                </button>
-              ))}
-              {query.trim().length >= 5 ? (
-                <button
-                  type="button"
-                  onClick={() => choose(query.trim())}
-                  className="block min-h-11 w-full px-4 py-2.5 text-left text-sm text-ink-600 hover:bg-cream-100"
-                >
-                  Nerandate sąraše? Naudoti „{query.trim()}“
-                </button>
-              ) : matches.length === 0 ? (
-                <p className="px-4 py-3 text-sm text-ink-600">Paštomatų nerasta. Pabandykite kitą miestą ar gatvę.</p>
-              ) : null}
-            </>
-          )}
-        </div>
-      ) : null}
-    </div>
   );
 }
 

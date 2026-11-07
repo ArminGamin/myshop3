@@ -9,7 +9,7 @@ export interface CollectionContent {
 
 const shippingFaq: FaqItem = {
   q: "Per kiek laiko atkeliaus dovana?",
-  a: "Užsakymus pristatome per 3–4 dienas visoje Lietuvoje. Pristatymas į Omniva, LP Express ar DPD paštomatą kainuoja 1,99 €, kurjeriu į namus – 2,99 €, o užsakymams nuo 24,99 € – nemokamas.",
+  a: "Užsakymus pristatome per 3–4 dienas visoje Lietuvoje. Pristatymas kainuoja 2,99 €, o užsakymams nuo 24,99 € – nemokamas.",
 };
 
 const returnsFaq: FaqItem = {

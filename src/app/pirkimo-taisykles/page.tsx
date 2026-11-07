@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   const free = (store.shipping.freeThresholdCents / 100).toFixed(2).replace(".", ",");
   const rate = (store.shipping.flatRateCents / 100).toFixed(2).replace(".", ",");
-  const pickupRate = (store.shipping.pickupRateCents / 100).toFixed(2).replace(".", ",");
 
   return (
     <InfoPage title="Pirkimo taisyklės">
@@ -39,7 +38,7 @@ export default function TermsPage() {
       <p>
         Visos kainos eurais, su PVM. Pristatymo kaina matoma prieš atsiskaitymą.
         Užsakymams nuo {free} € taikomas nemokamas pristatymas. Užsakymams iki {free} €
-        pristatymas į Omniva, LP Express ar DPD paštomatą kainuoja {pickupRate} €, kurjeriu į namus — {rate} €.
+        pristatymo kaina — {rate} €.
       </p>
 
       <h2>4. Mokėjimas</h2>

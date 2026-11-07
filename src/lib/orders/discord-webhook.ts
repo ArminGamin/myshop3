@@ -160,8 +160,7 @@ function buildDiscordEmbed(input: {
           { name: "Pavardė", value: surname, inline: true },
           { name: "El. paštas", value: email, inline: true },
           { name: "Telefonas", value: phone, inline: true },
-          ...(meta.delivery ? [{ name: "Pristatymas", value: meta.delivery, inline: false }] : []),
-          { name: meta.delivery && meta.delivery !== "Kurjeris į namus" ? "Paštomatas" : "Adresas", value: address, inline: false },
+          { name: "Adresas", value: address, inline: false },
           { name: "Prekės", value: productsValue.length > 1024 ? productsValue.slice(0, 900) + "\n… Visas sąrašas pridėtame faile." : productsValue, inline: false },
           ...(colorsValue !== "—"
             ? [{ name: "Spalva", value: colorsValue.slice(0, 1024), inline: false }]

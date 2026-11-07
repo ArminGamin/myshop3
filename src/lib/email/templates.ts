@@ -54,7 +54,6 @@ export async function renderPurchase(input: {
   paidAt: number;
   order: OrderEmailSnapshot;
   address: string;
-  shippingMethod?: string;
 }) {
   const items = [...input.order.items, { name: "Pristatymas", quantity: 1, unitAmount: input.order.shippingCents }];
   return render("purchase", {
@@ -62,7 +61,7 @@ export async function renderPurchase(input: {
     order_date: escapeHtml(new Intl.DateTimeFormat("lt-LT", { timeZone: "Europe/Vilnius", dateStyle: "long" }).format(new Date(input.paidAt))),
     order_total: escapeHtml(euro(input.order.totalCents)),
     order_items: itemsHtml(items),
-    shipping_method: escapeHtml(`${input.shippingMethod || "Pristatymas į nurodytą adresą"} · 3–4 darbo dienos`),
+    shipping_method: "Pristatymas į nurodytą adresą · 3–4 darbo dienos",
     shipping_address: escapeHtml(input.address).replace(/\n/g, "<br>"),
   });
 }

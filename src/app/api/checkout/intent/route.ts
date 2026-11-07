@@ -5,7 +5,6 @@ import { getStripe } from "@/lib/stripe";
 import { denyPost } from "@/lib/security/guard";
 import { buildOrder, orderMetadata, orderTotalError, parseLines } from "@/lib/cart/server-order";
 import { validateCustomer } from "@/lib/checkout/customer";
-import { DELIVERY_METHODS, deliveryMethod, isPickup } from "@/lib/checkout/delivery";
 import { store } from "@/lib/config/store.config";
 import { orderSnapshot, snapshotMetadata } from "@/lib/email/templates";
 import { readCartSession } from "@/lib/email/tokens";
@@ -43,10 +42,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Krepšelis tuščias." }, { status: 400 });
   }
 
-  const delivery = deliveryMethod(customer.delivery);
-  const pickup = isPickup(delivery);
-  const deliveryLabel = DELIVERY_METHODS[delivery].label;
-  const order = buildOrder(rawLines, body.addons, body.mysteryGift, delivery);
+  const order = buildOrder(rawLines, body.addons, body.mysteryGift);
   if ("error" in order) {
     return NextResponse.json({ error: order.error }, { status: 400 });
   }
@@ -68,23 +64,20 @@ export async function POST(req: Request) {
       shipping: {
         name: `${customer.name} ${customer.surname}`,
         phone: customer.phone,
-        address: pickup
-          ? { line1: deliveryLabel, line2: customer.locker, country: "LT" }
-          : {
-              line1: customer.address,
-              city: customer.city,
-              state: customer.region || undefined,
-              postal_code: customer.postalCode,
-              country: "LT",
-            },
+        address: {
+          line1: customer.address,
+          city: customer.city,
+          state: customer.region || undefined,
+          postal_code: customer.postalCode,
+          country: "LT",
+        },
       },
       metadata: { ...orderMetadata(order, {
         email: customer.email,
         phone: customer.phone,
         name: customer.name,
         surname: customer.surname,
-        address: pickup ? customer.locker : `${customer.address}, ${customer.city} ${customer.postalCode}`,
-        delivery: deliveryLabel,
+        address: `${customer.address}, ${customer.city} ${customer.postalCode}`,
       }), ...snapshotMetadata(orderSnapshot(order)), email_cart_run: readCartSession(req)?.runId ?? "" },
     });
 

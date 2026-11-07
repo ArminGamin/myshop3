@@ -6,7 +6,6 @@ import { addonAmounts, parseCheckoutAddons, type CartAddonSelection } from "@/li
 import { MYSTERY_GIFT, parseMysteryGift } from "@/lib/cart/mystery-gift";
 import { MAX_ORDER_LINES, normalizeQuantity } from "@/lib/cart/limits";
 import { STRIPE_STORE } from "@/lib/stripe-store";
-import { deliveryRateCents, type DeliveryMethod } from "@/lib/checkout/delivery";
 
 export type CheckoutLineIn = { slug: string; variantId: string; qty: number };
 
@@ -38,8 +37,7 @@ export function parseLines(value: unknown): CheckoutLineIn[] {
 export function buildOrder(
   rawLines: CheckoutLineIn[],
   addonsRaw: unknown,
-  mysteryRaw?: unknown,
-  delivery: DeliveryMethod = "home"
+  mysteryRaw?: unknown
 ): BuiltOrder | { error: string } {
   if (rawLines.length > MAX_ORDER_LINES) {
     return { error: `Krepšelyje gali būti iki ${MAX_ORDER_LINES} skirtingų prekių. Sumažinkite jų skaičių.` };
@@ -118,10 +116,10 @@ export function buildOrder(
     });
   }
 
-  const shippingCents = deliveryRateCents(
-    delivery,
+  const shippingCents =
     mysteryGift || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(rawLines.map((l) => l.slug))
-  );
+      ? 0
+      : store.shipping.flatRateCents;
   const totalCents = subtotal + mysteryCents + extras.total + shippingCents;
 
   return {
@@ -146,7 +144,7 @@ export function orderTotalError(order: BuiltOrder, expectedTotalCents: unknown):
 
 export function orderMetadata(
   order: BuiltOrder,
-  customer?: { email?: string; phone?: string; address?: string; name?: string; surname?: string; delivery?: string }
+  customer?: { email?: string; phone?: string; address?: string; name?: string; surname?: string }
 ) {
   return {
     store: STRIPE_STORE,
@@ -163,6 +161,5 @@ export function orderMetadata(
     address: (customer?.address ?? "").slice(0, 400),
     name: (customer?.name ?? "").slice(0, 40),
     surname: (customer?.surname ?? "").slice(0, 40),
-    delivery: (customer?.delivery ?? "").slice(0, 40),
   };
 }
