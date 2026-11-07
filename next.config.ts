@@ -59,6 +59,15 @@ const nextConfig: NextConfig = {
       // Senos svetainės tinklaraščio adresai.
       { source: "/blog", destination: "/straipsniai", permanent: true },
       { source: "/blog/:slug", destination: "/straipsniai/:slug", permanent: true },
+      { source: "/produktai/dzemperis-siltas-uztrauktukas", destination: "/dovanos/dovanos-jam", permanent: true },
+      { source: "/produktai/golfas-aukstas-kaklas", destination: "/dovanos/dovanos-jam", permanent: true },
+      { source: "/produktai/advento-kalendorius-24", destination: "/dovanos/dovanos-seimai", permanent: true },
+      { source: "/produktai/telefono-stovas-stalas", destination: "/dovanos/visos-dovanos", permanent: true },
+      { source: "/produktai/nuotrauku-remelis-akimirka", destination: "/dovanos/visos-dovanos", permanent: true },
+      { source: "/produktai/serviravimo-lenta-vakariene", destination: "/dovanos/dovanos-poroms", permanent: true },
+      { source: "/produktai/mini-masazo-pistoletas", destination: "/dovanos/dovanos-jam", permanent: true },
+      { source: "/produktai/belaidis-ikroviklis-medis", destination: "/dovanos/dovanos-jam", permanent: true },
+      { source: "/produktai/keramikinis-zibintas-ziemos-namelis", destination: "/dovanos/dovanos-jai", permanent: true },
       {
         source: "/apmokejimas",
         destination: "/checkout",

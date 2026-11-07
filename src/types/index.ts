@@ -3,6 +3,7 @@ export type RecipientId =
   | "jam"
   | "porai"
   | "seimai"
+  | "vaikams"
   | "draugui"
   | "tevams"
   | "kolegai";
@@ -43,12 +44,18 @@ export interface ProductSpec {
   value: string;
 }
 
+export interface ProductContentGroup {
+  title: string;
+  description: string;
+}
+
 export interface Product {
   slug: string;
   sku: string;
   name: string;
   tagline: string;
   description: string[];
+  contents?: ProductContentGroup[];
   benefits: string[];
   specs: ProductSpec[];
   priceCents: number;
@@ -66,7 +73,6 @@ export interface Product {
   occasions: OccasionId[];
   pairsWith: string[];
   inStock: boolean;
-  previewDraft?: boolean;
   rating: number | null;
   reviewCount: number | null;
 }
@@ -76,6 +82,7 @@ export const RECIPIENT_LABELS: Record<RecipientId, string> = {
   jam: "Jam",
   porai: "Porai",
   seimai: "Šeimai",
+  vaikams: "Vaikams",
   draugui: "Draugui",
   tevams: "Tėvams",
   kolegai: "Kolegai",

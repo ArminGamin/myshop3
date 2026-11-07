@@ -58,7 +58,9 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Greitas pridėjimas — atsiranda užvedus (desktop) */}
         <div className="absolute inset-x-3 bottom-3 z-[2] hidden translate-y-1 opacity-0 transition-[opacity,transform] duration-500 sm:block sm:pointer-events-none sm:group-hover:pointer-events-auto sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-          {product.sizeGroups ? (
+          {!product.inStock ? (
+            <Link href={`/produktai/${product.slug}`} className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full bg-ink-900/82 py-2.5 text-[13px] font-semibold text-cream-50 backdrop-blur-sm transition hover:bg-burgundy-600">Peržiūrėti</Link>
+          ) : product.sizeGroups ? (
             <Link href={`/produktai/${product.slug}`} className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full bg-ink-900/82 py-2.5 text-[13px] font-semibold text-cream-50 backdrop-blur-sm transition hover:bg-burgundy-600">Rinktis dydžius</Link>
           ) : (
             <button
@@ -95,7 +97,9 @@ export function ProductCard({ product }: { product: Product }) {
           ) : null}
         </div>
 
-        {product.sizeGroups ? (
+        {!product.inStock ? (
+          <Link href={`/produktai/${product.slug}`} className="mt-2 flex min-h-11 w-full items-center justify-center rounded-full border border-burgundy-600/25 bg-white/70 text-[13px] font-semibold text-burgundy-600 transition hover:bg-burgundy-600 hover:text-cream-50 sm:hidden">Peržiūrėti</Link>
+        ) : product.sizeGroups ? (
           <Link href={`/produktai/${product.slug}`} className="mt-2 flex min-h-11 w-full items-center justify-center rounded-full border border-burgundy-600/25 bg-white/70 text-[13px] font-semibold text-burgundy-600 transition hover:bg-burgundy-600 hover:text-cream-50 sm:hidden">Rinktis dydžius</Link>
         ) : (
           <button

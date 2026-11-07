@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { BadgeCheck, Check, Gift, Heart, ShoppingBag, Truck, X } from "lucide-react";
+import { BadgeCheck, Check, Gift, Heart, RotateCcw, ShoppingBag, Truck, X } from "lucide-react";
 import type { Product } from "@/types";
 import { useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
@@ -199,6 +199,10 @@ export function AddToCartForm({ product }: { product: Product }) {
             <li>
               <Truck aria-hidden className="size-4" strokeWidth={1.8} />
               Pristatymas per 3–4 d.
+            </li>
+            <li>
+              <RotateCcw aria-hidden className="size-4" strokeWidth={1.8} />
+              Grąžinimas per 14 d. be klausimų
             </li>
             <li>
               <BadgeCheck aria-hidden className="size-4" strokeWidth={1.8} />

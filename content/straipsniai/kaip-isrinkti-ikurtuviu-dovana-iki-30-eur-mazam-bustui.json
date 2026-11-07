@@ -25,7 +25,6 @@
     {
       "heading": "Kokios nedidelės dovanos tinka mažam būstui?",
       "paragraphs": [
-        "Nedidelis nuotraukų rėmelis tinka žmogui, kuris mėgsta šeimos ar kelionių nuotraukas: [Nuotraukų rėmelis „Akimirka“](/produktai/nuotrauku-remelis-akimirka) skirtas 10 × 15 cm nuotraukai ir turi stovą bei kilputę, todėl jį galima pastatyti arba pakabinti. Rinkitės jį, jei žinote, kad gavėjas turi mėgstamą nuotrauką ir nori ją matyti namuose.",
         "Jei gavėjas mėgsta jaukius vakarus, nedidelė žvakė gali būti praktiškesnė už dar vieną nuolatinę dekoraciją: [Aromaterapijos žvakė „Žvakių vakaras“](/produktai/aromaterapijos-zvake-zvakiu-vakaras) sveria 220 g, o jos nurodytas degimo laikas – apie 45 valandas. Kvapnią dovaną rinkitės tik jei žinote, kad žmogui tinka kvapai. Arbatos ar kakavos mėgėjui gali tikti [Puodelis „Karšta kakava“](/produktai/kaledinis-puodelis-kakava), kurio tūris – 350 ml; toks pasirinkimas geriausias, jei namuose yra vietos dar vienam puodeliui. Jei įkurtuvės vyksta prieš Kalėdas, šį puodelį galite įteikti supakuotą po eglute – kaip nedidelę dovaną naujiems namams ir žiemos vakarams. Jis tiks žmogui, kuris geria arbatą ar kakavą."
       ]
     },
@@ -73,8 +72,7 @@
     "zvakiu-sildymo-lempa",
     "menulio-lempa-3d",
     "saulelydzio-lempa",
-    "slepetes-minksta-peda",
-    "nuotrauku-remelis-akimirka"
+    "slepetes-minksta-peda"
   ],
   "editorial": {
     "version": "kaledu-short-5-f0f6d4713a11",
@@ -115,7 +113,7 @@
       },
       "links": {
         "status": "pass",
-        "evidence": "[Nuotraukų rėmelis „Akimirka“](/produktai/nuotrauku-remelis-akimirka)",
+        "evidence": "",
         "correction": ""
       }
     }

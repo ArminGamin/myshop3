@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Heart, Package, ShieldCheck, Truck } from "lucide-react";
-import { products, canViewProduct, getProduct, TEST_PRODUCT } from "@/lib/data/products";
+import { ChevronDown, ChevronRight, Heart, Package, ShieldCheck, Truck } from "lucide-react";
+import { products, canViewProduct, getProduct } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
 import { discountPercent, formatPrice } from "@/lib/format";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
@@ -29,20 +29,18 @@ interface Props {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return [...products, TEST_PRODUCT].map((p) => ({ slug: p.slug }));
+  return products.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
   if (!canViewProduct(product)) notFound();
-  const draftPreview = !product.inStock;
   // Ilgiems pavadinimams kaina nerodoma, kad pavadinimas tilptų paieškos rezultatuose (~70 simbolių).
   const priced = `${product.name} — ${formatPrice(product.priceCents)}`;
   return {
-    title: draftPreview ? `${product.name} — peržiūros juodraštis` : priced.length + store.brand.name.length + 3 > 70 ? product.name : priced,
-    description: draftPreview ? product.tagline : `${product.tagline} Nemokamas pristatymas nuo ${formatPrice(store.shipping.freeThresholdCents)}. Pristatome per 3–4 dienas.`,
-    robots: draftPreview || product.slug === TEST_PRODUCT.slug ? { index: false, follow: false } : undefined,
+    title: priced.length + store.brand.name.length + 3 > 70 ? product.name : priced,
+    description: `${product.tagline} Nemokamas pristatymas nuo ${formatPrice(store.shipping.freeThresholdCents)}. Pristatome per 3–4 dienas.`,
     alternates: { canonical: `/produktai/${product.slug}` },
     openGraph: {
       title: product.name,
@@ -66,6 +64,7 @@ const RECIPIENT_FIT: Record<RecipientId, { text: string; href?: string }> = {
   jam: { text: "Jam – tėčiui, vyrui ar draugui", href: "/dovanos/dovanos-jam" },
   porai: { text: "Porai – bendram laikui dviese", href: "/dovanos/dovanos-poroms" },
   seimai: { text: "Visai šeimai", href: "/dovanos/dovanos-seimai" },
+  vaikams: { text: "Vaikams – žaidimams, kūrybai ir atradimams", href: "/dovanos/dovanos-vaikams" },
   draugui: { text: "Draugui ar draugei", href: "/rask-dovana" },
   tevams: { text: "Tėvams ar seneliams", href: "/rask-dovana" },
   kolegai: { text: "Kolegai ar komandos nariui", href: "/rask-dovana" },
@@ -118,7 +117,7 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = getProduct(slug);
   if (!canViewProduct(product)) notFound();
-  const draftPreview = !product.inStock;
+  const adventCalendar = product.slug.startsWith("advento-kalendorius-");
   const discount = discountPercent(product.priceCents, product.compareAtPriceCents);
   const reviews = getProductReviews(product.sku);
 
@@ -133,11 +132,6 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div data-product-page="" className="pdp mx-auto max-w-7xl px-4 pb-mobile-sticky pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pb-16 lg:pt-8">
-      {draftPreview ? (
-        <p className="mb-5 rounded-cozy border border-gold-400 bg-cream-100 p-4 text-sm font-semibold text-ink-900">
-          Peržiūros juodraštis — tiekėjo komplektacija dar tikrinama. Pirkti negalima.
-        </p>
-      ) : null}
       {/* Naršymo takeliai */}
       <nav aria-label="Naršymo takelis" className="mb-3 flex flex-wrap items-center gap-1 text-[13px] text-ink-400 sm:mb-6">
         <Link href="/" className="inline-flex min-h-9 items-center hover:text-burgundy-600">Pradžia</Link>
@@ -192,63 +186,108 @@ export default async function ProductPage({ params }: Props) {
       </ProductVariantProvider>
 
       {/* Aprašymas ir savybės */}
-      <section className="mt-16 grid gap-8 lg:mt-20 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-14" aria-labelledby="desc-heading">
-        <div>
-          <h2 id="desc-heading" className="home-h2 font-display text-[2rem] font-bold leading-[1.06] text-ink-900 sm:text-[2.5rem]">
-            Apie <em>prekę</em>
-          </h2>
-          <div className="mt-5 max-w-[65ch] space-y-4 text-[15.5px] leading-relaxed text-ink-600">
-            {product.description.map((para) => (
-              <p key={para.slice(0, 24)}>{para}</p>
-            ))}
+      {adventCalendar ? (
+        <section className="mx-auto mt-12 max-w-5xl lg:mt-16">
+          <details className="group border-y border-cream-300">
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 text-[17px] font-semibold text-ink-900 marker:content-none [&::-webkit-details-marker]:hidden">
+              <span>Aprašymas</span>
+              <ChevronDown aria-hidden className="size-5 shrink-0 text-ink-600 transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="grid gap-8 border-t border-cream-300/80 py-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
+              <div>
+                <div className="max-w-[70ch] space-y-4 text-[15.5px] leading-relaxed text-ink-600">
+                  {product.description.map((para) => (
+                    <p key={para.slice(0, 24)}>{para}</p>
+                  ))}
+                </div>
+                {product.contents?.length ? (
+                  <section className="mt-8" aria-labelledby="contents-heading">
+                    <h3 id="contents-heading" className="font-display text-xl font-bold text-ink-900">Kas slepiasi viduje</h3>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      {product.contents.map((group) => (
+                        <article key={group.title} className="rounded-cozy border border-cream-300/80 bg-cream-100/55 p-4">
+                          <h4 className="text-sm font-bold text-ink-900">{group.title}</h4>
+                          <p className="mt-1.5 text-[13px] leading-relaxed text-ink-600">{group.description}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
+                <ul className="mt-7 space-y-2 text-sm leading-relaxed text-ink-600">
+                  {product.benefits.map((benefit) => <li key={benefit}>• {benefit}</li>)}
+                </ul>
+              </div>
+              <aside aria-labelledby="specs-heading" className="pdp-specs h-fit">
+                <h3 id="specs-heading" className="font-display text-[1.35rem] font-bold text-ink-900">Savybės</h3>
+                <dl className="mt-4 text-sm">
+                  {product.specs.map((spec) => (
+                    <div key={spec.label} className="pdp-spec-row">
+                      <dt className="text-ink-400">{spec.label}</dt>
+                      <dd className="text-right font-semibold text-ink-900">{spec.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </aside>
+            </div>
+          </details>
+        </section>
+      ) : (
+        <section className="mt-16 grid gap-8 lg:mt-20 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-14" aria-labelledby="desc-heading">
+          <div>
+            <h2 id="desc-heading" className="home-h2 font-display text-[2rem] font-bold leading-[1.06] text-ink-900 sm:text-[2.5rem]">
+              Apie <em>prekę</em>
+            </h2>
+            <div className="mt-5 max-w-[65ch] space-y-4 text-[15.5px] leading-relaxed text-ink-600">
+              {product.description.map((para) => (
+                <p key={para.slice(0, 24)}>{para}</p>
+              ))}
+            </div>
+
+            <ul className="pdp-promise mt-9">
+                {[
+                  {
+                    icon: <Truck className="size-5" strokeWidth={1.7} />,
+                    t: "Pristatymas",
+                    d: `Per 3–4 d. · nuo ${formatPrice(store.shipping.pickupRateCents)} arba nemokamai`,
+                  },
+                  {
+                    icon: <ShieldCheck className="size-5" strokeWidth={1.7} />,
+                    t: "Kokybė",
+                    d: "Aukštos kokybės medžiagos ir kruopšti atranka",
+                  },
+                  {
+                    icon: <Package className="size-5" strokeWidth={1.7} />,
+                    t: "Pakuotė",
+                    d: "Paruošta dovanoti iš karto",
+                  },
+                ].map((x) => (
+                  <li key={x.t}>
+                    <span className="pdp-promise-icon">{x.icon}</span>
+                    <div>
+                      <p className="text-sm font-bold text-ink-900">{x.t}</p>
+                      <p className="mt-0.5 text-[13px] leading-snug text-ink-600">{x.d}</p>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+            <GiftFit product={product} />
           </div>
 
-          {!draftPreview ? (
-            <ul className="pdp-promise mt-9">
-              {[
-                {
-                  icon: <Truck className="size-5" strokeWidth={1.7} />,
-                  t: "Pristatymas",
-                  d: `Per 3–4 d. · nuo ${formatPrice(store.shipping.pickupRateCents)} arba nemokamai`,
-                },
-                {
-                  icon: <ShieldCheck className="size-5" strokeWidth={1.7} />,
-                  t: "Kokybė",
-                  d: "Aukštos kokybės medžiagos ir kruopšti atranka",
-                },
-                {
-                  icon: <Package className="size-5" strokeWidth={1.7} />,
-                  t: "Pakuotė",
-                  d: "Paruošta dovanoti iš karto",
-                },
-              ].map((x) => (
-                <li key={x.t}>
-                  <span className="pdp-promise-icon">{x.icon}</span>
-                  <div>
-                    <p className="text-sm font-bold text-ink-900">{x.t}</p>
-                    <p className="mt-0.5 text-[13px] leading-snug text-ink-600">{x.d}</p>
-                  </div>
-                </li>
+          <aside aria-labelledby="specs-heading" className="pdp-specs h-fit">
+            <h2 id="specs-heading" className="font-display text-[1.5rem] font-bold text-ink-900">
+              Savybės
+            </h2>
+            <dl className="mt-4 text-sm">
+              {product.specs.map((spec) => (
+                <div key={spec.label} className="pdp-spec-row">
+                  <dt className="text-ink-400">{spec.label}</dt>
+                  <dd className="text-right font-semibold text-ink-900">{spec.value}</dd>
+                </div>
               ))}
-            </ul>
-          ) : null}
-          {!draftPreview ? <GiftFit product={product} /> : null}
-        </div>
-
-        <aside aria-labelledby="specs-heading" className="pdp-specs h-fit">
-          <h2 id="specs-heading" className="font-display text-[1.5rem] font-bold text-ink-900">
-            Savybės
-          </h2>
-          <dl className="mt-4 text-sm">
-            {product.specs.map((spec) => (
-              <div key={spec.label} className="pdp-spec-row">
-                <dt className="text-ink-400">{spec.label}</dt>
-                <dd className="text-right font-semibold text-ink-900">{spec.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </aside>
-      </section>
+            </dl>
+          </aside>
+        </section>
+      )}
 
       {/* Atsiliepimai */}
       <ProductReviews reviews={reviews} rating={product.rating} />
@@ -292,7 +331,7 @@ export default async function ProductPage({ params }: Props) {
 
       <JsonLd
         data={[
-          ...(draftPreview ? [] : [productSchema(product)]),
+          productSchema(product),
           breadcrumbSchema([
             { name: "Pradžia", href: "/" },
             { name: "Dovanos", href: "/dovanos/visos-dovanos" },
@@ -300,7 +339,7 @@ export default async function ProductPage({ params }: Props) {
           ]),
         ]}
       />
-      {!draftPreview ? <TrackProductView product={product} /> : null}
+      <TrackProductView product={product} />
     </div>
   );
 }
