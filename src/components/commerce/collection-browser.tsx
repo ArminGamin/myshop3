@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import type { Product } from "@/types";
 import { PRICE_RANGES } from "@/lib/data/collections";
+import { productRank } from "@/lib/data/product-order";
 import { ProductGrid } from "./product-card";
 
 type SortId = "recommended" | "price-asc" | "price-desc" | "newest";
@@ -45,7 +46,7 @@ export function CollectionBrowser({
         return [...list].sort((a, b) => skuRank(b.sku) - skuRank(a.sku));
       default:
         return [...list].sort(
-          (a, b) => Number(b.bestseller) - Number(a.bestseller) || skuRank(b.sku) - skuRank(a.sku)
+          (a, b) => productRank(a.slug) - productRank(b.slug) || Number(b.bestseller) - Number(a.bestseller) || skuRank(b.sku) - skuRank(a.sku)
         );
     }
   }, [products, range, sort]);
