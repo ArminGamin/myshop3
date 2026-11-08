@@ -336,32 +336,6 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
       "text": "Dėžutę pasiliksiu kitom Kalėdom. Stiklinius dedu atsargiau nei visa kita"
     }
   ],
-  "JK-017": [
-    {
-      "name": "Beata",
-      "text": "Aukinis kratšelis plonas, labai gražus. Prie baltų lėkštelių tinka"
-    },
-    {
-      "name": "Andrius",
-      "text": "Mano mėgstamiausias puodelis"
-    },
-    {
-      "name": "Milda",
-      "text": "kreminė spalva geriau už baltą, ir arbatai naudooju nebūtinai kakavai"
-    },
-    {
-      "name": "Rugilė",
-      "text": "Kraštelį tik geriau pažiūrėjus pastebėjau.. Patinka kai puodelis ne išmargintas"
-    },
-    {
-      "name": "Donatas",
-      "text": "didelių puodelių nemėgstu, šito dydis geras. su arbata prie kompo sėdžiu"
-    },
-    {
-      "name": "Živilė",
-      "text": "laikau priekyje kad rytais neieskot. kakava savaitgaliais jau iprotis ☕"
-    }
-  ],
   "JK-019": [
     {
       "name": "Eglė",
@@ -812,36 +786,6 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
       "text": "Grafitines paėmiau. dėklas sportiniam krepsy, vaziuodamas į salę išsitrauukiu ir po to atgal"
     }
   ],
-  "JK-039": [
-    {
-      "name": "Viktorija",
-      "text": "grįžus iš darbo pirmiausia persiaunu. padas minkštas, atviras kulnas tai greit ☁️"
-    },
-    {
-      "name": "Mindaugas",
-      "text": "didesnį dydį ėmiau, koja 42 ir tiko. rytais virtuvėj geriau nei su kojinėm"
-    },
-    {
-      "name": "Laima",
-      "text": "Šiltos ir minkštos"
-    },
-    {
-      "name": "Neringa",
-      "text": "kremines grazios bet katinas, plauku pilna 😅 slepetes patogios aviu kasdien"
-    },
-    {
-      "name": "Rasa",
-      "text": "Patogios"
-    },
-    {
-      "name": "Giedrius",
-      "text": "senas gumines visada avėjau. šitos su pamušalu daug maloniau sėdint prie kompo"
-    },
-    {
-      "name": "Milda",
-      "text": "kremines nes šviesių norėjau. padas minkštas, į lauką neinu, namams pasilikau"
-    }
-  ],
   "JK-040": [
     {
       "name": "Ieva",
@@ -956,24 +900,6 @@ export const PRODUCT_REVIEWS: Record<string, ProductReview[]> = {
     {
       "name": "Eglė",
       "text": "prie lango pastaciau, vakare su girlanda graziai. susilaikyti neatidarius visko pirma dieną sunkiausia 😂"
-    }
-  ],
-  "JK-046": [
-    {
-      "name": "Kristina",
-      "text": "vaikui saldainių ir laiškelį įdėjau. megzta, ne tokia plona kaip sena"
-    },
-    {
-      "name": "Simas",
-      "text": "Židinio neturim, prie eglutės pakabinom. kreminė su bordo prie žaisliukų tinka 🎅"
-    },
-    {
-      "name": "Aistė",
-      "text": "mažesnė maniau bus, o vietos smulkmenom daug. kasmet išsitrauksim su dekoracijom"
-    },
-    {
-      "name": "Dalia",
-      "text": "Mieli kutai"
     }
   ],
   "JK-047": [

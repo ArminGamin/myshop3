@@ -69,6 +69,9 @@ const nextConfig: NextConfig = {
       { source: "/produktai/belaidis-ikroviklis-medis", destination: "/dovanos/dovanos-jam", permanent: true },
       { source: "/produktai/keramikinis-zibintas-ziemos-namelis", destination: "/dovanos/dovanos-jai", permanent: true },
       { source: "/produktai/odinis-korteliu-deklas", destination: "/dovanos/dovanos-jam", permanent: true },
+      { source: "/produktai/slepetes-minksta-peda", destination: "/dovanos/dovanos-jai", permanent: true },
+      { source: "/produktai/kaledinis-puodelis-kakava", destination: "/dovanos/dovanos-jai", permanent: true },
+      { source: "/produktai/kaledu-dovanu-kojine-staigmena", destination: "/dovanos/dovanos-seimai", permanent: true },
       {
         source: "/apmokejimas",
         destination: "/checkout",

@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { BuiltOrder } from "@/lib/cart/server-order";
 import { bundleUnitPriceCents } from "@/lib/commerce/pricing";
+import { NEWSLETTER_PROMO } from "@/lib/commerce/promo-codes";
 import { bestsellers, products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types";
@@ -33,6 +34,9 @@ export function orderSnapshot(order: BuiltOrder): OrderEmailSnapshot {
     const price = line.price_data!;
     return { name: price.product_data!.name, quantity: line.quantity ?? 1, unitAmount: price.unit_amount ?? 0 };
   });
+  if (order.discountCents) {
+    items.push({ name: `Nuolaida (${order.promoCode})`, quantity: 1, unitAmount: -order.discountCents });
+  }
   return { items, totalCents: order.totalCents, shippingCents: order.shippingCents };
 }
 
@@ -105,6 +109,8 @@ export async function renderNewsletter(kind: NewsletterKind, siteUrl: string, un
     shop_url: escapeHtml(`${base}/dovanos/visos-dovanos`),
     quiz_url: escapeHtml(`${base}/rask-dovana`),
     unsubscribe_url: escapeHtml(unsubscribeUrl),
+    welcome_code: escapeHtml(NEWSLETTER_PROMO.code),
+    welcome_percent: String(NEWSLETTER_PROMO.percentOff),
     products: kind === "picks" || kind === "bundles" ? productCards(base, newsletterPicks(kind), kind === "bundles") : "",
   });
 }

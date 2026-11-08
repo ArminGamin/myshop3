@@ -9,7 +9,7 @@ const DAY = 24 * 60 * 60_000;
 const UNSUBSCRIBE_TTL = 365 * DAY;
 
 export const NEWSLETTER_SERIES: { kind: NewsletterKind; day: number; subject: string }[] = [
-  { kind: "welcome", day: 0, subject: "🎄 Sveiki atvykę į Kalėdų Kampelį!" },
+  { kind: "welcome", day: 0, subject: "🎁 Jūsų −10 % nuolaidos kodas – sveiki atvykę!" },
   { kind: "picks", day: 2, subject: "🎁 Šias dovanas renkasi dažniausiai" },
   { kind: "recipients", day: 5, subject: "🎄 Kam šiemet ieškai dovanos?" },
   { kind: "bundles", day: 9, subject: "✨ Ta pati dovana keliems – iki 15 % pigiau" },

@@ -100,15 +100,6 @@ export const STOREFRONT_REVIEWS: StorefrontReview[] = [
     image: "/reviews/darius.png",
   },
   {
-    id: "emilija",
-    name: "Emilija B.",
-    city: "Telšiai",
-    rating: 5,
-    bought: "Puodelis „Karšta kakava“",
-    text: "Mažytis mielas puodelis, kakava ilgiau šilta. Dabar dar vieno sau noriu, nes dukra šitą pasiėmė 🍫",
-    image: "/reviews/emilija.png",
-  },
-  {
     id: "karolis",
     name: "Karolis A.",
     city: "Vilnius",

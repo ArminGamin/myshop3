@@ -15,10 +15,11 @@ import {
 import Link from "next/link";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe, type StripeElements, type StripeError } from "@stripe/stripe-js";
-import { Clock, CreditCard, Info, Lock } from "lucide-react";
+import { Clock, CreditCard, Info, Lock, Tag, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resolveItems, subtotalOf, useCart } from "@/lib/cart/context";
 import { addonAmounts } from "@/lib/cart/addons";
+import { promoDiscountCents, promoLadder, type PromoTerms } from "@/lib/commerce/promo";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import {
   digitsOnly,
@@ -123,6 +124,9 @@ type Model = {
   subtotal: number;
   mysteryCents: number;
   extras: ReturnType<typeof addonAmounts>;
+  promo: PromoTerms | null;
+  setPromo: (next: PromoTerms | null) => void;
+  discountCents: number;
   shippingCents: number;
   totalCents: number;
   stripeEnabled: boolean;
@@ -203,6 +207,7 @@ export function CheckoutExperience() {
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutCustomer, string>>>({});
   const [banner, setBanner] = useState<string | null | undefined>(undefined);
   const [keyboard, setKeyboard] = useState(false);
+  const [promo, setPromo] = useState<PromoTerms | null>(null);
   const deliveryPromise = christmasDeliveryPromise();
   const queryBanner = klaidaMessage(search.get("klaida"));
   const visibleBanner = banner === undefined ? queryBanner : banner;
@@ -215,7 +220,8 @@ export function CheckoutExperience() {
     mystery || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(items.map((i) => i.slug))
       ? 0
       : store.shipping.flatRateCents;
-  const totalCents = subtotal + mysteryCents + extras.total + shippingCents;
+  const discountCents = promoDiscountCents(promo, subtotal);
+  const totalCents = subtotal - discountCents + mysteryCents + extras.total + shippingCents;
   const stripeEnabled = Boolean(STRIPE_PK);
   const formValid = Object.keys(validateCustomer(form).errors).length === 0;
   const captureEmail = useCartReminders(form.email, cart.lines, addons, mystery, paidRef);
@@ -306,6 +312,9 @@ export function CheckoutExperience() {
     subtotal,
     mysteryCents,
     extras,
+    promo,
+    setPromo,
+    discountCents,
     shippingCents,
     totalCents,
     stripeEnabled,
@@ -446,6 +455,7 @@ function CheckoutInner({
       lines: cart.lines.map((line) => ({ ...line })),
       addons: { ...model.addons },
       mysteryGift: model.mystery,
+      promoCode: model.promo?.code,
       customer: value,
       expectedTotalCents,
     };
@@ -825,6 +835,146 @@ function CheckoutShippingUpsells() {
   );
 }
 
+function PromoField() {
+  const model = useModel();
+  const [open, setOpen] = useState(false);
+  const [code, setCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [checking, setChecking] = useState(false);
+
+  async function apply() {
+    if (!code.trim() || checking) return;
+    setChecking(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/checkout/promo", {
+        method: "POST",
+        headers: apiHeaders(),
+        body: JSON.stringify({ code }),
+      });
+      const data: PromoTerms & { error?: string } = await res.json();
+      if (!res.ok) {
+        setError(data.error ?? "Nepavyko patikrinti kodo.");
+        return;
+      }
+      model.setPromo(data);
+      setCode("");
+      setOpen(false);
+    } catch {
+      setError("Nepavyko patikrinti kodo. Bandykite dar kartą.");
+    } finally {
+      setChecking(false);
+    }
+  }
+
+  if (model.promo) {
+    const below = model.discountCents === 0;
+    return (
+      <div className="mt-4">
+        <div className="flex items-center justify-between gap-3 rounded-[12px] border border-forest-500/30 bg-forest-100 px-3.5 py-2.5">
+          <span className="inline-flex min-w-0 items-center gap-2 text-sm font-bold text-forest-600">
+            <Tag aria-hidden className="size-4 shrink-0" strokeWidth={2} />
+            <span className="truncate">
+              {model.promo.code} · −{model.promo.percentOff} %
+            </span>
+          </span>
+          <button
+            type="button"
+            onClick={() => model.setPromo(null)}
+            aria-label="Pašalinti nuolaidos kodą"
+            className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-forest-600 hover:bg-forest-500/10"
+          >
+            <X aria-hidden className="size-4" strokeWidth={2.2} />
+          </button>
+        </div>
+        {below ? (
+          <p className="mt-1.5 text-sm font-medium text-burgundy-600">
+            Kodas galioja užsakymams nuo {formatPrice(model.promo.minSubtotalCents)}. Iki jo trūksta{" "}
+            {formatPrice(model.promo.minSubtotalCents - model.subtotal)}.
+          </p>
+        ) : null}
+      </div>
+    );
+  }
+
+  const suggestion = promoLadder(model.subtotal).best;
+
+  if (!open) {
+    return (
+      <div className="mt-4">
+        {suggestion ? (
+          <div className="flex items-center justify-between gap-3 rounded-[12px] border-[1.5px] border-dashed border-gold-500 bg-cream-50 px-3.5 py-2.5">
+            <span className="min-w-0 text-sm font-medium leading-snug text-ink-600">
+              Jūsų krepšeliui tinka kodas{" "}
+              <strong className="font-extrabold tracking-wide text-burgundy-700">{suggestion.code}</strong> (−{suggestion.percentOff} %)
+            </span>
+            <button
+              type="button"
+              onClick={() => model.setPromo(suggestion)}
+              className="min-h-10 shrink-0 rounded-full bg-burgundy-600 px-4 text-[13.5px] font-bold text-cream-50 transition hover:bg-burgundy-700"
+            >
+              Pritaikyti
+            </button>
+          </div>
+        ) : null}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="mt-2 inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold text-burgundy-600 underline underline-offset-4 hover:text-burgundy-700"
+      >
+        <Tag aria-hidden className="size-4" strokeWidth={2} />
+        {suggestion ? "Turite kitą nuolaidos kodą?" : "Turite nuolaidos kodą?"}
+      </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4">
+      <label htmlFor="promo-code" className="mb-1.5 block text-sm font-semibold text-ink-600">
+        Nuolaidos kodas
+      </label>
+      <div className="flex gap-2">
+        <input
+          id="promo-code"
+          value={code}
+          onChange={(e) => {
+            setCode(e.target.value.toUpperCase());
+            setError(null);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              void apply();
+            }
+          }}
+          autoComplete="off"
+          autoCapitalize="characters"
+          spellCheck={false}
+          autoFocus
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? "promo-code-error" : undefined}
+          className="min-h-12 min-w-0 flex-1 rounded-[12px] border-[1.5px] border-gold-600 bg-white px-3.5 text-base font-semibold uppercase tracking-wide text-ink-900 placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-200 focus:border-burgundy-600 focus:outline-none focus:ring-[3px] focus:ring-gold-200"
+          placeholder="Įveskite kodą"
+        />
+        <button
+          type="button"
+          onClick={() => void apply()}
+          disabled={checking || !code.trim()}
+          className="min-h-12 shrink-0 rounded-[12px] bg-burgundy-600 px-5 text-[15px] font-bold text-cream-50 transition hover:bg-burgundy-700 disabled:opacity-50"
+        >
+          {checking ? "Tikrinama…" : "Taikyti"}
+        </button>
+      </div>
+      {error ? (
+        <p id="promo-code-error" role="alert" className="mt-1.5 text-sm font-medium text-burgundy-600">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 function OrderSummary({
   variant,
   paymentReady,
@@ -870,11 +1020,18 @@ function OrderSummary({
           </li>
         ))}
       </ul>
+      <PromoField />
       <div className="mt-4 space-y-3 text-[15px] font-medium leading-snug text-ink-600">
         <div className="flex items-center justify-between gap-3">
           <span>Tarpinė suma</span>
           <span className="num font-bold text-ink-900">{formatPrice(model.subtotal)}</span>
         </div>
+        {model.discountCents ? (
+          <div className="flex items-center justify-between gap-3">
+            <span>Nuolaida ({model.promo!.code})</span>
+            <span className="num font-bold text-forest-500">−{formatPrice(model.discountCents)}</span>
+          </div>
+        ) : null}
         {model.mysteryCents ? (
           <div className="flex items-center justify-between gap-3">
             <span>{MYSTERY_GIFT.name}</span>

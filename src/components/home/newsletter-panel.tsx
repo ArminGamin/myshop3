@@ -1,5 +1,6 @@
 import { NewsletterForm } from "@/components/commerce/newsletter-form";
 import { HeroGarland } from "@/components/layout/hero-garland";
+import { NEWSLETTER_PERCENT_OFF } from "@/lib/commerce/promo";
 
 export function NewsletterPanel() {
   return (
@@ -12,10 +13,10 @@ export function NewsletterPanel() {
             id="nl-heading"
             className="home-h2 font-display text-[2rem] font-bold leading-[1.06] text-ink-900 sm:text-[2.6rem]"
           >
-            Pirmieji sužinokite apie <em>naujas dovanas</em>
+            Gaukite <em>−{NEWSLETTER_PERCENT_OFF} %</em> savo užsakymui
           </h2>
           <p className="mx-auto mt-3 max-w-md text-[15px] font-medium leading-relaxed text-ink-600">
-            Prenumeruokite naujienlaiškį ir gaukite specialius Kalėdinius pasiūlymus.
+            Prenumeruokite naujienlaiškį – nuolaidos kodą visoms prekėms atsiųsime el. paštu iš karto. Be minimalios sumos.
           </p>
           <div className="mt-7">
             <NewsletterForm source="homepage" />

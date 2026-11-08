@@ -10,6 +10,8 @@ import {
   lithuanianDayWord,
 } from "@/lib/config/deadline";
 import { SafeDiv } from "@/components/layout/safe-div";
+import { ADVERTISED_PROMOS } from "@/lib/commerce/promo";
+import { formatPrice } from "@/lib/format";
 
 const ROTATE_MS = 4500;
 
@@ -33,11 +35,19 @@ function christmasMessage(): { text: string; sparkle: boolean } | null {
   return { text: `Iki Kalėdų liko ${days} ${lithuanianDayWord(days)}!`, sparkle: false };
 }
 
+// Reklamuojamas kodas viršutinėje juostoje (KALEDOS15).
+const promoLine = (() => {
+  const promo = ADVERTISED_PROMOS.find((p) => p.code === "KALEDOS15");
+  return promo
+    ? { text: `Kodas ${promo.code}: −${promo.percentOff} % užsakymui nuo ${formatPrice(promo.minSubtotalCents)} 🎁`, sparkle: true }
+    : null;
+})();
+
 function buildMessages(): { text: string; sparkle: boolean }[] {
   const campaignLine = campaign.announcementText
     ? { text: campaign.announcementText, sparkle: false }
     : null;
-  return [campaignLine, christmasMessage(), deadlineMessage()].filter(
+  return [campaignLine, promoLine, christmasMessage(), deadlineMessage()].filter(
     (item): item is { text: string; sparkle: boolean } => Boolean(item)
   );
 }

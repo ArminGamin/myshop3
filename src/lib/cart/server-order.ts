@@ -6,6 +6,8 @@ import { addonAmounts, parseCheckoutAddons, type CartAddonSelection } from "@/li
 import { MYSTERY_GIFT, parseMysteryGift } from "@/lib/cart/mystery-gift";
 import { MAX_ORDER_LINES, normalizeQuantity } from "@/lib/cart/limits";
 import { STRIPE_STORE } from "@/lib/stripe-store";
+import { findPromo } from "@/lib/commerce/promo-codes";
+import { promoDiscountCents } from "@/lib/commerce/promo";
 
 export type CheckoutLineIn = { slug: string; variantId: string; qty: number };
 
@@ -18,6 +20,8 @@ export type BuiltOrder = {
   addons: CartAddonSelection;
   mysteryGift: boolean;
   mysteryCents: number;
+  promoCode: string | null;
+  discountCents: number;
   rawLines: CheckoutLineIn[];
 };
 
@@ -37,10 +41,15 @@ export function parseLines(value: unknown): CheckoutLineIn[] {
 export function buildOrder(
   rawLines: CheckoutLineIn[],
   addonsRaw: unknown,
-  mysteryRaw?: unknown
+  mysteryRaw?: unknown,
+  promoRaw?: unknown
 ): BuiltOrder | { error: string } {
   if (rawLines.length > MAX_ORDER_LINES) {
     return { error: `Krepšelyje gali būti iki ${MAX_ORDER_LINES} skirtingų prekių. Sumažinkite jų skaičių.` };
+  }
+  const promo = findPromo(promoRaw);
+  if (promoRaw && !promo) {
+    return { error: "Nuolaidos kodas nebegalioja. Pašalinkite jį ir bandykite dar kartą." };
   }
   const addons = parseCheckoutAddons(addonsRaw);
   const mysteryGift = parseMysteryGift(mysteryRaw);
@@ -120,9 +129,12 @@ export function buildOrder(
     mysteryGift || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(rawLines.map((l) => l.slug))
       ? 0
       : store.shipping.flatRateCents;
-  const totalCents = subtotal + mysteryCents + extras.total + shippingCents;
+  const discountCents = promoDiscountCents(promo, subtotal);
+  const totalCents = subtotal - discountCents + mysteryCents + extras.total + shippingCents;
 
   return {
+    promoCode: discountCents ? promo!.code : null,
+    discountCents,
     lineItems,
     subtotal,
     extras,
@@ -155,6 +167,7 @@ export function orderMetadata(
       r: order.addons.priority ? 1 : 0,
       m: order.mysteryGift ? 1 : 0,
     }),
+    promo: order.promoCode ?? "",
     // Ne „email“: kitos parduotuvės webhook'as toje pačioje Stripe paskyroje siunčia laišką kiekvienam metadata.email.
     customer_email: (customer?.email ?? "").slice(0, 80),
     phone: (customer?.phone ?? "").slice(0, 20),

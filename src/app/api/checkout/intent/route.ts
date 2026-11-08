@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Atsiskaitymas dar nesukonfigūruotas." }, { status: 503 });
   }
 
-  let body: { lines?: unknown; addons?: unknown; customer?: unknown; mysteryGift?: unknown; expectedTotalCents?: unknown };
+  let body: { lines?: unknown; addons?: unknown; customer?: unknown; mysteryGift?: unknown; promoCode?: unknown; expectedTotalCents?: unknown };
   try {
     body = await req.json();
     if (!body || typeof body !== "object") throw new Error("Invalid payload");
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Krepšelis tuščias." }, { status: 400 });
   }
 
-  const order = buildOrder(rawLines, body.addons, body.mysteryGift);
+  const order = buildOrder(rawLines, body.addons, body.mysteryGift, body.promoCode);
   if ("error" in order) {
     return NextResponse.json({ error: order.error }, { status: 400 });
   }

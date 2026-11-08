@@ -17,6 +17,7 @@ import { Overlay } from "@/components/ui/overlay";
 import { ProductImage } from "./product-art";
 import { addonLineLabel, CartAddonRows } from "./cart-addons";
 import { CheckoutLeave } from "./checkout-leave";
+import { PromoHint } from "./promo-hint";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import { useCheckoutAddons, useMysterySelection, updateCheckoutAddons } from "@/lib/checkout/draft-store";
 
@@ -178,6 +179,7 @@ export function CartDrawer() {
             <FreeShippingBar
               subtotalCents={mystery ? store.shipping.freeThresholdCents : subtotal}
             />
+            <PromoHint subtotalCents={subtotal} />
 
             <ul className="flex flex-col gap-2.5">
               {items.map((item) => (

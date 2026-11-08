@@ -17,7 +17,7 @@ type OrderLine = {
 };
 
 function formatEuro(cents: number): string {
-  return `€${(cents / 100).toFixed(2)}`;
+  return `${cents < 0 ? "−" : ""}€${(Math.abs(cents) / 100).toFixed(2)}`;
 }
 
 function parseCart(raw: string | undefined): CartLine[] {

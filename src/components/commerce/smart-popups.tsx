@@ -11,6 +11,7 @@ import { track } from "@/lib/analytics";
 import { usePresence } from "@/lib/motion";
 import { apiHeaders } from "@/lib/security/csrf-client";
 import { isAllowedEmail } from "@/lib/security/email";
+import { NEWSLETTER_PERCENT_OFF } from "@/lib/commerce/promo";
 import { CartExitPreview } from "./cart-exit-preview";
 
 type PopupKind = "welcome" | "exit-cart" | "exit-quiz" | null;
@@ -180,10 +181,10 @@ function WelcomePopup({ onClose, visible }: { onClose: () => void; visible: bool
     <PopupShell visible={visible} onClose={onClose} label="Sveiki atvykę">
       <p className="text-center font-display text-4xl" aria-hidden>🎄</p>
       <h2 className="mt-2 text-center font-display text-2xl font-semibold leading-snug text-ink-900">
-        Prenumeruokite naujienlaiškį
+        Gaukite −{NEWSLETTER_PERCENT_OFF} % nuolaidą
       </h2>
       <p className="mx-auto mt-2 max-w-xs text-center text-sm leading-relaxed text-ink-600">
-        Sužinosite apie naujas dovanas ir specialius Kalėdinius pasiūlymus.
+        Prenumeruokite naujienlaiškį – nuolaidos kodą visoms prekėms atsiųsime el. paštu iš karto.
       </p>
       <div className="mt-5">
         <NewsletterInline onSuccess={onClose} />
@@ -278,7 +279,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
       track("sign_up", { source: "popup-welcome" });
       track("popup_convert", { popup_type: "welcome" });
       setState("ok");
-      setTimeout(onSuccess, 1800);
+      setTimeout(onSuccess, 3000);
     } catch {
       setState("error");
     }
@@ -287,7 +288,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
   if (state === "ok")
     return (
       <p role="status" className="rounded-cozy border border-gold-400/55 bg-cream-100 py-3 text-center text-sm font-semibold text-burgundy-700">
-        🎄 Ačiū! Gavome jūsų prašymą prenumeruoti naujienas.
+        🎄 Ačiū! Nuolaidos kodą išsiuntėme el. paštu.
       </p>
     );
 
@@ -312,7 +313,7 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
         disabled={state === "loading"}
         className="flex min-h-12 w-full items-center justify-center rounded-full bg-gold-500 text-[15px] font-bold text-burgundy-800 transition hover:bg-gold-400 disabled:opacity-50"
       >
-        {state === "loading" ? "Siunčiama…" : "Prenumeruoti"}
+        {state === "loading" ? "Siunčiama…" : `Gauti −${NEWSLETTER_PERCENT_OFF} % kodą`}
       </button>
       {state === "error" ? (
         <p role="alert" className="text-center text-xs font-semibold text-burgundy-600">

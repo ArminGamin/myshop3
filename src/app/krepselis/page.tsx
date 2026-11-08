@@ -9,6 +9,7 @@ import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import { addonAmounts } from "@/lib/cart/addons";
 import { useCheckoutAddons, useMysterySelection, updateCheckoutAddons, updateMysterySelection } from "@/lib/checkout/draft-store";
 import { addonLineLabel, CartAddonRows } from "@/components/commerce/cart-addons";
+import { PromoHint } from "@/components/commerce/promo-hint";
 import { formatPrice } from "@/lib/format";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { ProductImage } from "@/components/commerce/product-art";
@@ -103,6 +104,9 @@ function CartView() {
 
           <div className="mt-4">
             <CartAddonRows selected={addons} onChange={updateCheckoutAddons} />
+          </div>
+          <div className="mt-4">
+            <PromoHint subtotalCents={subtotal} />
           </div>
           <div className="mt-6 rounded-cozy bg-cream-100 p-5">
             <div className="flex justify-between text-sm text-ink-600">

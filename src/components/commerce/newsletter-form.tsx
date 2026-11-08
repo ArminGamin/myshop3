@@ -5,6 +5,7 @@ import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { apiHeaders } from "@/lib/security/csrf-client";
 import { emailError } from "@/lib/security/email";
+import { NEWSLETTER_PERCENT_OFF } from "@/lib/commerce/promo";
 
 export function NewsletterForm({
   source = "footer-section",
@@ -48,7 +49,7 @@ export function NewsletterForm({
           compact ? "" : "mx-auto max-w-md"
         }`}
       >
-        Ačiū! Gavome jūsų prašymą prenumeruoti naujienas adresu <strong>{email}</strong>.
+        Ačiū! −{NEWSLETTER_PERCENT_OFF} % nuolaidos kodą išsiuntėme adresu <strong>{email}</strong>. Jei nerandate, patikrinkite „Reklamos“ ar šlamšto aplanką.
       </div>
     );
   }
@@ -84,7 +85,7 @@ export function NewsletterForm({
           className="min-h-12 flex-1 rounded-full border border-cream-400 bg-white px-5 text-base text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-gold-500"
         />
         <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
-          {status === "loading" ? "Siunčiama…" : "Prenumeruoti"}
+          {status === "loading" ? "Siunčiama…" : `Gauti −${NEWSLETTER_PERCENT_OFF} %`}
         </Button>
       </div>
       {(status === "invalid" || status === "error") && (
