@@ -20,6 +20,7 @@ import { RecipientBento } from "@/components/home/recipient-bento";
 import { WhyUs } from "@/components/home/why-us";
 import { PremiumShowcase } from "@/components/home/premium-showcase";
 import { NewsletterPanel } from "@/components/home/newsletter-panel";
+import { AdventShowcase } from "@/components/home/advent-showcase";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -111,6 +112,7 @@ export default function HomePage() {
       </section>
 
       <TrustStrip />
+      <AdventShowcase />
 
       <Reveal>
         <ReviewsMarquee />

@@ -16,6 +16,7 @@ const TILES: { slug: string; size: TileSize; image?: string }[] = [
     size: "small",
     image: "/products/seimos-megztiniai-siaures-rastas-family-real-v2-47dd02e0.webp",
   },
+  { slug: "dovanos-vaikams", size: "small" },
   { slug: "dovanos-poroms", size: "small" },
   { slug: "dovanos-iki-20-euru", size: "small" },
   { slug: "dovanos-iki-50-euru", size: "small" },

@@ -31,6 +31,18 @@ export const collections: CollectionMeta[] = [
     filter: () => true,
   },
   {
+    slug: "advento-kalendoriai",
+    title: "Advento kalendoriai",
+    shortTitle: "Advento kalendoriai",
+    emoji: "gift",
+    seoTitle: "Advento kalendoriai 2026 – jai, jam ir vaikams",
+    description:
+      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški kalendoriai. Nemokamas pristatymas visoje Lietuvoje.",
+    intro:
+      "Kiekvieną gruodžio rytą – nauja staigmena iki pat Kalėdų. Išsirinkite kalendorių jai, jam ar vaikams: visi užpildyti ir paruošti dovanoti.",
+    filter: (p) => p.slug.startsWith("advento-kalendorius-"),
+  },
+  {
     slug: "bestselleriai",
     title: "Bestselleriai",
     shortTitle: "Bestselleriai",
@@ -77,6 +89,18 @@ export const collections: CollectionMeta[] = [
     intro:
       "Dovanos ne vienam žmogui, o visiems namams — už bendrą laiką, juoką ir tradicijas.",
     filter: byRecipient("seimai"),
+  },
+  {
+    slug: "dovanos-vaikams",
+    title: "Dovanos vaikams",
+    shortTitle: "Vaikams",
+    emoji: "gift",
+    seoTitle: "Kalėdinės dovanos vaikams — žaidimams ir atradimams",
+    description:
+      "Kalėdinės dovanos vaikams: konstravimo, lenktynių, mokslo, kūrybos ir grožio staigmenos. Išsirinkite dovaną pagal vaiko pomėgius.",
+    intro:
+      "Dovanos smalsiems vaikams, kuriems patinka kurti, konstruoti, eksperimentuoti ir kiekvieną dieną atrasti naują veiklą.",
+    filter: byRecipient("vaikams"),
   },
   {
     slug: "dovanos-poroms",

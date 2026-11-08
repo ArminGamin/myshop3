@@ -17,11 +17,14 @@ const SearchOverlay = dynamic(
   { ssr: false }
 );
 
+const ADVENT_HREF = "/dovanos/advento-kalendoriai";
+
+// Trumpi pavadinimai, kad tilptų advento kalendorių nuoroda; pilnas pavadinimas – aria-label.
 const desktopNav = [
-  { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos", icon: TreePine, tone: "#1f7a58" },
-  { href: "/dovanos/dovanos-jai", label: "Dovanos jai", icon: Heart, tone: "#d4405f" },
-  { href: "/dovanos/dovanos-jam", label: "Dovanos jam", icon: Watch, tone: "#2a6f9a" },
-  { href: "/dovanos/dovanos-seimai", label: "Dovanos šeimai", icon: House, tone: "#c98620" },
+  { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos", full: "Kalėdinės dovanos", icon: TreePine, tone: "#1f7a58" },
+  { href: "/dovanos/dovanos-jai", label: "Jai", full: "Dovanos jai", icon: Heart, tone: "#d4405f" },
+  { href: "/dovanos/dovanos-jam", label: "Jam", full: "Dovanos jam", icon: Watch, tone: "#2a6f9a" },
+  { href: "/dovanos/dovanos-seimai", label: "Šeimai", full: "Dovanos šeimai", icon: House, tone: "#c98620" },
 ];
 
 export function Header() {
@@ -78,11 +81,22 @@ export function Header() {
 
           <nav aria-label="Pagrindinė navigacija" className="hidden flex-1 xl:block">
             <ul className="flex items-center justify-center gap-0.5 xl:gap-1.5">
+              <li>
+                <Link
+                  href={ADVENT_HREF}
+                  aria-current={pathname === ADVENT_HREF ? "page" : undefined}
+                  className="nav-advent"
+                >
+                  Advento kalendoriai
+                  <span className="nav-advent-tag">Nauja</span>
+                </Link>
+              </li>
               {desktopNav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     aria-current={pathname === item.href ? "page" : undefined}
+                    aria-label={item.full}
                     className="nav-chip group"
                     style={{ "--tone": item.tone } as CSSProperties}
                   >
@@ -157,8 +171,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const menuItems: { href: string; label: string; accent?: boolean; pill?: boolean }[] = [
     { href: "/rask-dovana", label: "Rasti dovaną", accent: true },
     ...collections
-      .slice(0, 7)
-      .filter((c) => c.slug !== "bestselleriai")
+      .filter((c) => c.slug !== "bestselleriai" && c.slug !== "advento-kalendoriai")
+      .slice(0, 6)
       .map((c) => ({
       href: `/dovanos/${c.slug}`,
       label: c.title,
@@ -200,6 +214,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 <ArrowRight aria-hidden className="size-4.5 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
               </Link>
             ))}
+          <Link href={ADVENT_HREF} onClick={onClose} className="menu-advent group">
+            <span className="menu-advent-copy">
+              <span className="menu-advent-tag">Nauja</span>
+              <span className="menu-advent-title">Advento kalendoriai</span>
+              <span className="menu-advent-sub">24 staigmenos jai, jam ir vaikams</span>
+            </span>
+            <ArrowRight aria-hidden className="size-4.5 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
+          </Link>
           <ul className="mt-3">
             {menuItems
               .filter((item) => !item.accent)

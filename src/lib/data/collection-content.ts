@@ -40,6 +40,32 @@ export const collectionContent: Record<string, CollectionContent> = {
       returnsFaq,
     ],
   },
+  "advento-kalendoriai": {
+    h1: "Advento kalendoriai jai, jam ir vaikams",
+    guide: {
+      heading: "Kaip išsirinkti advento kalendorių",
+      paragraphs: [
+        "Pradėkite nuo to, kuo žmogus gyvena kasdien. Kavos mėgėjui tiks kalendorius su skirtingomis kavos porcijomis, namų meistrui – su įrankiais, o tam, kuris vertina ramius vakarus, – su arbata, žvakėmis ir šiltomis kojinėmis. Moterims siūlome grožio priemonių ir papuošalų kalendorius.",
+        "Vaikams rinkitės pagal pomėgius: konstravimo, lenktynių, mokslo eksperimentų, slime ar kūrybos kalendorius. Prie kiekvieno kalendoriaus nurodytas rekomenduojamas amžius, o kalendorių su smulkiomis detalėmis mažesniems vaikams patariame naudoti prižiūrint suaugusiajam.",
+        "Kad pirmąjį langelį būtų galima atidaryti gruodžio 1 d., užsakykite iš anksto: pristatome per 3–4 dienas visoje Lietuvoje, o visiems advento kalendoriams pristatymas nemokamas.",
+      ],
+    },
+    faq: [
+      {
+        q: "Kiek staigmenų yra advento kalendoriuje?",
+        a: "Daugumoje kalendorių yra 24 langeliai – po vieną kiekvienai dienai nuo gruodžio 1 iki 24 d. Kalendoriuje „Grožio ritualas“ – 25 staigmenos. Tikslų turinį rasite kiekvieno kalendoriaus aprašyme.",
+      },
+      {
+        q: "Kada užsakyti, kad kalendorius atkeliautų iki gruodžio 1 d.?",
+        a: "Pristatome per 3–4 dienas, todėl patariame užsakyti bent savaitę iki gruodžio 1 d. Jei užsakysite vėliau, praleistus langelius galima atidaryti iš karto gavus kalendorių.",
+      },
+      {
+        q: "Ar advento kalendoriui taikomas nemokamas pristatymas?",
+        a: "Taip. Visi advento kalendoriai kainuoja nuo 24,99 €, todėl pristatymas visoje Lietuvoje jiems nemokamas.",
+      },
+      returnsFaq,
+    ],
+  },
   bestselleriai: {
     h1: "Populiariausios kalėdinės dovanos",
     guide: {

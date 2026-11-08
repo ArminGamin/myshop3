@@ -2,6 +2,18 @@
 // šventiškiausios ir labiausiai tikėtinos pirkti prekės. Į sąrašą neįtrauktos
 // prekės rodomos po šių.
 export const PRODUCT_ORDER = [
+  "advento-kalendorius-jaukumo-vakarai",
+  "advento-kalendorius-lenktyniu-garazas",
+  "advento-kalendorius-kavos-kelione",
+  "advento-kalendorius-princeses-skrynele",
+  "advento-kalendorius-auksines-smulkmenos",
+  "advento-kalendorius-mazasis-statytojas",
+  "advento-kalendorius-meistro-deze",
+  "advento-kalendorius-slime-laboratorija",
+  "advento-kalendorius-grozio-ritualas",
+  "advento-kalendorius-spalvu-pasaka",
+  "advento-kalendorius-kojiniu",
+  "advento-kalendorius-jaunasis-mokslininkas",
   "kaledinis-megztinis-sventinis-rastas",
   "seimos-megztiniai-siaures-rastas",
   "seimos-megztiniai-kaledu-dziaugsmas",
