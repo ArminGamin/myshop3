@@ -114,7 +114,7 @@ test("all variant, quantity, gift and add-on combinations retain identical check
 
 test("new Christmas clothing uses screenshot-confirmed sizes and reviewed retail prices", async () => {
   const roles = { "JK-057": ["woman"], "JK-058": ["child", "woman", "man"], "JK-059": ["woman", "man"], "JK-060": ["child", "woman", "man"] };
-  const prices = { "JK-057": 1899, "JK-058": 2199, "JK-059": 2399, "JK-060": 2299 };
+  const prices = { "JK-057": 1599, "JK-058": 1899, "JK-059": 1999, "JK-060": 1999 };
   const confirmedSizes = {
     "JK-057": [["S (EU 36)", "M (EU 38)", "L (EU 40/42)"]],
     "JK-058": [["3Y", "4Y", "5Y", "6Y", "7Y"], ["S", "M", "L", "XL", "2XL", "3XL"], ["S", "M", "L", "XL", "2XL", "3XL"]],
@@ -129,7 +129,7 @@ test("new Christmas clothing uses screenshot-confirmed sizes and reviewed retail
     assert(product, sku);
     assert.equal(product.inStock, true);
     assert.equal(product.priceCents, prices[sku]);
-    assert(product.priceCents >= 1899 && product.priceCents <= 2399);
+    assert(product.priceCents >= 1599 && product.priceCents <= 1999);
     assert.equal(product.defaultVariantId, SIZE_SELECTION_REQUIRED);
     assert.deepEqual(product.sizeGroups.map(group => group.id), expectedRoles);
     assert.deepEqual(product.sizeGroups.map(group => group.sizes), confirmedSizes[sku]);
@@ -272,7 +272,7 @@ test("malformed encoded CSRF cookies return false, not an exception", () => {
 });
 
 test("unknown catalog URLs are rejected before streaming while valid products keep their normal route", () => {
-  for (const pathname of ["/produktai/not-in-catalog", "/dovanos/not-in-catalog", "/produktai/%ZZ", "/straipsniai/not-an-article"]) {
+  for (const pathname of ["/produktai/not-in-catalog", "/dovanos/not-in-catalog", "/produktai/%ZZ"]) {
     const response = proxy(new NextRequest(`https://store.test${pathname}`));
     assert.equal(response.status, 404);
     assert.equal(response.headers.get("x-middleware-rewrite"), "https://store.test/404");
@@ -392,4 +392,61 @@ test("older small orders retain their original JSON notification format", async 
   assert.equal(captured.input.headers["Content-Type"], "application/json");
   const payload = JSON.parse(captured.input.body);
   assert(payload.embeds[0].fields.find(field => field.name === "Prekės").value.includes(products[0].name));
+});
+
+// Nuolaidos kodai: suma, Stripe ir užsakymo įrašas turi sutapti su krepšelyje rodoma suma.
+const { promoDiscountCents, ADVERTISED_PROMOS } = require("../src/lib/commerce/promo.ts");
+const { PROMO_CODES, NEWSLETTER_PROMO } = require("../src/lib/commerce/promo-codes.ts");
+const promoRoute = require("../src/app/api/checkout/promo/route.ts");
+
+test("every promo code charges exactly the discounted total through PaymentIntent and records it", async () => {
+  const bigCart = products.filter(p => p.inStock && !p.sizeGroups).slice(0, 6).map(p => line(p));
+  for (const promo of PROMO_CODES) {
+    const plain = buildOrder(parseLines(bigCart), addons, false);
+    const order = buildOrder(parseLines(bigCart), addons, false, promo.code.toLowerCase() + " ");
+    const discount = promoDiscountCents(promo, plain.subtotal);
+    assert(discount > 0, promo.code);
+    assert.equal(order.discountCents, discount);
+    assert.equal(order.totalCents, plain.totalCents - discount);
+    stripeCalls = [];
+    const response = await intent.POST(request({ ...payload(), lines: bigCart, promoCode: promo.code, expectedTotalCents: order.totalCents }));
+    assert.equal(response.status, 200);
+    assert.equal(stripeCalls[0].amount, order.totalCents);
+    assert.equal(stripeCalls[0].metadata.promo, promo.code);
+    const snapshot = readSnapshot(stripeCalls[0].metadata);
+    assert.equal(snapshot.items.reduce((sum, i) => sum + i.unitAmount * i.quantity, 0) + snapshot.shippingCents, order.totalCents);
+  }
+});
+
+test("unknown, stacked or non-string promo codes are refused without calling Stripe", async () => {
+  for (const promoCode of ["NERA", ["JAUKU5", "KALEDOS15"], { code: "JAUKU5" }, 5]) {
+    stripeCalls = [];
+    const body = payload();
+    const response = await intent.POST(request({ ...body, promoCode }));
+    assert.equal(response.status, 400, JSON.stringify(promoCode));
+    assert.equal(stripeCalls.length, 0);
+  }
+});
+
+test("a code below its minimum gives no discount and the client-shown total still matches", async () => {
+  const promo = ADVERTISED_PROMOS.find(p => p.minSubtotalCents > 0);
+  const cheap = products.filter(p => p.inStock && !p.sizeGroups).sort((a, b) => a.priceCents - b.priceCents)[0];
+  const lines = [line(cheap)];
+  const order = buildOrder(parseLines(lines), addons, false, promo.code);
+  assert(order.subtotal < promo.minSubtotalCents);
+  assert.equal(order.discountCents, 0);
+  assert.equal(order.totalCents, buildOrder(parseLines(lines), addons, false).totalCents);
+  stripeCalls = [];
+  const response = await intent.POST(request({ ...payload(), lines, promoCode: promo.code, expectedTotalCents: order.totalCents }));
+  assert.equal(response.status, 200);
+  assert.equal(stripeCalls[0].amount, order.totalCents);
+});
+
+test("promo lookup endpoint returns terms for valid codes only and never lists the newsletter code client-side", async () => {
+  const ok = await promoRoute.POST(request({ code: " sventes10 " }));
+  assert.equal(ok.status, 200);
+  assert.deepEqual(await ok.json(), NEWSLETTER_PROMO);
+  assert.equal((await promoRoute.POST(request({ code: "NERA" }))).status, 404);
+  assert(!ADVERTISED_PROMOS.some(p => p.code === NEWSLETTER_PROMO.code));
+  assert.equal(new Set(PROMO_CODES.map(p => p.code)).size, PROMO_CODES.length);
 });

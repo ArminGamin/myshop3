@@ -5003,27 +5003,75 @@ html[data-intro="pending"] .hero-shell *::after {
 }
 
 /* ── Advento kalendoriai: pagrindinio puslapio sekcija ──────────── */
+/* Tamsi bordo juosta su auksiniu švytėjimu ir langelių tinkleliu – sekcija išsiskiria
+   tarp šviesių blokų, kaip žalioji „Kam ieškote dovanos?“ juosta. */
 .advent-band {
   position: relative;
+  overflow: hidden;
+  color: var(--color-cream-50);
   background:
-    radial-gradient(ellipse 60% 45% at 85% 0%, color-mix(in srgb, var(--color-gold-300) 24%, transparent), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 0% 100%, color-mix(in srgb, var(--color-forest-500) 8%, transparent), transparent 70%),
-    var(--color-cream-100);
-  border-block: 1px solid color-mix(in srgb, var(--color-gold-500) 22%, transparent);
+    radial-gradient(ellipse 55% 60% at 88% 0%, rgb(227 199 126 / 0.2), transparent 68%),
+    radial-gradient(ellipse 45% 55% at 0% 100%, rgb(125 42 44 / 0.55), transparent 70%),
+    radial-gradient(ellipse 80% 70% at 50% 40%, var(--color-burgundy-600), transparent 80%),
+    var(--color-burgundy-700);
+  box-shadow: var(--shadow-band);
 }
-/* Švelnus langelių tinklelis – advento kalendoriaus užuomina. */
+/* Langelių tinklelis – advento kalendoriaus užuomina, išblėsta į apačią. */
 .advent-band::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--color-gold-600) 8%, transparent) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(0deg, color-mix(in srgb, var(--color-gold-600) 8%, transparent) 1px, transparent 1px) 0 0 / 56px 56px;
-  mask-image: linear-gradient(180deg, #000, transparent 55%);
+    linear-gradient(90deg, rgb(227 199 126 / 0.09) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(0deg, rgb(227 199 126 / 0.09) 1px, transparent 1px) 0 0 / 64px 64px;
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 85%);
+}
+/* Auksinės „sniego“ kibirkštys viršuje. */
+.advent-band::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 22rem;
+  pointer-events: none;
+  opacity: 0.55;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, var(--color-gold-200), transparent),
+    radial-gradient(1px 1px at 22% 62%, var(--color-gold-200), transparent),
+    radial-gradient(2px 2px at 38% 12%, var(--color-gold-300), transparent),
+    radial-gradient(1px 1px at 55% 40%, var(--color-gold-200), transparent),
+    radial-gradient(1.5px 1.5px at 68% 22%, var(--color-gold-200), transparent),
+    radial-gradient(2px 2px at 82% 52%, var(--color-gold-300), transparent),
+    radial-gradient(1px 1px at 92% 14%, var(--color-gold-200), transparent),
+    radial-gradient(1.5px 1.5px at 6% 78%, var(--color-gold-200), transparent);
+  mask-image: linear-gradient(180deg, #000, transparent);
 }
 .advent-band > * {
   position: relative;
+  z-index: 1;
+}
+.advent-band .home-h2 {
+  color: var(--color-cream-50);
+}
+.advent-band .home-h2 em {
+  color: var(--color-gold-300);
+}
+.advent-band .home-h2 + p {
+  color: rgb(245 240 230 / 0.8);
+}
+.advent-band .home-more {
+  color: var(--color-cream-50);
+}
+.advent-band .home-more:hover {
+  color: var(--color-gold-300);
+}
+.advent-band .home-more-icon {
+  color: var(--color-gold-300);
+  border-color: rgb(227 199 126 / 0.45);
+}
+.advent-band .home-more:hover .home-more-icon {
+  color: var(--color-burgundy-800);
+  background: var(--color-gold-300);
 }
 .advent-eyebrow {
   display: inline-flex;
@@ -5034,14 +5082,14 @@ html[data-intro="pending"] .hero-shell *::after {
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-forest-500);
+  color: var(--color-gold-300);
 }
 .advent-eyebrow-tag {
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   letter-spacing: 0.14em;
-  color: var(--color-cream-50);
-  background: linear-gradient(112deg, var(--color-forest-500), var(--color-forest-700));
+  color: var(--color-burgundy-800);
+  background: linear-gradient(112deg, var(--color-gold-300), var(--color-gold-200));
 }
 .advent-perks {
   display: flex;
@@ -5050,7 +5098,7 @@ html[data-intro="pending"] .hero-shell *::after {
   margin-top: 1.25rem;
   font-size: 13.5px;
   font-weight: 700;
-  color: var(--color-ink-900);
+  color: rgb(245 240 230 / 0.92);
 }
 .advent-perks li {
   display: inline-flex;
@@ -5058,7 +5106,7 @@ html[data-intro="pending"] .hero-shell *::after {
   gap: 0.45rem;
 }
 .advent-perks svg {
-  color: var(--color-gold-600);
+  color: var(--color-gold-300);
 }
 
 .advent-tabs {
@@ -5067,10 +5115,8 @@ html[data-intro="pending"] .hero-shell *::after {
   gap: 0.25rem;
   padding: 0.3rem;
   border-radius: 999px;
-  background: rgb(255 255 255 / 0.72);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--color-gold-500) 30%, transparent),
-    var(--shadow-card);
+  background: rgb(42 11 12 / 0.45);
+  box-shadow: inset 0 0 0 1px rgb(227 199 126 / 0.28);
 }
 .advent-tab {
   display: inline-flex;
@@ -5082,18 +5128,54 @@ html[data-intro="pending"] .hero-shell *::after {
   border-radius: 999px;
   font-size: 14.5px;
   font-weight: 700;
-  color: var(--color-ink-600);
+  color: rgb(245 240 230 / 0.82);
   transition:
     background-color var(--duration-hover) var(--ease-cinematic),
     color var(--duration-hover) var(--ease-cinematic);
 }
 .advent-tab:hover {
-  color: var(--color-ink-900);
+  color: var(--color-cream-50);
 }
 .advent-tab[aria-selected="true"] {
+  color: var(--color-burgundy-800);
+  background: linear-gradient(112deg, var(--color-gold-300), var(--color-gold-200));
+  box-shadow: 0 8px 18px -10px rgb(0 0 0 / 0.6);
+}
+/* Prekių kortelės – tamsiai bordo „plokštelės“ su auksiniu kraštu, tekstas šviesus. */
+.advent-card {
+  padding: 0.45rem 0.45rem 0.9rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, rgb(92 26 27 / 0.75), rgb(42 11 12 / 0.85));
+  box-shadow:
+    inset 0 0 0 1px rgb(227 199 126 / 0.3),
+    0 18px 36px -18px rgb(0 0 0 / 0.6);
+  transition: box-shadow var(--duration-hover) var(--ease-cinematic);
+}
+.advent-card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgb(227 199 126 / 0.6),
+    0 22px 40px -18px rgb(0 0 0 / 0.7);
+}
+.advent-card > * {
+  height: 100%;
+}
+.advent-card h3,
+.advent-card .group:hover h3 {
   color: var(--color-cream-50);
-  background: linear-gradient(112deg, var(--color-burgundy-600), var(--color-burgundy-700));
-  box-shadow: 0 8px 18px -10px rgb(42 11 12 / 0.8);
+}
+.advent-card p {
+  color: rgb(245 240 230 / 0.72);
+}
+.advent-card .font-display {
+  color: var(--color-gold-300);
+}
+.advent-card s {
+  color: rgb(245 240 230 / 0.5);
+}
+.advent-card a.rounded-full {
+  color: var(--color-gold-200);
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(227 199 126 / 0.4);
 }
 .advent-tab:focus-visible {
   outline: none;
@@ -5113,8 +5195,8 @@ html[data-intro="pending"] .hero-shell *::after {
   background: color-mix(in srgb, var(--color-gold-300) 55%, white);
 }
 .advent-tab[aria-selected="true"] .advent-tab-count {
-  color: var(--color-burgundy-800);
-  background: var(--color-gold-300);
+  color: var(--color-cream-50);
+  background: var(--color-burgundy-700);
 }
 @media (max-width: 639px) {
   .advent-tabs {
@@ -5195,10 +5277,10 @@ html[data-intro="pending"] .hero-shell *::after {
   justify-content: flex-end;
   overflow: hidden;
   border-radius: 1.25rem;
-  background: var(--color-forest-700);
+  background: var(--color-burgundy-800);
   box-shadow:
-    inset 0 0 0 1px rgb(227 199 126 / 0.32),
-    var(--shadow-lift);
+    inset 0 0 0 1px rgb(227 199 126 / 0.4),
+    0 18px 36px -18px rgb(0 0 0 / 0.6);
 }
 .advent-feature:focus-visible {
   outline: none;
@@ -5215,9 +5297,9 @@ html[data-intro="pending"] .hero-shell *::after {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgb(11 42 31 / 0) 25%,
-    rgb(11 42 31 / 0.72) 58%,
-    rgb(11 42 31 / 0.96) 100%
+    rgb(42 11 12 / 0) 25%,
+    rgb(42 11 12 / 0.75) 58%,
+    rgb(42 11 12 / 0.97) 100%
   );
 }
 .advent-feature-body {

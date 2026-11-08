@@ -39,8 +39,8 @@ const steps: Step[] = [
     options: [
       { value: "iki-20", label: "Iki 20 €" },
       { value: "20-30", label: "20–30 €" },
-      { value: "30-50", label: "30–50 €" },
-      { value: "50-plus", label: "50 €+" },
+      { value: "30-50", label: "30–40 €" },
+      { value: "50-plus", label: "40 €+" },
     ],
   },
   {
@@ -73,8 +73,8 @@ const steps: Step[] = [
 const budgetRange = {
   "iki-20": [0, 2000],
   "20-30": [2000, 3000],
-  "30-50": [3000, 5000],
-  "50-plus": [5000, Infinity],
+  "30-50": [3000, 4000],
+  "50-plus": [4000, Infinity],
 } as const;
 
 const MAX_SCORE = 12.5;
