@@ -5916,3 +5916,200 @@ html[data-intro="pending"] .hero-shell *::after {
     inset 0 0 0 1px rgb(227 199 126 / 0.35),
     0 10px 22px -12px rgb(92 26 27 / 0.7);
 }
+
+/* ── Advento kalendorių nukreipimo puslapis: bordo ir auksas, kaip pagrindinio puslapio juosta ── */
+.adv-dark {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-cream-50);
+  background:
+    radial-gradient(ellipse 55% 45% at 88% 0%, rgb(227 199 126 / 0.2), transparent 68%),
+    radial-gradient(ellipse 45% 40% at 0% 60%, rgb(125 42 44 / 0.55), transparent 70%),
+    radial-gradient(ellipse 80% 50% at 50% 20%, var(--color-burgundy-600), transparent 80%),
+    var(--color-burgundy-700);
+}
+/* Auksinis langelių tinklelis – advento kalendoriaus užuomina. */
+.adv-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgb(227 199 126 / 0.08) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(0deg, rgb(227 199 126 / 0.08) 1px, transparent 1px) 0 0 / 64px 64px;
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.35) 40%, rgb(0 0 0 / 0.15) 100%);
+}
+.bq-hero.lp-advent {
+  background: none;
+}
+.bq-hero.lp-advent::before {
+  display: none;
+}
+.lp-advent .bq-eyebrow {
+  color: var(--color-gold-300);
+}
+.lp-advent .bq-eyebrow-tag {
+  color: var(--color-burgundy-800);
+  background: linear-gradient(112deg, var(--color-gold-300), var(--color-gold-200));
+}
+.lp-advent .bq-title {
+  color: var(--color-cream-50);
+}
+.lp-advent .bq-title em,
+.lp-advent .home-h2 em {
+  color: var(--color-gold-300);
+}
+.lp-advent .bq-perks {
+  color: rgb(245 240 230 / 0.92);
+}
+.lp-advent .bq-perks svg {
+  color: var(--color-gold-300);
+}
+.lp-advent .bq-fan-card {
+  border-color: var(--color-gold-200);
+  box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.7);
+}
+.lp-advent .bq-fan-badge {
+  color: var(--color-burgundy-800);
+  background: radial-gradient(circle at 30% 25%, var(--color-gold-200), var(--color-gold-400) 75%);
+  box-shadow:
+    inset 0 0 0 2px rgb(255 255 255 / 0.5),
+    0 14px 30px -12px rgb(0 0 0 / 0.65);
+}
+.lp-advent .bq-fan-badge-text {
+  color: var(--color-burgundy-600);
+}
+.lp-advent .bq-mood {
+  background: rgb(42 11 12 / 0.45);
+  box-shadow:
+    inset 0 0 0 1px rgb(227 199 126 / 0.3),
+    0 10px 24px -16px rgb(0 0 0 / 0.6);
+}
+.lp-advent .bq-mood:hover {
+  box-shadow:
+    inset 0 0 0 1px rgb(227 199 126 / 0.65),
+    0 14px 28px -16px rgb(0 0 0 / 0.7);
+}
+.lp-advent .bq-mood-name {
+  color: var(--color-cream-50);
+}
+.adv-groups {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .adv-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.adv-group-photo {
+  position: relative;
+  overflow: hidden;
+  width: 3rem;
+  height: 3rem;
+  background: var(--color-burgundy-800);
+  box-shadow: inset 0 0 0 2px rgb(227 199 126 / 0.6);
+}
+.adv-group-sub {
+  margin-top: 0.15rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-gold-200);
+}
+.adv-group {
+  margin-top: 3rem;
+}
+.adv-group + .adv-group {
+  padding-top: 2.5rem;
+  border-top: 1px solid rgb(227 199 126 / 0.2);
+}
+.adv-group-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+@media (min-width: 768px) {
+  .adv-group {
+    margin-top: 4rem;
+  }
+}
+/* Kortelės tinklelyje, o ne slenkamoje juostoje. */
+.adv-dark .advent-card {
+  width: auto;
+}
+.adv-feature {
+  min-height: 0;
+  background: var(--color-burgundy-800);
+  box-shadow:
+    inset 0 0 0 1px rgb(227 199 126 / 0.4),
+    0 18px 36px -18px rgb(0 0 0 / 0.6);
+}
+.adv-feature-price {
+  margin-top: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-gold-300);
+}
+/* „Kaip tai veikia“ – šviesi pertrauka po tamsios juostos, raudonai auksinė. */
+.bq-how.adv-how {
+  color: var(--color-ink-900);
+  background:
+    radial-gradient(ellipse 50% 70% at 100% 0%, rgb(227 199 126 / 0.28), transparent 70%),
+    linear-gradient(180deg, var(--color-cream-100), var(--color-bg));
+  box-shadow: inset 0 1px 0 rgb(227 199 126 / 0.5);
+}
+.bq-how.adv-how .home-h2 {
+  color: var(--color-ink-900);
+}
+.bq-how.adv-how .home-h2 em {
+  color: var(--color-burgundy-600);
+}
+.adv-how .bq-step {
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 0 0 1px rgb(214 179 95 / 0.45),
+    0 14px 30px -22px rgb(61 16 17 / 0.5);
+}
+.adv-how .bq-step-num {
+  -webkit-text-stroke-color: var(--color-gold-400);
+}
+.adv-how .bq-step-icon {
+  color: var(--color-burgundy-600);
+}
+.adv-how .bq-step-title {
+  color: var(--color-ink-900);
+}
+.adv-how .bq-step-text {
+  color: var(--color-ink-600);
+}
+.adv-how .bq-note {
+  color: var(--color-ink-600);
+}
+.adv-how .bq-note svg {
+  color: var(--color-burgundy-600);
+}
+/* Pagrindinis mygtukas tamsiame fone – auksinis, kaip pagrindinio puslapio skirtukai. */
+.lp-advent .adv-cta.cta-fill,
+.lp-advent .adv-cta.cta-fill:hover:not(:disabled) {
+  color: var(--color-burgundy-800);
+  background-image: linear-gradient(112deg, var(--color-gold-300), var(--color-gold-200));
+  background-size: 100% 100%;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.45),
+    0 10px 24px -10px rgb(0 0 0 / 0.6);
+}
+/* Grupės nuotraukos plytelė – tik kompiuteryje (telefone ją pakeičia antraštės tekstas). */
+.adv-feature {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .adv-feature {
+    display: flex;
+    grid-row: auto;
+  }
+  .adv-feature.adv-feature-tall {
+    grid-row: span 2;
+  }
+}

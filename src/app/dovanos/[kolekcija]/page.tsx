@@ -11,6 +11,7 @@ import { FAQAccordion } from "@/components/commerce/faq-accordion";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CollectionBrowser } from "@/components/commerce/collection-browser";
 import { TrustStrip } from "@/components/commerce/trust-strip";
+import { AdventLanding } from "@/components/commerce/advent-landing";
 
 interface Props {
   params: Promise<{ kolekcija: string }>;
@@ -49,6 +50,8 @@ export default async function CollectionPage({ params }: Props) {
   ]
     .filter((post, i, list) => list.indexOf(post) === i)
     .slice(0, 3);
+
+  if (meta.slug === "advento-kalendoriai") return <AdventLanding content={content} articles={articles} />;
 
   return (
     <>

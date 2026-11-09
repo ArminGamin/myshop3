@@ -1,51 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, CalendarDays, Gift, Truck } from "lucide-react";
-import type { Product, RecipientId } from "@/types";
-import { products } from "@/lib/data/products";
-import { productRank } from "@/lib/data/product-order";
+import { ADVENT_GROUPS as GROUPS, ADVENT_HREF, adventProducts, contentsFirst } from "@/lib/data/advent";
 import { formatPrice } from "@/lib/format";
 import { ProductCard } from "@/components/commerce/product-card";
 import { ProductImage } from "@/components/commerce/product-art";
 import { HomeHeading, HomeMoreMobile } from "@/components/home/home-heading";
 import { AdventTabs } from "./advent-tabs";
 
-const ADVENT_HREF = "/dovanos/advento-kalendoriai";
-
-const GROUPS: { id: RecipientId; label: string; title: string; text: string; cover: string }[] = [
-  {
-    id: "jai",
-    label: "Jai",
-    title: "Kalendoriai jai",
-    text: "Grožio ritualai, auksinės smulkmenos ir jaukūs vakarai – po staigmeną kiekvieną gruodžio rytą.",
-    cover: "advento-kalendorius-jaukumo-vakarai",
-  },
-  {
-    id: "jam",
-    label: "Jam",
-    title: "Kalendoriai jam",
-    text: "Kava iš viso pasaulio, meistro įrankiai ir linksmos kojinės – laukimas, kuris tikrai praverčia.",
-    cover: "advento-kalendorius-kavos-kelione",
-  },
-  {
-    id: "vaikams",
-    label: "Vaikams",
-    title: "Kalendoriai vaikams",
-    text: "Konstravimas, lenktynės, mokslas, slime ir kūryba – kad laukti Kalėdų būtų dar smagiau.",
-    cover: "advento-kalendorius-spalvu-pasaka",
-  },
-];
-
-// Kortelėje rodoma turinio nuotrauka (3-ioji) – ji geriausiai parodo, kas viduje.
-function contentsFirst(product: Product): Product {
-  const [front, open, contents, ...rest] = product.images;
-  if (!contents) return product;
-  return { ...product, images: [contents, front, open, ...rest].filter(Boolean) };
-}
-
 export function AdventShowcase() {
-  const advent = products
-    .filter((p) => p.inStock && p.slug.startsWith("advento-kalendorius-"))
-    .sort((a, b) => productRank(a.slug) - productRank(b.slug));
+  const advent = adventProducts();
   const groups = GROUPS.map((group) => ({
     ...group,
     items: advent.filter((p) => p.recipients.includes(group.id)),
