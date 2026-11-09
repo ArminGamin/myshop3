@@ -67,7 +67,7 @@ export function AdventShowcase() {
               Advento kalendoriai <em>visai šeimai</em>
             </>
           }
-          sub={`24 staigmenos – po vieną kiekvienam gruodžio rytui. Užpildyti, paruošti dovanoti, nuo ${formatPrice(fromCents)} su nemokamu pristatymu.`}
+          sub={`24 staigmenos – po vieną kiekvienam gruodžio rytui. Užpildyti, paruošti dovanoti – jau nuo ${formatPrice(fromCents)}.`}
           action={{ href: ADVENT_HREF, label: "Visi advento kalendoriai" }}
         />
 

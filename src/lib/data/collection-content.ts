@@ -47,7 +47,7 @@ export const collectionContent: Record<string, CollectionContent> = {
       paragraphs: [
         "Pradėkite nuo to, kuo žmogus gyvena kasdien. Kavos mėgėjui tiks kalendorius su skirtingomis kavos porcijomis, namų meistrui – su įrankiais, o tam, kuris vertina ramius vakarus, – su arbata, žvakėmis ir šiltomis kojinėmis. Moterims siūlome grožio priemonių ir papuošalų kalendorius.",
         "Vaikams rinkitės pagal pomėgius: konstravimo, lenktynių, mokslo eksperimentų, slime ar kūrybos kalendorius. Prie kiekvieno kalendoriaus nurodytas rekomenduojamas amžius, o kalendorių su smulkiomis detalėmis mažesniems vaikams patariame naudoti prižiūrint suaugusiajam.",
-        "Kad pirmąjį langelį būtų galima atidaryti gruodžio 1 d., užsakykite iš anksto: pristatome per 3–4 dienas visoje Lietuvoje, o visiems advento kalendoriams pristatymas nemokamas.",
+        "Kad pirmąjį langelį būtų galima atidaryti gruodžio 1 d., užsakykite iš anksto: pristatome per 3–4 dienas visoje Lietuvoje, o užsakymams nuo 24,99 € pristatymas nemokamas.",
       ],
     },
     faq: [
@@ -61,7 +61,7 @@ export const collectionContent: Record<string, CollectionContent> = {
       },
       {
         q: "Ar advento kalendoriui taikomas nemokamas pristatymas?",
-        a: "Taip. Visi advento kalendoriai kainuoja nuo 24,99 €, todėl pristatymas visoje Lietuvoje jiems nemokamas.",
+        a: "Taip, jei užsakymo suma siekia 24,99 € ar daugiau – tai daugumai advento kalendorių. Pigesniems kalendoriams pristatymas kainuoja 2,99 €.",
       },
       returnsFaq,
     ],
