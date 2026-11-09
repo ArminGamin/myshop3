@@ -47,7 +47,7 @@ type Message = { text: string; sparkle: boolean; href?: string };
 
 // Naujiena – pirmoji, kad būtų matoma iškart; paspaudus veda į puokščių puslapį.
 const bouquetLine: Message = {
-  text: "Naujiena: saldainių puokštės su Kinder, Milka ir Ferrero 🎁",
+  text: "Naujiena – saldainių puokštės dovanai 🎁",
   sparkle: true,
   href: "/saldainiu-puokstes",
 };

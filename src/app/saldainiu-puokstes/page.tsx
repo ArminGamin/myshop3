@@ -159,7 +159,10 @@ export default function BouquetsPage() {
                     <span aria-hidden className="bq-mood-dot" style={{ "--swatch": mood?.swatch } as CSSProperties} />
                     <span className="bq-mood-copy">
                       <span className="bq-mood-name">{bouquetTitle(product)}</span>
-                      <span className="bq-mood-sub">{mood?.label}</span>
+                      <span className="bq-mood-sub">
+                        <span className="sm:hidden">{formatPrice(product.priceCents)}</span>
+                        <span className="hidden sm:inline">{mood?.label}</span>
+                      </span>
                     </span>
                     <span className="bq-mood-price">{formatPrice(product.priceCents)}</span>
                   </a>
