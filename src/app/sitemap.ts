@@ -10,12 +10,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
-    ...collections.map((c) => ({
+    ...collections.filter((c) => c.slug !== "saldainiu-puokstes").map((c) => ({
       url: `${base}/dovanos/${c.slug}`,
       lastModified: now,
       changeFrequency: "daily" as const,
       priority: c.slug === "bestselleriai" ? 0.9 : 0.8,
     })),
+    { url: `${base}/saldainiu-puokstes`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
     {
       url: `${base}/rask-dovana`,
       lastModified: now,

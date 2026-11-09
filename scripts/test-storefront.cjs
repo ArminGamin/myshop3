@@ -228,6 +228,54 @@ test("new Christmas prices reach Stripe and the order snapshot unchanged", async
   }
 });
 
+test("candy bouquets keep reviewed prices from cart to Stripe, collections and feed", async () => {
+  const { getCollectionProducts } = require("../src/lib/data/collections.ts");
+  const { bundleUnitPriceCents } = require("../src/lib/commerce/pricing.ts");
+  const prices = { "JK-073": 2499, "JK-074": 2399, "JK-075": 2799, "JK-076": 2999, "JK-077": 2899, "JK-078": 2699 };
+  const bouquets = products.filter((p) => p.slug.startsWith("saldainiu-puokste-"));
+  assert.deepEqual(bouquets.map((p) => p.sku).sort(), Object.keys(prices));
+  assert.deepEqual(getCollectionProducts("saldainiu-puokstes").map((p) => p.sku).sort(), Object.keys(prices));
+  const under30 = getCollectionProducts("dovanos-iki-30-euru").map((p) => p.sku);
+  const xml = await (await feed.GET()).text();
+  for (const product of bouquets) {
+    assert.equal(product.priceCents, prices[product.sku], product.sku);
+    assert(product.inStock && canViewProduct(product));
+    assert(under30.includes(product.sku));
+    assert(product.variants.some((v) => v.id === product.defaultVariantId));
+    assert.equal(product.images.length, 2);
+    for (const image of product.images) assert(fs.existsSync(path.join(root, "public", image)), image);
+    for (const slug of product.pairsWith) assert(products.some((p) => p.slug === slug && p.inStock), `${product.sku} pairs with ${slug}`);
+    assert(xml.includes(`<g:id>${product.sku}</g:id>`));
+    assert(xml.includes(`<g:price>${(product.priceCents / 100).toFixed(2)} EUR</g:price>`));
+    for (const qty of [1, 2, 3]) {
+      const lines = [line(product, qty)];
+      const order = buildOrder(parseLines(lines), {}, false);
+      const unit = bundleUnitPriceCents(product.priceCents, qty);
+      assert.equal(order.lineItems[0].price_data.unit_amount, unit);
+      assert.equal(order.subtotal, resolveItems(lines)[0].lineTotalCents);
+      assert.equal(order.subtotal, subtotalOf(resolveItems(lines)));
+      const shipping = order.subtotal >= store.shipping.freeThresholdCents ? 0 : store.shipping.flatRateCents;
+      assert.equal(order.shippingCents, shipping);
+      assert.equal(order.totalCents, order.subtotal + shipping);
+    }
+  }
+  const xmlItem = xml.split("<item>").find((item) => item.includes("<g:id>JK-073</g:id>"));
+  assert(xmlItem.includes("Candy &amp; Chocolate"));
+  const mixed = bouquets.map((p) => line(p));
+  const order = buildOrder(parseLines(mixed), addons, false);
+  assert.equal(order.subtotal, Object.values(prices).reduce((a, b) => a + b, 0));
+  for (const [name, route] of [["PaymentIntent", intent], ["hosted Checkout", hosted]]) {
+    stripeCalls = [];
+    const response = await route.POST(request({ lines: mixed, addons, mysteryGift: false, customer, expectedTotalCents: order.totalCents }));
+    assert.equal(response.status, 200, name);
+    assert.equal((await response.json()).totalCents, order.totalCents);
+    const input = stripeCalls[0];
+    const total = input.amount ?? input.line_items.reduce((sum, l) => sum + l.quantity * l.price_data.unit_amount, 0) + input.shipping_options[0].shipping_rate_data.fixed_amount.amount;
+    assert.equal(total, order.totalCents, name);
+    assert.deepEqual(readSnapshot(input.metadata), orderSnapshot(order));
+  }
+});
+
 for (const [name, route] of [["PaymentIntent", intent], ["hosted Checkout", hosted]]) {
   test(`${name} rejects missing, changed or fractional expected totals without calling Stripe`, async () => {
     for (const expectedTotalCents of [undefined, 1, 1234.5, "2939"]) {

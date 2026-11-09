@@ -19,6 +19,11 @@ export async function GET() {
     .filter((p) => p.inStock)
     .map((p) => {
       const apparel = Boolean(p.sizeGroups) || /^JK-05[2-6]$/.test(p.sku);
+      const category = apparel
+        ? "Apparel &amp; Accessories &gt; Clothing"
+        : p.slug.startsWith("saldainiu-puokste-")
+          ? "Food, Beverages &amp; Tobacco &gt; Food Items &gt; Candy &amp; Chocolate"
+          : "Home &amp; Garden &gt; Decor";
       return `    <item>
       <g:id>${esc(p.sku)}</g:id>
       <g:title>${esc(`${p.name} | ${store.brand.name}`)}</g:title>
@@ -29,7 +34,7 @@ export async function GET() {
       <g:availability>in_stock</g:availability>
       <g:price>${(p.priceCents / 100).toFixed(2)} EUR</g:price>
       <g:brand>${esc(store.brand.name)}</g:brand>
-      <g:google_product_category>${apparel ? "Apparel &amp; Accessories &gt; Clothing" : "Home &amp; Garden &gt; Decor"}</g:google_product_category>
+      <g:google_product_category>${category}</g:google_product_category>
       <g:identifier_exists>no</g:identifier_exists>
     </item>`;
     })

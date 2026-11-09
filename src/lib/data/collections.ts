@@ -162,6 +162,18 @@ export const collections: CollectionMeta[] = [
       "Kai dovana turi kalbėti pati už save. Visas mūsų katalogas parinktas pagal tą patį principą.",
     filter: () => true,
   },
+  {
+    slug: "saldainiu-puokstes",
+    title: "Saldainių puokštės",
+    shortTitle: "Saldainių puokštės",
+    emoji: "gift",
+    seoTitle: "Saldainių puokštės dovanai – rankų darbo",
+    description:
+      "Rankų darbo saldainių puokštės su Kinder, Milka, Ferrero ir kitais mėgstamais saldumynais. Nuo 23,99 €, nemokamas pristatymas nuo 24,99 €.",
+    intro:
+      "Saldi staigmena, kuri atrodo kaip gėlių puokštė: šokoladukai, saldainiai ir kaspinas – paruošta dovanoti.",
+    filter: (p) => p.slug.startsWith("saldainiu-puokste-"),
+  },
 ];
 
 export function getCollection(slug: string): CollectionMeta | undefined {

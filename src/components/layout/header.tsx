@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type CSSProperties } from "react";
-import { ArrowRight, Heart, House, Menu, Search, ShieldCheck, ShoppingBag, Sparkles, TreePine, Truck, Watch, X } from "lucide-react";
+import { ArrowRight, Candy, Heart, House, Menu, Search, ShieldCheck, ShoppingBag, Sparkles, TreePine, Truck, Watch, X } from "lucide-react";
 import { collections } from "@/lib/data/collections";
 import { countOf, useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
@@ -18,11 +18,11 @@ const SearchOverlay = dynamic(
 );
 
 const ADVENT_HREF = "/dovanos/advento-kalendoriai";
+const BOUQUET_HREF = "/saldainiu-puokstes";
 
 // Trumpi pavadinimai, kad tilptų advento kalendorių nuoroda; pilnas pavadinimas – aria-label.
 const desktopNav = [
-  { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos", full: "Kalėdinės dovanos", icon: TreePine, tone: "#1f7a58" },
-  { href: "/dovanos/dovanos-jai", label: "Jai", full: "Dovanos jai", icon: Heart, tone: "#d4405f" },
+  { href: "/dovanos/visos-dovanos", label: "Kalėdinės dovanos", full: "Kalėdinės dovanos", icon: TreePine, tone: "#1f7a58" },  { href: "/dovanos/dovanos-jai", label: "Jai", full: "Dovanos jai", icon: Heart, tone: "#d4405f" },
   { href: "/dovanos/dovanos-jam", label: "Jam", full: "Dovanos jam", icon: Watch, tone: "#2a6f9a" },
   { href: "/dovanos/dovanos-seimai", label: "Šeimai", full: "Dovanos šeimai", icon: House, tone: "#c98620" },
 ];
@@ -88,6 +88,18 @@ export function Header() {
                   className="nav-advent"
                 >
                   Advento kalendoriai
+                  <span className="nav-advent-tag">Nauja</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={BOUQUET_HREF}
+                  aria-current={pathname === BOUQUET_HREF ? "page" : undefined}
+                  aria-label="Saldainių puokštės"
+                  className="nav-advent nav-bouquet"
+                >
+                  <Candy aria-hidden className="size-[0.95rem]" strokeWidth={2.2} />
+                  Puokštės
                   <span className="nav-advent-tag">Nauja</span>
                 </Link>
               </li>
@@ -219,6 +231,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
               <span className="menu-advent-tag">Nauja</span>
               <span className="menu-advent-title">Advento kalendoriai</span>
               <span className="menu-advent-sub">24 staigmenos jai, jam ir vaikams</span>
+            </span>
+            <ArrowRight aria-hidden className="size-4.5 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
+          </Link>
+          <Link href={BOUQUET_HREF} onClick={onClose} className="menu-advent menu-bouquet group">
+            <span className="menu-advent-copy">
+              <span className="menu-advent-tag">Nauja</span>
+              <span className="menu-advent-title">Saldainių puokštės</span>
+              <span className="menu-advent-sub">Rankų darbo saldi staigmena su kaspinu</span>
             </span>
             <ArrowRight aria-hidden className="size-4.5 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
           </Link>

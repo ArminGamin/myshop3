@@ -125,6 +125,14 @@ const KEYWORD_MAP: Record<string, string[]> = {
   golfas: ["golfas", "megztinis"],
   rubai: ["megztinis", "dzemperis", "kardiganas", "pizama", "golfas"],
   drabuziai: ["megztinis", "dzemperis", "kardiganas", "pizama", "golfas"],
+  puokste: ["puokste"],
+  puokstes: ["puokste"],
+  bouquet: ["puokste"],
+  saldainiai: ["puokste", "adventas"],
+  saldainiu: ["puokste"],
+  sokoladas: ["puokste"],
+  kinder: ["puokste"],
+  milka: ["puokste"],
 };
 
 export function searchProducts(query: string): Product[] {

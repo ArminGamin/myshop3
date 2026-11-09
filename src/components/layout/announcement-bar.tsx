@@ -43,12 +43,21 @@ const promoLine = (() => {
     : null;
 })();
 
-function buildMessages(): { text: string; sparkle: boolean }[] {
+type Message = { text: string; sparkle: boolean; href?: string };
+
+// Naujiena – pirmoji, kad būtų matoma iškart; paspaudus veda į puokščių puslapį.
+const bouquetLine: Message = {
+  text: "Naujiena: saldainių puokštės su Kinder, Milka ir Ferrero 🎁",
+  sparkle: true,
+  href: "/saldainiu-puokstes",
+};
+
+function buildMessages(): Message[] {
   const campaignLine = campaign.announcementText
     ? { text: campaign.announcementText, sparkle: false }
     : null;
-  return [campaignLine, promoLine, christmasMessage(), deadlineMessage()].filter(
-    (item): item is { text: string; sparkle: boolean } => Boolean(item)
+  return [bouquetLine, campaignLine, promoLine, christmasMessage(), deadlineMessage()].filter(
+    (item): item is Message => Boolean(item)
   );
 }
 
@@ -71,11 +80,11 @@ function AnnouncementText({ text }: { text: string }) {
   );
 }
 
-const campaignOnly = campaign.announcementText
+const campaignOnly: Message[] = campaign.announcementText
   ? [{ text: campaign.announcementText, sparkle: false }]
   : [];
 
-let clientMessages: { text: string; sparkle: boolean }[] | null = null;
+let clientMessages: Message[] | null = null;
 
 function readMessages() {
   if (!clientMessages) clientMessages = buildMessages();
@@ -115,6 +124,8 @@ export function AnnouncementBar() {
   }, [messages.length]);
 
   if (messages.length === 0) return null;
+  const href = messages[index]?.href ?? "/pristatymas";
+  const label = href === "/pristatymas" ? "Daugiau apie pristatymą" : "Žiūrėti saldainių puokštes";
 
   // Visi pranešimai sukrauti vienoje vietoje ir keičiamas tik jų matomumas:
   // tekstas DOM'e nesikeičia, todėl iOS Safari nepalieka senų raidžių likučių.
@@ -136,13 +147,8 @@ export function AnnouncementBar() {
           </p>
         ))}
       </div>
-      <Link
-        href="/pristatymas"
-        aria-label="Daugiau apie pristatymą"
-        className="absolute inset-0"
-        tabIndex={-1}
-      >
-        <span className="sr-only">Daugiau apie pristatymą</span>
+      <Link href={href} aria-label={label} className="absolute inset-0" tabIndex={-1}>
+        <span className="sr-only">{label}</span>
       </Link>
     </SafeDiv>
   );

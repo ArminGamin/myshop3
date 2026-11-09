@@ -21,6 +21,7 @@ import { WhyUs } from "@/components/home/why-us";
 import { PremiumShowcase } from "@/components/home/premium-showcase";
 import { NewsletterPanel } from "@/components/home/newsletter-panel";
 import { AdventShowcase } from "@/components/home/advent-showcase";
+import { BouquetShowcase } from "@/components/home/bouquet-showcase";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -28,6 +29,11 @@ export const metadata: Metadata = {
 
 // Hero vitrinos skaidrės: emocija (megztiniai) ir jaukumas (sniego gaublys, girlianda).
 const HERO_SLIDES: { slug: string; image: string; focus: string }[] = [
+  {
+    slug: "saldainiu-puokste-rozine-prabanga",
+    image: "/products/saldainiu-puokste-rozine-prabanga-aplinka-f23f68b0d1.webp",
+    focus: "50% 30%",
+  },
   {
     slug: "kalediniai-megztiniai-sniego-duetas",
     image: "/products/kalediniai-megztiniai-sniego-duetas-couple-real-v2-af063818.webp",
@@ -113,6 +119,7 @@ export default function HomePage() {
 
       <TrustStrip />
       <AdventShowcase />
+      <BouquetShowcase />
 
       <Reveal>
         <ReviewsMarquee />

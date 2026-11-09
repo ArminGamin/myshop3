@@ -16,7 +16,12 @@ export function GET() {
 
 ## Kolekcijos
 
-${collections.map((c) => `- [${c.title}](${base}/dovanos/${c.slug}): ${c.description}`).join("\n")}
+${collections
+  .map((c) => {
+    const href = c.slug === "saldainiu-puokstes" ? "/saldainiu-puokstes" : `/dovanos/${c.slug}`;
+    return `- [${c.title}](${base}${href}): ${c.description}`;
+  })
+  .join("\n")}
 
 ## Prekės
 

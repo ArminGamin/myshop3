@@ -4,11 +4,12 @@ import { ArrowUpRight } from "lucide-react";
 import { collections } from "@/lib/data/collections";
 import { products } from "@/lib/data/products";
 import { SectionGlyph } from "@/components/ui/line-icons";
+import { BOUQUET_HREF } from "@/lib/data/bouquets";
 
 type TileSize = "tall" | "small" | "wide";
 
 // `image` leidžia rankiniu būdu parinkti nuotrauką; kitaip imamas bestseleris.
-const TILES: { slug: string; size: TileSize; image?: string }[] = [
+const TILES: { slug: string; size: TileSize; image?: string; href?: string }[] = [
   { slug: "dovanos-jai", size: "tall", image: "/products/zvakide-sventinis-vakaras-q2-98b41e146c.webp" },
   { slug: "dovanos-jam", size: "tall" },
   {
@@ -21,6 +22,12 @@ const TILES: { slug: string; size: TileSize; image?: string }[] = [
   { slug: "dovanos-iki-20-euru", size: "small" },
   { slug: "dovanos-iki-50-euru", size: "small" },
   { slug: "premium-dovanos", size: "wide" },
+  {
+    slug: "saldainiu-puokstes",
+    size: "small",
+    image: "/products/saldainiu-puokste-violetine-svajone-aplinka-a9feda731b.webp",
+    href: BOUQUET_HREF,
+  },
 ];
 
 const PREFERRED: Record<string, string> = {
@@ -53,7 +60,7 @@ function buildTiles() {
     return [
       {
         ...tile,
-        href: `/dovanos/${collection.slug}`,
+        href: tile.href ?? `/dovanos/${collection.slug}`,
         label: tile.size === "small" ? collection.shortTitle : collection.title,
         count: matching.length,
         image: tile.image ?? cover?.images[0] ?? null,

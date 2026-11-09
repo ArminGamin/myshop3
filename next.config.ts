@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Puokštės turi savo puslapį – kolekcijos adresas nekonkuruoja su juo paieškoje.
+      { source: "/dovanos/saldainiu-puokstes", destination: "/saldainiu-puokstes", permanent: true },
       {
         source: "/produktai/sventinis-dovanu-krepselis",
         destination: "/produktai/namu-kino-projektorius",
