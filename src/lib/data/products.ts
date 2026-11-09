@@ -2535,7 +2535,7 @@ export function getProduct(slug: string): Product | undefined {
 }
 
 export function canViewProduct(product: Product | undefined): product is Product {
-  return Boolean(product?.inStock && product.slug !== TEST_PRODUCT.slug);
+  return Boolean(product?.inStock);
 }
 
 export function getProducts(slugs: string[]): Product[] {
