@@ -202,7 +202,9 @@ export function AddToCartForm({ product }: { product: Product }) {
             </li>
             <li>
               <RotateCcw aria-hidden className="size-4" strokeWidth={1.8} />
-              Grąžinimas per 14 d. be klausimų
+              {product.slug.startsWith("saldainiu-puokste-")
+                ? "Grąžinimas per 14 d., jei puokštė neišvyniota"
+                : "Grąžinimas per 14 d. be klausimų"}
             </li>
             <li>
               <BadgeCheck aria-hidden className="size-4" strokeWidth={1.8} />
