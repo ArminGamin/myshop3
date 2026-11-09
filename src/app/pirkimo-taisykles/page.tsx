@@ -62,6 +62,9 @@ export default function TermsPage() {
         </Link>
         .
       </p>
+      <p>
+        Saldainių puokštės ir kiti maisto produktai priimami atgal tik neišvynioti, nepažeistomis pakuotėmis. Dėl higienos ir sveikatos apsaugos išvyniotų ar atidarytų maisto prekių grąžinti negalima. Jei puokštė atkeliavo pažeista, ją pakeisime arba grąžinsime pinigus.
+      </p>
 
       <h2>7. {productPhotoDisclaimer.termsTitle}</h2>
       <p>{productPhotoDisclaimer.terms}</p>

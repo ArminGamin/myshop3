@@ -54,6 +54,10 @@ const FAQ = [
     a: "Saldumynuose gali būti pieno, glitimo, sojos, žemės riešutų ir kitų riešutų. Tiksli kiekvieno saldumyno sudėtis ir alergenai nurodyti ant jo pakuotės.",
   },
   {
+    q: "Ar galima grąžinti puokštę?",
+    a: "Taip, per 14 dienų, jei ji neišvyniota ir pakuotės nepažeistos. Išvyniotų puokščių dėl higienos priežasčių nepriimame. Pažeistą siuntą pakeisime arba grąžinsime pinigus.",
+  },
+  {
     q: "Kaip laikyti puokštę iki įteikimo?",
     a: "Laikykite vėsioje, sausoje vietoje, atokiau nuo radiatorių ir tiesioginės saulės – taip šokoladas išliks gražus. Tinkamumo vartoti terminai nurodyti ant kiekvieno saldumyno pakuotės.",
   },

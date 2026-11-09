@@ -26,6 +26,9 @@ export default function ReturnsPage() {
         Grąžinti negalėsime prekių, kurios buvo naudotos, pripildytos vandeniu, subraižytos,
         sulaužytos ar suteptos.
       </p>
+      <p>
+        Saldainių puokštės ir kiti maisto produktai priimami atgal tik neišvynioti, nepažeistomis pakuotėmis. Dėl higienos ir sveikatos apsaugos išvyniotų ar atidarytų maisto prekių grąžinti negalima. Jei puokštė atkeliavo pažeista, ją pakeisime arba grąžinsime pinigus.
+      </p>
 
       <h2>Kaip grąžinti prekę</h2>
       <ul>
