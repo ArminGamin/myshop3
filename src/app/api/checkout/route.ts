@@ -64,8 +64,8 @@ export async function POST(req: Request) {
               : "Nemokamas pristatymas (nuo 24,99 €)"
             : "Pristatymas Lietuvoje",
         delivery_estimate: {
-          minimum: { unit: "business_day", value: 4 },
-          maximum: { unit: "business_day", value: 6 },
+          minimum: { unit: "business_day", value: 3 },
+          maximum: { unit: "business_day", value: 4 },
         },
       },
     },
