@@ -387,18 +387,22 @@ test("newsletter cannot claim success without a delivery destination or consent"
 test("all 840 gift quiz combinations keep every recommendation within the selected budget", () => {
   const source = fs.readFileSync(path.join(root, "src/components/commerce/gift-finder-quiz.tsx"), "utf8");
   const ast = ts.createSourceFile("quiz.tsx", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-  const statements = ast.statements.filter(n => ts.isVariableStatement(n) && n.declarationList.declarations.some(d => ["steps", "budgetRange"].includes(d.name.getText(ast))) || ts.isFunctionDeclaration(n) && n.name?.text === "scoreProducts");
+  const statements = ast.statements.filter(n => ts.isVariableStatement(n) && n.declarationList.declarations.some(d => ["steps", "budgetRange"].includes(d.name.getText(ast))) || ts.isFunctionDeclaration(n) && ["scoreProducts", "tieBreak"].includes(n.name?.text));
   const compiled = ts.transpileModule(statements.map(n => n.getText(ast)).join("\n"), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
   const { steps, budgetRange, scoreProducts } = new Function("products", compiled + ";return {steps,budgetRange,scoreProducts};")(products);
   let combinations = 0;
+  const resultSets = new Set();
   for (const recipient of steps[0].options) for (const budget of steps[1].options) for (const vibe of steps[2].options) for (const occasion of steps[3].options) {
     const results = scoreProducts({ recipient: recipient.value, budget: budget.value, vibe: vibe.value, occasion: occasion.value });
     const [min, max] = budgetRange[budget.value];
     assert(results.length > 0);
     for (const { p } of results) assert(p.priceCents >= min && p.priceCents <= max, `${budget.value}: ${p.slug}`);
+    resultSets.add(results.map(({ p }) => p.slug).join(","));
     combinations++;
   }
   assert.equal(combinations, 840);
+  // Skirtingi atsakymai turi duoti skirtingas rekomendacijas.
+  assert(resultSets.size >= 500, `only ${resultSets.size} distinct recommendation sets`);
 });
 
 test("large order notifications retain every saved product, variant and charged line amount", async () => {

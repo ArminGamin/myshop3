@@ -37,10 +37,10 @@ const steps: Step[] = [
     q: "Koks biudžetas?",
     hint: "Parodysime tik į jį telpančias dovanas.",
     options: [
-      { value: "iki-20", label: "Iki 20 €" },
-      { value: "20-30", label: "20–30 €" },
-      { value: "30-50", label: "30–40 €" },
-      { value: "50-plus", label: "40 €+" },
+      { value: "iki-15", label: "Iki 15 €" },
+      { value: "15-20", label: "15–20 €" },
+      { value: "20-25", label: "20–25 €" },
+      { value: "25-plus", label: "25 €+" },
     ],
   },
   {
@@ -71,38 +71,54 @@ const steps: Step[] = [
 ];
 
 const budgetRange = {
-  "iki-20": [0, 2000],
-  "20-30": [2000, 3000],
-  "30-50": [3000, 4000],
-  "50-plus": [4000, Infinity],
+  "iki-15": [0, 1499],
+  "15-20": [1500, 1999],
+  "20-25": [2000, 2499],
+  "25-plus": [2500, Infinity],
 } as const;
 
-const MAX_SCORE = 12.5;
+// Atitikimo procentui: gavėjas 3 + biudžetas 4 + pobūdis 3 + proga 2.
+const MAX_MATCH = 12;
 
 type Answers = Partial<Record<string, string>>;
-type Scored = { p: Product; score: number };
+type Scored = { p: Product; score: number; match: number };
+
+// Deterministinis „atsitiktinumas“ lygiems rezultatams išmaišyti pagal atsakymus.
+function tieBreak(seed: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) h = Math.imul(h ^ seed.charCodeAt(i), 16777619);
+  return (h >>> 0) / 4294967296;
+}
 
 function scoreProducts(a: Answers): Scored[] {
-  return products
-    .filter((p) => p.inStock)
-    .filter((p) => {
-      if (!a.budget) return true;
-      const [min, max] = budgetRange[a.budget as keyof typeof budgetRange];
-      return p.priceCents >= min && p.priceCents <= max;
-    })
+  const inBudget = products.filter((p) => {
+    if (!p.inStock) return false;
+    if (!a.budget) return true;
+    const [min, max] = budgetRange[a.budget as keyof typeof budgetRange];
+    return p.priceCents >= min && p.priceCents <= max;
+  });
+  // Gavėjas svarbiausias: jei tinkančių pakanka, rodome tik jiems skirtas dovanas.
+  const forRecipient = inBudget.filter((p) => a.recipient && p.recipients.includes(a.recipient as RecipientId));
+  const pool = forRecipient.length >= 3 ? forRecipient : inBudget;
+  const seed = `${a.recipient}|${a.budget}|${a.vibe}|${a.occasion}`;
+
+  return pool
     .map((p) => {
+      const forWho = Boolean(a.recipient && p.recipients.includes(a.recipient as RecipientId));
+      const vibe = Boolean(a.vibe && p.vibes.includes(a.vibe as VibeId));
+      const occasion = Boolean(a.occasion && p.occasions.includes(a.occasion as OccasionId));
+      // Siauresnės (specifiškesnės) prekės už tą patį atitikimą gauna daugiau taškų,
+      // kad universalios prekės neužgožtų visų rezultatų.
       let score = 0;
-      if (a.recipient && p.recipients.includes(a.recipient as RecipientId)) score += 3;
-      if (a.budget) {
-        const [min, max] = budgetRange[a.budget as keyof typeof budgetRange];
-        if (p.priceCents >= min && p.priceCents <= max) score += 4;
-      }
-      if (a.vibe && p.vibes.includes(a.vibe as VibeId)) score += 3;
-      if (a.occasion && p.occasions.includes(a.occasion as OccasionId)) score += 2;
-      if (p.bestseller) score += 0.5;
-      return { p, score };
+      if (forWho) score += 3 + 2 / p.recipients.length;
+      if (vibe) score += 3 + 2 / p.vibes.length;
+      if (occasion && a.occasion !== "kaledos") score += 2 + 1 / p.occasions.length;
+      if (p.bestseller) score += 0.3;
+      score += tieBreak(seed + p.slug) * 0.6;
+      const match = (forWho ? 3 : 0) + 4 + (vibe ? 3 : 0) + (occasion ? 2 : 0);
+      return { p, score, match };
     })
-    .filter((x) => x.score >= 3)
+    .filter((x) => x.match >= 7)
     .sort((x, y) => y.score - x.score)
     .slice(0, 6);
 }
@@ -111,7 +127,7 @@ function fallbackPicks(): Scored[] {
   return products
     .filter((p) => p.inStock && p.bestseller)
     .slice(0, 6)
-    .map((p) => ({ p, score: 0 }));
+    .map((p) => ({ p, score: 0, match: 0 }));
 }
 
 const labelOf = (stepId: string, value?: string) =>
@@ -249,7 +265,7 @@ export function GiftFinderQuiz() {
             </p>
 
             <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-              {results.map(({ p, score }, i) => {
+              {results.map(({ p, match }, i) => {
                 const top = i === 0 && matched.length > 0;
                 return (
                   <Link
@@ -274,7 +290,7 @@ export function GiftFinderQuiz() {
                     <span className="mt-auto flex items-center justify-between gap-2 pt-2">
                       <span className="text-[14px] font-extrabold text-burgundy-600">{formatPrice(p.priceCents)}</span>
                       {matched.length ? (
-                        <span className="quiz-match">{Math.min(99, Math.round((score / MAX_SCORE) * 100))}%</span>
+                        <span className="quiz-match">{Math.min(99, Math.round((match / MAX_MATCH) * 100))}%</span>
                       ) : null}
                     </span>
                   </Link>
