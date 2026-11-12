@@ -435,6 +435,7 @@ function CheckoutInner({
     const { errors: nextErrors, value } = validateCustomer(model.form);
     if (Object.keys(nextErrors).length > 0) {
       model.setErrors(nextErrors);
+      track("checkout_error", { reason: `invalid_fields:${Object.keys(nextErrors).join(",")}` });
       model.setBanner("Prašome taisyklingai užpildyti visus privalomus laukus.");
       const first = FIELD_ORDER.find((key) => nextErrors[key]);
       if (first) document.getElementById(`checkout-${first}`)?.focus();
@@ -467,6 +468,7 @@ function CheckoutInner({
     try {
       const { error: submitError } = await elements.submit();
       if (submitError) {
+        track("checkout_error", { reason: `payment_form:${submitError.code ?? submitError.type}` });
         model.setBanner(stripeBanner(submitError));
         return;
       }
@@ -479,17 +481,20 @@ function CheckoutInner({
       const data: { clientSecret?: string; totalCents?: number; error?: string; errors?: typeof nextErrors } = await res.json();
       if (res.status === 400 && data.errors) {
         model.setErrors(data.errors);
+        track("checkout_error", { reason: `server_fields:${Object.keys(data.errors).join(",")}` });
         model.setBanner(data.error ?? "Patikrinkite formos laukus.");
         const first = FIELD_ORDER.find((key) => data.errors?.[key]);
         if (first) document.getElementById(`checkout-${first}`)?.focus();
         return;
       }
       if (!res.ok || !data.clientSecret) {
+        track("checkout_error", { reason: `intent_${res.status}:${data.error ?? ""}` });
         model.setBanner(data.error ?? "Nepavyko pradėti mokėjimo.");
         return;
       }
 
       if (data.totalCents !== expectedTotalCents || latestTotal.current !== expectedTotalCents) {
+        track("checkout_error", { reason: "total_changed" });
         model.setBanner("Krepšelio suma pasikeitė. Patikrinkite ją ir bandykite dar kartą.");
         return;
       }
@@ -504,6 +509,7 @@ function CheckoutInner({
       });
 
       if (confirmation.error) {
+        track("checkout_error", { reason: `payment:${confirmation.error.decline_code ?? confirmation.error.code ?? confirmation.error.type}` });
         model.setBanner(stripeBanner(confirmation.error));
         return;
       }
@@ -516,6 +522,7 @@ function CheckoutInner({
         router.push(`/checkout/success?payment_intent=${confirmation.paymentIntent?.id ?? ""}`);
       }
     } catch {
+      track("checkout_error", { reason: "network" });
       model.setBanner("Nepavyko prisijungti. Patikrinkite internetą ir bandykite dar kartą.");
     } finally {
       if (!done) {

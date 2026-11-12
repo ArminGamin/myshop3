@@ -19,7 +19,7 @@ function fixture({ serverTotal = 2939 } = {}) {
     elements: { submit: () => new Promise(resolve => { release = resolve; }) },
     setBusy: value => state.busy.push(value), submitting: state.submitting, latestTotal: state.latestTotal,
     apiHeaders: () => ({}), router: { push() {} }, window: { location: { origin: "https://test.invalid" } },
-    stripeBanner: () => "error", document: { getElementById: () => null },
+    stripeBanner: () => "error", document: { getElementById: () => null }, track: () => {},
     fetch: async (_, input) => { state.submitted.push(JSON.parse(input.body)); return { ok: true, status: 200, json: async () => ({ clientSecret: "mock_secret", totalCents: serverTotal }) }; },
   };
   const submit = new Function(...Object.keys(deps), compiled + ";return onSubmit;")(...Object.values(deps));

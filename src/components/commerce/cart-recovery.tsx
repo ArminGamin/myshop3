@@ -12,7 +12,7 @@ export function CartRecovery({ lines, email, addons, mysteryGift }: { lines: Car
   useEffect(() => {
     cartStore.init();
     cartStore.clear();
-    for (const line of lines) cartStore.add(line, { silent: true });
+    for (const line of lines) cartStore.add(line, { silent: true, restore: true });
     patchCustomerDraft("email", email);
     updateCheckoutAddons(addons);
     updateMysterySelection(mysteryGift);

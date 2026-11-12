@@ -3,6 +3,8 @@ import { loadPosthog, posthogConfigured } from "@/lib/posthog-client";
 export type AnalyticsEvent =
   | "view_item"
   | "add_to_cart"
+  | "remove_from_cart"
+  | "checkout_error"
   | "view_cart"
   | "begin_checkout"
   | "add_payment_info"
@@ -31,7 +33,7 @@ interface TrackParams {
 
 function posthogProperties(params: TrackParams) {
   const properties: Record<string, string | number> = {};
-  const allowedKeys = ["item_id", "item_name", "value", "quantity", "currency", "variant", "popup_type", "source"] as const;
+  const allowedKeys = ["item_id", "item_name", "value", "quantity", "currency", "variant", "popup_type", "source", "reason"] as const;
 
   for (const key of allowedKeys) {
     const value = params[key];

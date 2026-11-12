@@ -3,6 +3,7 @@
 import { getProduct } from "@/lib/data/products";
 import type { CartItemResolved, CartLine } from "@/types";
 import { track } from "@/lib/analytics";
+import { apiHeaders } from "@/lib/security/csrf-client";
 import { bundleUnitPriceCents } from "@/lib/commerce/pricing";
 import { MAX_QTY, normalizeQuantity } from "@/lib/cart/limits";
 
@@ -74,7 +75,7 @@ export const cartStore = {
     hydratedFlag = true;
     emit();
   },
-  add(line: CartLine, opts?: { silent?: boolean }) {
+  add(line: CartLine, opts?: { silent?: boolean; restore?: boolean }) {
     line = { ...line, qty: normalizeQuantity(line.qty) };
     const product = getProduct(line.slug);
     if (!line.qty || !product?.inStock || (product.sizeGroups && !product.variants.some((v) => v.id === line.variantId))) return;
@@ -88,6 +89,15 @@ export const cartStore = {
       : [...lines, line];
     persist();
     emit();
+    if (!opts?.restore && typeof window !== "undefined") {
+      // Discord pranešimas apie įdėtą prekę (siunčia serveris, klaidos ignoruojamos).
+      fetch("/api/notify/cart-add", {
+        method: "POST",
+        headers: apiHeaders(),
+        keepalive: true,
+        body: JSON.stringify({ line, cart: lines, path: window.location.pathname }),
+      }).catch(() => {});
+    }
     if (product && !opts?.silent) {
       track("add_to_cart", {
         item_id: line.slug,
@@ -107,6 +117,8 @@ export const cartStore = {
     emit();
   },
   remove(slug: string, variantId: string) {
+    const removed = lines.find((l) => l.slug === slug && l.variantId === variantId);
+    if (removed) track("remove_from_cart", { item_id: slug, quantity: removed.qty });
     lines = lines.filter((l) => !(l.slug === slug && l.variantId === variantId));
     persist();
     emit();
