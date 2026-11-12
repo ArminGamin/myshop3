@@ -10,7 +10,8 @@ let ready: Promise<PostHog | null> | null = null;
 // PostHog įkeliamas atskiru paketu tik kai jo prireikia (arba naršyklei
 // atsilaisvinus), kad nestabdytų pirmo puslapio atvaizdavimo.
 export function loadPosthog(): Promise<PostHog | null> {
-  if (typeof window === "undefined" || !posthogConfigured) return Promise.resolve(null);
+  // Savo testavimo localhost neįrašome, kad statistika liktų švari.
+  if (typeof window === "undefined" || !posthogConfigured || /^(localhost|127.0.0.1|[::1])$/.test(location.hostname)) return Promise.resolve(null);
   ready ??= import("posthog-js")
     .then(({ default: posthog }) => {
       if (!posthog.__loaded) {

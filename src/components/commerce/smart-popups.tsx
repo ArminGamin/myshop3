@@ -18,6 +18,12 @@ type PopupKind = "welcome" | "exit-cart" | "exit-quiz" | null;
 
 const DISMISS_KEY = "jaukumas.popup-dismissed.v1";
 
+// Facebook / Instagram programėlių naršyklė: čia beveik niekas neperka iš karto,
+// todėl vietoj pirkimo siūlome −10 % naujienlaiškį ir susigrąžiname laiškais.
+function isSocialInApp() {
+  return /FBAN|FBAV|FB_IAB|Instagram/i.test(navigator.userAgent);
+}
+
 function readDismissed(): number | null {
   try {
     const raw = localStorage.getItem(DISMISS_KEY);
@@ -84,7 +90,8 @@ export function SmartPopups() {
 
   // Laiko / slinkimo trigeriai — el. pašto pasisveikinimui
   useEffect(() => {
-    if (!flags.ENABLE_POPUP || !flags.ENABLE_EMAIL_CAPTURE) return;
+    const social = isSocialInApp();
+    if (!flags.ENABLE_POPUP || (!flags.ENABLE_EMAIL_CAPTURE && !social)) return;
     let done = false;
     function tryShow() {
       if (done || shownRef.current || !eligible()) return;
@@ -93,7 +100,8 @@ export function SmartPopups() {
       show(seenBefore ? "welcome" : "welcome");
     }
 
-    const timer = setTimeout(tryShow, store.popups.timerSeconds * 1000);
+    // Socialinių tinklų lankytojai išeina greitai (mediana ~1 min.), todėl rodome anksčiau.
+    const timer = setTimeout(tryShow, (social ? 10 : store.popups.timerSeconds) * 1000);
 
     function onScroll() {
       const doc = document.documentElement;
@@ -108,6 +116,25 @@ export function SmartPopups() {
       window.removeEventListener("scroll", onScroll);
     };
   }, [show, eligible]);
+
+  // Dovanų testas po 20 s visiško neveiklumo (tuščias krepšelis).
+  useEffect(() => {
+    if (!flags.ENABLE_POPUP) return;
+    let timer = 0;
+    function reset() {
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (!(hydratedRef.current && countOf(cart.lines) > 0)) show("exit-quiz");
+      }, 20_000);
+    }
+    const events = ["scroll", "mousemove", "pointerdown", "keydown", "touchstart"] as const;
+    events.forEach((e) => window.addEventListener(e, reset, { passive: true }));
+    reset();
+    return () => {
+      clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, reset));
+    };
+  }, [show, cart.lines]);
 
   useEffect(() => {
     try {
@@ -260,6 +287,7 @@ function CartReminderPopup({ onClose, visible }: { onClose: () => void; visible:
 function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "ok" | "error">("idle");
+  const source = isSocialInApp() ? "popup-social" : "popup-welcome";
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -272,11 +300,11 @@ function NewsletterInline({ onSuccess }: { onSuccess: () => void }) {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: apiHeaders(),
-        body: JSON.stringify({ email, consent: true, source: "popup-welcome" }),
+        body: JSON.stringify({ email, consent: true, source }),
       });
       const data = await res.json();
       if (!res.ok || data.ok !== true || !["captured", "klaviyo"].includes(data.mode)) throw new Error();
-      track("sign_up", { source: "popup-welcome" });
+      track("sign_up", { source });
       track("popup_convert", { popup_type: "welcome" });
       setState("ok");
       setTimeout(onSuccess, 3000);
