@@ -126,7 +126,7 @@ export function SocialProofToast() {
     <div
       role="status"
       aria-live="polite"
-      className="social-proof-toast pointer-events-none fixed left-2.5 z-[45] w-max max-w-[calc(100vw-1.25rem)] transition-[opacity,transform] duration-500 sm:left-4"
+      className="social-proof-toast pointer-events-none fixed left-2.5 z-[45] w-max max-w-[calc(100vw-1.25rem)] transition-[opacity,transform] duration-500 lg:left-4"
       style={{
         pointerEvents: visible ? "auto" : "none",
         opacity: visible ? 1 : 0,
@@ -135,13 +135,14 @@ export function SocialProofToast() {
       }}
     >
       <div className="social-proof-shell relative overflow-hidden rounded-full border border-gold-400/40 shadow-card">
-        <div className="flex shrink-0 items-center gap-2 py-2.5 pl-2.5 pr-1.5 sm:gap-2.5 sm:py-3 sm:pl-3 sm:pr-2">
-          <span className="relative flex size-2.5 shrink-0 items-center justify-center">
+        {/* Telefone ir planšetėje – kompaktiškas, kompiuteryje – pilno dydžio. */}
+        <div className="flex shrink-0 items-center gap-1.5 py-1 pl-2 pr-0.5 lg:gap-2.5 lg:py-3 lg:pl-3 lg:pr-2">
+          <span className="relative flex size-1.5 shrink-0 items-center justify-center lg:size-2.5">
             <span className="social-proof-pulse-ring absolute inset-0 rounded-full bg-gold-400" />
-            <span className="social-proof-pulse-dot relative size-2.5 rounded-full bg-gold-400" />
+            <span className="social-proof-pulse-dot relative size-1.5 rounded-full bg-gold-400 lg:size-2.5" />
           </span>
           <span
-            className="max-w-[min(100%,11.5rem)] whitespace-normal text-center text-[12.5px] font-semibold leading-snug text-cream-50 transition-[opacity,transform] duration-500 sm:max-w-none sm:whitespace-nowrap sm:text-[13.5px]"
+            className="whitespace-nowrap text-[11px] font-semibold leading-tight text-cream-50 transition-[opacity,transform] duration-500 lg:text-[13.5px] lg:leading-snug"
             style={{
               opacity: phase === "in" ? 1 : 0,
               transform: phase === "in" ? "translateY(0)" : "translateY(-6px)",
@@ -154,9 +155,9 @@ export function SocialProofToast() {
             type="button"
             onClick={handleDismiss}
             aria-label="Užverti"
-            className="ml-auto inline-flex size-11 shrink-0 items-center justify-center rounded-full text-cream-50/75 transition hover:bg-cream-50/10 hover:text-cream-50"
+            className="ml-auto inline-flex size-7 shrink-0 items-center justify-center rounded-full text-cream-50/75 transition hover:bg-cream-50/10 hover:text-cream-50 lg:size-11"
           >
-            <X className="block size-3.5 shrink-0" strokeWidth={2.5} />
+            <X className="block size-3 shrink-0 lg:size-3.5" strokeWidth={2.5} />
           </button>
         </div>
         {slice ? (
