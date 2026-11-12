@@ -87,7 +87,13 @@ export function ProductCard({ product }: { product: Product }) {
             {String(product.rating).replace(".", ",")} ({product.reviewCount})
           </p>
         ) : null}
-        <p className="mt-1 hidden line-clamp-1 text-[13px] leading-snug text-ink-600 sm:block">{product.tagline}</p>
+        {product.inside ? (
+          <p className="mt-1 line-clamp-3 text-[12px] leading-snug text-ink-600 sm:text-[13px]">
+            <span className="font-bold">Viduje:</span> {product.inside}
+          </p>
+        ) : (
+          <p className="mt-1 hidden line-clamp-1 text-[13px] leading-snug text-ink-600 sm:block">{product.tagline}</p>
+        )}
         <div className="mt-1 flex items-baseline gap-2">
           <span className="font-display text-[17px] font-extrabold text-burgundy-600 sm:text-xl">
             {formatPrice(product.priceCents)}

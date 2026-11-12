@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { headers } from "next/headers";
@@ -68,7 +67,8 @@ const stripExtensionAttrs = `(function(){function strip(n){if(n.nodeType!==1)ret
 
 const motionBootstrap = `try{function r(){document.documentElement.dataset.motionReady="1";window.dispatchEvent(new Event("motion-ready"))}if(matchMedia("(prefers-reduced-motion: reduce)").matches)r()}catch(e){}`;
 
-const introGate = `try{var p=location.pathname;var nv=performance.getEntriesByType&&performance.getEntriesByType("navigation")[0];var nt=nv&&nv.type;var same=false;try{same=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(e){}if(nt==="back_forward"||(nt==="navigate"&&same)){document.documentElement.removeAttribute("data-intro");document.documentElement.dataset.motionReady="1"}var checkout=p==="/checkout"||p.indexOf("/checkout/")===0||p==="/apmokejimas";if(checkout){document.documentElement.dataset.checkout="on";document.documentElement.dataset.motionReady="1"}if(matchMedia("(prefers-reduced-motion: reduce)").matches||checkout){document.documentElement.removeAttribute("data-intro")}if(matchMedia("(prefers-reduced-motion: reduce)").matches){var n=document.getElementById("intro-static");if(n)n.remove()}setTimeout(function(){var d=document.documentElement;if(d.dataset.intro==="pending"){d.removeAttribute("data-intro");d.dataset.motionReady="1";var x=document.getElementById("intro-static");if(x)x.remove()}},5200)}catch(e){}`;
+// Įžanga rodoma tik pirmą kartą: vėliau (taip pat perkrovus puslapį) praleidžiama.
+const introGate = `try{var p=location.pathname;var nv=performance.getEntriesByType&&performance.getEntriesByType("navigation")[0];var nt=nv&&nv.type;var same=false;try{same=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(e){}var seen=false;try{seen=localStorage.getItem("jaukumas.intro-seen")==="1";localStorage.setItem("jaukumas.intro-seen","1")}catch(e){}if(seen||nt==="back_forward"||(nt==="navigate"&&same)){document.documentElement.removeAttribute("data-intro");document.documentElement.dataset.motionReady="1"}var checkout=p==="/checkout"||p.indexOf("/checkout/")===0||p==="/apmokejimas";if(checkout){document.documentElement.dataset.checkout="on";document.documentElement.dataset.motionReady="1"}if(matchMedia("(prefers-reduced-motion: reduce)").matches||checkout){document.documentElement.removeAttribute("data-intro")}if(matchMedia("(prefers-reduced-motion: reduce)").matches){var n=document.getElementById("intro-static");if(n)n.remove()}setTimeout(function(){var d=document.documentElement;if(d.dataset.intro==="pending"){d.removeAttribute("data-intro");d.dataset.motionReady="1";var x=document.getElementById("intro-static");if(x)x.remove()}},5200)}catch(e){}`;
 
 const introPaint = `#intro-static{position:fixed;inset:0;z-index:200;background:#0b2a1f}#intro-static.is-leaving{background:transparent}#intro-static .intro-line{display:block;width:min(18rem,72vw);height:1px;background:#d6b35f;opacity:1;transform:none}#intro-static .intro-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}#intro-static .intro-mark{opacity:1;color:#f5f0e6;margin:1.15rem 0 0;font-size:clamp(1.65rem,5vw,2.75rem);font-weight:700;letter-spacing:0.14em}#intro-static .intro-tagline{opacity:1;color:#e8dfcc;margin:0.65rem 0 0;font-size:0.78rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase}`;
 
@@ -85,14 +85,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <style dangerouslySetInnerHTML={{ __html: introPaint }} />
+        {/* Paprastas script head dalyje vykdomas iškart, prieš piešiant puslapį (next/script beforeInteractive React 19 sukeldavo konsolės klaidą). */}
+        <script id="app-bootstrap" nonce={nonce} dangerouslySetInnerHTML={{ __html: appBootstrap }} />
       </head>
       <body className="relative z-0 flex min-h-dvh flex-col" suppressHydrationWarning>
-        <Script
-          id="app-bootstrap"
-          strategy="beforeInteractive"
-          nonce={nonce}
-          dangerouslySetInnerHTML={{ __html: appBootstrap }}
-        />
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}#intro-static,.intro-curtain,.intro-skip{display:none!important}`}</style>
         </noscript>

@@ -7,11 +7,10 @@ import { useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
 import { useMobileChromeFlag, useIsMobile } from "@/lib/mobile-chrome";
 import { bundleUnitPriceCents, bundleTiers } from "@/lib/commerce/pricing";
-import { selectedSizeVariantId, sizeLabel, SIZE_SELECTION_REQUIRED } from "@/lib/commerce/size-variants";
+import { selectedSizeVariantId, sizeLabel, sizeVariantCount, SIZE_SELECTION_REQUIRED } from "@/lib/commerce/size-variants";
 import { store } from "@/lib/config/store.config";
 import { formatPrice, discountPercent } from "@/lib/format";
 import { Button } from "@/components/ui/button";
-import { track } from "@/lib/analytics";
 import {
   variantButtonClasses,
   variantSwatch,
@@ -37,6 +36,10 @@ export function AddToCartForm({ product }: { product: Product }) {
   const discount = discountPercent(unit, compareTotal);
   const savings = baseUnit * qtyChoice - total;
 
+  const groups = product.sizeGroups;
+  const multi = Boolean(groups && groups.length > 1);
+  const pieces = variantId === SIZE_SELECTION_REQUIRED ? 0 : sizeVariantCount(variantId);
+
   const tierOptions = useMemo(
     () => [{ qty: 1 }, ...bundleTiers.map((t) => ({ qty: t.qty }))],
     []
@@ -45,25 +48,40 @@ export function AddToCartForm({ product }: { product: Product }) {
   return (
     <div id="product-size-selection" className="space-y-6">
       {/* Variantai */}
-      {product.sizeGroups ? (
-        <div className="grid gap-3 sm:grid-cols-3">
-          {product.sizeGroups.map((group) => (
-            <label key={group.id} className="pdp-label block">
-              {group.label} — dydis
-              <select
-                value={selectedSizes[group.id] ?? ""}
-                onChange={(event) => {
-                  const next = { ...selectedSizes, [group.id]: event.target.value };
-                  setSelectedSizes(next);
-                  setVariantId(selectedSizeVariantId(product.sizeGroups!, next) ?? SIZE_SELECTION_REQUIRED);
-                }}
-                required
-                className="pdp-select mt-2 min-h-12 w-full px-3.5 text-sm font-semibold normal-case tracking-normal text-ink-900"
-              >
-                <option value="">Pasirinkite dydį</option>
-                {group.sizes.map((size) => <option key={size} value={size}>{sizeLabel(size)}</option>)}
-              </select>
-            </label>
+      {groups ? (
+        <div className="space-y-4">
+          {multi ? (
+            <p className="rounded-cozy border border-gold-400/50 bg-cream-100 px-4 py-3 text-sm font-semibold text-ink-900">
+              Vienas megztinis – {formatPrice(product.priceCents)}. Pasirinkite dydį tiems, kam perkate:
+              {groups!.length > 2 ? " 2 vnt. −10 %, 3 vnt. −15 %." : " abu kartu −10 %."}
+            </p>
+          ) : null}
+          {groups.map((group) => (
+            <fieldset key={group.id}>
+              <legend className="pdp-label mb-2">{group.label} — dydis</legend>
+              <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={`${group.label} — dydis`}>
+                {group.sizes.map((size) => {
+                  const selected = selectedSizes[group.id] === size;
+                  return (
+                    <button
+                      key={size}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      onClick={() => {
+                        // Pakartotinai paspaudus – šis megztinis nebeperkamas.
+                        const next = { ...selectedSizes, [group.id]: selected && multi ? "" : size };
+                        setSelectedSizes(next);
+                        setVariantId(selectedSizeVariantId(groups, next) ?? SIZE_SELECTION_REQUIRED);
+                      }}
+                      className={variantButtonClasses(size, selected)}
+                    >
+                      {sizeLabel(size)}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
           ))}
         </div>
       ) : product.variants.length > 1 ? (
@@ -99,7 +117,7 @@ export function AddToCartForm({ product }: { product: Product }) {
       ) : null}
 
       {/* Kiekio rinkiniai */}
-      {product.inStock && store.bundles?.enabled && bundleTiers.length > 0 ? (
+      {product.inStock && !groups && store.bundles?.enabled && bundleTiers.length > 0 ? (
         <fieldset>
           <legend className="pdp-label mb-2.5">
             Rinkinys — kuo daugiau, tuo pigiau
@@ -158,6 +176,12 @@ export function AddToCartForm({ product }: { product: Product }) {
           ) : null}
           {discount ? <span className="pdp-save mb-1">−{discount} %</span> : null}
         </div>
+        {multi && pieces > 0 ? (
+          <p className="mt-1.5 text-[13px] font-semibold text-ink-600">
+            {pieces === 1 ? "Kaina už 1 megztinį" : `Kaina už ${pieces} megztinius`}
+            {pieces > 1 ? <span className="text-forest-500"> · sutaupote {formatPrice(product.priceCents * pieces - total)}</span> : null}
+          </p>
+        ) : null}
         {savings > 0 ? (
           <p className="mt-1.5 text-[13px] font-semibold text-forest-500">
             Sutaupote {formatPrice(savings)} su rinkiniu
@@ -169,15 +193,7 @@ export function AddToCartForm({ product }: { product: Product }) {
             size="lg"
             className="hero-cta min-h-14 flex-1 text-[16px]"
             disabled={!product.inStock || (Boolean(product.sizeGroups) && variantId === SIZE_SELECTION_REQUIRED)}
-            onClick={() => {
-              track("add_to_cart", {
-                item_id: product.slug,
-                item_name: product.name,
-                value: total / 100,
-                quantity: qtyChoice,
-              });
-              cart.addItem(product.slug, variantId, qtyChoice);
-            }}
+            onClick={() => cart.addItem(product.slug, variantId, qtyChoice)}
           >
             <ShoppingBag className="size-5" strokeWidth={2} />
             {!product.inStock ? "Prekė tikrinama" : variantId === SIZE_SELECTION_REQUIRED ? "Pasirinkite dydžius" : "Į krepšelį"}
@@ -269,7 +285,7 @@ export function StickyBuyBar({ product }: { product: Product }) {
             if (product.sizeGroups) {
               const form = document.getElementById("product-size-selection");
               form?.scrollIntoView({ behavior: "smooth", block: "center" });
-              form?.querySelector("select")?.focus({ preventScroll: true });
+              form?.querySelector<HTMLButtonElement>("[role=radio]")?.focus({ preventScroll: true });
             } else {
               cart.addItem(product.slug, product.defaultVariantId);
             }

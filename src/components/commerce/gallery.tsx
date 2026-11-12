@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Product } from "@/types";
 import { ProductImage, ProductArt } from "./product-art";
@@ -25,6 +25,7 @@ export function Gallery({ product }: { product: Product }) {
   if (selection.variantId !== variantId) setSelection({ variantId, index: 0 });
   const active = selection.variantId === variantId ? selection.index : 0;
   const [zoom, setZoom] = useState(false);
+  const touch = useRef<{ x: number; y: number } | null>(null);
 
   const hasImages = images.length > 0;
   const current = images[active] ?? images[0];
@@ -43,6 +44,16 @@ export function Gallery({ product }: { product: Product }) {
             if (hasImages && window.matchMedia("(hover: hover)").matches) setZoom(true);
           }}
           onMouseLeave={() => setZoom(false)}
+          onTouchStart={(e) => { touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }}
+          onTouchEnd={(e) => {
+            // Braukimas telefonu: kairėn – kita nuotrauka, dešinėn – ankstesnė.
+            const start = touch.current;
+            touch.current = null;
+            if (!start || !many) return;
+            const dx = e.changedTouches[0].clientX - start.x;
+            const dy = e.changedTouches[0].clientY - start.y;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+          }}
         >
           {current ? (
             <ProductImage

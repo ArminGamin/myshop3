@@ -103,7 +103,7 @@ export const cartStore = {
         item_id: line.slug,
         item_name: product.name,
         quantity: line.qty,
-        value: ((product.priceCents + (product.variants.find((v) => v.id === line.variantId)?.priceDeltaCents ?? 0)) * line.qty) / 100,
+        value: (bundleUnitPriceCents(product.priceCents + (product.variants.find((v) => v.id === line.variantId)?.priceDeltaCents ?? 0), line.qty) * line.qty) / 100,
       });
     }
   },

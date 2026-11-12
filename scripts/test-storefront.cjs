@@ -133,10 +133,19 @@ test("new Christmas clothing uses screenshot-confirmed sizes and reviewed retail
     assert.equal(product.defaultVariantId, SIZE_SELECTION_REQUIRED);
     assert.deepEqual(product.sizeGroups.map(group => group.id), expectedRoles);
     assert.deepEqual(product.sizeGroups.map(group => group.sizes), confirmedSizes[sku]);
-    assert.equal(product.variants.length, product.sizeGroups.reduce((count, group) => count * group.sizes.length, 1));
+    const multi = product.sizeGroups.length > 1;
+    assert.equal(product.variants.length, multi ? product.sizeGroups.reduce((count, group) => count * (group.sizes.length + 1), 1) - 1 : product.sizeGroups[0].sizes.length);
     assert.equal(new Set(product.variants.map(variant => variant.id)).size, product.variants.length);
     assert.equal(selectedSizeVariantId(product.sizeGroups, {}), null);
-    assert.equal(selectedSizeVariantId(product.sizeGroups, Object.fromEntries(product.sizeGroups.map(group => [group.id, group.sizes[0]]))), product.variants[0].id);
+    const fullSet = product.variants.find(v => v.id === selectedSizeVariantId(product.sizeGroups, Object.fromEntries(product.sizeGroups.map(group => [group.id, group.sizes[0]]))));
+    assert(fullSet);
+    // Kiekvienas megztinis – atskira kaina; keli kartu pigiau (2 vnt. −10 %, 3 vnt. −15 %).
+    const n = product.sizeGroups.length;
+    assert.equal(product.priceCents + (fullSet.priceDeltaCents ?? 0), n === 1 ? product.priceCents : Math.round(product.priceCents * (n === 2 ? 0.9 : 0.85)) * n);
+    if (multi) {
+      const one = selectedSizeVariantId(product.sizeGroups, { [product.sizeGroups[1].id]: product.sizeGroups[1].sizes[0] });
+      assert.equal(product.variants.find(v => v.id === one)?.priceDeltaCents ?? 0, 0);
+    }
     assert(product.images.length > 0);
     for (const image of product.images) {
       assert(image.endsWith(".webp") && fs.existsSync(path.join(root, "public", image)), image);

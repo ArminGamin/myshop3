@@ -56,6 +56,8 @@ export interface Product {
   tagline: string;
   description: string[];
   contents?: ProductContentGroup[];
+  /** Trumpas turinio sąrašas kortelėje (pvz. advento kalendoriams). */
+  inside?: string;
   benefits: string[];
   specs: ProductSpec[];
   priceCents: number;

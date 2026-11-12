@@ -1820,11 +1820,11 @@ export const products: Product[] = [
     tagline: "Derantys raudoni Kalėdų Senelio ir snaigių motyvai šeimai.",
     description: [
       "Raudonas šventinis dizainas su Kalėdų Senelio ir snaigių motyvais skirtas derančiam vaiko, moters ir vyro įvaizdžiui.",
-      "Vaikui galima rinktis 3–7 m. dydžius, o moteriai ir vyrui – S–3XL. Komplektą sudaro trys megztiniai, o kiekvieno šeimos nario dydis pasirenkamas atskirai.",
+      "Vaikui galima rinktis 3–7 m. dydžius, o moteriai ir vyrui – S–3XL. Galite pirkti vieną, du ar visus tris megztinius – kiekvieno šeimos nario dydis pasirenkamas atskirai.",
     ],
     benefits: ["Derantis šeimos įvaizdis", "Kalėdų Senelio ir snaigių motyvai", "Atskiras vaiko, moters ir vyro dydžio pasirinkimas"],
     specs: [
-      { label: "Komplektacija", value: "3 megztiniai: vaikui, moteriai ir vyrui" },
+      { label: "Kaina", value: "Už vieną megztinį; 2 vnt. −10 %, 3 vnt. −15 %" },
       { label: "Raštas", value: "Kalėdų Senelis ir snaigės" },
       { label: "Spalva", value: "Raudona" },
       { label: "Vaiko dydžiai", value: "3, 4, 5, 6, 7 m." },
@@ -1836,7 +1836,7 @@ export const products: Product[] = [
     priceCents: 1899,
     compareAtPriceCents: null,
     sizeGroups: santaFamilySizes,
-    variants: makeSizeVariants(santaFamilySizes),
+    variants: makeSizeVariants(santaFamilySizes, 1899),
     defaultVariantId: SIZE_SELECTION_REQUIRED,
     images: ["/products/seimos-megztiniai-kaledu-dziaugsmas-hero-real-v2-13c8cef4.webp", "/products/seimos-megztiniai-kaledu-dziaugsmas-detail-real-v2-5484aa5d.webp", "/products/seimos-megztiniai-kaledu-dziaugsmas-family-real-v2-3f445505.webp"],
     artSeed: "megztinis",
@@ -1858,11 +1858,11 @@ export const products: Product[] = [
     tagline: "Raudonų, žalių ir baltų spalvų sniego senio motyvas porai.",
     description: [
       "Didelis sniego senio motyvas ir raudonos, žalios bei baltos spalvos kuria linksmą derinį dviem žmonėms.",
-      "Komplektą sudaro du megztiniai, o kiekvienam dydis pasirenkamas atskirai iš M (EU 38), L (EU 40/42), XL (EU 44) ir XXL (EU 46).",
+      "Galite pirkti vieną arba abu megztinius – kiekvienam dydis pasirenkamas atskirai iš M (EU 38), L (EU 40/42), XL (EU 44) ir XXL (EU 46).",
     ],
     benefits: ["Derantis įvaizdis porai", "Ryškus sniego senio motyvas", "Atskiri moters ir vyro dydžiai"],
     specs: [
-      { label: "Komplektacija", value: "2 megztiniai porai" },
+      { label: "Kaina", value: "Už vieną megztinį; abu kartu −10 %" },
       { label: "Raštas", value: "Sniego senis" },
       { label: "Spalvos", value: "Raudona, žalia, balta" },
       { label: "Dydžiai", value: "M (EU 38), L (EU 40/42), XL (EU 44), XXL (EU 46)" },
@@ -1873,7 +1873,7 @@ export const products: Product[] = [
     priceCents: 1999,
     compareAtPriceCents: null,
     sizeGroups: snowmanCoupleSizes,
-    variants: makeSizeVariants(snowmanCoupleSizes),
+    variants: makeSizeVariants(snowmanCoupleSizes, 1999),
     defaultVariantId: SIZE_SELECTION_REQUIRED,
     images: ["/products/kalediniai-megztiniai-sniego-duetas-hero-real-v2-c5aa5849.webp", "/products/kalediniai-megztiniai-sniego-duetas-detail-real-v2-4779066b.webp", "/products/kalediniai-megztiniai-sniego-duetas-woman-real-v2-60c50e5d.webp", "/products/kalediniai-megztiniai-sniego-duetas-couple-real-v2-af063818.webp"],
     artSeed: "megztinis",
@@ -1895,11 +1895,11 @@ export const products: Product[] = [
     tagline: "Raudonas ir baltas šiaurietiškas elnių ir snaigių raštas šeimai.",
     description: [
       "Raudonų ir baltų spalvų šiaurietiškas raštas su elniais ir snaigėmis skirtas šventiniam vaiko, moters ir vyro deriniui.",
-      "Vaikui galima rinktis 4–5 m., 6 m., 7–8 m., 9–10 m. arba 11–12 m. dydžius. Moteriai ir vyrui skirti S–2XL dydžiai. Komplektą sudaro trys megztiniai.",
+      "Vaikui galima rinktis 4–5 m., 6 m., 7–8 m., 9–10 m. arba 11–12 m. dydžius. Moteriai ir vyrui skirti S–2XL dydžiai. Galite pirkti vieną, du ar visus tris megztinius.",
     ],
     benefits: ["Šiaurietiškas šventinis raštas", "Elnių ir snaigių motyvai", "Atskiri vaiko, moters ir vyro dydžiai"],
     specs: [
-      { label: "Komplektacija", value: "3 megztiniai: vaikui, moteriai ir vyrui" },
+      { label: "Kaina", value: "Už vieną megztinį; 2 vnt. −10 %, 3 vnt. −15 %" },
       { label: "Raštas", value: "Šiaurietiškas: elniai ir snaigės" },
       { label: "Spalvos", value: "Raudona, balta" },
       { label: "Vaiko dydžiai", value: "4–5, 6, 7–8, 9–10, 11–12 m." },
@@ -1911,7 +1911,7 @@ export const products: Product[] = [
     priceCents: 1999,
     compareAtPriceCents: null,
     sizeGroups: nordicFamilySizes,
-    variants: makeSizeVariants(nordicFamilySizes),
+    variants: makeSizeVariants(nordicFamilySizes, 1999),
     defaultVariantId: SIZE_SELECTION_REQUIRED,
     images: ["/products/seimos-megztiniai-siaures-rastas-hero-real-v2-a4fba9f5.webp", "/products/seimos-megztiniai-siaures-rastas-detail-real-v2-e93e3e46.webp", "/products/seimos-megztiniai-siaures-rastas-family-real-v2-47dd02e0.webp"],
     artSeed: "megztinis",
@@ -1931,6 +1931,7 @@ export const products: Product[] = [
     sku: "JK-061",
     name: "Advento kalendorius „Mažasis statytojas“",
     tagline: "24 konstravimo staigmenos, kurios po truputį virsta mažu statybų pasauliu.",
+    inside: "ekskavatoriaus ir krano detalės, statybininko figūrėlė, įrankiai, kelio ženklai, kūgiai",
     description: [
       "„Mažasis statytojas“ kiekvieną gruodžio rytą pateikia naują detalę: nuo važiuoklės ir ratų iki mini statybininko, kelio ženklų bei statybų priedų. Atvėrus visus langelius, vaikas gali sujungti dalis į kelis nedidelius statybų scenarijus ir tęsti žaidimą savo nuožiūra.",
       "Tai kalendorius vaikui, kuriam patinka rinkti, jungti ir iškart išbandyti savo kūrinį. Dėžė sunumeruota 24 dienoms; dėl smulkių detalių rinkinį rekomenduojama naudoti prižiūrint suaugusiajam.",
@@ -1979,6 +1980,7 @@ export const products: Product[] = [
     sku: "JK-062",
     name: "Advento kalendorius „Lenktynių garažas“",
     tagline: "Automobiliukai, garažo detalės ir nauja trasos staigmena kasdien.",
+    inside: "8 mini automobiliai, trasos atkarpos, rampa, remonto stendas, degalų kolonėlė, vėliavėlės",
     description: [
       "„Lenktynių garažas“ kuriamas per visą adventą: pirmiausia atsiranda mini automobiliai, tada – trasos, techninės priežiūros ir lenktynių atributai. Iš viso kalendoriuje yra 8 automobiliukai ir 16 žaidimo priedų, kad atvėrus langelius susidėliotų savas mažas lenktynių pasaulis.",
       "Maždaug 5–7 cm automobiliai patogūs žaisti ant stalo, o kelio ženklai ir barjerai leidžia sukurti vis kitą trasą. Smulkios detalės skirtos vyresniems vaikams ir žaidimui prižiūrint suaugusiajam.",
@@ -2027,6 +2029,7 @@ export const products: Product[] = [
     sku: "JK-063",
     name: "Advento kalendorius „Jaunasis mokslininkas“",
     tagline: "24 trumpi bandymai, kurie paverčia gruodžio rytus mažais mokslo atradimais.",
+    inside: "24 bandymai su spalvomis, vandeniu ir oru, pipetė, indeliai, instrukcijos lietuviškai",
     description: [
       "„Jaunasis mokslininkas“ kasdien pasiūlo naują klausimą ir praktišką bandymą: kaip susimaišo spalvos, kas skęsta, kas plūduriuoja, kaip juda oras ar kodėl susidaro burbulai. Rinkinys apjungia 24 užduotis su smulkiomis tyrinėjimo priemonėmis ir lietuviškomis instrukcijomis.",
       "Daugumą bandymų galima atlikti ant stalo, naudojant priemones iš kalendoriaus ir kelis įprastus namų daiktus. Vaikams rekomenduojama suaugusiojo priežiūra; viską naudoti tik taip, kaip nurodyta instrukcijoje, ir nebandyti ragauti.",
@@ -2075,6 +2078,7 @@ export const products: Product[] = [
     sku: "JK-064",
     name: "Advento kalendorius „Princesės skrynelė“",
     tagline: "24 plaukų ir papuošalų staigmenos kasdieniams šventiniams deriniams.",
+    inside: "8 plaukų segtukai, 4 gumytės, 4 lankeliai, 8 papuošalai: apyrankės, žiedai, pakabukai",
     description: [
       "„Princesės skrynelė“ – mažų aksesuarų kolekcija, kurią galima pradėti derinti dar neatėjus Kalėdoms. Langeliai slepia segtukus, gumytes, lankelius ir papuošalus: dalis tinka plaukams, dalis – šventiniam įvaizdžiui užbaigti.",
       "Rinkinyje yra 24 atskiros staigmenos – 8 segtukai, 4 gumytės, 4 lankeliai ir 8 bižuterijos detalės. Viskas telpa vienoje sunumeruotoje dėžėje; smulkūs papuošalai naudojami prižiūrint suaugusiajam.",
@@ -2122,6 +2126,7 @@ export const products: Product[] = [
     sku: "JK-065",
     name: "Advento kalendorius „Slime laboratorija“",
     tagline: "Spalvų, blizgučių ir tekstūrų laboratorija 24 advento dienoms.",
+    inside: "8 slime porcijos, blizgučiai, karoliukai, maišymo mentelės, 4 užsukami indeliai",
     description: [
       "„Slime laboratorija“ kviečia kurti spalvų ir tekstūrų derinius. Kalendoriuje – 8 mini slime porcijos, 8 spalvų ar blizgių priedų, 4 maišymo įrankiai ir 4 laikymo indeliai, kad kiekvieną kūrinį būtų patogu sumaišyti ir išsaugoti.",
       "Žaisti geriausia ant lengvai nuvalomo paviršiaus. Slime negalima valgyti ar tepti ant veido; panaudojus nusiplauti rankas. Vaikams naudoti prižiūrint suaugusiajam ir laikantis pakuotės instrukcijų.",
@@ -2169,6 +2174,7 @@ export const products: Product[] = [
     sku: "JK-066",
     name: "Advento kalendorius „Spalvų pasaka“",
     tagline: "24 piešimo ir dekoravimo priemonės mažoms gruodžio kūrybos sesijoms.",
+    inside: "8 spalvoti pieštukai, 4 flomasteriai, 4 trafaretai, lipdukai, kūrybinės kortelės",
     description: [
       "„Spalvų pasaka“ kasdien atneša naują priemonę arba idėją: piešti, spalvinti, kurti raštą ar papuošti atviruką. Kalendoriuje suderinti spalvoti pieštukai, flomasteriai, trafaretai, lipdukai ir mini kūrybinės kortelės.",
       "24 langelių turinys tinka trumpoms kūrybinėms pauzėms namuose. Priemones galima naudoti kartu arba pasilikti skirtingiems projektams; smulkūs priedai skirti vaikams nuo 6 metų su suaugusiojo priežiūra.",
@@ -2216,6 +2222,7 @@ export const products: Product[] = [
     sku: "JK-067",
     name: "Advento kalendorius „Meistro dėžė“",
     tagline: "24 dirbtuvių smulkmenos: atsuktuvas, antgaliai ir kasdieniai priedai.",
+    inside: "atsuktuvas su 12 antgalių, matavimo juostelė, žibintuvėlis, šešiakampiai raktai, peiliukas",
     description: [
       "„Meistro dėžė“ sudėta tiems, kam patinka smulkius namų darbus atlikti patiems. Tarp 24 langelių – mini atsuktuvas su keičiamais antgaliais, 1 m matavimo juostelė, žibintuvėlis ir nedideli tvirtinimo bei remonto priedai.",
       "Tai kompaktiškas pagalbinis rinkinys lengviems buities pataisymams, ne profesionaliam darbui ar didelėms apkrovoms. Aštrias ir smulkias detales laikyti vaikams nepasiekiamoje vietoje; žibintuvėlio baterijų tipą tikrinti ant jo korpuso.",
@@ -2263,6 +2270,7 @@ export const products: Product[] = [
     sku: "JK-068",
     name: "Advento kalendorius „Kavos advento kelionė“",
     tagline: "24 vieno puodelio porcijos ir 12 skirtingų kavos aromato krypčių.",
+    inside: "24 maltos kavos porcijos, 12 skonių: šokoladinė, riešutinė, vaisinė, citrusinė, tamsi",
     description: [
       "„Kavos advento kelionė“ kasdien atveria atskirai supakuotą kavos porciją. 12 skirtingų aromato krypčių po dvi porcijas leidžia vieną dieną paragauti pačiam, o kitą – pasidalyti atradimu.",
       "Kiekviename paketėlyje yra 10 g maltos kavos – patogi porcija vienam puodeliui. Bendra grynos kavos masė siekia 240 g; paruošimo pasiūlymas ir konkretaus profilio aprašymas pateikiami prie porcijos.",
@@ -2311,6 +2319,7 @@ export const products: Product[] = [
     sku: "JK-069",
     name: "Advento kalendorius „Kojinių kalendorius“",
     tagline: "24 langeliai, 12 porų ir kasdienis šventinių raštų atradimas.",
+    inside: "12 porų kojinių su snaigėmis, eglutėmis, juostomis ir langeliais, EU 40–46",
     description: [
       "„Kojinių kalendoriuje“ kiekviename langelyje slepiasi po vieną kojinę. Po dviejų dienų jau susidaro nauja pora, o per 24 dienas – 12 skirtingų porų su žiemos, šventiniais ir kasdieniais motyvais.",
       "Kojinės skirtos EU 40–46 dydžiui, todėl tai praktiška dovana, kurią galima dėvėti ir pasibaigus adventui. Medvilnės, poliamido ir elastano mišinys padeda kojinei išlaikyti formą kasdien nešiojant.",
@@ -2359,6 +2368,7 @@ export const products: Product[] = [
     sku: "JK-070",
     name: "Advento kalendorius „Grožio ritualas“",
     tagline: "25 SEPHORA grožio staigmenos veidui, plaukams, kūnui ir makiažui.",
+    inside: "serumas, paakių kremas, šampūnas, plaukų kaukė, kūno kremas, tušas, šešėliai, 2 kvepalų miniatiūros",
     description: [
       "„Grožio ritualas“ – 25 dienų pažintis su skirtingomis kasdienės priežiūros akimirkomis: vieną dieną laukia veido priežiūros priemonė, kitą – plaukų, makiažo ar kvapų akcentas. Mažesni formatai kviečia išbandyti naujus produktus, o kelios didesnės talpos priemonės pravers ir kasdienėje rutinoje.",
       "SEPHORA VIP kalendoriuje susitinka įvairių grožio ženklų priemonės – nuo RASA serumo ir NUXE aliejaus iki WELLA plaukų priežiūros. Tikslią sudėtį ir naudojimo būdą rasite ant kiekvienos priemonės pakuotės.",
@@ -2403,6 +2413,7 @@ export const products: Product[] = [
     sku: "JK-071",
     name: "Advento kalendorius „Auksinės smulkmenos“",
     tagline: "24 aukso spalvos papuošalų staigmenos deriniams nuo kasdienio iki šventinio.",
+    inside: "6 poros auskarų, 6 vėriniai, 6 apyrankės, 6 žiedai – aukso spalvos",
     description: [
       "„Auksinės smulkmenos“ – bižuterijos rinkinys, kuriame kasdien atsiveria nauja derinimo detalė: auskarai, vėriniai, apyrankės ar žiedai. Skirtingos formos leidžia papuošalus dėvėti atskirai arba sujungti į vientisą šventinį komplektą.",
       "Kalendoriuje yra 24 papuošalų staigmenos su aukso spalvos apdaila. Tai bižuterija, ne tikras auksas; kad danga ilgiau išliktų graži, saugokite papuošalus nuo vandens, kvepalų ir kosmetikos.",
@@ -2451,6 +2462,7 @@ export const products: Product[] = [
     sku: "JK-072",
     name: "Advento kalendorius „Jaukumo vakarai“",
     tagline: "24 mažos dovanos arbatai, šilumai ir ramiems gruodžio vakarams.",
+    inside: "8 arbatos porcijos, 4 mini žvakės, 4 poros kojinių, vonios druskos, šventinės kortelės",
     description: [
       "„Jaukumo vakarai“ sudėlioja mažą poilsio ritualą: šiltas gėrimas, švelni žvakių šviesa, vonios akimirka ir jaukios kojinės. Per 24 dienas susirenka kelių rūšių arbata, mini žvakės, kojinių poros, vonios druskos ir atvirukai.",
       "Tai iš anksto paruoštas kalendorius, todėl nereikia pačiai rinkti atskirų smulkmenų. Žvakę deginti prižiūrint ir ant karščiui atsparaus paviršiaus; vonios priemones naudoti pagal jų pakuotėje pateiktą informaciją.",
