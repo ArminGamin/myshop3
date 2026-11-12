@@ -318,6 +318,56 @@ export function AdventLanding({ content, articles }: Props) {
         </div>
       </section>
 
+      <section
+        aria-labelledby="adv-compare"
+        className="mx-auto max-w-5xl px-4 pt-12 sm:px-6 lg:pt-16"
+      >
+        <h2
+          id="adv-compare"
+          className="font-display text-[1.7rem] font-bold leading-tight text-ink-900 sm:text-[2.2rem]"
+        >
+          Visų advento kalendorių palyginimas
+        </h2>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-600">
+          {items.length} {calendarWord(items.length)} vienoje lentelėje: kam tinka, kas viduje ir kiek kainuoja. Pristatymas per 3–4 d.,
+          nemokamai užsakymams nuo {free}.
+        </p>
+        <div className="mt-5 overflow-x-auto rounded-cozy border border-cream-300 bg-white">
+          <table className="w-full text-left text-[13px] leading-snug sm:text-[13.5px]">
+            <thead className="bg-cream-100 text-ink-900">
+              <tr>
+                <th scope="col" className="px-3 py-2.5 font-bold">Kalendorius</th>
+                <th scope="col" className="hidden px-3 py-2.5 font-bold sm:table-cell">Kam</th>
+                <th scope="col" className="px-3 py-2.5 font-bold">Kas viduje</th>
+                <th scope="col" className="hidden px-3 py-2.5 text-right font-bold sm:table-cell">Kaina</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-cream-200 text-ink-600">
+              {[...items].sort((a, b) => a.priceCents - b.priceCents).map((p) => (
+                <tr key={p.slug}>
+                  <th scope="row" className="px-3 py-2.5 font-semibold text-ink-900">
+                    <Link href={`/produktai/${p.slug}`} className="underline-offset-2 hover:text-burgundy-600 hover:underline">
+                      {p.name.replace(/^Advento kalendorius /, "")}
+                    </Link>
+                    <span className="mt-1 block text-[12px] font-medium text-ink-600 sm:hidden">
+                      {ADVENT_GROUPS.filter((g) => p.recipients.includes(g.id)).map((g) => g.label).join(", ")} ·{" "}
+                      <span className="num font-bold text-burgundy-600">{formatPrice(p.priceCents)}</span>
+                    </span>
+                  </th>
+                  <td className="hidden px-3 py-2.5 sm:table-cell">
+                    {ADVENT_GROUPS.filter((g) => p.recipients.includes(g.id)).map((g) => g.label).join(", ")}
+                  </td>
+                  <td className="px-3 py-2.5">{p.inside ?? p.tagline}</td>
+                  <td className="num hidden whitespace-nowrap px-3 py-2.5 text-right font-bold text-burgundy-600 sm:table-cell">
+                    {formatPrice(p.priceCents)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       {content ? (
         <section
           aria-labelledby="gidas"

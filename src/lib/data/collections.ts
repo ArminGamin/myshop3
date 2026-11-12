@@ -37,7 +37,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "Advento kalendoriai 2026 – jai, jam ir vaikams",
     description:
-      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški kalendoriai. Nemokamas pristatymas visoje Lietuvoje.",
+      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški kalendoriai. Nuo 18,99 €, nemokamas pristatymas užsakymams nuo 24,99 €.",
     intro:
       "Kiekvieną gruodžio rytą – nauja staigmena iki pat Kalėdų. Išsirinkite kalendorių jai, jam ar vaikams: visi užpildyti ir paruošti dovanoti.",
     filter: (p) => p.slug.startsWith("advento-kalendorius-"),
@@ -49,9 +49,9 @@ export const collections: CollectionMeta[] = [
     emoji: "star",
     seoTitle: "Kalėdų bestselleriai — populiariausios dovanos 2026",
     description:
-      "Populiariausios kalėdinės dovanos, kurias perka dažniausiai. Patikrintos dešimčių pirkėjų — ideali pradžia ieškant dovanos.",
+      "Populiariausios kalėdinės dovanos, kurias pirkėjai renkasi dažniausiai — ideali pradžia ieškant dovanos.",
     intro:
-      "Šios prekės išsirinkimo problemą išsprendžia jau tūkstančiams pirkėjų. Jeigu abejojate — pradėkite čia.",
+      "Šias dovanas pirkėjai renkasi dažniausiai. Jeigu abejojate — pradėkite čia.",
     filter: (p) => p.bestseller,
   },
   {
@@ -85,7 +85,7 @@ export const collections: CollectionMeta[] = [
     emoji: "users",
     seoTitle: "Kalėdinės dovanos šeimai — bendram laikui",
     description:
-      "Dovanos, kurios suartina: žaidimų vakarai, „Šventės paslaptis“ vaikams, eglutės detalės. Pristatymas iki Kalėdų garantuotas.",
+      "Dovanos, kurios suartina: žaidimų vakarai, „Šventės paslaptis“ vaikams, eglutės detalės. Pristatymas visoje Lietuvoje per 3–4 dienas.",
     intro:
       "Dovanos ne vienam žmogui, o visiems namams — už bendrą laiką, juoką ir tradicijas.",
     filter: byRecipient("seimai"),

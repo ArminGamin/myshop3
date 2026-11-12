@@ -36,7 +36,7 @@ async function sendNewsletterEmail(email: string, item: (typeof NEWSLETTER_SERIE
     limit: 1,
   });
   if (paid?.data.length) return false;
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kaledukampelis.com";
+  const base = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.kaledukampelis.com").replace(/\/$/, "");
   const token = sealToken({ purpose: "newsletter-unsubscribe", runId, email }, UNSUBSCRIBE_TTL);
   const unsubscribeUrl = `${base}/api/email/unsubscribe?token=${encodeURIComponent(token)}`;
   const html = await renderNewsletter(item.kind, base, unsubscribeUrl);

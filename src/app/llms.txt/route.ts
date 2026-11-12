@@ -27,7 +27,7 @@ ${collections
 
 ${products
   .filter((p) => p.inStock)
-  .map((p) => `- [${p.name}](${base}/produktai/${p.slug}) — ${formatPrice(p.priceCents)}: ${p.tagline}`)
+  .map((p) => `- [${p.name}](${base}/produktai/${p.slug}) — ${formatPrice(p.priceCents)}: ${p.tagline}${p.inside ? ` Viduje: ${p.inside}.` : ""}`)
   .join("\n")}
 
 ## Pagalba

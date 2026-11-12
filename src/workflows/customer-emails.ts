@@ -36,7 +36,7 @@ export async function cartReminderWorkflow(cart: CartEmailInput) {
 
 async function prepareCartLinks(cart: CartEmailInput, runId: string) {
   "use step";
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kaledukampelis.com";
+  const base = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.kaledukampelis.com").replace(/\/$/, "");
   const recoverToken = sealToken({ purpose: "recover", runId, cart });
   const fingerprint = cartFingerprint({ email: cart.email, lines: cart.lines, addons: cart.addons, mysteryGift: cart.mysteryGift });
   const unsubscribeToken = sealToken({ purpose: "unsubscribe", runId, fingerprint });
