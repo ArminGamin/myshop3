@@ -81,7 +81,7 @@ const budgetRange = {
 const MAX_MATCH = 12;
 
 type Answers = Partial<Record<string, string>>;
-type Scored = { p: Product; score: number; match: number };
+type Scored = { p: Product; score: number; match: number; pct: number };
 
 // Deterministinis „atsitiktinumas“ lygiems rezultatams išmaišyti pagal atsakymus.
 function tieBreak(seed: string): number {
@@ -116,18 +116,24 @@ function scoreProducts(a: Answers): Scored[] {
       if (p.bestseller) score += 0.3;
       score += tieBreak(seed + p.slug) * 0.6;
       const match = (forWho ? 3 : 0) + 4 + (vibe ? 3 : 0) + (occasion ? 2 : 0);
-      return { p, score, match };
+      return { p, score, match, pct: 0 };
     })
     .filter((x) => x.match >= 7)
     .sort((x, y) => y.score - x.score)
-    .slice(0, 6);
+    .slice(0, 6)
+    // Procentas: atitiktų atsakymų dalis + kiek prekė atsilieka nuo geriausios pagal
+    // tikslųjį balą, kad vienodai atitinkančios prekės nerodytų vienodo skaičiaus.
+    .map((x, _, all) => ({
+      ...x,
+      pct: Math.max(60, Math.min(99, Math.round((x.match / MAX_MATCH) * 100 + 12 - (all[0].score - x.score) * 6))),
+    }));
 }
 
 function fallbackPicks(): Scored[] {
   return products
     .filter((p) => p.inStock && p.bestseller)
     .slice(0, 6)
-    .map((p) => ({ p, score: 0, match: 0 }));
+    .map((p) => ({ p, score: 0, match: 0, pct: 0 }));
 }
 
 const labelOf = (stepId: string, value?: string) =>
@@ -265,7 +271,7 @@ export function GiftFinderQuiz() {
             </p>
 
             <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-              {results.map(({ p, match }, i) => {
+              {results.map(({ p, pct }, i) => {
                 const top = i === 0 && matched.length > 0;
                 return (
                   <Link
@@ -290,7 +296,7 @@ export function GiftFinderQuiz() {
                     <span className="mt-auto flex items-center justify-between gap-2 pt-2">
                       <span className="text-[14px] font-extrabold text-burgundy-600">{formatPrice(p.priceCents)}</span>
                       {matched.length ? (
-                        <span className="quiz-match">{Math.min(99, Math.round((match / MAX_MATCH) * 100))}%</span>
+                        <span className="quiz-match">{pct}%</span>
                       ) : null}
                     </span>
                   </Link>
