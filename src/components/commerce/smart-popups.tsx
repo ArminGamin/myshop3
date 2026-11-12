@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { store, flags } from "@/lib/config/store.config";
@@ -17,6 +17,7 @@ import { CartExitPreview } from "./cart-exit-preview";
 type PopupKind = "welcome" | "exit-cart" | "exit-quiz" | null;
 
 const DISMISS_KEY = "jaukumas.popup-dismissed.v1";
+const QUIZ_SEEN_KEY = "jaukumas.quiz-seen";
 
 // Facebook / Instagram programėlių naršyklė: čia beveik niekas neperka iš karto,
 // todėl vietoj pirkimo siūlome −10 % naujienlaiškį ir susigrąžiname laiškais.
@@ -50,6 +51,12 @@ export function SmartPopups() {
   const [lastKind, setLastKind] = useState<PopupKind>(null);
   const shownRef = useRef(false);
   const hydratedRef = useRef(cart.hydrated);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!pathname.startsWith("/rask-dovana")) return;
+    try { localStorage.setItem(QUIZ_SEEN_KEY, "1"); } catch { /* neprieinama */ }
+  }, [pathname]);
 
   useEffect(() => {
     hydratedRef.current = cart.hydrated;
@@ -78,12 +85,11 @@ export function SmartPopups() {
     track("popup_view", { popup_type: candidate });
   }, [eligible]);
 
-  // Išėjimo ketinimas
+  // Išėjimo ketinimas – tik kai krepšelyje yra prekių (dovanų testo čia nerodome).
   useExitIntent(
     flags.ENABLE_EXIT_INTENT
       ? () => {
-          const withCart = hydratedRef.current && countOf(cart.lines) > 0;
-          show(withCart ? "exit-cart" : "exit-quiz");
+          if (hydratedRef.current && countOf(cart.lines) > 0) show("exit-cart");
         }
       : () => {}
   );
@@ -117,13 +123,18 @@ export function SmartPopups() {
     };
   }, [show, eligible]);
 
-  // Dovanų testas po 20 s visiško neveiklumo (tuščias krepšelis).
+  // Dovanų testas po 20 s visiško neveiklumo (tuščias krepšelis). Nerodome prekės
+  // puslapyje (žmogus žiūri nuotraukas) ir tiems, kurie testą jau atidarė.
   useEffect(() => {
     if (!flags.ENABLE_POPUP) return;
     let timer = 0;
     function reset() {
       clearTimeout(timer);
       timer = window.setTimeout(() => {
+        const path = window.location.pathname;
+        let quizSeen = false;
+        try { quizSeen = localStorage.getItem(QUIZ_SEEN_KEY) === "1"; } catch { /* neprieinama */ }
+        if (quizSeen || path.startsWith("/produktai/")) return;
         if (!(hydratedRef.current && countOf(cart.lines) > 0)) show("exit-quiz");
       }, 20_000);
     }
