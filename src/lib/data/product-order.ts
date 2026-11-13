@@ -20,6 +20,7 @@ export const PRODUCT_ORDER = [
   "saldainiu-puokste-violetine-svajone",
   "saldainiu-puokste-braskiu-romantika",
   "saldainiu-puokste-vaivorykstes-sprogimas",
+  "lego-meduoliu-namelis-10267",
   "lego-disney-stitch-43249",
   "lego-kaledu-senelio-roges-40499",
   "lego-speed-champions-ferrari-812-competizione-76914",
