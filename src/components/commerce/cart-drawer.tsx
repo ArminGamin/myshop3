@@ -179,7 +179,7 @@ export function CartDrawer() {
             <FreeShippingBar
               subtotalCents={mystery ? store.shipping.freeThresholdCents : subtotal}
             />
-            <PromoHint subtotalCents={subtotal} />
+            <PromoHint subtotalCents={subtotal} lines={items} />
 
             <ul className="flex flex-col gap-2.5">
               {items.map((item) => (

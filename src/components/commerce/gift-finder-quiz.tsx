@@ -27,6 +27,7 @@ const steps: Step[] = [
       { value: "jam", label: "Jam" },
       { value: "porai", label: "Porai" },
       { value: "seimai", label: "Šeimai" },
+      { value: "vaikams", label: "Vaikams" },
       { value: "draugui", label: "Draugui" },
       { value: "kolegai", label: "Kolegei" },
       { value: "tevams", label: "Tėvams" },
@@ -102,7 +103,7 @@ function scoreProducts(a: Answers): Scored[] {
   const pool = forRecipient.length >= 3 ? forRecipient : inBudget;
   const seed = `${a.recipient}|${a.budget}|${a.vibe}|${a.occasion}`;
 
-  return pool
+  const scored = pool
     .map((p) => {
       const forWho = Boolean(a.recipient && p.recipients.includes(a.recipient as RecipientId));
       const vibe = Boolean(a.vibe && p.vibes.includes(a.vibe as VibeId));
@@ -117,8 +118,10 @@ function scoreProducts(a: Answers): Scored[] {
       score += tieBreak(seed + p.slug) * 0.6;
       const match = (forWho ? 3 : 0) + 4 + (vibe ? 3 : 0) + (occasion ? 2 : 0);
       return { p, score, match, pct: 0 };
-    })
-    .filter((x) => x.match >= 7)
+    });
+  // Jei niekas neatitinka gavėjo ar pobūdžio, rodome bent biudžetą atitinkančias dovanas.
+  const strong = scored.filter((x) => x.match >= 7);
+  return (strong.length ? strong : scored)
     .sort((x, y) => y.score - x.score)
     .slice(0, 6)
     // Procentas: atitiktų atsakymų dalis + kiek prekė atsilieka nuo geriausios pagal

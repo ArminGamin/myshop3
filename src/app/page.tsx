@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, CalendarDays, Candy, ToyBrick } from "lucide-react";
 import { campaign, store } from "@/lib/config/store.config";
 import { getProduct, premiumProducts } from "@/lib/data/products";
 import { productRank } from "@/lib/data/product-order";
@@ -22,6 +23,7 @@ import { PremiumShowcase } from "@/components/home/premium-showcase";
 import { NewsletterPanel } from "@/components/home/newsletter-panel";
 import { AdventShowcase } from "@/components/home/advent-showcase";
 import { BouquetShowcase } from "@/components/home/bouquet-showcase";
+import { LegoShowcase } from "@/components/home/lego-showcase";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -111,6 +113,26 @@ export default function HomePage() {
                 {campaign.secondaryCTA}
               </Link>
             </div>
+            <div className="mt-6 sm:mt-8">
+              <p className="hero-quicklinks-label">Naršykite skyrius</p>
+              <div className="hero-quicklinks mt-2.5 flex flex-wrap gap-2.5">
+                <Link href="/dovanos/lego-rinkiniai" className="nav-advent nav-bouquet nav-lego hero-quicklink group">
+                  <ToyBrick aria-hidden className="size-4" strokeWidth={2.2} />
+                  LEGO
+                  <ArrowRight aria-hidden className="hero-quicklink-arrow size-3.5" strokeWidth={2.6} />
+                </Link>
+                <Link href="/saldainiu-puokstes" className="nav-advent nav-bouquet hero-quicklink group">
+                  <Candy aria-hidden className="size-4" strokeWidth={2.2} />
+                  Puokštės
+                  <ArrowRight aria-hidden className="hero-quicklink-arrow size-3.5" strokeWidth={2.6} />
+                </Link>
+                <Link href="/dovanos/advento-kalendoriai" className="nav-advent hero-quicklink group">
+                  <CalendarDays aria-hidden className="size-4" strokeWidth={2.2} />
+                  Advento kalendoriai
+                  <ArrowRight aria-hidden className="hero-quicklink-arrow size-3.5" strokeWidth={2.6} />
+                </Link>
+              </div>
+            </div>
           </div>
 
           <HeroShowcase slides={heroSlides} />
@@ -120,6 +142,7 @@ export default function HomePage() {
       <TrustStrip />
       <AdventShowcase />
       <BouquetShowcase />
+      <LegoShowcase />
 
       <Reveal>
         <ReviewsMarquee />

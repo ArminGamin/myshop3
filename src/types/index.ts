@@ -58,6 +58,8 @@ export interface Product {
   contents?: ProductContentGroup[];
   /** Trumpas turinio sąrašas kortelėje (pvz. advento kalendoriams). */
   inside?: string;
+  /** Gamintojo prekės ženklas, jei ne mūsų (pvz. LEGO) – Google ir schema.org. */
+  brand?: string;
   benefits: string[];
   specs: ProductSpec[];
   priceCents: number;

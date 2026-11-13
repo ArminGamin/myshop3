@@ -5842,6 +5842,48 @@ html[data-intro="pending"] .hero-shell *::after {
   color: var(--color-cream-50);
 }
 
+/* LEGO juosta – puokščių juostos sandara, LEGO spalvos ir kaladėlių taškai. */
+.lego-band {
+  background:
+    radial-gradient(ellipse 42% 55% at 100% 0%, rgb(232 170 60 / 0.34), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 0% 100%, rgb(201 138 28 / 0.22), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgb(255 255 255 / 0.6), transparent 75%),
+    linear-gradient(180deg, #fbe9c6 0%, #fbf0d9 55%, #f8f1e4 100%);
+}
+.lego-band::before {
+  background: radial-gradient(circle at 50% 50%, rgb(201 138 28 / 0.16) 0 7px, transparent 8px) 0 0 / 26px 26px;
+}
+.lego-band::after {
+  background:
+    radial-gradient(3px 3px at 8% 22%, #b5741a 98%, transparent),
+    radial-gradient(2.5px 2.5px at 17% 9%, #e0a93b 98%, transparent),
+    radial-gradient(3px 3px at 31% 30%, #7d2a2c 98%, transparent),
+    radial-gradient(2px 2px at 44% 8%, #c98a1c 98%, transparent),
+    radial-gradient(3px 3px at 58% 26%, #e0a93b 98%, transparent),
+    radial-gradient(2.5px 2.5px at 66% 6%, #b5741a 98%, transparent),
+    radial-gradient(2px 2px at 76% 34%, #c98a1c 98%, transparent),
+    radial-gradient(3px 3px at 88% 14%, #7d2a2c 98%, transparent),
+    radial-gradient(2.5px 2.5px at 95% 40%, #b5741a 98%, transparent),
+    radial-gradient(2px 2px at 3% 48%, #e0a93b 98%, transparent);
+}
+.lego-band .bq-eyebrow {
+  color: #95570a;
+}
+.lego-band .bq-eyebrow-tag {
+  background: linear-gradient(112deg, #d18f2a, #8f5208);
+  box-shadow: 0 6px 14px -8px rgb(143 82 8 / 0.8);
+}
+.lego-band .home-h2 em {
+  color: #a8650c;
+}
+.lego-band .bq-feature {
+  background: #4a2a08;
+  box-shadow: 0 18px 36px -18px rgb(74 42 8 / 0.6);
+}
+.lego-band .bq-feature-media::after {
+  background: linear-gradient(180deg, rgb(74 42 8 / 0) 35%, rgb(74 42 8 / 0.74) 62%, rgb(46 25 4 / 0.96) 100%);
+}
+
 /* Meniu „Puokštės“ – rožinis advento nuorodos dvynys su lėtu blizgesiu. */
 .nav-bouquet {
   gap: 0.4rem;
@@ -5915,6 +5957,84 @@ html[data-intro="pending"] .hero-shell *::after {
   box-shadow:
     inset 0 0 0 1px rgb(227 199 126 / 0.35),
     0 10px 22px -12px rgb(92 26 27 / 0.7);
+}
+
+/* LEGO skirtukas ir meniu kortelė – auksinė, kad skirtųsi nuo rožinių puokščių. */
+.nav-lego {
+  background: linear-gradient(112deg, #d18f2a, #8f5208);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.28),
+    0 6px 16px -8px rgb(143 82 8 / 0.9);
+}
+.menu-lego {
+  background:
+    repeating-linear-gradient(-32deg, rgb(255 255 255 / 0.07) 0 10px, transparent 10px 26px),
+    linear-gradient(135deg, #d18f2a, #8f5208);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.3),
+    0 10px 22px -12px rgb(143 82 8 / 0.7);
+}
+
+/* LEGO puslapis – puokščių puslapio sandara, auksinės spalvos. */
+.bq-hero.lp-lego {
+  border-bottom-color: color-mix(in srgb, #d18f2a 30%, transparent);
+  background:
+    radial-gradient(ellipse 55% 70% at 85% 35%, rgb(232 170 60 / 0.4), transparent 70%),
+    radial-gradient(ellipse 45% 55% at 5% 0%, rgb(201 138 28 / 0.18), transparent 70%),
+    linear-gradient(180deg, #fbf0d9 0%, var(--color-bg) 100%);
+}
+.bq-hero.lp-lego::before {
+  background: radial-gradient(circle at 50% 50%, rgb(201 138 28 / 0.14) 0 7px, transparent 8px) 0 0 / 26px 26px;
+}
+.lp-lego .bq-eyebrow {
+  color: #95570a;
+}
+.lp-lego .bq-eyebrow-tag {
+  background: linear-gradient(112deg, #d18f2a, #8f5208);
+  box-shadow: 0 6px 14px -8px rgb(143 82 8 / 0.8);
+}
+.lp-lego .bq-title em,
+.lp-lego .home-h2 em {
+  color: #a8650c;
+}
+.lp-lego .bq-perks svg {
+  color: #a8650c;
+}
+.lp-lego .bq-fan-card {
+  border-color: #f2dfb0;
+}
+.lp-lego .bq-fan-badge {
+  background: radial-gradient(circle at 30% 25%, #e0a93b, #8f5208 75%);
+}
+.bq-how.lego-how {
+  background:
+    radial-gradient(ellipse 50% 70% at 100% 0%, rgb(232 170 60 / 0.3), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgb(227 199 126 / 0.14), transparent 70%),
+    linear-gradient(135deg, #5a3208, #3a1f05);
+}
+.lego-how .home-h2 em {
+  color: var(--color-gold-300);
+}
+
+/* Pagrindinio puslapio skyrių mygtukai po CTA. */
+.hero-quicklinks-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-600);
+}
+.hero-quicklink {
+  gap: 0.45rem;
+  margin-right: 0;
+  padding: 0.7rem 1.05rem 0.7rem 1rem;
+  font-size: 12.5px;
+}
+.hero-quicklink-arrow {
+  transition: transform var(--duration-hover) var(--ease-cinematic);
+}
+.hero-quicklink:hover .hero-quicklink-arrow {
+  transform: translateX(3px);
 }
 
 /* ── Advento kalendorių nukreipimo puslapis: bordo ir auksas, kaip pagrindinio puslapio juosta ── */

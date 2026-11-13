@@ -393,10 +393,10 @@ test("newsletter cannot claim success without a delivery destination or consent"
   }
 });
 
-test("all 840 gift quiz combinations keep every recommendation within the selected budget", () => {
+test("all gift quiz combinations keep every recommendation within the selected budget", () => {
   const source = fs.readFileSync(path.join(root, "src/components/commerce/gift-finder-quiz.tsx"), "utf8");
   const ast = ts.createSourceFile("quiz.tsx", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-  const statements = ast.statements.filter(n => ts.isVariableStatement(n) && n.declarationList.declarations.some(d => ["steps", "budgetRange"].includes(d.name.getText(ast))) || ts.isFunctionDeclaration(n) && ["scoreProducts", "tieBreak"].includes(n.name?.text));
+  const statements = ast.statements.filter(n => ts.isVariableStatement(n) && n.declarationList.declarations.some(d => ["steps", "budgetRange", "MAX_MATCH"].includes(d.name.getText(ast))) || ts.isFunctionDeclaration(n) && ["scoreProducts", "tieBreak"].includes(n.name?.text));
   const compiled = ts.transpileModule(statements.map(n => n.getText(ast)).join("\n"), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
   const { steps, budgetRange, scoreProducts } = new Function("products", compiled + ";return {steps,budgetRange,scoreProducts};")(products);
   let combinations = 0;
@@ -409,7 +409,7 @@ test("all 840 gift quiz combinations keep every recommendation within the select
     resultSets.add(results.map(({ p }) => p.slug).join(","));
     combinations++;
   }
-  assert.equal(combinations, 840);
+  assert.equal(combinations, steps.reduce((n, step) => n * step.options.length, 1));
   // Skirtingi atsakymai turi duoti skirtingas rekomendacijas.
   assert(resultSets.size >= 500, `only ${resultSets.size} distinct recommendation sets`);
 });
@@ -462,10 +462,13 @@ const promoRoute = require("../src/app/api/checkout/promo/route.ts");
 
 test("every promo code charges exactly the discounted total through PaymentIntent and records it", async () => {
   const bigCart = products.filter(p => p.inStock && !p.sizeGroups).slice(0, 6).map(p => line(p));
+  // Krepšelyje yra ir LEGO rinkinys, kad LEGO10 turėtų kam taikytis.
+  bigCart.push(line(products.find(p => p.slug.startsWith("lego-"))));
   for (const promo of PROMO_CODES) {
     const plain = buildOrder(parseLines(bigCart), addons, false);
     const order = buildOrder(parseLines(bigCart), addons, false, promo.code.toLowerCase() + " ");
-    const discount = promoDiscountCents(promo, plain.subtotal);
+    const eligible = bigCart.filter(l => !promo.slugPrefix || l.slug.startsWith(promo.slugPrefix)).reduce((sum, l) => sum + products.find(p => p.slug === l.slug).priceCents * l.qty, 0);
+    const discount = promoDiscountCents(promo, plain.subtotal, eligible);
     assert(discount > 0, promo.code);
     assert.equal(order.discountCents, discount);
     assert.equal(order.totalCents, plain.totalCents - discount);
@@ -477,6 +480,15 @@ test("every promo code charges exactly the discounted total through PaymentInten
     const snapshot = readSnapshot(stripeCalls[0].metadata);
     assert.equal(snapshot.items.reduce((sum, i) => sum + i.unitAmount * i.quantity, 0) + snapshot.shippingCents, order.totalCents);
   }
+});
+
+test("LEGO10 discounts only LEGO sets and nothing without them", () => {
+  const lego = products.find(p => p.slug.startsWith("lego-"));
+  const other = products.find(p => p.inStock && !p.sizeGroups && !p.slug.startsWith("lego-"));
+  const mixed = buildOrder(parseLines([line(lego), line(other)]), addons, false, "LEGO10");
+  assert.equal(mixed.discountCents, Math.round(lego.priceCents * 0.1));
+  const none = buildOrder(parseLines([line(other)]), addons, false, "LEGO10");
+  assert.equal(none.discountCents, 0);
 });
 
 test("unknown, stacked or non-string promo codes are refused without calling Stripe", async () => {

@@ -12,6 +12,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { CollectionBrowser } from "@/components/commerce/collection-browser";
 import { TrustStrip } from "@/components/commerce/trust-strip";
 import { AdventLanding } from "@/components/commerce/advent-landing";
+import { LegoLanding } from "@/components/commerce/lego-landing";
 
 interface Props {
   params: Promise<{ kolekcija: string }>;
@@ -52,6 +53,7 @@ export default async function CollectionPage({ params }: Props) {
     .slice(0, 3);
 
   if (meta.slug === "advento-kalendoriai") return <AdventLanding content={content} articles={articles} />;
+  if (meta.slug === "lego-rinkiniai") return <LegoLanding articles={articles} />;
 
   return (
     <>

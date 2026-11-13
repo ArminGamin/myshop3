@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { Check, Copy, Tag } from "lucide-react";
-import { promoDiscountCents, promoLadder } from "@/lib/commerce/promo";
+import { bestPromo, promoDiscountCents, promoEligibleCents, promoLadder } from "@/lib/commerce/promo";
 import { formatPrice } from "@/lib/format";
 
 // Krepšelyje parodo geriausią tinkamą nuolaidos kodą ir kitą laiptelį.
-export function PromoHint({ subtotalCents }: { subtotalCents: number }) {
-  const { best, next } = promoLadder(subtotalCents);
+export function PromoHint({ subtotalCents, lines }: { subtotalCents: number; lines: { slug: string; lineTotalCents: number }[] }) {
+  const { next } = promoLadder(subtotalCents);
+  const best = bestPromo(subtotalCents, lines);
   const [copied, setCopied] = useState(false);
   if (!best) return null;
 
@@ -29,8 +30,8 @@ export function PromoHint({ subtotalCents }: { subtotalCents: number }) {
         </span>
         <p className="min-w-0 flex-1 text-[13.5px] font-medium leading-snug text-ink-600">
           Kodas <strong className="font-extrabold tracking-wide text-burgundy-700">{best.code}</strong> – −{best.percentOff} %
-          {" "}jūsų krepšeliui. Sutaupysite{" "}
-          <strong className="text-ink-900">{formatPrice(promoDiscountCents(best, subtotalCents))}</strong>.
+          {best.slugPrefix ? " LEGO rinkiniams" : " jūsų krepšeliui"}. Sutaupysite{" "}
+          <strong className="text-ink-900">{formatPrice(promoDiscountCents(best, subtotalCents, promoEligibleCents(best, lines)))}</strong>.
         </p>
         <button
           type="button"

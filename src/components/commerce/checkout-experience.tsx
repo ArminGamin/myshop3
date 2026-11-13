@@ -19,7 +19,7 @@ import { Clock, CreditCard, Info, Lock, Tag, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resolveItems, subtotalOf, useCart } from "@/lib/cart/context";
 import { addonAmounts } from "@/lib/cart/addons";
-import { promoDiscountCents, promoLadder, type PromoTerms } from "@/lib/commerce/promo";
+import { bestPromo, promoDiscountCents, promoEligibleCents, type PromoTerms } from "@/lib/commerce/promo";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import {
   digitsOnly,
@@ -220,7 +220,7 @@ export function CheckoutExperience() {
     mystery || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(items.map((i) => i.slug))
       ? 0
       : store.shipping.flatRateCents;
-  const discountCents = promoDiscountCents(promo, subtotal);
+  const discountCents = promoDiscountCents(promo, subtotal, promoEligibleCents(promo, items));
   const totalCents = subtotal - discountCents + mysteryCents + extras.total + shippingCents;
   const stripeEnabled = Boolean(STRIPE_PK);
   const formValid = Object.keys(validateCustomer(form).errors).length === 0;
@@ -882,7 +882,7 @@ function PromoField() {
           <span className="inline-flex min-w-0 items-center gap-2 text-sm font-bold text-forest-600">
             <Tag aria-hidden className="size-4 shrink-0" strokeWidth={2} />
             <span className="truncate">
-              {model.promo.code} · −{model.promo.percentOff} %
+              {model.promo.code} · −{model.promo.percentOff} %{model.promo.slugPrefix ? " LEGO rinkiniams" : ""}
             </span>
           </span>
           <button
@@ -894,7 +894,9 @@ function PromoField() {
             <X aria-hidden className="size-4" strokeWidth={2.2} />
           </button>
         </div>
-        {below ? (
+        {below && model.promo.slugPrefix ? (
+          <p className="mt-1.5 text-sm font-medium text-burgundy-600">Šis kodas taikomas tik LEGO rinkiniams.</p>
+        ) : below ? (
           <p className="mt-1.5 text-sm font-medium text-burgundy-600">
             Kodas galioja užsakymams nuo {formatPrice(model.promo.minSubtotalCents)}. Iki jo trūksta{" "}
             {formatPrice(model.promo.minSubtotalCents - model.subtotal)}.
@@ -904,7 +906,8 @@ function PromoField() {
     );
   }
 
-  const suggestion = promoLadder(model.subtotal).best;
+  // Siūlome kodą su didžiausia nuolaida: LEGO10 (jei yra LEGO) arba geriausią reklamuojamą.
+  const suggestion = bestPromo(model.subtotal, model.items);
 
   if (!open) {
     return (
@@ -913,7 +916,7 @@ function PromoField() {
           <div className="flex items-center justify-between gap-3 rounded-[12px] border-[1.5px] border-dashed border-gold-500 bg-cream-50 px-3.5 py-2.5">
             <span className="min-w-0 text-sm font-medium leading-snug text-ink-600">
               Jūsų krepšeliui tinka kodas{" "}
-              <strong className="font-extrabold tracking-wide text-burgundy-700">{suggestion.code}</strong> (−{suggestion.percentOff} %)
+              <strong className="font-extrabold tracking-wide text-burgundy-700">{suggestion.code}</strong> (−{suggestion.percentOff} %{suggestion.slugPrefix ? " LEGO rinkiniams" : ""})
             </span>
             <button
               type="button"

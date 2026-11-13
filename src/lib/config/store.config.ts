@@ -44,6 +44,7 @@ export const store = {
   },
   search: {
     popularQueries: [
+      "lego",
       "žvakė",
       "pledas",
       "dovana mamai",

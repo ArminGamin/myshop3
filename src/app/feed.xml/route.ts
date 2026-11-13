@@ -1,5 +1,6 @@
 import { store } from "@/lib/config/store.config";
 import { products } from "@/lib/data/products";
+import { setNumber } from "@/lib/format";
 
 export const runtime = "nodejs";
 
@@ -18,10 +19,13 @@ export async function GET() {
   const items = products
     .filter((p) => p.inStock)
     .map((p) => {
+      const mpn = setNumber(p);
       const apparel = Boolean(p.sizeGroups) || /^JK-05[2-6]$/.test(p.sku);
       const category = apparel
         ? "Apparel &amp; Accessories &gt; Clothing"
-        : p.slug.startsWith("saldainiu-puokste-")
+        : p.brand === "LEGO"
+          ? "Toys &amp; Games &gt; Toys &gt; Building Toys &gt; Construction Set Toys"
+          : p.slug.startsWith("saldainiu-puokste-")
           ? "Food, Beverages &amp; Tobacco &gt; Food Items &gt; Candy &amp; Chocolate"
           : "Home &amp; Garden &gt; Decor";
       return `    <item>
@@ -33,9 +37,9 @@ export async function GET() {
       <g:condition>new</g:condition>
       <g:availability>in_stock</g:availability>
       <g:price>${(p.priceCents / 100).toFixed(2)} EUR</g:price>
-      <g:brand>${esc(store.brand.name)}</g:brand>
+      <g:brand>${esc(p.brand ?? store.brand.name)}</g:brand>
       <g:google_product_category>${category}</g:google_product_category>
-      <g:identifier_exists>no</g:identifier_exists>
+      ${mpn ? `<g:mpn>${esc(mpn)}</g:mpn>` : "<g:identifier_exists>no</g:identifier_exists>"}
     </item>`;
     })
     .join("\n");

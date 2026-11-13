@@ -7,7 +7,7 @@ import { MYSTERY_GIFT, parseMysteryGift } from "@/lib/cart/mystery-gift";
 import { MAX_ORDER_LINES, normalizeQuantity } from "@/lib/cart/limits";
 import { STRIPE_STORE } from "@/lib/stripe-store";
 import { findPromo } from "@/lib/commerce/promo-codes";
-import { promoDiscountCents } from "@/lib/commerce/promo";
+import { promoDiscountCents, promoEligibleCents } from "@/lib/commerce/promo";
 
 export type CheckoutLineIn = { slug: string; variantId: string; qty: number };
 
@@ -55,6 +55,7 @@ export function buildOrder(
   const mysteryGift = parseMysteryGift(mysteryRaw);
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
   let subtotal = 0;
+  const pricedLines: { slug: string; lineTotalCents: number }[] = [];
 
   for (const line of rawLines) {
     const product = getProduct(line.slug);
@@ -65,6 +66,7 @@ export function buildOrder(
     const variant = product.variants.find((v) => v.id === line.variantId) ?? product.variants[0];
     const unit = bundleUnitPriceCents(product.priceCents + (variant.priceDeltaCents ?? 0), line.qty);
     subtotal += unit * line.qty;
+    pricedLines.push({ slug: product.slug, lineTotalCents: unit * line.qty });
     lineItems.push({
       quantity: line.qty,
       price_data: {
@@ -129,7 +131,7 @@ export function buildOrder(
     mysteryGift || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(rawLines.map((l) => l.slug))
       ? 0
       : store.shipping.flatRateCents;
-  const discountCents = promoDiscountCents(promo, subtotal);
+  const discountCents = promoDiscountCents(promo, subtotal, promoEligibleCents(promo, pricedLines));
   const totalCents = subtotal - discountCents + mysteryCents + extras.total + shippingCents;
 
   return {

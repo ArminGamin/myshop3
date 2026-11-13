@@ -1,5 +1,6 @@
 import { store } from "@/lib/config/store.config";
 import type { Product } from "@/types";
+import { setNumber } from "@/lib/format";
 import { flags } from "@/lib/config/store.config";
 
 type JsonLd = Record<string, unknown>;
@@ -43,7 +44,8 @@ export function productSchema(product: Product): JsonLd {
     description: product.tagline,
     image: product.images.map((src) => `${store.brand.url}${src}`),
     sku: product.sku,
-    brand: { "@type": "Brand", name: store.brand.name },
+    brand: { "@type": "Brand", name: product.brand ?? store.brand.name },
+    ...(setNumber(product) ? { mpn: setNumber(product) } : {}),
     offers: {
       "@type": "Offer",
       url: `${store.brand.url}/produktai/${product.slug}`,

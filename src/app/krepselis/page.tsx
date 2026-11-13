@@ -106,7 +106,7 @@ function CartView() {
             <CartAddonRows selected={addons} onChange={updateCheckoutAddons} />
           </div>
           <div className="mt-4">
-            <PromoHint subtotalCents={subtotal} />
+            <PromoHint subtotalCents={subtotal} lines={items} />
           </div>
           <div className="mt-6 rounded-cozy bg-cream-100 p-5">
             <div className="flex justify-between text-sm text-ink-600">

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ChevronDown, ChevronRight, Heart, Package, ShieldCheck, Truck } from "lucide-react";
 import { products, canViewProduct, getProduct, TEST_PRODUCT } from "@/lib/data/products";
 import { store } from "@/lib/config/store.config";
-import { discountPercent, formatPrice } from "@/lib/format";
+import { discountPercent, formatPrice, setNumber } from "@/lib/format";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { RECIPIENT_LABELS, type Product, type RecipientId } from "@/types";
@@ -37,9 +37,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = getProduct(slug);
   if (!canViewProduct(product)) notFound();
   // Ilgiems pavadinimams kaina nerodoma, kad pavadinimas tilptų paieškos rezultatuose (~70 simbolių).
-  const priced = `${product.name} — ${formatPrice(product.priceCents)}`;
+  const set = setNumber(product);
+  const searchName = set ? `${product.name} ${set}` : product.name;
+  const priced = `${searchName} — ${formatPrice(product.priceCents)}`;
   return {
-    title: priced.length + store.brand.name.length + 3 > 70 ? product.name : priced,
+    title: priced.length + store.brand.name.length + 3 > 70 ? searchName : priced,
     description: `${product.tagline} Nemokamas pristatymas nuo ${formatPrice(store.shipping.freeThresholdCents)}. Pristatome per 3–4 dienas.`,
     alternates: { canonical: `/produktai/${product.slug}` },
     ...(product.slug === TEST_PRODUCT.slug ? { robots: { index: false, follow: false } } : {}),

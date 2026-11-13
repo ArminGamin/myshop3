@@ -181,9 +181,9 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "LEGO® rinkiniai vaikams – kalėdinės dovanos",
     description:
-      "Originalūs LEGO® rinkiniai: meduolių namelis, Kalėdų Senelio rogės, Disney Stitch ir Speed Champions Ferrari. Nuo 20,99 €, nemokamas pristatymas nuo 24,99 €.",
+      "Originalūs LEGO® rinkiniai: Lamborghini Huracán, žiemos namelis, meduolių namelis, Kalėdų Senelio rogės, Disney Stitch ir Ferrari 812 Superfast. Nuo 20,99 €, nemokamas pristatymas nuo 24,99 €.",
     intro:
-      "Originalūs LEGO® rinkiniai vaikams iki 12 metų – nuo šventinių rogių iki Ferrari. Visi nauji, gamintojo pakuotėse ir paruošti dovanoti.",
+      "Originalūs LEGO® rinkiniai vaikams ir visai šeimai – nuo Lamborghini Huracán iki jaukaus žiemos namelio. Visi nauji, gamintojo pakuotėse ir paruošti dovanoti.",
     filter: (p) => p.slug.startsWith("lego-"),
   },
 ];

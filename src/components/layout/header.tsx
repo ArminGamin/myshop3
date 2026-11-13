@@ -109,7 +109,7 @@ export function Header() {
                   href={LEGO_HREF}
                   aria-current={pathname === LEGO_HREF ? "page" : undefined}
                   aria-label="LEGO rinkiniai"
-                  className="nav-advent nav-bouquet"
+                  className="nav-advent nav-bouquet nav-lego"
                 >
                   <ToyBrick aria-hidden className="size-[0.95rem]" strokeWidth={2.2} />
                   LEGO
@@ -256,7 +256,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             </span>
             <ArrowRight aria-hidden className="size-4.5 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
           </Link>
-          <Link href={LEGO_HREF} onClick={onClose} className="menu-advent menu-bouquet group">
+          <Link href={LEGO_HREF} onClick={onClose} className="menu-advent menu-bouquet menu-lego group">
             <span className="menu-advent-copy">
               <span className="menu-advent-tag">Nauja</span>
               <span className="menu-advent-title">LEGO rinkiniai</span>
