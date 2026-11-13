@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type CSSProperties } from "react";
-import { ArrowRight, Candy, Heart, House, Menu, Search, ShieldCheck, ShoppingBag, Sparkles, TreePine, Truck, Watch, X } from "lucide-react";
+import { ArrowRight, Candy, Heart, House, Menu, Search, ShieldCheck, ShoppingBag, Sparkles, ToyBrick, TreePine, Truck, Watch, X } from "lucide-react";
 import { collections } from "@/lib/data/collections";
 import { countOf, useCart } from "@/lib/cart/context";
 import { useWishlist } from "@/lib/behavior/storage";
@@ -19,6 +19,7 @@ const SearchOverlay = dynamic(
 
 const ADVENT_HREF = "/dovanos/advento-kalendoriai";
 const BOUQUET_HREF = "/saldainiu-puokstes";
+const LEGO_HREF = "/dovanos/lego-rinkiniai";
 
 // Trumpi pavadinimai, kad tilptų advento kalendorių nuoroda; pilnas pavadinimas – aria-label.
 const desktopNav = [
@@ -100,6 +101,19 @@ export function Header() {
                 >
                   <Candy aria-hidden className="size-[0.95rem]" strokeWidth={2.2} />
                   Puokštės
+                  <span className="nav-advent-tag">Nauja</span>
+                </Link>
+              </li>
+              {/* Rodoma tik plačiame ekrane, kad meniu neišstumtų paieškos ir krepšelio. */}
+              <li className="hidden min-[1700px]:list-item">
+                <Link
+                  href={LEGO_HREF}
+                  aria-current={pathname === LEGO_HREF ? "page" : undefined}
+                  aria-label="LEGO rinkiniai"
+                  className="nav-advent nav-bouquet"
+                >
+                  <ToyBrick aria-hidden className="size-[0.95rem]" strokeWidth={2.2} />
+                  LEGO
                   <span className="nav-advent-tag">Nauja</span>
                 </Link>
               </li>
@@ -239,6 +253,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
               <span className="menu-advent-tag">Nauja</span>
               <span className="menu-advent-title">Saldainių puokštės</span>
               <span className="menu-advent-sub">Rankų darbo saldi staigmena su kaspinu</span>
+            </span>
+            <ArrowRight aria-hidden className="size-4.5 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
+          </Link>
+          <Link href={LEGO_HREF} onClick={onClose} className="menu-advent menu-bouquet group">
+            <span className="menu-advent-copy">
+              <span className="menu-advent-tag">Nauja</span>
+              <span className="menu-advent-title">LEGO rinkiniai</span>
+              <span className="menu-advent-sub">Originalūs rinkiniai vaikams iki 12 metų</span>
             </span>
             <ArrowRight aria-hidden className="size-4.5 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
           </Link>

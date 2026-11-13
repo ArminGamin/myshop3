@@ -174,6 +174,18 @@ export const collections: CollectionMeta[] = [
       "Saldi staigmena, kuri atrodo kaip gėlių puokštė: šokoladukai, saldainiai ir kaspinas – paruošta dovanoti.",
     filter: (p) => p.slug.startsWith("saldainiu-puokste-"),
   },
+  {
+    slug: "lego-rinkiniai",
+    title: "LEGO rinkiniai",
+    shortTitle: "LEGO",
+    emoji: "gift",
+    seoTitle: "LEGO® rinkiniai vaikams – kalėdinės dovanos",
+    description:
+      "Originalūs LEGO® rinkiniai vaikams: Disney Stitch, Kalėdų Senelio rogės ir Speed Champions Ferrari. Nuo 20,99 €, nemokamas pristatymas nuo 24,99 €.",
+    intro:
+      "Originalūs LEGO® rinkiniai vaikams iki 12 metų – nuo šventinių rogių iki Ferrari. Visi nauji, gamintojo pakuotėse ir paruošti dovanoti.",
+    filter: (p) => p.slug.startsWith("lego-"),
+  },
 ];
 
 export function getCollection(slug: string): CollectionMeta | undefined {
