@@ -104,8 +104,7 @@ export function Header() {
                   <span className="nav-advent-tag">Nauja</span>
                 </Link>
               </li>
-              {/* Rodoma tik plačiame ekrane, kad meniu neišstumtų paieškos ir krepšelio. */}
-              <li className="hidden min-[1700px]:list-item">
+              <li>
                 <Link
                   href={LEGO_HREF}
                   aria-current={pathname === LEGO_HREF ? "page" : undefined}
@@ -133,7 +132,8 @@ export function Header() {
                   </Link>
                 </li>
               ))}
-              <li>
+              {/* „Iki 30 €“ yra ir mobiliajame meniu bei kainų filtruose; siauresniame ekrane užleidžia vietą LEGO skirtukui. */}
+              <li className="hidden min-[1700px]:list-item">
                 <Link
                   href="/dovanos/dovanos-iki-30-euru"
                   aria-current={pathname === "/dovanos/dovanos-iki-30-euru" ? "page" : undefined}
