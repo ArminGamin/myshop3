@@ -9,7 +9,7 @@ export interface CartAddonSelection {
 }
 
 export const CART_ADDON_DEFAULTS: CartAddonSelection = {
-  protection: true,
+  protection: false,
   donation: false,
   priority: false,
 };
