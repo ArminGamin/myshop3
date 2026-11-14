@@ -52,7 +52,7 @@ import { addonLineLabel } from "./cart-addons";
 import { MysteryGiftCard } from "./mystery-gift-card";
 import { CheckoutReviews } from "./reviews-marquee";
 import { CheckoutPayMarks } from "./payment-icons";
-import { CheckoutLeave } from "./checkout-leave";
+import { CheckoutLeave, claimLeavePrompt } from "./checkout-leave";
 import {
   CheckoutGarland,
   CheckoutSteps,
@@ -397,8 +397,9 @@ function CheckoutInner({
 
   const requestLeave = useCallback(() => {
     if (busy) return;
-    setLeaveOpen(true);
-  }, [busy]);
+    if (claimLeavePrompt()) setLeaveOpen(true);
+    else router.push("/");
+  }, [busy, router]);
 
   const handleStay = useCallback(() => {
     setLeaveOpen(false);

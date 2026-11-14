@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Overlay } from "@/components/ui/overlay";
 import { ProductImage } from "./product-art";
 import { addonLineLabel, CartAddonRows } from "./cart-addons";
-import { CheckoutLeave } from "./checkout-leave";
+import { CheckoutLeave, claimLeavePrompt } from "./checkout-leave";
 import { PromoHint } from "./promo-hint";
 import { MYSTERY_GIFT } from "@/lib/cart/mystery-gift";
 import { useCheckoutAddons, useMysterySelection, updateCheckoutAddons } from "@/lib/checkout/draft-store";
@@ -105,7 +105,7 @@ export function CartDrawer() {
   }
 
   function requestClose() {
-    if (items.length > 0) {
+    if (items.length > 0 && claimLeavePrompt()) {
       setLeaveOpen(true);
       return;
     }

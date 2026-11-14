@@ -7,6 +7,17 @@ import { CartExitPreview } from "./cart-exit-preview";
 import { CheckoutReviews } from "./reviews-marquee";
 import { HeroGarland } from "@/components/layout/hero-garland";
 
+// „Jūsų dovanos dar laukia“ rodomas ne daugiau kaip kartą per apsilankymą.
+export function claimLeavePrompt(): boolean {
+  try {
+    if (sessionStorage.getItem("jaukumas.leave-shown")) return false;
+    sessionStorage.setItem("jaukumas.leave-shown", "1");
+  } catch {
+    /* neprieinama */
+  }
+  return true;
+}
+
 export function CheckoutLeave({ open, onStay, onLeave }: { open: boolean; onStay: () => void; onLeave: () => void }) {
   const dialog = useRef<HTMLDivElement>(null);
 
