@@ -106,8 +106,8 @@ export function SmartPopups() {
       show(seenBefore ? "welcome" : "welcome");
     }
 
-    // Socialinių tinklų lankytojai išeina greitai (mediana ~1 min.), todėl rodome anksčiau.
-    const timer = setTimeout(tryShow, (social ? 10 : store.popups.timerSeconds) * 1000);
+    // Socialinių tinklų lankytojai išeina greitai (mediana ~1 min.), todėl rodome po 20 s.
+    const timer = setTimeout(tryShow, (social ? 20 : store.popups.timerSeconds) * 1000);
 
     function onScroll() {
       const doc = document.documentElement;

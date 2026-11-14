@@ -75,7 +75,7 @@ export function AdventLanding({ content, articles }: Props) {
       <div className="adv-dark">
         <section className="bq-hero lp-advent" aria-labelledby="adv-title">
           <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-14 pt-6 sm:px-6 sm:pt-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12 lg:px-8 lg:pb-20 lg:pt-10">
-            <div>
+            <div className="min-w-0">
               <nav
                 aria-label="Naršymo takelis"
                 className="mb-6 flex items-center gap-1 text-[13px] text-cream-100/70"
@@ -96,6 +96,17 @@ export function AdventLanding({ content, articles }: Props) {
                 Advento kalendoriai jai, jam ir vaikams –{" "}
                 <em>24 staigmenos iki Kalėdų</em>
               </h1>
+              {/* Telefone kalendoriai su kainomis iškart po antrašte – braukiami į šoną. */}
+              <div
+                className="no-scrollbar -mx-4 mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 lg:hidden"
+                aria-label="Advento kalendoriai"
+              >
+                {items.map((product) => (
+                  <div key={product.slug} className="advent-card w-[42vw] max-w-[13rem] shrink-0 snap-start">
+                    <ProductCard product={contentsFirst(product)} />
+                  </div>
+                ))}
+              </div>
               <p className="mt-5 max-w-lg text-[15.5px] font-medium leading-relaxed text-cream-100/85 sm:text-[17px]">
                 Kiekvieną gruodžio rytą – naujas langelis ir nauja staigmena.
                 Visi kalendoriai užpildyti ir paruošti dovanoti: išsirink pagal
