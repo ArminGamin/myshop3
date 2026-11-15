@@ -13,8 +13,14 @@ import {
   type SetStateAction,
 } from "react";
 import Link from "next/link";
-import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { loadStripe, type Stripe, type StripeElements, type StripeError } from "@stripe/stripe-js";
+import { Elements, ExpressCheckoutElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  loadStripe,
+  type Stripe,
+  type StripeElements,
+  type StripeError,
+  type StripeExpressCheckoutElementConfirmEvent,
+} from "@stripe/stripe-js";
 import { Clock, CreditCard, Info, Lock, Tag, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resolveItems, subtotalOf, useCart } from "@/lib/cart/context";
@@ -207,7 +213,8 @@ export function CheckoutExperience() {
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutCustomer, string>>>({});
   const [banner, setBanner] = useState<string | null | undefined>(undefined);
   const [keyboard, setKeyboard] = useState(false);
-  const [promo, setPromo] = useState<PromoTerms | null>(null);
+  // Geriausias kodas pritaikomas automatiškai, kol pirkėjas pats jo nepakeičia.
+  const [manualPromo, setPromo] = useState<PromoTerms | null | undefined>(undefined);
   const deliveryPromise = christmasDeliveryPromise();
   const queryBanner = klaidaMessage(search.get("klaida"));
   const visibleBanner = banner === undefined ? queryBanner : banner;
@@ -220,6 +227,7 @@ export function CheckoutExperience() {
     mystery || subtotal >= store.shipping.freeThresholdCents || isTestOnlyCart(items.map((i) => i.slug))
       ? 0
       : store.shipping.flatRateCents;
+  const promo = manualPromo === undefined ? bestPromo(subtotal, items) : manualPromo;
   const discountCents = promoDiscountCents(promo, subtotal, promoEligibleCents(promo, items));
   const totalCents = subtotal - discountCents + mysteryCents + extras.total + shippingCents;
   const stripeEnabled = Boolean(STRIPE_PK);
@@ -388,6 +396,7 @@ function CheckoutInner({
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [paymentLoaded, setPaymentLoaded] = useState(false);
   const [paymentLoadError, setPaymentLoadError] = useState(false);
+  const [expressReady, setExpressReady] = useState(false);
   const elementsReady = Boolean(stripe && elements);
   const paymentReady = elementsReady && paymentLoaded && !paymentLoadError;
 
@@ -451,7 +460,46 @@ function CheckoutInner({
       model.setBanner("Mokėjimo sistema dar kraunasi. Palaukite sekundę ir bandykite dar kartą.");
       return;
     }
+    await pay(value);
+  }
 
+  // Apple Pay / Google Pay: adresą, el. paštą ir telefoną pateikia piniginė.
+  async function onExpressConfirm(event: StripeExpressCheckoutElementConfirmEvent) {
+    const fullName = (event.shippingAddress?.name ?? event.billingDetails?.name ?? "").trim();
+    const space = fullName.lastIndexOf(" ");
+    const address = event.shippingAddress?.address;
+    const draft: Partial<CheckoutCustomer> = {
+      email: event.billingDetails?.email ?? "",
+      name: space > 0 ? fullName.slice(0, space) : fullName,
+      surname: space > 0 ? fullName.slice(space + 1) : "",
+      address: [address?.line1, address?.line2].filter(Boolean).join(", "),
+      city: address?.city ?? "",
+      region: address?.state ?? "",
+      postalCode: (address?.postal_code ?? "").replace(/\D/g, ""),
+      phone: formatPhone(event.billingDetails?.phone ?? ""),
+    };
+    for (const key of FIELD_ORDER) if (draft[key] !== undefined) model.patch(key, draft[key] ?? "");
+    if (draft.region) model.patch("region", draft.region);
+
+    const { errors: nextErrors, value } = validateCustomer(draft);
+    if (Object.keys(nextErrors).length > 0) {
+      event.paymentFailed({ reason: "invalid_shipping_address" });
+      model.setErrors(nextErrors);
+      track("checkout_error", { reason: `express_fields:${Object.keys(nextErrors).join(",")}` });
+      model.setBanner("Patikslinkite pažymėtus laukus ir bandykite dar kartą.");
+      const first = FIELD_ORDER.find((key) => nextErrors[key]);
+      if (first) document.getElementById(`checkout-${first}`)?.focus();
+      return;
+    }
+    if (submitting.current || !stripe || !elements) {
+      event.paymentFailed();
+      return;
+    }
+    await pay(value, () => event.paymentFailed());
+  }
+
+  async function pay(value: CheckoutCustomer, onAbort?: () => void) {
+    if (!stripe || !elements) return;
     const expectedTotalCents = model.totalCents;
     const payload = {
       lines: cart.lines.map((line) => ({ ...line })),
@@ -465,6 +513,7 @@ function CheckoutInner({
     setBusy(true);
     model.setBanner(null);
     let done = false;
+    let confirming = false;
 
     try {
       const { error: submitError } = await elements.submit();
@@ -479,7 +528,7 @@ function CheckoutInner({
         headers: apiHeaders(),
         body: JSON.stringify(payload),
       });
-      const data: { clientSecret?: string; totalCents?: number; error?: string; errors?: typeof nextErrors } = await res.json();
+      const data: { clientSecret?: string; totalCents?: number; error?: string; errors?: Partial<Record<keyof CheckoutCustomer, string>> } = await res.json();
       if (res.status === 400 && data.errors) {
         model.setErrors(data.errors);
         track("checkout_error", { reason: `server_fields:${Object.keys(data.errors).join(",")}` });
@@ -500,6 +549,7 @@ function CheckoutInner({
         return;
       }
 
+      confirming = true;
       const confirmation = await stripe.confirmPayment({
         elements,
         clientSecret: data.clientSecret,
@@ -527,6 +577,7 @@ function CheckoutInner({
       model.setBanner("Nepavyko prisijungti. Patikrinkite internetą ir bandykite dar kartą.");
     } finally {
       if (!done) {
+        if (!confirming) onAbort?.();
         submitting.current = false;
         setBusy(false);
       }
@@ -601,6 +652,33 @@ function CheckoutInner({
 
         <div className="mt-4 grid grid-cols-1 items-start gap-8 lg:mt-0 lg:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)]">
           <div className="space-y-8">
+            {elementsReady ? (
+              <section aria-label="Greitas apmokėjimas" className={expressReady ? "" : "hidden"}>
+                <p className="mb-2 text-sm font-semibold text-ink-600">Greitas apmokėjimas – adresas užpildomas automatiškai</p>
+                <ExpressCheckoutElement
+                  onReady={({ availablePaymentMethods }) => setExpressReady(Boolean(availablePaymentMethods))}
+                  onConfirm={(event) => void onExpressConfirm(event)}
+                  options={{
+                    emailRequired: true,
+                    phoneNumberRequired: true,
+                    shippingAddressRequired: true,
+                    allowedShippingCountries: ["LT"],
+                    shippingRates: [
+                      { id: "lp-express", displayName: "LP Express pristatymas", amount: model.shippingCents, deliveryEstimate: store.shipping.estimate },
+                    ],
+                    paymentMethods: { applePay: "always", googlePay: "always", link: "never", amazonPay: "never", paypal: "never", klarna: "never" },
+                    buttonType: { applePay: "buy", googlePay: "buy" },
+                    buttonHeight: 48,
+                  }}
+                />
+                <p className="mt-4 flex items-center gap-3 text-[13px] font-semibold text-ink-400">
+                  <span className="h-px flex-1 bg-cream-300" aria-hidden />
+                  arba užpildykite duomenis
+                  <span className="h-px flex-1 bg-cream-300" aria-hidden />
+                </p>
+              </section>
+            ) : null}
+            <PromoField />
             <section id="checkout-details" className="scroll-mt-36 space-y-4">
               <p className="text-[13px] font-medium text-ink-600">
                 <span className="checkout-req" aria-hidden="true">*</span> - privaloma
@@ -1031,7 +1109,6 @@ function OrderSummary({
           </li>
         ))}
       </ul>
-      <PromoField />
       <div className="mt-4 space-y-3 text-[15px] font-medium leading-snug text-ink-600">
         <div className="flex items-center justify-between gap-3">
           <span>Tarpinė suma</span>

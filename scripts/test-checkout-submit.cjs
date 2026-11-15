@@ -4,8 +4,8 @@ const { test } = require("node:test");
 const ts = require("typescript");
 const source = fs.readFileSync(require("node:path").join(__dirname, "../src/components/commerce/checkout-experience.tsx"), "utf8");
 const ast = ts.createSourceFile("checkout.tsx", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-let onSubmit;
-function find(node) { if (ts.isFunctionDeclaration(node) && node.name?.text === "onSubmit") onSubmit = node.getText(ast); ts.forEachChild(node, find); }
+let onSubmit = "";
+function find(node) { if (ts.isFunctionDeclaration(node) && ["onSubmit", "pay"].includes(node.name?.text)) onSubmit += node.getText(ast) + ";"; ts.forEachChild(node, find); }
 find(ast);
 const compiled = ts.transpileModule(onSubmit, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
 function fixture({ serverTotal = 2939 } = {}) {
