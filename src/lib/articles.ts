@@ -20,7 +20,8 @@ export type Article = {
   coverAlt?: string;
   /** Neprivaloma: prekių slug'ai, rodomi straipsnio pabaigoje. */
   productSlugs?: string[];
-  sections: { heading: string; paragraphs: string[] }[];
+  /** table – neprivaloma palyginimo lentelė po pastraipomis. */
+  sections: { heading: string; paragraphs: string[]; table?: { head: string[]; rows: string[][] } }[];
   faq: { q: string; a: string }[];
   relatedBlogSlugs?: string[];
   /** SEO įrankio laukai. */
@@ -75,7 +76,7 @@ const stripLinks = (text: string) => text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1"
 export function articleWords(post: Article) {
   const text = [
     post.intro,
-    ...post.sections.flatMap((s) => [s.heading, ...s.paragraphs]),
+    ...post.sections.flatMap((s) => [s.heading, ...s.paragraphs, ...(s.table ? [...s.table.head, ...s.table.rows.flat()] : [])]),
     ...post.faq.flatMap((f) => [f.q, f.a]),
   ]
     .map(stripLinks)
@@ -125,6 +126,9 @@ export function formatArticleDate(iso: string) {
 
 // Kolekcija, į kurią straipsnis nukreipia (ir kurioje rodomas): pagal adresą, o nepavykus – pagal minimas prekes.
 const COLLECTION_RULES: [RegExp, string][] = [
+  [/advento/, "advento-kalendoriai"],
+  [/lego/, "lego-rinkiniai"],
+  [/saldainiu-puokst/, "saldainiu-puokstes"],
   [/iki-20/, "dovanos-iki-20-euru"],
   [/iki-30/, "dovanos-iki-30-euru"],
   [/iki-50/, "dovanos-iki-50-euru"],

@@ -41,11 +41,12 @@ export function productSchema(product: Product): JsonLd {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.tagline,
+    description: [product.tagline, ...product.description].join(" "),
     image: product.images.map((src) => `${store.brand.url}${src}`),
     sku: product.sku,
     brand: { "@type": "Brand", name: product.brand ?? store.brand.name },
     ...(setNumber(product) ? { mpn: setNumber(product) } : {}),
+    additionalProperty: product.specs.map((spec) => ({ "@type": "PropertyValue", name: spec.label, value: spec.value })),
     offers: {
       "@type": "Offer",
       url: `${store.brand.url}/produktai/${product.slug}`,

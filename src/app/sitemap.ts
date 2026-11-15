@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   void flags;
   void campaign;
   const articlePages: MetadataRoute.Sitemap = getArticles().map((post) => ({
-    url: `${base}/straipsniai/${post.slug}`, lastModified: new Date(post.published), changeFrequency: "monthly", priority: 0.6,
+    url: `${base}/straipsniai/${post.slug}`, lastModified: new Date(post.updated ?? post.published), changeFrequency: "monthly", priority: 0.6,
   }));
   return [...staticPages, ...productPages, { url: `${base}/straipsniai`, changeFrequency: "weekly", priority: 0.6 }, ...articlePages];
 }

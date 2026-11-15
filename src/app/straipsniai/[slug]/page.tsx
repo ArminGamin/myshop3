@@ -59,6 +59,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const allowedLinks = new Set([
   "/rask-dovana",
   "/dovanos/visos-dovanos",
+  "/saldainiu-puokstes",
+  "/pristatymas",
+  "/grazinimas",
   ...products.map((p) => `/produktai/${p.slug}`),
 ]);
 function isAllowed(href: string) {
@@ -167,6 +170,30 @@ export default async function ArticlePage({ params }: Props) {
                         <ArticleText text={paragraph} />
                       </p>
                     ))}
+                    {section.table ? (
+                      <div className="blog-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              {section.table.head.map((cell, k) => (
+                                <th key={k} scope="col">{cell}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {section.table.rows.map((row, r) => (
+                              <tr key={r}>
+                                {row.map((cell, k) => (
+                                  <td key={k}>
+                                    <ArticleText text={cell} />
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : null}
                   </section>
                 ))}
               </div>

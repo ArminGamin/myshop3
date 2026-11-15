@@ -4195,6 +4195,18 @@ html[data-intro="pending"] .hero-shell *::after {
   transition: text-decoration-color var(--duration-hover) var(--ease-cinematic);
 }
 .blog-link:hover { text-decoration-color: var(--color-burgundy-600); }
+.blog-table {
+  margin-top: 1.3rem;
+  overflow-x: auto;
+  border: 1px solid color-mix(in srgb, var(--color-gold-500) 40%, transparent);
+  border-radius: 16px;
+  background: var(--color-cream-50);
+}
+.blog-table table { width: 100%; min-width: 30rem; border-collapse: collapse; font-size: 15px; line-height: 1.45; }
+.blog-table th,
+.blog-table td { padding: 0.7rem 0.9rem; text-align: left; vertical-align: top; }
+.blog-table th { font-weight: 800; color: var(--color-ink-900); white-space: nowrap; }
+.blog-table tbody tr { border-top: 1px solid color-mix(in srgb, var(--color-gold-500) 28%, transparent); }
 
 .blog-toc-mobile,
 .blog-faq {

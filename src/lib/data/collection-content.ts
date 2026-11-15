@@ -24,14 +24,14 @@ export const collectionContent: Record<string, CollectionContent> = {
       heading: "Kaip greitai rasti tinkamą kalėdinę dovaną",
       paragraphs: [
         "Pradėkite nuo žmogaus, o ne nuo prekės. Pagalvokite, kaip jis leidžia laisvus vakarus: ar mėgsta jaukumą namuose, ar daug keliauja, ar vertina praktiškus daiktus kasdienai. Tada išsirinkite biudžetą – mūsų kataloge rasite dovanų nuo kelių eurų iki įspūdingų rinkinių.",
-        "Jei vis dar dvejojate, naudokite filtrus pagal gavėją ir kainą arba atsakykite į kelis klausimus dovanų paieškoje. Perkant kelias prekes, automatiškai taikoma kiekio nuolaida: 10 % dviem prekėms ir 15 % trims. Taip vienu užsakymu galite pasirūpinti dovanomis visai šeimai.",
+        "Jei vis dar dvejojate, naudokite filtrus pagal gavėją ir kainą arba atsakykite į kelis klausimus dovanų paieškoje. Perkant kelias vienodas prekes, automatiškai taikoma kiekio nuolaida: 10 % dviem vienetams ir 15 % trims ar daugiau. Tai patogu, kai ta pati dovana skirta keliems žmonėms.",
       ],
     },
     faq: [
       shippingFaq,
       {
         q: "Ar galiu vienu užsakymu nupirkti dovanų keliems žmonėms?",
-        a: "Taip. Perkant dvi prekes taikoma 10 %, o tris ir daugiau – 15 % kiekio nuolaida.",
+        a: "Taip, kai perkate kelias vienodas prekes: dviem vienetams taikoma 10 %, o trims ir daugiau – 15 % kiekio nuolaida.",
       },
       {
         q: "Kaip galiu sumokėti?",
@@ -176,7 +176,7 @@ export const collectionContent: Record<string, CollectionContent> = {
       heading: "Kaip išsirinkti gerą dovaną iki 20 eurų",
       paragraphs: [
         "Su 20 eurų biudžetu verta rinktis vieną kokybišką, gražiai atrodančią prekę, o ne kelis smulkius daiktus. Puodelis, šiltos šlepetės, sniego gaublys ar gua sha rinkinys atrodo kaip tikra dovana, o ne kaip formalumas.",
-        "Tokios dovanos ypač tinka Slaptajam Kalėdų Seneliui, kolegoms ir klasės draugams. Jei perkate kelias dovanas iš karto, kiekio nuolaida padeda dar labiau sutaupyti.",
+        "Tokios dovanos ypač tinka Slaptajam Kalėdų Seneliui, kolegoms ir klasės draugams. Jei tą pačią dovaną perkate keliems žmonėms, kiekio nuolaida padeda dar labiau sutaupyti.",
       ],
     },
     faq: [
