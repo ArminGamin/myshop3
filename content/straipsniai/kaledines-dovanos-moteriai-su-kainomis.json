@@ -1,0 +1,171 @@
+{
+  "slug": "kaledines-dovanos-moteriai-su-kainomis",
+  "topic": "Dovanos jai",
+  "brand": "kaledukampelis",
+  "mock": false,
+  "title": "Kalėdinės dovanos moteriai: 15 idėjų su kainomis",
+  "h1": "Kalėdinės dovanos moteriai: 15 idėjų nuo 12,90 € iki 29,99 €",
+  "metaDescription": "15 kalėdinių dovanų moteriai, mamai ar draugei su tiksliomis kainomis: šilko rinkiniai, žvakės, arbatos rinkinys, advento kalendoriai ir vilnonis pledas.",
+  "intro": "Moteriai Kalėdoms galima rinktis iš trijų krypčių: grožio ir miego smulkmenos nuo 12,90 €, namų jaukumo dovanos (žvakė – 19,90 €, arbatos rinkinys – 24,99 €) arba didesnė dovana – advento kalendorius nuo 24,99 € ar vilnonis pledas už 26,99 €. Žemiau – 15 idėjų su kainomis.",
+  "category": "Dovanos jai",
+  "cover": "/products/silkas-miegas-q2-c0c419ec68.webp",
+  "coverAlt": "Šilkinis miego rinkinys „Saldūs sapnai“ – kalėdinė dovana moteriai",
+  "keywords": [
+    "kalėdinės dovanos moteriai",
+    "dovana moteriai kalėdoms",
+    "dovana mamai kalėdoms",
+    "dovana draugei kalėdoms",
+    "dovana žmonai kalėdoms",
+    "dovanos jai"
+  ],
+  "productSlugs": [
+    "silkinis-miego-rinkinys-miegas",
+    "keramikos-arbatos-rinkinys-po-vakara",
+    "aromaterapijos-zvake-zvakiu-vakaras",
+    "advento-kalendorius-grozio-ritualas"
+  ],
+  "sections": [
+    {
+      "heading": "Kokios kalėdinės dovanos tinka moteriai ir kiek jos kainuoja?",
+      "paragraphs": [
+        "Lentelėje dovanos surikiuotos nuo pigiausios iki brangiausios. Dovanoms nuo 24,99 € pristatymas nemokamas, pigesnėms jis kainuoja 2,99 €."
+      ],
+      "table": {
+        "head": [
+          "Dovana",
+          "Kaina",
+          "Kas tai"
+        ],
+        "rows": [
+          [
+            "[Gua Sha rinkinys „Rožinė ramybė“](/produktai/gua-sha-rinkinys-roze)",
+            "12,90 €",
+            "Veido volelis ir gua sha akmuo dovanų dėžutėje"
+          ],
+          [
+            "[Vonios rinkinys „Ramybės vakaras“](/produktai/sventinis-vonios-rinkinys)",
+            "13,90 €",
+            "Vonios aliejus 100 ml, muilas 100 g, džiovintos gėlės"
+          ],
+          [
+            "[Megzta šildyklė „Lovos šiluma“](/produktai/megzta-sildykle-2l)",
+            "13,90 €",
+            "2 l šildyklė su nuimamu megztu užvalkalu"
+          ],
+          [
+            "[Saulėlydžio lempa „Auksinis vakaras“](/produktai/saulelydzio-lempa)",
+            "15,90 €",
+            "USB lempa, projektuojanti saulėlydžio šviesą ant sienos"
+          ],
+          [
+            "[Užrašinė „Auksiniai puslapiai“](/produktai/uzrasine-aukso-krastu)",
+            "16,90 €",
+            "A5 užrašinė, 160 puslapių, lininiai viršeliai"
+          ],
+          [
+            "[Šilkinis pagalvės užvalkalas „Švelni naktis“](/produktai/silkinis-pagalves-uzvalkalas)",
+            "18,90 €",
+            "Šilkmedžio šilkas, 50 × 70 cm"
+          ],
+          [
+            "[Aromaterapijos žvakė „Žvakių vakaras“](/produktai/aromaterapijos-zvake-zvakiu-vakaras)",
+            "19,90 €",
+            "220 g sojų vaško žvakė, dega iki 45 val."
+          ],
+          [
+            "[Rožė stikliniame gaubte „Amžina rožė“](/produktai/amzinoji-roze-gaubte)",
+            "19,90 €",
+            "Dirbtinio šilko rožė su LED šviesa stikliniame gaubte, ~22 cm"
+          ],
+          [
+            "[Šilkinis miego rinkinys „Saldūs sapnai“](/produktai/silkinis-miego-rinkinys-miegas)",
+            "22,90 €",
+            "Šilkinė miego kaukė ir plaukų gumytė"
+          ],
+          [
+            "[Kvapo difuzorius „Jaukūs namai“](/produktai/kvapo-difuzorius-lazdelemis)",
+            "22,90 €",
+            "200 ml lazdelių difuzorius, kvepia 10–12 savaičių"
+          ],
+          [
+            "[Keramikos arbatos rinkinys „Arbatos metas“](/produktai/keramikos-arbatos-rinkinys-po-vakara)",
+            "24,99 €",
+            "Arbatinukas 450 ml su filtru, puodelis, padėkliukas"
+          ],
+          [
+            "[Žvakių lempa „Vakaro šviesa“](/produktai/zvakiu-sildymo-lempa)",
+            "24,99 €",
+            "Lempa, kuri tirpdo žvakę be liepsnos; laikmatis 2 / 4 / 8 val."
+          ],
+          [
+            "[Advento kalendorius „Jaukumo vakarai“](/produktai/advento-kalendorius-jaukumo-vakarai)",
+            "24,99 €",
+            "24 langeliai: arbata, žvakės, kojinės, vonios druskos"
+          ],
+          [
+            "[Vilnonis pledas „Žiemos šiluma“](/produktai/vilnonis-pledas-jaukumas)",
+            "26,99 €",
+            "130 × 180 cm, 70 % merinoso vilna"
+          ],
+          [
+            "[Kardiganas „Atviras šiltis“](/produktai/kardiganas-atviras-siltis)",
+            "29,99 €",
+            "Storai megztas kardiganas su medinėmis sagomis, S–XL"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Ką dovanoti moteriai, kai nežinote jos skonio?",
+      "paragraphs": [
+        "Rinkitės dovaną, kuriai nereikia žinoti dydžio, odos tipo ar mėgstamo kvapo. Tokios yra [Megzta šildyklė „Lovos šiluma“](/produktai/megzta-sildykle-2l), [Užrašinė „Auksiniai puslapiai“](/produktai/uzrasine-aukso-krastu) ir [Keramikos arbatos rinkinys „Arbatos metas“](/produktai/keramikos-arbatos-rinkinys-po-vakara). Kvapų dovanos – žvakė ar difuzorius – tinka tada, kai bent apytiksliai žinote, ar ji mėgsta saldesnius, ar gaivesnius kvapus.",
+        "Plačiau apie tai – gide [dovana moteriai, kai nežinote jos skonio](/straipsniai/kaip-isrinkti-dovana-moteriai-kai-nezinote-jos-skonio)."
+      ]
+    },
+    {
+      "heading": "Ką dovanoti mamai ar močiutei?",
+      "paragraphs": [
+        "Mamai ir močiutei dažniausiai tinka šiluma ir ramūs vakarai: [Vilnonis pledas „Žiemos šiluma“](/produktai/vilnonis-pledas-jaukumas) (130 × 180 cm, 70 % merinoso vilna), [Megzta šildyklė „Lovos šiluma“](/produktai/megzta-sildykle-2l) arba [Keramikos arbatos rinkinys „Arbatos metas“](/produktai/keramikos-arbatos-rinkinys-po-vakara). Jei norite, kad dovana džiugintų visą gruodį, tinka advento kalendorius [„Jaukumo vakarai“](/produktai/advento-kalendorius-jaukumo-vakarai) su arbata, žvakėmis ir kojinėmis."
+      ]
+    },
+    {
+      "heading": "Ką dovanoti žmonai ar merginai?",
+      "paragraphs": [
+        "Antrajai pusei tinka asmeniškesnė dovana. [Šilkinis miego rinkinys „Saldūs sapnai“](/produktai/silkinis-miego-rinkinys-miegas) ir [Šilkinis pagalvės užvalkalas „Švelni naktis“](/produktai/silkinis-pagalves-uzvalkalas) pagaminti iš šilkmedžio šilko. [Rožė stikliniame gaubte „Amžina rožė“](/produktai/amzinoji-roze-gaubte) – simbolinė dovana: tai dirbtinio šilko rožė su šilta LED šviesa, kuri nenuvysta. Kosmetiką mėgstančiai tinka advento kalendorius [„Grožio ritualas“](/produktai/advento-kalendorius-grozio-ritualas) su 25 SEPHORA priemonėmis (27,99 €).",
+        "Visus tris moterims skirtus kalendorius palyginome gide [advento kalendorius moteriai](/straipsniai/advento-kalendorius-moteriai-kuri-pasirinkti)."
+      ]
+    },
+    {
+      "heading": "Ką dovanoti draugei ar kolegei iki 20 eurų?",
+      "paragraphs": [
+        "Draugei ar kolegei pakanka mažos, bet gražiai supakuotos dovanos. [Gua Sha rinkinys „Rožinė ramybė“](/produktai/gua-sha-rinkinys-roze) ir [Vonios rinkinys „Ramybės vakaras“](/produktai/sventinis-vonios-rinkinys) parduodami dovanų dėžutėse, o [Aromaterapijos žvakė „Žvakių vakaras“](/produktai/aromaterapijos-zvake-zvakiu-vakaras) dega iki 45 valandų. Saldumynus mėgstančiai tinka saldainių puokštė – jas palyginome gide [saldainių puokštė dovanų](/straipsniai/saldainiu-puokste-dovanu-kuria-pasirinkti).",
+        "Pristatymas visoje Lietuvoje trunka 3–4 dienas ir kainuoja 2,99 €, o užsakymams nuo 24,99 € jis nemokamas. Visas dovanas moterims rasite skyriuje [dovanos jai](/dovanos/dovanos-jai)."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Kokia gera kalėdinė dovana moteriai iki 30 eurų?",
+      "a": "Iki 30 eurų tinka arbatos rinkinys (24,99 €), advento kalendorius „Jaukumo vakarai“ (24,99 €), vilnonis pledas (26,99 €) arba kardiganas (29,99 €)."
+    },
+    {
+      "q": "Ką dovanoti mamai Kalėdoms?",
+      "a": "Mamai tinka vilnonis pledas (26,99 €), megzta šildyklė (13,90 €), keramikos arbatos rinkinys (24,99 €) arba advento kalendorius „Jaukumo vakarai“."
+    },
+    {
+      "q": "Ar rožė stikliniame gaubte yra tikra?",
+      "a": "Ne. Tai dirbtinio šilko rožė su šilta LED šviesa, todėl ji nenuvysta ir nereikalauja priežiūros. Maitinama per USB arba trimis AAA baterijomis."
+    },
+    {
+      "q": "Ar dovanas reikia papildomai pakuoti?",
+      "a": "Dalis dovanų – gua sha rinkinys, vonios rinkinys, žvakė, šilkinis miego rinkinys – parduodamos dovanų dėžutėse. Kitoms tinka dovanų pakavimo rinkinys už 9,90 €."
+    }
+  ],
+  "published": "2026-11-16T09:00:00.000Z",
+  "updated": "2026-11-16T09:00:00.000Z",
+  "relatedBlogSlugs": [
+    "advento-kalendorius-moteriai-kuri-pasirinkti",
+    "kaip-isrinkti-dovana-moteriai-kai-nezinote-jos-skonio",
+    "kaip-isrinkti-dovana-mamai-ramiems-vakarams-namuose"
+  ]
+}

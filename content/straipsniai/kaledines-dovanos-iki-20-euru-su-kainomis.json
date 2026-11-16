@@ -1,0 +1,196 @@
+{
+  "slug": "kaledines-dovanos-iki-20-euru-su-kainomis",
+  "topic": "Dovanos pagal biudžetą",
+  "brand": "kaledukampelis",
+  "mock": false,
+  "title": "Kalėdinės dovanos iki 20 €: 20 idėjų su kainomis",
+  "h1": "Kalėdinės dovanos iki 20 eurų: 20 idėjų su kainomis",
+  "metaDescription": "20 kalėdinių dovanų iki 20 € su kainomis: nuo 6,90 € pakabuko iki žvakės, ausinių, mėnulio lempos ir advento kalendoriaus vaikui. Kam kuri tinka.",
+  "intro": "Iki 20 eurų telpa daugiau nei smulkmenos: belaidės ausinės (19,90 €), sojų vaško žvakė (19,90 €), trys poros vilnonių kojinių (18,90 €) ar net advento kalendorius vaikui (18,99 €). Pigiausia dovana kainuoja 6,90 €. Žemiau – 20 idėjų pagal kainą ir gavėją.",
+  "category": "Dovanos pagal biudžetą",
+  "cover": "/products/menulio-lempa-q2-9fc77143e9.webp",
+  "coverAlt": "Mėnulio lempa „Mėnulio šviesa“ – kalėdinė dovana iki 20 eurų",
+  "keywords": [
+    "dovanos iki 20 eurų",
+    "kalėdinės dovanos iki 20 eur",
+    "dovanos iki 15 eurų",
+    "dovanos iki 10 eurų",
+    "slaptojo kalėdų senelio dovana",
+    "pigios dovanos kalėdoms"
+  ],
+  "productSlugs": [
+    "menulio-lempa-3d",
+    "ausines-kisenines",
+    "aromaterapijos-zvake-zvakiu-vakaras",
+    "sniego-gaublys-ziemos-pasaka"
+  ],
+  "sections": [
+    {
+      "heading": "Kokias dovanas galima nupirkti iki 20 eurų?",
+      "paragraphs": [
+        "Lentelėje – 20 dovanų nuo pigiausios iki brangiausios. Visoms joms pristatymas kainuoja 2,99 €; jis tampa nemokamas, kai bendra užsakymo suma pasiekia 24,99 €."
+      ],
+      "table": {
+        "head": [
+          "Dovana",
+          "Kaina",
+          "Kam tinka"
+        ],
+        "rows": [
+          [
+            "[Raktų pakabukas „Mažoji eglutė“](/produktai/raktu-pakabukas-namai)",
+            "6,90 €",
+            "Kolegai, Slaptajam Kalėdų Seneliui"
+          ],
+          [
+            "[Dovanų pakavimo rinkinys „Šventinė pakuotė“](/produktai/dovanu-pakavimas-sventine)",
+            "9,90 €",
+            "Tam, kas pakuoja visos šeimos dovanas"
+          ],
+          [
+            "[Pieno plakiklis „Kreminės putos“](/produktai/pieno-plakiklis-usb)",
+            "11,90 €",
+            "Kavos ir kakavos mėgėjui"
+          ],
+          [
+            "[Gua Sha rinkinys „Rožinė ramybė“](/produktai/gua-sha-rinkinys-roze)",
+            "12,90 €",
+            "Draugei, sesei, kolegei"
+          ],
+          [
+            "[Vonios rinkinys „Ramybės vakaras“](/produktai/sventinis-vonios-rinkinys)",
+            "13,90 €",
+            "Mamai, draugei"
+          ],
+          [
+            "[Megzta šildyklė „Lovos šiluma“](/produktai/megzta-sildykle-2l)",
+            "13,90 €",
+            "Mamai, močiutei, seneliui"
+          ],
+          [
+            "[Kambario kvapo purškiklis „Jaukūs namai“](/produktai/kvapo-purskiklis-namai)",
+            "13,90 €",
+            "Kolegei, šeimininkei"
+          ],
+          [
+            "[Mini sodas „Žalioji oazė“](/produktai/vaistazoliu-auginimo-rinkinys)",
+            "14,90 €",
+            "Mėgstančiam gaminti"
+          ],
+          [
+            "[Išorinė baterija „Visada su savimi“](/produktai/isoreine-baterija-kelione)",
+            "14,90 €",
+            "Paaugliui, keliaujančiam"
+          ],
+          [
+            "[Saulėlydžio lempa „Auksinis vakaras“](/produktai/saulelydzio-lempa)",
+            "15,90 €",
+            "Paauglei, draugei"
+          ],
+          [
+            "[Sniego gaublys „Žiemos pasaka“](/produktai/sniego-gaublys-ziemos-pasaka)",
+            "15,90 €",
+            "Vaikams, šeimai"
+          ],
+          [
+            "[Stikliniai eglutės žaisliukai „Šventinis spindesys“](/produktai/egluciu-zaisliukai-stiklas)",
+            "15,90 €",
+            "Tėvams, šeimai"
+          ],
+          [
+            "[Užrašinė „Auksiniai puslapiai“](/produktai/uzrasine-aukso-krastu)",
+            "16,90 €",
+            "Kolegei, studentei"
+          ],
+          [
+            "[Vilnonės kojinės „Šilta žiema“](/produktai/vilnones-kojines-ziemos-jaukumas)",
+            "18,90 €",
+            "Tėčiui, seneliui, broliui"
+          ],
+          [
+            "[Vaikų žaidimas „Šventės paslaptis“](/produktai/vaiku-kaledinis-zaidimas)",
+            "18,90 €",
+            "Vaikui nuo 4 m."
+          ],
+          [
+            "[Advento kalendorius „Spalvų pasaka“](/produktai/advento-kalendorius-spalvu-pasaka)",
+            "18,99 €",
+            "Vaikui nuo 6 m."
+          ],
+          [
+            "[Aromaterapijos žvakė „Žvakių vakaras“](/produktai/aromaterapijos-zvake-zvakiu-vakaras)",
+            "19,90 €",
+            "Mamai, draugei, porai"
+          ],
+          [
+            "[Mėnulio lempa „Mėnulio šviesa“](/produktai/menulio-lempa-3d)",
+            "19,90 €",
+            "Paaugliui, porai"
+          ],
+          [
+            "[Belaidės ausinės „Kasdienė muzika“](/produktai/ausines-kisenines)",
+            "19,90 €",
+            "Paaugliui, draugui, kolegai"
+          ],
+          [
+            "[LED girlianda „Šilta šviesa“](/produktai/led-girlianda-siltas)",
+            "19,90 €",
+            "Šeimai, namams"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Ką dovanoti iki 10 eurų?",
+      "paragraphs": [
+        "Iki 10 eurų turime dvi dovanas. [Raktų pakabukas „Mažoji eglutė“](/produktai/raktu-pakabukas-namai) už 6,90 € – natūralios odos pakabukas su žalvario eglute, parduodamas dovanų maišelyje. [Dovanų pakavimo rinkinys „Šventinė pakuotė“](/produktai/dovanu-pakavimas-sventine) už 9,90 € – popierius, lininės juostelės, lipdukai ir 8 kortelės; juo galima supakuoti ir kitas dovanas."
+      ]
+    },
+    {
+      "heading": "Ką dovanoti Slaptajam Kalėdų Seneliui iki 15 eurų?",
+      "paragraphs": [
+        "Kai gavėją pažįstate mažai, rinkitės neutralią ir naudojamą dovaną. [Pieno plakiklis „Kreminės putos“](/produktai/pieno-plakiklis-usb) tinka visiems, kas geria kavą ar kakavą. [Mini sodas „Žalioji oazė“](/produktai/vaistazoliu-auginimo-rinkinys) – trys keramikiniai vazonėliai su sėklomis ant palangės. [Megzta šildyklė „Lovos šiluma“](/produktai/megzta-sildykle-2l) praverčia kiekvieną žiemą. Moteriai tinka [Gua Sha rinkinys „Rožinė ramybė“](/produktai/gua-sha-rinkinys-roze) arba [Vonios rinkinys „Ramybės vakaras“](/produktai/sventinis-vonios-rinkinys) – abu dovanų dėžutėse.",
+        "Daugiau patarimų – gide [Slaptojo Kalėdų Senelio dovana iki 20 €](/straipsniai/ka-patikrinti-renkantis-slaptojo-senelio-dovana-iki-20-eur)."
+      ]
+    },
+    {
+      "heading": "Ką dovanoti už 15–20 eurų?",
+      "paragraphs": [
+        "Šiame rėžyje dovanos jau atrodo solidžiai. [Belaidės ausinės „Kasdienė muzika“](/produktai/ausines-kisenines) turi Bluetooth 5.3 ir su dėklu groja iki 20 valandų. [Mėnulio lempa „Mėnulio šviesa“](/produktai/menulio-lempa-3d) valdoma prisilietimu ir įkraunama per USB. [Aromaterapijos žvakė „Žvakių vakaras“](/produktai/aromaterapijos-zvake-zvakiu-vakaras) – 220 g sojų vaško žvakė, deganti iki 45 valandų. [Vilnonės kojinės „Šilta žiema“](/produktai/vilnones-kojines-ziemos-jaukumas) – trys poros kalėdinėje dovanų dėžutėje.",
+        "Atkreipkite dėmesį: [LED girlianda „Šilta šviesa“](/produktai/led-girlianda-siltas) maitinama trimis AA baterijomis, kurios į komplektą neįeina."
+      ]
+    },
+    {
+      "heading": "Ką dovanoti vaikui iki 20 eurų?",
+      "paragraphs": [
+        "Vaikui nuo 4 metų tinka [Vaikų žaidimas „Šventės paslaptis“](/produktai/vaiku-kaledinis-zaidimas) – 24 medinės kortelės, iš kurių susidaro 12 porų. Vaikui nuo 6 metų už 18,99 € galima padovanoti advento kalendorių [„Spalvų pasaka“](/produktai/advento-kalendorius-spalvu-pasaka) su 24 piešimo priemonėmis, o nuo 8 metų – [advento kalendorius „Slime laboratorija“](/produktai/advento-kalendorius-slime-laboratorija) už 19,99 €.",
+        "Jei biudžetas šiek tiek didesnis, pažiūrėkite [kalėdines dovanas iki 30 eurų](/straipsniai/kaledines-dovanos-iki-30-euru-su-kainomis). Visą pasirinkimą rasite skyriuje [dovanos iki 20 eurų](/dovanos/dovanos-iki-20-euru)."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Kokia gera kalėdinė dovana iki 20 eurų?",
+      "a": "Iki 20 eurų tinka belaidės ausinės (19,90 €), mėnulio lempa (19,90 €), sojų vaško žvakė (19,90 €) arba trys poros vilnonių kojinių (18,90 €)."
+    },
+    {
+      "q": "Kokia pigiausia kalėdinė dovana?",
+      "a": "Pigiausia mūsų dovana – odinis raktų pakabukas su žalvario eglute už 6,90 €."
+    },
+    {
+      "q": "Kiek kainuoja pristatymas dovanoms iki 20 eurų?",
+      "a": "Pristatymas kainuoja 2,99 € ir trunka 3–4 dienas. Kai užsakymo suma pasiekia 24,99 €, pristatymas nemokamas."
+    },
+    {
+      "q": "Ar perkant kelias vienodas dovanas taikoma nuolaida?",
+      "a": "Taip. Perkant dvi vienodas prekes automatiškai taikoma 10 %, tris ir daugiau – 15 % kiekio nuolaida. Tai patogu, kai tą pačią dovaną perkate keliems kolegoms."
+    }
+  ],
+  "published": "2026-11-16T08:58:00.000Z",
+  "updated": "2026-11-16T08:58:00.000Z",
+  "relatedBlogSlugs": [
+    "ka-patikrinti-renkantis-slaptojo-senelio-dovana-iki-20-eur",
+    "kaledines-dovanos-iki-30-euru-su-kainomis",
+    "ka-dovanoti-mazai-pazistamam-kolegai-per-slaptaji-seneli"
+  ]
+}

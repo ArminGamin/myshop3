@@ -15,7 +15,7 @@ export function GET() {
   const flat = formatPrice(store.shipping.flatRateCents);
   const inStock = products.filter((p) => p.inStock);
   const line = (p: (typeof products)[number]) =>
-    `- [${p.name}](${base}/produktai/${p.slug}) — ${formatPrice(p.priceCents)}: ${p.tagline}${p.inside ? ` Viduje: ${p.inside}.` : ""} ${p.specs.map((x) => `${x.label}: ${x.value}`).join("; ")}.`;
+    `- [${p.name}](${base}/produktai/${p.slug}) — ${formatPrice(p.priceCents)}: ${p.tagline}${p.inside ? ` Viduje: ${p.inside}.` : ""} ${p.specs.filter((x) => x.value.trim()).map((x) => `${x.label}: ${x.value}`).join("; ")}.`;
   const group = (prefix: RegExp) => inStock.filter((p) => prefix.test(p.slug)).map(line).join("\n");
   const adventPrices = inStock.filter((p) => p.slug.startsWith("advento-kalendorius-")).map((p) => p.priceCents);
 

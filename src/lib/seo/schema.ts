@@ -46,7 +46,7 @@ export function productSchema(product: Product): JsonLd {
     sku: product.sku,
     brand: { "@type": "Brand", name: product.brand ?? store.brand.name },
     ...(setNumber(product) ? { mpn: setNumber(product) } : {}),
-    additionalProperty: product.specs.map((spec) => ({ "@type": "PropertyValue", name: spec.label, value: spec.value })),
+    additionalProperty: product.specs.filter((spec) => spec.value.trim()).map((spec) => ({ "@type": "PropertyValue", name: spec.label, value: spec.value })),
     offers: {
       "@type": "Offer",
       url: `${store.brand.url}/produktai/${product.slug}`,

@@ -3,9 +3,9 @@
   "topic": "Kalėdiniai megztiniai",
   "brand": "kaledukampelis",
   "mock": false,
-  "title": "Šeimos kalėdiniai megztiniai: dydžiai ir kainos",
+  "title": "Šeimos kalėdiniai megztiniai fotosesijai: dydžiai ir kainos",
   "h1": "Vienodi kalėdiniai megztiniai šeimai: kaip išrinkti raštą ir dydžius?",
-  "metaDescription": "Derantys kalėdiniai megztiniai vaikui, mamai ir tėčiui nuo 18,99 € už vienetą. Vaikų dydžiai nuo 3 iki 12 metų, suaugusiųjų S–3XL, nuolaida komplektui.",
+  "metaDescription": "Derantys kalėdiniai megztiniai šeimos fotosesijai nuo 18,99 € už vienetą. Vaikų dydžiai nuo 3 iki 12 metų, suaugusiųjų S–3XL, nuolaida komplektui.",
   "intro": "Derančius kalėdinius megztinius visai šeimai galima surinkti iš dviejų modelių: „Kalėdų džiaugsmas“ (18,99 € už megztinį, vaikams 3–7 m., suaugusiems S–3XL) ir „Šiaurės raštas“ (19,99 €, vaikams 4–12 m., suaugusiems S–2XL). Kiekvieno dydis renkamas atskirai, o perkant du megztinius taikoma 10 %, tris – 15 % nuolaida.",
   "category": "Kalėdiniai megztiniai",
   "cover": "/products/seimos-megztiniai-siaures-rastas-hero-real-v2-a4fba9f5.webp",
@@ -16,7 +16,9 @@
     "kalėdiniai megztiniai porai",
     "kalėdinis megztinis vaikui",
     "kalėdiniai megztiniai fotosesijai",
-    "kalėdinis megztinis moterims"
+    "kalėdinis megztinis moterims",
+    "megztiniai šeimos fotosesijai",
+    "kalėdinė fotosesija šeimai"
   ],
   "productSlugs": [
     "seimos-megztiniai-siaures-rastas",
@@ -87,9 +89,23 @@
       ]
     },
     {
+      "heading": "Kokie megztiniai tinka šeimos kalėdinei fotosesijai?",
+      "paragraphs": [
+        "Fotosesijai svarbiausia, kad visų megztinių raštas ir spalva sutaptų. Šeimai su vaiku tinka du modeliai: [„Šiaurės raštas“](/produktai/seimos-megztiniai-siaures-rastas) – raudonas ir baltas su šiaurietiškais elniais ir snaigėmis, ramesnis ir klasikinis; [„Kalėdų džiaugsmas“](/produktai/seimos-megztiniai-kaledu-dziaugsmas) – raudonas su Kalėdų Seneliu, žaismingesnis. Porai be vaikų skirtas [„Sniego duetas“](/produktai/kalediniai-megztiniai-sniego-duetas) su sniego seniu.",
+        "Jei šeimoje yra 8–12 metų vaikas, vienodą raštą visiems galima surinkti tik iš modelio „Šiaurės raštas“. Jei vaikui 3 metai arba kam nors reikia 3XL dydžio – tik iš modelio „Kalėdų džiaugsmas“. Viename komplekte galima pasirinkti vieną vaikišką dydį, todėl šeimai su dviem vaikais antrą vaikišką megztinį į krepšelį reikia įdėti atskirai."
+      ]
+    },
+    {
+      "heading": "Kaip pasiruošti fotosesijai su kalėdiniais megztiniais?",
+      "paragraphs": [
+        "Megztiniai yra ryškūs ir raštuoti, todėl prie jų geriausiai dera vienspalvis apatinis drabužis – džinsai arba tamsios kelnės visiems šeimos nariams. Tada nuotraukose dėmesys lieka megztiniams ir veidams.",
+        "Dydį kiekvienam šeimos nariui rinkitės atskirai prekės puslapyje. Megztinius verta pasimatuoti iš karto gavus siuntą, kad iki fotosesijos liktų laiko pakeisti netikusį dydį."
+      ]
+    },
+    {
       "heading": "Kada užsakyti megztinius šventinei fotosesijai?",
       "paragraphs": [
-        "Pristatome per 3–4 dienas, todėl fotosesijai ar šventiniam vakarėliui megztinius užsakykite bent savaitę anksčiau – liks laiko pasimatuoti. Netikusį nedėvėtą megztinį galima grąžinti per 14 dienų. Daugiau idėjų visai šeimai rasite skyriuje [dovanos šeimai](/dovanos/dovanos-seimai)."
+        "Pristatome per 3–4 dienas, todėl fotosesijai ar šventiniam vakarėliui megztinius užsakykite bent savaitę anksčiau – liks laiko pasimatuoti. Jei fotosesija numatyta gruodžio pradžioje, užsakykite dar lapkritį. Netikusį nedėvėtą megztinį galima grąžinti per 14 dienų. Daugiau idėjų visai šeimai rasite skyriuje [dovanos šeimai](/dovanos/dovanos-seimai)."
       ]
     }
   ],
@@ -97,6 +113,10 @@
     {
       "q": "Kiek kainuoja šeimos kalėdiniai megztiniai?",
       "a": "Vienas megztinis kainuoja 18,99 € („Kalėdų džiaugsmas“) arba 19,99 € („Šiaurės raštas“). Perkant du taikoma 10 %, tris – 15 % nuolaida, tad komplektas trims kainuoja apie 48–51 €."
+    },
+    {
+      "q": "Kokie kalėdiniai megztiniai tinka šeimos fotosesijai?",
+      "a": "Šeimai su vaiku tinka „Šiaurės raštas“ (raudonas ir baltas, šiaurietiški elniai, vaikams 4–12 m.) arba „Kalėdų džiaugsmas“ (raudonas, Kalėdų Senelis, vaikams 3–7 m.). Porai skirtas „Sniego duetas“. Visų narių dydžiai pasirenkami atskirai."
     },
     {
       "q": "Kokių dydžių yra vaikiški kalėdiniai megztiniai?",
@@ -116,7 +136,7 @@
     }
   ],
   "published": "2026-11-15T08:54:00.000Z",
-  "updated": "2026-11-15T08:54:00.000Z",
+  "updated": "2026-11-16T09:10:00.000Z",
   "relatedBlogSlugs": [
     "kaip-isrinkti-bendra-kaledine-dovana-porai",
     "kaledines-dovanos-iki-30-euru-su-kainomis",
