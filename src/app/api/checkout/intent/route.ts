@@ -61,17 +61,8 @@ export async function POST(req: Request) {
       description: `${store.brand.name} užsakymas`,
       // Be receipt_email Stripe nesiunčia savo kvito – klientas gauna tik mūsų patvirtinimo laišką.
       automatic_payment_methods: { enabled: true, allow_redirects: "never" },
-      shipping: {
-        name: `${customer.name} ${customer.surname}`,
-        phone: customer.phone,
-        address: {
-          line1: customer.address,
-          city: customer.city,
-          state: customer.region || undefined,
-          postal_code: customer.postalCode,
-          country: "LT",
-        },
-      },
+      // Pristatymo adreso į PaymentIntent nerašome: jį nustačius slaptuoju raktu Stripe atmeta
+      // Apple Pay / Google Pay patvirtinimą. Adresas saugomas metadata (Discord ir laiškai jį ima iš ten).
       metadata: { ...orderMetadata(order, {
         email: customer.email,
         phone: customer.phone,
