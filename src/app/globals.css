@@ -2528,6 +2528,54 @@ html[data-motion-ready] .hero-chip {
   background: radial-gradient(circle at 50% 30%, #fff8e6, var(--color-gold-300) 70%);
   box-shadow: 0 0 0 4px rgb(227 199 126 / 0.2);
 }
+/* Atsiskaitymas: kukli eilutė iki nemokamo pristatymo po antrašte. */
+.co-ship {
+  display: inline-flex;
+  width: 100%;
+  max-width: 19rem;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.85rem 0.55rem 0.5rem;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgb(201 162 75 / 0.35), 0 1px 2px rgb(60 20 20 / 0.04);
+  font-size: 13px;
+  color: var(--color-ink-600);
+}
+.co-ship-icon {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--color-cream-50);
+  background: linear-gradient(135deg, var(--color-burgundy-500), var(--color-burgundy-700));
+}
+.co-ship-track {
+  height: 0.25rem;
+  margin-top: 0.4rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-cream-200);
+}
+.co-ship-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-burgundy-500), var(--color-gold-400));
+  transition: width 700ms var(--ease-cinematic);
+}
+.co-ship-done {
+  width: auto;
+  padding-right: 1rem;
+  font-weight: 600;
+  color: var(--color-forest-600);
+}
+.co-ship-done .co-ship-icon {
+  background: linear-gradient(135deg, var(--color-forest-500), var(--color-forest-700));
+}
 .cart-ship-track {
   height: 0.5rem;
   overflow: hidden;

@@ -21,7 +21,7 @@ import {
   type StripeError,
   type StripeExpressCheckoutElementConfirmEvent,
 } from "@stripe/stripe-js";
-import { Clock, CreditCard, Info, Lock, Tag, X } from "lucide-react";
+import { Check, Clock, CreditCard, Info, Lock, Tag, Truck, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resolveItems, subtotalOf, useCart } from "@/lib/cart/context";
 import { addonAmounts } from "@/lib/cart/addons";
@@ -619,7 +619,10 @@ function CheckoutInner({
       <form id={FORM_ID} onSubmit={onSubmit} noValidate inert={leaveOpen} className="mx-auto max-w-6xl px-4 pb-8 pt-4 sm:px-6">
         <fieldset disabled={busy} className="min-w-0">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <h1 className="font-display text-[2rem] font-bold leading-none text-ink-900 sm:text-[2.5rem]">Apmokėjimas</h1>
+          <div>
+            <h1 className="font-display text-[2rem] font-bold leading-none text-ink-900 sm:text-[2.5rem]">Apmokėjimas</h1>
+            <FreeShippingLine />
+          </div>
           <CheckoutSteps current={current} onPick={goTo} />
         </div>
         <div className="checkout-timer mb-5" aria-live="polite">
@@ -1060,6 +1063,47 @@ function PromoField() {
           {error}
         </p>
       ) : null}
+    </div>
+  );
+}
+
+// Kukli eilutė po antrašte: kiek liko iki nemokamo pristatymo.
+function FreeShippingLine() {
+  const model = useModel();
+  const threshold = store.shipping.freeThresholdCents;
+  if (model.items.length === 0) return null;
+  if (model.shippingCents === 0) {
+    return (
+      <p className="co-ship co-ship-done">
+        <span aria-hidden className="co-ship-icon">
+          <Check className="size-3" strokeWidth={3} />
+        </span>
+        Pristatymas jums nemokamas
+      </p>
+    );
+  }
+  const left = Math.max(0, threshold - model.subtotal);
+  const pct = Math.min(100, Math.max(6, Math.round((model.subtotal / threshold) * 100)));
+  return (
+    <div className="co-ship">
+      <span aria-hidden className="co-ship-icon">
+        <Truck className="size-3" strokeWidth={2.4} />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="leading-none">
+          Iki nemokamo pristatymo liko <strong className="num text-burgundy-700">{formatPrice(left)}</strong>
+        </p>
+        <div
+          role="progressbar"
+          aria-valuenow={pct}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Pažanga iki nemokamo pristatymo"
+          className="co-ship-track"
+        >
+          <div className="co-ship-fill" style={{ width: `${pct}%` }} />
+        </div>
+      </div>
     </div>
   );
 }
