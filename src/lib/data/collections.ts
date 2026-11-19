@@ -37,7 +37,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "Advento kalendoriai 2026 – jai, jam ir vaikams",
     description:
-      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški kalendoriai. Nuo 18,99 €, nemokamas pristatymas užsakymams nuo 24,99 €.",
+      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški kalendoriai. Nuo 17,99 €, nemokamas pristatymas užsakymams nuo 24,99 €.",
     intro:
       "Kiekvieną gruodžio rytą – nauja staigmena iki pat Kalėdų. Išsirinkite kalendorių jai, jam ar vaikams: visi užpildyti ir paruošti dovanoti.",
     filter: (p) => p.slug.startsWith("advento-kalendorius-"),

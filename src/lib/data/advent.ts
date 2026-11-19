@@ -23,7 +23,7 @@ export const ADVENT_GROUPS: { id: RecipientId; label: string; title: string; tex
     id: "vaikams",
     label: "Vaikams",
     title: "Kalendoriai vaikams",
-    text: "Konstravimas, lenktynės, mokslas, slime ir kūryba – kad laukti Kalėdų būtų dar smagiau.",
+    text: "Mieli gyvūnėliai, konstravimas, lenktynės, mokslas, slime ir kūryba – kad laukti Kalėdų būtų dar smagiau.",
     cover: "advento-kalendorius-spalvu-pasaka",
   },
 ];

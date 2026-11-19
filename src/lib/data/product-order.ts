@@ -3,10 +3,11 @@
 // prekės rodomos po šių.
 export const PRODUCT_ORDER = [
   "advento-kalendorius-grozio-ritualas",
-  "advento-kalendorius-lenktyniu-garazas",
+  "advento-kalendorius-squishy-pasaulis",
   "advento-kalendorius-kavos-kelione",
   "advento-kalendorius-princeses-skrynele",
   "advento-kalendorius-auksines-smulkmenos",
+  "advento-kalendorius-lenktyniu-garazas",
   "advento-kalendorius-mazasis-statytojas",
   "advento-kalendorius-meistro-deze",
   "advento-kalendorius-slime-laboratorija",

@@ -4,9 +4,9 @@
   "brand": "kaledukampelis",
   "mock": false,
   "title": "Kalėdinės dovanos vaikams pagal amžių",
-  "h1": "Kalėdinės dovanos vaikams pagal amžių: nuo 4 iki 14 metų",
+  "h1": "Kalėdinės dovanos vaikams pagal amžių: nuo 3 iki 14 metų",
   "metaDescription": "Kalėdinės dovanos vaikams pagal amžių su kainomis: žaidimas nuo 4 m., advento kalendoriai nuo 6 ir 8 m., LEGO® rinkiniai nuo 9, 12 ir 14 metų.",
-  "intro": "Vaikui nuo 4 metų tinka medinis atminties žaidimas (18,90 €), nuo 6 metų – advento kalendoriai su mašinėlėmis ar piešimo priemonėmis (nuo 18,99 €), nuo 8 metų – mokslo bandymų kalendorius (25,99 €), nuo 9 metų – originalūs LEGO® rinkiniai (nuo 20,99 €). Paaugliams nuo 12–14 metų skirti LEGO® automobiliai.",
+  "intro": "Vaikui nuo 3 metų tinka figūrėlių advento kalendorius „Squishy pasaulis“ (17,99 €), nuo 4 metų – medinis atminties žaidimas (18,90 €), nuo 6 metų – advento kalendoriai su mašinėlėmis ar piešimo priemonėmis (nuo 18,99 €), nuo 8 metų – mokslo bandymų kalendorius (25,99 €), nuo 9 metų – originalūs LEGO® rinkiniai (nuo 20,99 €). Paaugliams nuo 12–14 metų skirti LEGO® automobiliai.",
   "category": "Dovanos vaikams",
   "cover": "/products/lego-disney-stitch-43249-surinktas-c8b341ee55.webp",
   "coverAlt": "LEGO® Disney Stitch – kalėdinė dovana vaikui nuo 9 metų",
@@ -40,6 +40,12 @@
           "Kas tai"
         ],
         "rows": [
+          [
+            "Nuo 3 m.",
+            "[Advento kalendorius „Squishy pasaulis“](/produktai/advento-kalendorius-squishy-pasaulis)",
+            "17,99 €",
+            "24 mini gyvūnėlių ir saldumynų figūrėlės"
+          ],
           [
             "Nuo 4 m.",
             "[Vaikų žaidimas „Šventės paslaptis“](/produktai/vaiku-kaledinis-zaidimas)",
@@ -122,9 +128,9 @@
       }
     },
     {
-      "heading": "Ką dovanoti 4–7 metų vaikui?",
+      "heading": "Ką dovanoti 3–7 metų vaikui?",
       "paragraphs": [
-        "Mažiausiems tinka [Vaikų žaidimas „Šventės paslaptis“](/produktai/vaiku-kaledinis-zaidimas): 24 medinės kortelės su eglutėmis, žvaigždėmis ir dovanomis, kurias reikia sudėti į poras. Nuo 6 metų vaikai jau gali naudotis advento kalendoriais – [„Lenktynių garažas“](/produktai/advento-kalendorius-lenktyniu-garazas) su aštuoniais automobiliukais arba [advento kalendorius „Spalvų pasaka“](/produktai/advento-kalendorius-spalvu-pasaka) su pieštukais, flomasteriais ir trafaretais.",
+        "Trimečiams ir vyresniems tinka [Advento kalendorius „Squishy pasaulis“](/produktai/advento-kalendorius-squishy-pasaulis): per adventą susirenka 24 mielos figūrėlės. Nuo 4 metų tinka [Vaikų žaidimas „Šventės paslaptis“](/produktai/vaiku-kaledinis-zaidimas): 24 medinės kortelės su eglutėmis, žvaigždėmis ir dovanomis, kurias reikia sudėti į poras. Nuo 6 metų vaikai jau gali naudotis advento kalendoriais – [„Lenktynių garažas“](/produktai/advento-kalendorius-lenktyniu-garazas) su aštuoniais automobiliukais arba [advento kalendorius „Spalvų pasaka“](/produktai/advento-kalendorius-spalvu-pasaka) su pieštukais, flomasteriais ir trafaretais.",
         "3–7 metų vaikams yra ir kalėdinių megztinių, derančių prie tėvų megztinių – apie juos skaitykite gide [vienodi kalėdiniai megztiniai šeimai](/straipsniai/seimos-kalediniai-megztiniai-dydziai-ir-kainos)."
       ]
     },
@@ -145,7 +151,7 @@
     {
       "heading": "Ar advento kalendorius tinka kaip kalėdinė dovana?",
       "paragraphs": [
-        "Taip. Vaikiškuose kalendoriuose yra žaislai ir kūrybos priemonės, o ne saldainiai, todėl jie nepraranda vertės ir po gruodžio 1 d. – vaikas tiesiog iš karto atidaro praleistus langelius. Visus šešis vaikiškus kalendorius palyginome gide [advento kalendorius vaikams pagal amžių](/straipsniai/advento-kalendorius-vaikams-pagal-amziu).",
+        "Taip. Vaikiškuose kalendoriuose yra žaislai ir kūrybos priemonės, o ne saldainiai, todėl jie nepraranda vertės ir po gruodžio 1 d. – vaikas tiesiog iš karto atidaro praleistus langelius. Visus septynis vaikiškus kalendorius palyginome gide [advento kalendorius vaikams pagal amžių](/straipsniai/advento-kalendorius-vaikams-pagal-amziu).",
         "Pristatymas visoje Lietuvoje trunka 3–4 dienas ir kainuoja 2,99 €, o užsakymams nuo 24,99 € jis nemokamas. Visas dovanas rasite skyriuje [dovanos vaikams](/dovanos/dovanos-vaikams)."
       ]
     }
@@ -169,7 +175,7 @@
     }
   ],
   "published": "2026-11-16T08:57:00.000Z",
-  "updated": "2026-11-16T08:57:00.000Z",
+  "updated": "2026-11-19T09:00:00.000Z",
   "relatedBlogSlugs": [
     "advento-kalendorius-vaikams-pagal-amziu",
     "lego-rinkiniai-kaledoms-pagal-amziu",
