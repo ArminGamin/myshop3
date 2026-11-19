@@ -14,7 +14,7 @@ export async function sendEmail(input: { to: string; subject: string; html: stri
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", "Idempotency-Key": input.idempotencyKey },
     body: JSON.stringify({
       from, to: [input.to], subject: input.subject, html: input.html,
-      reply_to: "kaleddovanos@gmail.com",
+      reply_to: "pagalba@kaledukampelis.com",
       // Vieno paspaudimo atsisakymas galimas tik su https nuoroda; mailto – be jo.
       ...(input.unsubscribeUrl
         ? {
