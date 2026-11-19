@@ -17,6 +17,26 @@ import {
 
 const SPRING = "cubic-bezier(0.22, 1, 0.36, 1)";
 
+// Retai: pirmas pranešimas po 20–30 s, tarp jų 60–90 s, ne daugiau kaip 3 per sesiją.
+const SHOWN_KEY = "jaukumas.social-proof-shown";
+const MAX_PER_SESSION = 3;
+
+function shownThisSession() {
+  try {
+    return Number(sessionStorage.getItem(SHOWN_KEY) ?? "0");
+  } catch {
+    return MAX_PER_SESSION;
+  }
+}
+
+function markShown() {
+  try {
+    sessionStorage.setItem(SHOWN_KEY, String(shownThisSession() + 1));
+  } catch {
+    /* neprieinama */
+  }
+}
+
 export function SocialProofToast() {
   const cart = useCart();
   const motionReady = useMotionReady();
@@ -49,7 +69,7 @@ export function SocialProofToast() {
     if (!eligible) return undefined;
     const id = window.setInterval(() => {
       setViewerCount((current) => nudgeViewers(current));
-    }, 9000);
+    }, 60_000);
     return () => window.clearInterval(id);
   }, [eligible]);
 
@@ -69,9 +89,10 @@ export function SocialProofToast() {
     let cancelled = false;
 
     const showStep = () => {
-      if (cancelled) return;
+      if (cancelled || shownThisSession() >= MAX_PER_SESSION) return;
+      markShown();
       const displayFor = rand(4200, 5200);
-      const pauseAfter = rand(1600, 2800);
+      const pauseAfter = rand(60_000, 90_000);
       const fadeMs = 480;
 
       const next = pickNextToast(lastShownKindRef.current);
@@ -102,7 +123,7 @@ export function SocialProofToast() {
         setPhase("in");
       }
     }, 0);
-    startTimerRef.current = window.setTimeout(showStep, 1200);
+    startTimerRef.current = window.setTimeout(showStep, rand(20_000, 30_000));
 
     return () => {
       cancelled = true;
