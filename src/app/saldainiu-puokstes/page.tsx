@@ -16,7 +16,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 export const metadata: Metadata = {
   title: "Saldainių puokštės dovanai",
   description:
-    "Rankomis komponuotos saldainių puokštės su Kinder, Milka, Ferrero, Raffaello ir kitais firminiais skanėstais. Išsirink šventišką, dovanai paruoštą saldžią staigmeną.",
+    "Rankomis komponuotos saldainių puokštės su Kinder, Milka, Ferrero ir Raffaello skanėstais. Šventiška, dovanai paruošta saldi staigmena.",
   alternates: { canonical: BOUQUET_HREF },
 };
 

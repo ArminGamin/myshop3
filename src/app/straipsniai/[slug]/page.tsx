@@ -37,7 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `${ARTICLES_PATH}/${post.slug}`;
   const images = post.cover ? [{ url: post.cover, alt: post.coverAlt ?? post.h1 }] : undefined;
   return {
-    title: post.title,
+    // Ilgas pavadinimas be prekės ženklo priesagos, kad Google jo nenukirptų.
+    title: post.title.length + store.brand.name.length + 3 > 70 ? { absolute: post.title } : post.title,
     description: post.metaDescription,
     keywords: post.keywords,
     alternates: { canonical: url },

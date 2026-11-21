@@ -37,7 +37,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "Advento kalendoriai 2026 – jai, jam ir vaikams",
     description:
-      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški kalendoriai. Nuo 17,99 €, nemokamas pristatymas užsakymams nuo 24,99 €.",
+      "Advento kalendoriai su 24 staigmenomis: grožio, papuošalų, kavos, įrankių, kojinių ir vaikiški. Nuo 17,99 €, nemokamas pristatymas nuo 24,99 €.",
     intro:
       "Kiekvieną gruodžio rytą – nauja staigmena iki pat Kalėdų. Išsirinkite kalendorių jai, jam ar vaikams: visi užpildyti ir paruošti dovanoti.",
     filter: (p) => p.slug.startsWith("advento-kalendorius-"),
@@ -181,7 +181,7 @@ export const collections: CollectionMeta[] = [
     emoji: "gift",
     seoTitle: "LEGO® rinkiniai vaikams – kalėdinės dovanos",
     description:
-      "Originalūs LEGO® rinkiniai: Lamborghini Huracán, žiemos namelis, meduolių namelis, Kalėdų Senelio rogės, Disney Stitch ir Ferrari 812 Superfast. Nuo 20,99 €, nemokamas pristatymas nuo 24,99 €.",
+      "Originalūs LEGO® rinkiniai: Lamborghini, Ferrari, Disney Stitch, žiemos ir meduolių nameliai, Senelio rogės. Nuo 20,99 €, nemokamas pristatymas nuo 24,99 €.",
     intro:
       "Originalūs LEGO® rinkiniai vaikams ir visai šeimai – nuo Lamborghini Huracán iki jaukaus žiemos namelio. Visi nauji, gamintojo pakuotėse ir paruošti dovanoti.",
     filter: (p) => p.slug.startsWith("lego-"),
