@@ -785,6 +785,14 @@ function CheckoutInner({
                   onChange={(value) => model.patch("phone", formatPhone(value))}
                 />
               </div>
+              <div className="co-home">
+                <span className="co-home-icon" aria-hidden>
+                  <Truck className="size-3.5" strokeWidth={2} />
+                </span>
+                <p>
+                  <strong>Pristatymas į namus.</strong> Kurjeris atveš siuntą jūsų nurodytu adresu, o prieš jam atvykstant gausite SMS žinutę su numatomu laiku. Jei tuo metu negalėsite siuntos priimti, ji bus pristatyta į artimiausią Omniva arba LP Express paštomatą.
+                </p>
+              </div>
             </section>
 
             <section id="checkout-payment" className="scroll-mt-36">

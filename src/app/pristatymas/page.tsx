@@ -21,6 +21,11 @@ export default function ShippingPage() {
         pristatymo vietos.
       </p>
       <p>
+        Siuntas pristatome kurjeriu tiesiai į namus, jūsų nurodytu adresu. Prieš kurjeriui
+        atvykstant gausite SMS žinutę su numatomu pristatymo laiku. Jei tuo metu negalėsite
+        siuntos priimti, ji bus pristatyta į artimiausią Omniva arba LP Express paštomatą.
+      </p>
+      <p>
         Dedame visas pastangas, kad prekės klientus pasiektų kuo greičiau. Pateikdamas
         užsakymą klientas patvirtina, kad susipažino su pristatymo informacija ir supranta,
         jog pristatymo terminas gali priklausyti nuo kurjerių bei užsakymų srauto.
